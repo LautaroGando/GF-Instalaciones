@@ -1,8 +1,11 @@
 import React from 'react'
+import HomeTitle from '../ui/HomeTitle/HomeTitle'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <HomeTitle/>
+    </div>
   )
 }
 
