@@ -11,3 +11,11 @@
   font-family: "PlayfairDisplay";
   src: url("/fonts/PlayfairDisplay.ttf");
 }
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
