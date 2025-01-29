@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/HeaderComponents/Header";
 import BannerHome from "@/components/HomeComponents/BannerHome/BannerHome";
 import clsx from "clsx";
+import Footer from "@/components/FooterComponents/Footer";
 
 export const metadata: Metadata = {
   title: "GF Instalaciones",
@@ -19,7 +20,10 @@ export default function RootLayout({
       <body className={clsx("bg-bgColor font-textFont")}>
         <Header />
         <BannerHome />
-        <main className="px-[12px] sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">{children}</main>
+        <main className="px-[12px] sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
