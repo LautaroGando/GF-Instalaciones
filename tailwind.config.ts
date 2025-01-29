@@ -13,6 +13,7 @@ export default {
         primaryColor: "#A79351",
         secondaryColor: "#000000",
         secondaryColorDark: "#E4E4E4",
+        letterColorLight: "#FAFAFA",
         bgColor: "#FAFAFA",
         bgColorDark: "#000000",
         primaryTransparentColor: "#A7935133",
