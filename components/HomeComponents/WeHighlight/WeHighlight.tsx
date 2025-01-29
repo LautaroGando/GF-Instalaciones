@@ -7,7 +7,7 @@ const WeHighlight = () => {
   return (
     <section>
       <HomeTitle text="Por qué destacamos" />
-      <div className="flex flex-col gap-[20px] sm:flex-row sm:gap-[11px] md:gap-[30px]">
+      <div className="flex flex-col gap-[20px] sm:flex-row sm:gap-[11px] md:gap-[30px] lg:gap-[15px]">
         {highlightItems.map((item, i) => (
           <HighlightItem key={i} title={item.title} description={item.description} />
         ))}

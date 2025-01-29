@@ -13,7 +13,7 @@ const HighlightItem: React.FC<IHighlightItemProps> = ({ title, description }) =>
           className="size-[40px] select-none lg:size-[55px] xl:size-[80px]"
         />
       </div>
-      <h3 className="text-center text-[14px] text-primaryColor font-semibold lg:text-[18px] xl:text-[24px]">
+      <h3 className="text-center text-[14px] text-primaryColor font-semibold sm:w-[90%] md:w-[70%] lg:text-[18px] xl:text-[24px]">
         {title}
       </h3>
       <p className="text-center text-[12px] text-primaryColor lg:text-[14px] xl:text-[16px]">

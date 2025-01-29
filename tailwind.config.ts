@@ -11,15 +11,15 @@ export default {
     extend: {
       colors: {
         primaryColor: "#A79351",
-        secondaryColor: "#222222",
+        secondaryColor: "#000000",
         secondaryColorDark: "#E4E4E4",
         bgColor: "#FAFAFA",
         bgColorDark: "#000000",
         primaryTransparentColor: "#A7935133",
       },
       fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
-        playfairDisplay: ["PlayfairDisplay", "sans-serif"],
+        textFont: ["Montserrat", "sans-serif"],
+        titleFont: ["PlayfairDisplay", "sans-serif"],
       },
     },
   },
