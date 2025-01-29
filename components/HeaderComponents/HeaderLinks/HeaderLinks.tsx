@@ -1,6 +1,6 @@
 "use client";
 import { IHeaderLink } from "@/interfaces/IHeaderLink";
-import { headerLinks } from "@/utils/header-links";
+import { headerLinks } from "@/data/HeaderLinks/header-links";
 import Link from "next/link";
 import React from "react";
 import clsx from "clsx";

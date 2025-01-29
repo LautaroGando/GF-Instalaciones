@@ -1,4 +1,5 @@
-import { IHeaderLink } from "@/interfaces/IHeaderLink";
+import { IHeaderLink } from "./types";
+
 
 export const headerLinks: IHeaderLink[] = [
   {
