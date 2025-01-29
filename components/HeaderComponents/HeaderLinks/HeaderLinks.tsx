@@ -4,10 +4,10 @@ import { headerLinks } from "@/utils/header-links";
 import Link from "next/link";
 import React from "react";
 import clsx from "clsx";
-import { useHash } from "@/hooks/useHash";
+import { usePath } from "@/hooks/usePath";
 
 export const HeaderLinks: React.FC = () => {
-  const { pathname, hash } = useHash();
+  const { pathname, hash } = usePath();
 
   return (
     <nav className="hidden xl:block">
@@ -20,9 +20,7 @@ export const HeaderLinks: React.FC = () => {
               <Link
                 className={clsx(
                   "font-textFont xl:text-lg",
-                  isActive
-                    ? "text-primaryColor font-semibold"
-                    : "text-secondaryColor"
+                  isActive ? "text-primaryColor font-semibold" : "text-secondaryColor"
                 )}
                 href={link.href}
               >
