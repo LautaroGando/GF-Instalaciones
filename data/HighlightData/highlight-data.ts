@@ -1,4 +1,6 @@
-export const highlightItems = [
+import { IHighlightData } from "./types";
+
+export const highlightItems: IHighlightData[] = [
   {
     title: "Soluciones Personalizadas",
     description:

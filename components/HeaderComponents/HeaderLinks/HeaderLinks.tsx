@@ -1,13 +1,13 @@
 "use client";
 import { IHeaderLink } from "@/interfaces/IHeaderLink";
-import { headerLinks } from "@/utils/header-links";
+import { headerLinks } from "@/data/HeaderLinks/header-links";
 import Link from "next/link";
 import React from "react";
 import clsx from "clsx";
-import { useHash } from "@/hooks/useHash";
+import { usePath } from "@/hooks/usePath";
 
 export const HeaderLinks: React.FC = () => {
-  const { pathname, hash } = useHash();
+  const { pathname, hash } = usePath();
 
   return (
     <nav className="hidden xl:block">

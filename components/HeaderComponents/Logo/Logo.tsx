@@ -9,6 +9,7 @@ export const Logo: React.FC = () => {
         className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px]"
         src={logo}
         alt="Logo de la empresa"
+        priority
       />
       <h2 className="font-textFont sm:text-lg">Instalaciones</h2>
     </div>

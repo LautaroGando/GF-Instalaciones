@@ -1,9 +1,8 @@
 "use client";
-
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export const useHash = () => {
+export const usePath = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [hash, setHash] = useState<string>("");
