@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/HeaderComponents/Header";
+import BannerHome from "@/components/HomeComponents/BannerHome/BannerHome";
 
 export const metadata: Metadata = {
   title: "GF Instalaciones",
@@ -14,8 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="antialiased">
+      <body className="antialiased font-textFont">
         <Header />
+        <BannerHome />
         {children}
       </body>
     </html>

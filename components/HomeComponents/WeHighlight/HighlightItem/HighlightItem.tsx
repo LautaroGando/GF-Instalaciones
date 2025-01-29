@@ -9,10 +9,8 @@ const HighlightItem: React.FC<IHighlightItemProps> = ({ title, description }) =>
       <div className="mb-2">
         <Image
           src={starImage}
-          width={80}
-          height={80}
           alt="Imagen de estrella"
-          className="size-[40px] lg:size-[55px] xl:size-[80px]"
+          className="size-[40px] select-none lg:size-[55px] xl:size-[80px]"
         />
       </div>
       <h3 className="text-center text-[14px] text-primaryColor font-semibold sm:w-[90%] md:w-[70%] lg:text-[18px] xl:text-[24px]">
