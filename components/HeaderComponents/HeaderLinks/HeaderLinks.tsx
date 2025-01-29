@@ -20,9 +20,7 @@ export const HeaderLinks: React.FC = () => {
               <Link
                 className={clsx(
                   "font-textFont xl:text-lg",
-                  isActive
-                    ? "text-primaryColor font-semibold"
-                    : "text-secondaryColor"
+                  isActive ? "text-primaryColor font-semibold" : "text-secondaryColor"
                 )}
                 href={link.href}
               >
