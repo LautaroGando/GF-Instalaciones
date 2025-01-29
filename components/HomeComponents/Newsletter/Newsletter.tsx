@@ -29,7 +29,7 @@ const Newsletter = () => {
             </span>
           </p>
 
-          <div className="flex flex-col justify-center w-full max-w-[530px] rounded-tl-[30px] rounded-br-[30px] bg-gradient-to-r from-[#A79351]/70 to-[#A79351]/100 px-6 sm:h-[160px] xl:w-[580px] xl:h-[200px] xl:rounded-tl-[50px] xl:rounded-br-[50px]">
+          <div className="flex flex-col justify-center w-full h-[125px] max-w-[530px] rounded-tl-[30px] rounded-br-[30px] bg-gradient-to-r from-[#A79351]/70 to-[#A79351]/100 px-6 sm:h-[160px] xl:w-[580px] xl:h-[200px] xl:rounded-tl-[50px] xl:rounded-br-[50px]">
             <label
               htmlFor="email"
               className="text-white text-[14px] block mb-2 sm:text-[16px] xl:text-[18px]"
