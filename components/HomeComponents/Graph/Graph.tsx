@@ -9,7 +9,7 @@ export const Graph: React.FC = () => {
 
         <div>
             <HomeTitle text="¿Necesitas Instalar gráfica?"/>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 lg:flex-row lg:gap-10">
                 <PreviewJobs />
                 <InfoGraph />
             </div> 

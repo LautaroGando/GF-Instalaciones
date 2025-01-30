@@ -1,20 +1,40 @@
-import React from "react";
+"use client";
+import clsx from "clsx";
+import React, { useState } from "react";
 
 export const InfoGraph: React.FC = () => {
+  const [isVisibleText, setIsVisibleText] = useState(false);
+
+  const handleVisibleText = () => setIsVisibleText(!isVisibleText);
+
   return (
-    <div className="text-center flex flex-col gap-4">
-      <h2 className="text-lg font-semibold">Instalación Gráfica de Gran Formato</h2>
-      <p className="text-sm">
+    <div className="text-center flex flex-col gap-4 items-center lg:flex-1">
+      <h2 className="text-lg font-semibold sm:text-[22px] lg:text-[26px] lg:text-left xl:text-3xl">
+        Instalación Gráfica de Gran Formato
+      </h2>
+      <p
+        className={clsx(
+          "text-sm transition-all duration-500 linear overflow-hidden sm:text-base sm:max-h-full lg:text-left xl:text-lg",
+          isVisibleText ? "max-h-[300px]" : "max-h-[80px]"
+        )}
+      >
         GF es una empresa líder en servicios de instalación, especializada en el
         montaje de cartelería, señalética y estructuras publicitarias. Nos
-        enfocamos en ofrecer soluciones completas y personalizadas para
-        proyectos de diferentes escalas, desde pequeños trabajos hasta complejas
-        instalaciones industriales. Nuestro equipo altamente capacitado trabaja
-        con tecnología moderna y los más altos estándares de seguridad y
-        calidad, asegurando que cada proyecto se ejecute con precisión y
-        atención a los detalles. En GF, nos comprometemos a brindar resultados
-        eficientes que superen las expectativas de nuestros clientes.
+        enfocamos en ofrecer soluciones completas y
+        personalizadas para proyectos de diferentes escalas, desde pequeños
+        trabajos hasta complejas instalaciones industriales. Nuestro equipo
+        altamente capacitado trabaja con tecnología moderna y los más altos
+        estándares de seguridad y calidad, asegurando que cada proyecto se
+        ejecute con precisión y atención a los detalles. En GF, nos
+        comprometemos a brindar resultados eficientes que superen las
+        expectativas de nuestros clientes.
       </p>
+      <button
+        onClick={handleVisibleText}
+        className="py-1 px-4 bg-primaryColor text-letterColorLight border border-transparent rounded-sm text-sm font-medium transition-all hover:bg-bgColor hover:text-primaryColor hover:border-primaryColor sm:hidden"
+      >
+        Leer {isVisibleText ? "menos" : "más"}
+      </button>
     </div>
   );
 };
