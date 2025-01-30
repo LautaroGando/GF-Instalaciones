@@ -1,10 +1,9 @@
 "use client";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const usePath = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [hash, setHash] = useState<string>("");
 
   useEffect(() => {
@@ -12,7 +11,7 @@ export const usePath = () => {
     setHash(window.location.hash);
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   return { pathname, hash };
 };
