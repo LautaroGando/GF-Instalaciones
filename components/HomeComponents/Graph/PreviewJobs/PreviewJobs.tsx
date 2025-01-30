@@ -3,7 +3,7 @@ import { previewJobs } from "@/data/PreviewJobs/preview-jobs";
 import clsx from "clsx";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 export const PreviewJobs: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,7 +19,7 @@ export const PreviewJobs: React.FC = () => {
   const handleJob = (i: number) => setCurrentIndex(i);
 
   return (
-    <div className="w-full max-w-[350px] mx-auto h-44 border-b-[6px] border-primaryColor rounded-tl-[50px] rounded-br-[50px] overflow-hidden relative">
+    <div className="w-full max-w-[350px] mx-auto h-44 border-b-[6px] border-primaryColor rounded-tl-[50px] rounded-br-[50px] overflow-hidden relative sm:max-w-[447px] sm:h-60 lg:flex-1 lg:h-[360px] xl:min-w-[50%] xl:h-[396px]">
       <div className="absolute top-0 left-0 w-full h-full">
         <AnimatePresence mode="wait">
           <motion.div
@@ -51,8 +51,10 @@ export const PreviewJobs: React.FC = () => {
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="pl-2"
             >
-              <h2 className="font-medium">{previewJobs[currentIndex].title}</h2>
-              <p className="text-[10px] w-[85%] font-light border-l border-primaryColor pl-2">
+              <h2 className="font-medium sm:text-lg lg:text-xl xl:text-2xl">
+                {previewJobs[currentIndex].title}
+              </h2>
+              <p className="text-[10px] w-[85%] font-light border-l border-primaryColor pl-2 sm:text-xs lg:text-sm xl:text-base lg:w-[65%]">
                 {previewJobs[currentIndex].text}
               </p>
             </motion.div>
