@@ -1,5 +1,5 @@
 "use client";
-import { IHeaderLink } from "@/interfaces/IHeaderLink";
+import { IHeaderLink } from "@/data/IHeaderLink/types.d.ts";
 import { headerLinks } from "@/data/HeaderLinks/header-links";
 import Link from "next/link";
 import React from "react";
