@@ -16,6 +16,7 @@ export default {
         letterColorLight: "#FAFAFA",
         bgColor: "#FAFAFA",
         bgColorDark: "#000000",
+        error: '#CE1818',
         primaryTransparentColor: "#A7935133",
       },
       fontFamily: {

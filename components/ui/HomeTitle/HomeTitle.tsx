@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 const HomeTitle: React.FC<IHomeTitleProps> = ({ text, justLine = false }) => {
   return (
-    <div className="flex flex-col items-center justify-center mt-8 mb-5 w-full">
+    <div className={clsx("flex flex-col items-center justify-center mt-20 mb-5 w-full", justLine && 'mt-0')}>
       <span className="block w-[200px] h-[1px] bg-primaryColor sm:w-[350px] lg:w-[450px] xl:w-[600px]"></span>
       <h2
         className={clsx(
