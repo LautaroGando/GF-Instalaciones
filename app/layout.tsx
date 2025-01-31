@@ -8,6 +8,9 @@ import Footer from "@/components/FooterComponents/Footer";
 export const metadata: Metadata = {
   title: "GF Instalaciones",
   description: "",
+  icons: {
+    icon: "/assets/images/header/logo.svg",
+  },
 };
 
 export default function RootLayout({

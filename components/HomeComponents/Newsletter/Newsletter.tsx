@@ -5,7 +5,7 @@ import HomeTitle from "@/components/ui/HomeTitle/HomeTitle";
 
 const Newsletter = () => {
   return (
-    <section className="my-20 flex flex-col items-center">
+    <section className="mb-20 flex flex-col items-center">
       <HomeTitle text="" justLine />
 
       <div className="mt-14 w-full flex flex-col items-center justify-center gap-y-4 lg:flex-row lg:justify-between">
@@ -22,10 +22,12 @@ const Newsletter = () => {
             <span className="hidden sm:block">
               Déjanos tu mail para recibir novedades, ofertas exclusivas y
             </span>
-            <span className="hidden sm:block">actualizaciones de nuestros proyectos.</span>
+            <span className="hidden sm:block">
+              actualizaciones de nuestros proyectos.
+            </span>
             <span className="sm:hidden">
-              Déjanos tu mail para recibir novedades, ofertas exclusivas y actualizaciones de
-              nuestros proyectos.
+              Déjanos tu mail para recibir novedades, ofertas exclusivas y
+              actualizaciones de nuestros proyectos.
             </span>
           </p>
 
