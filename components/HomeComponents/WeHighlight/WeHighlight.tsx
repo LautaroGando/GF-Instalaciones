@@ -5,11 +5,15 @@ import highlightItems from "@/data/HighlightData/highlight-data";
 
 const WeHighlight = () => {
   return (
-    <section>
+    <section className="flex flex-col gap-10">
       <HomeTitle text="Por qué destacamos" />
       <div className="flex flex-col gap-[20px] sm:flex-row sm:gap-[11px] md:gap-[30px] lg:gap-[15px]">
         {highlightItems.map((item, i) => (
-          <HighlightItem key={i} title={item.title} description={item.description} />
+          <HighlightItem
+            key={i}
+            title={item.title}
+            description={item.description}
+          />
         ))}
       </div>
     </section>
