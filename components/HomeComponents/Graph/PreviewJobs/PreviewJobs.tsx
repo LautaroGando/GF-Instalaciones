@@ -11,7 +11,7 @@ export const PreviewJobs: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % previewJobs.length);
-    }, 10000);
+    }, 20000);
 
     return () => clearInterval(interval);
   }, []);

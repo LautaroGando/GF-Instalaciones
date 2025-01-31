@@ -3,6 +3,7 @@ import WeHighlight from "./WeHighlight/WeHighlight";
 import Graph from "./Graph/Graph";
 import Newsletter from "./Newsletter/Newsletter";
 import CoverageArea from "./CoverageArea/CoverageArea";
+import Contact from "./Contact/Contact";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <Graph />
       <WeHighlight />
       <CoverageArea />
+      <Contact />
       <Newsletter />
     </div>
   );
