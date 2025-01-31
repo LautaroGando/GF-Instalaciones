@@ -19,7 +19,7 @@ export const PreviewJobs: React.FC = () => {
   const handleJob = (i: number) => setCurrentIndex(i);
 
   return (
-    <div className="w-full max-w-[350px] mx-auto h-44 border-b-[6px] border-primaryColor rounded-tl-[50px] rounded-br-[50px] overflow-hidden relative sm:max-w-[447px] sm:h-60 lg:flex-1 lg:h-[360px] xl:min-w-[50%] xl:h-[396px]">
+    <div className="w-full max-w-[390px] mx-auto h-60 border-b-[6px] border-primaryColor rounded-tl-[50px] rounded-br-[50px] overflow-hidden relative sm:max-w-[480px] sm:h-72 lg:flex-1 lg:h-[360px] xl:min-w-[50%] xl:h-[396px]">
       <div className="absolute top-0 left-0 w-full h-full">
         <AnimatePresence mode="wait">
           <motion.div
