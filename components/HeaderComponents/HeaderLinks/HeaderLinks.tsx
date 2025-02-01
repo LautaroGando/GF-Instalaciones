@@ -11,7 +11,7 @@ export const HeaderLinks: React.FC = () => {
   const { pathname, hash } = usePath();
 
   return (
-    <nav className="hidden xl:block">
+    <nav className="hidden lg:block">
       <ul className="flex gap-7 items-center">
         <SelectTheme />
         {headerLinks.map((link: IHeaderLink, i: number) => {
