@@ -14,7 +14,7 @@ export const InfoGraph: React.FC = () => {
       </h2>
       <p
         className={clsx(
-          "text-sm transition-all duration-500 linear overflow-hidden sm:text-base sm:max-h-full lg:text-left xl:text-lg",
+          "text-sm transition-all duration-500 linear overflow-hidden sm:transition-none sm:text-base sm:max-h-full lg:text-left xl:text-lg",
           isVisibleText ? "max-h-[300px]" : "max-h-[80px]"
         )}
       >

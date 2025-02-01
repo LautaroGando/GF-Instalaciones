@@ -5,13 +5,15 @@ import React from "react";
 import clsx from "clsx";
 import { usePath } from "@/hooks/usePath";
 import type { IHeaderLink } from "@/data/HeaderLinks/types";
+import SelectTheme from "@/components/ui/SelectTheme/SelectTheme";
 
 export const HeaderLinks: React.FC = () => {
   const { pathname, hash } = usePath();
 
   return (
     <nav className="hidden xl:block">
-      <ul className="flex gap-7">
+      <ul className="flex gap-7 items-center">
+        <SelectTheme />
         {headerLinks.map((link: IHeaderLink, i: number) => {
           const isActive = link.href === `${pathname}${hash}`;
 
@@ -19,10 +21,10 @@ export const HeaderLinks: React.FC = () => {
             <li key={i}>
               <Link
                 className={clsx(
-                  "font-textFont xl:text-lg",
+                  "font-textFont transition-all duration-500 xl:text-lg",
                   isActive
                     ? "text-primaryColor font-semibold"
-                    : "text-secondaryColor"
+                    : "text-secondaryColor dark:text-letterColorLight"
                 )}
                 href={link.href}
               >

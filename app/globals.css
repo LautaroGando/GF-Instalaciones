@@ -22,10 +22,10 @@
 
 @layer components {
   .input {
-    @apply w-full h-11 border-b bg-bgColor resize-none outline-none transition-all duration-300 px-3 text-xs focus:border-primaryColor sm:text-base;
+    @apply w-full h-11 border-b bg-transparent resize-none outline-none transition-all duration-300 px-3 text-xs focus:border-primaryColor sm:text-base;
   }
 
   .inputError {
-    @apply text-error text-xs sm:text-sm;
+    @apply text-error text-xs dark:text-errorDark sm:text-sm;
   }
 }
