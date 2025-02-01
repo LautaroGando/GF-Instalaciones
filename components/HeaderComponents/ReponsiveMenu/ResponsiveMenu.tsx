@@ -17,39 +17,48 @@ export const ResponsiveMenu: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    size >= 1024 && menu && handleCloseMenu();
-  }, [size]);
+    if (size >= 1024 && menu) {
+      handleCloseMenu();
+    }
+  }, [size, menu, handleCloseMenu]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
+
       if (target.closest("[data-ignore-outside-click]")) {
         return;
       }
-      menuRef.current && !menuRef.current.contains(target);
-      handleCloseMenu();
+
+      if (menuRef.current && !menuRef.current.contains(target)) {
+        handleCloseMenu();
+      }
     };
 
-    menu && document.addEventListener("mousedown", handleClickOutside);
+    if (menu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
 
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [menu, handleCloseMenu]);
 
   return (
     <div className="lg:hidden">
-      <ButtonMenu />
+      <ButtonMenu data-ignore-outside-click />
       {menu && (
         <div
           className={clsx(
             "fixed top-0 left-0 transition-all w-full duration-500 h-full bg-secondaryColor/80 backdrop-blur-sm z-10",
-            menu ? " opacity-100" : "opacity-0"
+            menu ? "opacity-100" : "opacity-0"
           )}
         ></div>
       )}
       <div
         ref={menuRef}
         className={clsx(
-          "fixed h-full transition-all duration-500 top-0 right-0 overflow-hidden bg-bgColor z-10 dark:bg-secondaryColor sm:w-[50%]",
+          "fixed h-full transition-all duration-500 top-0 right-0 overflow-hidden bg-bgColor z-10 dark:bg-secondaryColor",
           menu ? "w-full sm:w-[400px]" : "w-0 sm:w-0"
         )}
       >
