@@ -13,19 +13,19 @@ export const ButtonMenu: React.FC = () => {
     >
       <span
         className={clsx(
-          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md",
+          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md dark:bg-bgColor",
           menu ? "rotate-45 translate-y-0" : "-translate-y-2"
         )}
       ></span>
       <span
         className={clsx(
-          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md",
+          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md dark:bg-bgColor",
           menu ? "opacity-0" : "opacity-100"
         )}
       ></span>
       <span
         className={clsx(
-          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md",
+          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md dark:bg-bgColor",
           menu ? "-rotate-45 translate-y-0" : "translate-y-2"
         )}
       ></span>
