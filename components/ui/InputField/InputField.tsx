@@ -17,9 +17,9 @@ export const InputField = <T,>({
       className={clsx(
         "input",
         errors[name] && touched[name]
-          ? "border-error placeholder:text-error"
+          ? "border-error placeholder:text-error dark:border-errorDark dark:placeholder:text-errorDark"
           : !values[name]
-          ? "border-secondaryColor"
+          ? "border-secondaryColor dark:border-bgColor"
           : "border-primaryColor",
         as === "textarea" && "h-40"
       )}
