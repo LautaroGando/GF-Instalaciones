@@ -1,10 +1,11 @@
 "use client";
-
 import type { TTheme } from "@/types/TTheme";
 import { useEffect, useState } from "react";
+import { useSize } from "./useSize";
 
 export const useTheme = () => {
   const [theme, setTheme] = useState<TTheme | undefined>(undefined);
+  const { size } = useSize();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as TTheme;
@@ -27,6 +28,13 @@ export const useTheme = () => {
 
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as TTheme;
+    if (savedTheme && savedTheme !== theme) {
+      setTheme(savedTheme);
+    }
+  }, [size]);
 
   return { theme, setTheme };
 };
