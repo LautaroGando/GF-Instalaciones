@@ -5,8 +5,8 @@ import ResponsiveMenu from "./ReponsiveMenu/ResponsiveMenu";
 
 export const Header: React.FC = () => {
   return (
-    <header className="w-full flex justify-center items-center h-[60px] px-[12px] sm:px-[20px] sm:h-[70px] lg:h-[80px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
-      <div className="flex items-center w-full justify-between">
+    <header className="w-full flex justify-center transition-all duration-500 items-center h-[60px] px-[12px] sticky top-0 z-50 bg-bgColor dark:bg-secondaryColor sm:px-[20px] sm:h-[70px] lg:h-[80px]">
+      <div className="flex items-center w-full justify-between lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
         <Logo />
         <HeaderLinks />
         <ResponsiveMenu />

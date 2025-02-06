@@ -1,6 +1,5 @@
 import { IHeaderLink } from "./types";
 
-
 export const headerLinks: IHeaderLink[] = [
   {
     label: "Inicio",
@@ -11,11 +10,7 @@ export const headerLinks: IHeaderLink[] = [
     href: "/blog",
   },
   {
-    label: "Iniciar sesión",
-    href: "/auth#sign-in",
-  },
-  {
-    label: "Registrarse",
-    href: "/auth#sign-up",
+    label: "Ingresar",
+    href: "/auth",
   },
 ];

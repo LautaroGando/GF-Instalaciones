@@ -12,10 +12,11 @@ export default {
       colors: {
         primaryColor: "#A79351",
         secondaryColor: "#000000",
-        secondaryColorDark: "#E4E4E4",
         letterColorLight: "#FAFAFA",
         bgColor: "#FAFAFA",
         bgColorDark: "#000000",
+        error: '#CE1818',
+        errorDark: '#FF8383',
         primaryTransparentColor: "#A7935133",
       },
       fontFamily: {

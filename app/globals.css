@@ -19,3 +19,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+@layer components {
+  .input {
+    @apply w-full h-11 border-b bg-transparent resize-none outline-none transition-all duration-300 px-3 text-xs focus:border-primaryColor sm:text-base;
+  }
+
+  .inputError {
+    @apply text-error text-xs dark:text-errorDark sm:text-sm;
+  }
+}
