@@ -5,15 +5,6 @@ import InfoGraph from "./InfoGraph/InfoGraph";
 
 export const Graph: React.FC = () => {
   return (
-<<<<<<< HEAD
-    <div>
-      <HomeTitle text="¿Necesitas Instalar gráfica?" />
-      <div className="flex flex-col gap-4">
-        <PreviewJobs />
-        <InfoGraph />
-      </div>
-    </div>
-=======
     <section className="flex flex-col gap-10 -mt-[70px]">
       <HomeTitle text="¿Necesitas Instalar gráfica?" />
       <div className="flex flex-col gap-4 lg:flex-row lg:gap-10">
@@ -21,7 +12,6 @@ export const Graph: React.FC = () => {
         <InfoGraph />
       </div>
     </section>
->>>>>>> cd1593d977701f3dea28a34cd1fb3ba05754d19c
   );
 };
 
