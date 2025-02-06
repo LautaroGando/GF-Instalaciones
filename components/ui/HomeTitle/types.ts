@@ -1,6 +1,6 @@
 export interface IHomeTitleProps {
   text: string;
-  justLine: boolean;
+  justLine?: boolean;
 }
 
 export default IHomeTitleProps;
