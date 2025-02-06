@@ -11,6 +11,7 @@ export default {
     extend: {
       colors: {
         primaryColor: "#A79351",
+        primaryColorHover: "#8D773D",
         secondaryColor: "#000000",
         letterColorLight: "#FAFAFA",
         bgColor: "#FAFAFA",
