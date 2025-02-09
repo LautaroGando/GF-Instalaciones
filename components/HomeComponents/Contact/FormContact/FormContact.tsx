@@ -4,10 +4,10 @@ import contactImg from "@/public/assets/ilustrations/home/contact.svg";
 import Image from "next/image";
 import { Form, Formik, FormikProps } from "formik";
 import { IContact } from "@/interfaces/IContact";
-import { validateContact } from "@/helpers/validateContact/validateContact";
 import { formContactData } from "@/data/FormContactData/form-contact-data";
 import InputField from "@/components/ui/InputField/InputField";
 import type { IFormContactData } from "@/data/FormContactData/types";
+import { validateContact } from "@/helpers/validateContact";
 
 export const FormContact: React.FC = () => {
   return (
