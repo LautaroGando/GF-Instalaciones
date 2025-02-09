@@ -1,9 +1,8 @@
 import { IContact } from "@/interfaces/IContact";
-import { IErrorContact } from "@/interfaces/IErrors";
-import { regex } from "./utils";
+import { regex } from "@/utils/regex";
 
 export const validateContact = (input: IContact) => {
-  const errors: IErrorContact = {};
+  const errors: Partial<IContact> = {};
 
   !regex.name.test(input.name)
     ? (errors.name =
