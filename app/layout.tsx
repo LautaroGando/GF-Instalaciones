@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={clsx("bg-bgColor transition-all duration-500 font-textFont text-secondaryColor dark:text-letterColorLight dark:bg-secondaryColor")}>
         <Header />
         <BannerHome />
-        <main className="px-[12px] sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
+        <main className="px-[12px] my-10 sm:px-[20px] lg:px-0 lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
           {children}
         </main>
         <Footer />
