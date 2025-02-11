@@ -5,21 +5,25 @@ export const formSignUpData: IFormSignUpData[] = [
     label: "Nombre completo",
     name: "fullName",
     type: "text",
+    required: true,
   },
   {
     label: "Correo Electrónico",
     name: "email",
     type: "email",
+    required: true,
   },
   {
     label: "Fecha de nacimiento",
     name: "birthDate",
     type: "date",
+    required: true,
   },
   {
     label: "Nº de documento",
     name: "idNumber",
     type: "text",
+    required: true,
   },
   {
     label: "País",
@@ -29,6 +33,7 @@ export const formSignUpData: IFormSignUpData[] = [
       { value: "", option: "Selecciona una opción" },
       { value: "argentina", option: "Argentina" },
     ],
+    required: true,
   },
   {
     label: "Provincia",
@@ -61,30 +66,38 @@ export const formSignUpData: IFormSignUpData[] = [
       { value: "tierraDelFuego", option: "Tierra del Fuego" },
       { value: "tucuman", option: "Tucumán" },
     ],
+    required: true,
   },
   {
     label: "Dirección",
     name: "address",
     type: "text",
+    required: true,
   },
   {
     label: "Nº Telefónico",
     name: "phone",
     type: "text",
     isPhone: true,
-    options: [{ value: "+54", option: "+54" }, { value: "+598", option: "+598" }],
+    options: [
+      { value: "+54", option: "+54" },
+      { value: "+598", option: "+598" },
+    ],
+    required: true,
   },
   {
     label: "Contraseña",
     name: "password",
     type: "password",
     icon: true,
+    required: true,
   },
   {
     label: "Repetir contraseña",
     name: "repeatPassword",
     type: "password",
     icon: true,
+    required: true,
   },
 ];
 
@@ -99,17 +112,20 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "responsableInscripto", option: "Responsable Inscripto" },
       { value: "exentoEnIVA ", option: "Exento en IVA" },
     ],
+    required: true,
   },
   {
     label: "Detalle los Trabajos que Sabe Realizar",
     name: "detailJobs",
     select: true,
     options: [{ value: "", option: "Selecciona una opción" }],
+    required: false,
   },
   {
     label: "Amplíe Información si es Necesario o Consultas",
     name: "expandInformation",
     textarea: true,
+    required: false,
   },
   {
     label: "¿Posee Seguro de Accidentes Personales?",
@@ -119,6 +135,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "si", option: "Sí" },
       { value: "no", option: "No" },
     ],
+    required: true,
   },
   {
     label: "¿Instalaciones en Altura?",
@@ -128,6 +145,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "si", option: "Sí" },
       { value: "no", option: "No" },
     ],
+    required: true,
   },
   {
     label: "¿Tensado de Lonas Front y Back?",
@@ -137,6 +155,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "si", option: "Sí" },
       { value: "no", option: "No" },
     ],
+    required: true,
   },
   {
     label: "¿Instalación de Corpóreos?",
@@ -146,6 +165,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "si", option: "Sí" },
       { value: "no", option: "No" },
     ],
+    required: true,
   },
   {
     label: "¿Instalación de Vinilos Esmerilados?",
@@ -155,6 +175,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "si", option: "Sí" },
       { value: "no", option: "No" },
     ],
+    required: true,
   },
   {
     label: "¿Instalación de Vinilos sobre Pared/Vidrios?",
@@ -164,6 +185,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "si", option: "Sí" },
       { value: "no", option: "No" },
     ],
+    required: true,
   },
   {
     label: "¿Forrado Completo de Autos (Carwrapping)?",
@@ -173,6 +195,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "si", option: "Sí" },
       { value: "no", option: "No" },
     ],
+    required: true,
   },
   {
     label: "¿Posee Movilidad Propia?",
@@ -182,5 +205,6 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
       { value: "si", option: "Sí" },
       { value: "no", option: "No" },
     ],
+    required: true,
   },
 ];

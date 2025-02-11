@@ -26,6 +26,6 @@
   }
 
   .inputError {
-    @apply text-error text-xs dark:text-errorDark sm:text-sm;
+    @apply text-error text-xs dark:text-errorDark;
   }
 }

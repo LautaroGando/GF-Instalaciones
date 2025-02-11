@@ -14,7 +14,7 @@ export const FormSignIn: React.FC = () => {
       transition={{ duration: 1 }}
       className="flex flex-col items-center w-full gap-5 max-w-[410px]"
     >
-      <h2 className="text-lg tracking-[3px] text-letterColorLight self-start">
+      <h2 className="text-lg tracking-[3px] text-letterColorLight self-start dark:text-primaryColor">
         INGRESAR
       </h2>
       <Formik
@@ -36,11 +36,12 @@ export const FormSignIn: React.FC = () => {
                 errors={errors[field.name as keyof IUserSignIn]}
                 touched={touched[field.name as keyof IUserSignIn]}
                 color="white"
+                required={field.required}
               />
             ))}
             <button
               type="button"
-              className="text-xs self-end text-letterColorLight"
+              className="text-xs self-end text-letterColorLight dark:text-primaryColor"
             >
               ¿Olvidaste tu contraseña?
             </button>

@@ -5,4 +5,5 @@ export interface IFormSignInData {
   type: string;
   name: keyof IUserSignIn;
   icon: boolean;
+  required: boolean;
 }

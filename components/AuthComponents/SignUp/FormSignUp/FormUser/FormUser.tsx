@@ -22,7 +22,7 @@ export const FormUser: React.FC = () => {
         view === "signIn" && "h-[550px] overflow-hidden"
       )}
     >
-      <h2 className="text-lg tracking-[3px] text-secondaryColor self-start">
+      <h2 className="text-lg tracking-[3px] text-secondaryColor self-start dark:text-letterColorLight">
         REGISTRARSE
       </h2>
       <Formik
@@ -59,6 +59,7 @@ export const FormUser: React.FC = () => {
                 isPhone={field.isPhone}
                 errors={errors[field.name as keyof IUserSignUp]}
                 touched={touched[field.name as keyof IUserSignUp]}
+                required={field.required}
               />
             ))}
             <ButtonAuth label="CREAR CUENTA" form="signUp" />
