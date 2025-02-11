@@ -4,7 +4,7 @@ import Header from "@/components/HeaderComponents/Header";
 import BannerHome from "@/components/HomeComponents/BannerHome/BannerHome";
 import clsx from "clsx";
 import Footer from "@/components/FooterComponents/Footer";
-import BlogBanner from "@/components/BlogComponents/BlogBanner/BlogBanner";
+import BlogBanner from "@/components/BlogComponents/ui/BlogBanner/BlogBanner";
 
 export const metadata: Metadata = {
   title: "GF Instalaciones",
@@ -25,7 +25,7 @@ export default function RootLayout({
         <Header />
         <BannerHome />
         <BlogBanner/>
-        <main className="px-[12px] my-10 sm:px-[20px] lg:px-0 lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
+        <main className="px-[15px] sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
           {children}
         </main>
         <Footer />
