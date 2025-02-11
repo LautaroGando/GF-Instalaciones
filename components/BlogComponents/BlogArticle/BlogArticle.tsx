@@ -7,12 +7,17 @@ import ArticleTemplate from "./ArticleTemplate/ArticleTemplate";
 
 const BlogArticle: React.FC = () => {
   const searchParams = useSearchParams();
+
+  if (!searchParams) return null;
+
   const articleName = searchParams.get("name");
   const template = searchParams.get("template");
 
   if (!articleName || !template || !["1", "2", "3"].includes(template)) {
     return (
-      <div className="text-center text-red-500 font-bold text-xl mt-10">Artículo no encontrado</div>
+      <div className="text-center text-red-500 font-bold text-xl mt-10">
+        Artículo no encontrado
+      </div>
     );
   }
 
