@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSize } from "./useSize";
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<TTheme | undefined>(undefined);
+  const [theme, setTheme] = useState<TTheme>("light");
   const { size } = useSize();
 
   useEffect(() => {

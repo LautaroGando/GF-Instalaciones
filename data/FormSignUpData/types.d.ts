@@ -13,4 +13,5 @@ export interface IFormSignUpData {
   textarea?: boolean;
   isPhone?: boolean;
   options?: IUserSignUpOption[];
+  required: boolean;
 }

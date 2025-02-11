@@ -1,9 +1,9 @@
-import { IUserSignUp } from "@/interfaces/IAuth";
+import { IUserSignUpInstaller } from "@/interfaces/IAuth";
 import { isValidBirthDate } from "@/utils/isValidBirthDate";
 import { regex } from "@/utils/regex";
 
-export const validateSignUp = (input: IUserSignUp) => {
-  const errors: Partial<IUserSignUp> = {};
+export const validateSignUpInstaller = (input: IUserSignUpInstaller) => {
+  const errors: Partial<IUserSignUpInstaller> = {};
 
   !regex.fullName.test(input.fullName)
     ? (errors.fullName =
@@ -44,7 +44,37 @@ export const validateSignUp = (input: IUserSignUp) => {
         "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial.")
     : "";
 
-  input.repeatPassword !== input.password ? errors.repeatPassword = 'Las contraseñas deben coincidir.' : '';
+  input.repeatPassword !== input.password
+    ? (errors.repeatPassword = "Las contraseñas deben coincidir.")
+    : "";
+
+  !input.taxCondition
+    ? (errors.taxCondition = "Debes seleccionar la condición fiscal.")
+    : "";
+
+  !input.personalAccidentInsurance
+    ? (errors.personalAccidentInsurance = " ")
+    : "";
+
+  !input.installationsAtHeight ? (errors.installationsAtHeight = " ") : "";
+
+  !input.canvasTensioning ? (errors.canvasTensioning = " ") : "";
+
+  !input.installationOfCorporeals
+    ? (errors.installationOfCorporeals = " ")
+    : "";
+
+  !input.installationFrostedVinyls
+    ? (errors.installationFrostedVinyls = " ")
+    : "";
+
+  !input.installationOfVinylOnWallsGlasses
+    ? (errors.installationOfVinylOnWallsGlasses = " ")
+    : "";
+
+  !input.carwrapping ? (errors.carwrapping = " ") : "";
+
+  !input.ownMobility ? (errors.ownMobility = " ") : "";
 
   return errors;
 };

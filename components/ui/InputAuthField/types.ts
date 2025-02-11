@@ -13,4 +13,5 @@ export interface IInputAuthFieldProps {
   isPhone?: boolean;
   errors?: string;
   touched?: boolean;
+  required?: boolean;
 }
