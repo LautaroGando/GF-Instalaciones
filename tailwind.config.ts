@@ -29,8 +29,8 @@ export default {
         titleFont: ["PlayfairDisplay", "sans-serif"],
       },
       backgroundImage: {
-        signInGradient: "linear-gradient(-165deg, #A79351 70%, #FAFAFA 70.3%)",
-        signInGradientDark: "linear-gradient(-165deg, #A7935133 70%, #000 70.3%)",
+        signInGradient: "linear-gradient(-165deg, #A79351 70%, #FAFAFA00 70.3%)",
+        signInGradientDark: "linear-gradient(-165deg, #A7935133 70%, #00000000 70.3%)",
       },
     },
   },

@@ -1,28 +1,30 @@
 "use client";
-import { useTheme } from "@/hooks/useTheme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import { useMounted } from "@/hooks/useMounted";
 
 export const SelectTheme: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { isDark, changeTheme } = useThemeStore();
+  const { mounted } = useMounted();
 
-  const handleToggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+  if (!mounted) {
+    return <div className="w-6 h-6" />;
+  }
 
   return (
     <AnimatePresence mode="wait">
       <motion.button
-        key={theme}
         animate={{ scale: 1 }}
         initial={{ scale: 0 }}
         exit={{ scale: 0 }}
         transition={{ duration: 0.5 }}
         className="leading-[0%] text-xl"
-        onClick={handleToggleTheme}
+        onClick={changeTheme}
       >
-        {theme === "dark" ? (
-          <FontAwesomeIcon className="" icon={faSun} />
+        {isDark ? (
+          <FontAwesomeIcon icon={faSun} />
         ) : (
           <FontAwesomeIcon icon={faMoon} />
         )}

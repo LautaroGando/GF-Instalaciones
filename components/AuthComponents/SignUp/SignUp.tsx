@@ -1,14 +1,19 @@
 import Image from "next/image";
 import React from "react";
-import logo from "@/public/assets/images/auth/logoSignUp.svg";
+import logoDark from "@/public/assets/images/auth/logoSignUp.svg";
+import logoLight from "@/public/assets/images/auth/logoSignIn.svg";
 import FormSignUp from "./FormSignUp/FormSignUp";
 import ButtonChangeAuth from "@/components/ui/ButtonChangeAuth/ButtonChangeAuth";
 import { useAuthStore } from "@/store/AuthStore/authStore";
 import ImageForm from "@/components/ui/ImageForm/ImageForm";
 import clsx from "clsx";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import { useMounted } from "@/hooks/useMounted";
 
 export const SignUp: React.FC = () => {
   const { view } = useAuthStore();
+  const { isDark } = useThemeStore();
+  const { mounted } = useMounted();
 
   return (
     <div className="w-full relative">
@@ -20,7 +25,9 @@ export const SignUp: React.FC = () => {
         )}
       >
         <ButtonChangeAuth />
-        <Image src={logo} alt="Logo" priority />
+        {mounted && (
+          <Image src={isDark ? logoLight : logoDark} alt="Logo" priority />
+        )}
         <FormSignUp />
       </div>
     </div>
