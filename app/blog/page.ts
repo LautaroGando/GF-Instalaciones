@@ -1,1 +1,1 @@
-export {default} from '@/components/BlogComponents/Blog'
+export { default } from "@/components/BlogComponents/BlogHome/BlogHome";

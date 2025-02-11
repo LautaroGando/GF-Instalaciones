@@ -19,6 +19,10 @@ export default {
         error: "#CE1818",
         errorDark: "#FF8383",
         primaryTransparentColor: "#A7935133",
+
+        blog: {
+          letterColor: "#8e8e8e",
+        }
       },
       fontFamily: {
         textFont: ["Montserrat", "sans-serif"],
