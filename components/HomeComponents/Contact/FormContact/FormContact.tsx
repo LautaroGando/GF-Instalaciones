@@ -36,7 +36,10 @@ export const FormContact: React.FC = () => {
                 />
               ))}
             </div>
-            <button className="bg-primaryColor text-letterColorLight font-titleFont transition-all duration-300 border border-transparent text-lg font-bold h-[52px] rounded-tl-[20px] rounded-br-[20px] hover:bg-transparent hover:text-primaryColor hover:border-primaryColor sm:rounded-tl-[30px] sm:rounded-br-[30px] sm:h-[60px] sm:text-xl">
+            <button
+              type="submit"
+              className="bg-primaryColor text-letterColorLight font-titleFont transition-all duration-300 border border-transparent text-lg font-bold h-[52px] rounded-tl-[20px] rounded-br-[20px] hover:bg-transparent hover:text-primaryColor hover:border-primaryColor sm:rounded-tl-[30px] sm:rounded-br-[30px] sm:h-[60px] sm:text-xl"
+            >
               Enviar
             </button>
           </Form>
