@@ -16,7 +16,7 @@ export const SignIn: React.FC = () => {
       {view === "signUp" && <ImageForm />}
       <div
         className={clsx(
-          "w-full p-3 bg-signInGradient flex flex-col justify-between gap-10 h-[900px] transition-all duration-500",
+          "w-full p-3 bg-signInGradient flex flex-col justify-between gap-10 h-[900px] transition-all duration-500 dark:bg-signInGradientDark",
           view === "signUp" ? "opacity-0 scale-75" : "opacity-100 scale-100"
         )}
       >
@@ -25,7 +25,10 @@ export const SignIn: React.FC = () => {
           <Image src={logo} alt="Logo" priority />
           <FormSignIn />
         </div>
-        <Link href="" className="underline text-xs self-start">
+        <Link
+          href=""
+          className="underline text-xs self-start dark:text-primaryColor"
+        >
           Términos y condiciones.
         </Link>
       </div>

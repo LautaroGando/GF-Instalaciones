@@ -9,6 +9,7 @@ import { IUserSignUpInstaller } from "@/interfaces/IAuth";
 import { Form, Formik, FormikProps } from "formik";
 import React from "react";
 import { motion } from "motion/react";
+import { validateSignUpInstaller } from "@/helpers/validateSignUpInstaller";
 
 export const FormInstaller: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ export const FormInstaller: React.FC = () => {
       transition={{ duration: 1 }}
       className="flex flex-col items-center w-full gap-5 mx-auto"
     >
-      <h2 className="text-lg tracking-[3px] text-secondaryColor self-start">
+      <h2 className="text-lg tracking-[3px] text-secondaryColor self-start dark:text-letterColorLight">
         REGISTRARSE
       </h2>
       <Formik
@@ -45,7 +46,7 @@ export const FormInstaller: React.FC = () => {
           carwrapping: "",
           ownMobility: "",
         }}
-        validate={() => {}}
+        validate={validateSignUpInstaller}
         onSubmit={(values) => {
           console.log(values);
         }}
@@ -66,10 +67,11 @@ export const FormInstaller: React.FC = () => {
                   isPhone={field.isPhone}
                   errors={errors[field.name as keyof IUserSignUpInstaller]}
                   touched={touched[field.name as keyof IUserSignUpInstaller]}
+                  required={field.required}
                 />
               ))}
             </div>
-            <h2 className="text-lg tracking-[3px] text-secondaryColor self-center border-t border-primaryColor w-[200px] text-center py-10">
+            <h2 className="text-lg tracking-[3px] text-secondaryColor self-center border-t border-primaryColor w-[200px] text-center py-10 dark:text-letterColorLight">
               INSTALADOR
             </h2>
             <div className="flex flex-col gap-5 md:grid md:grid-cols-[1.6fr_2fr] lg:grid-cols-2 lg:gap-10">
@@ -88,6 +90,11 @@ export const FormInstaller: React.FC = () => {
                       textarea={field.textarea}
                       options={field.options}
                       isPhone={field.isPhone}
+                      errors={errors[field.name as keyof IUserSignUpInstaller]}
+                      touched={
+                        touched[field.name as keyof IUserSignUpInstaller]
+                      }
+                      required={field.required}
                     />
                   ))}
               </div>
@@ -103,6 +110,11 @@ export const FormInstaller: React.FC = () => {
                       icon={field.icon}
                       color="black"
                       options={field.options}
+                      errors={errors[field.name as keyof IUserSignUpInstaller]}
+                      touched={
+                        touched[field.name as keyof IUserSignUpInstaller]
+                      }
+                      required={field.required}
                     />
                   ))}
                 <div className="w-full h-[1px] bg-primaryColor"></div>
