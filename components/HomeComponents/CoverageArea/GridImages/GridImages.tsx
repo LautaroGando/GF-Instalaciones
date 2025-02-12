@@ -13,14 +13,12 @@ export const GridImages: React.FC = () => {
           alt="Imagen de cobertura 1"
           className="w-[87px] h-[150px] sm:w-[100px] sm:h-[174px] lg:w-[112px] lg:h-[200px] xl:w-[140px] xl:h-[250px]"
           priority
-          style={{ height: "auto", width: "auto" }}
         />
         <Image
           src={coverage2}
           alt="Imagen de cobertura 2"
           className="w-[87px] h-[150px] sm:w-[100px] sm:h-[174px] lg:w-[112px] lg:h-[200px] xl:w-[140px] xl:h-[250px]"
           priority
-          style={{ height: "auto", width: "auto" }}
         />
       </div>
       <Image
@@ -28,7 +26,6 @@ export const GridImages: React.FC = () => {
         alt="Imagen de cobertura 3"
         className="w-[173px] h-[320px] sm:w-[200px] sm:h-[365px] lg:w-[230px] lg:h-[420px] xl:w-[300px] xl:h-[510px]"
         priority
-        style={{ height: "auto", width: "auto" }}
       />
     </div>
   );
