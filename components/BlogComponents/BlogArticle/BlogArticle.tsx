@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import React from "react";
-import BlogSocialIcons from "./ArticleTemplate/ui/BlogSocialIcons/BlogSocialIcons";
+import BlogSocialIcons from "../../ui/BlogSocialIcons/BlogSocialIcons";
 import ArticleTemplate from "./ArticleTemplate/ArticleTemplate";
 
 const BlogArticle: React.FC = () => {
