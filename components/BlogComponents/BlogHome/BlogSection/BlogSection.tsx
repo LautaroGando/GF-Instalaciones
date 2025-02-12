@@ -1,7 +1,7 @@
 import React from "react";
-import BlogArticleCard from "../../ui/BlogArticleCard/BlogArticleCard";
+import BlogArticleCard from "../../../ui/BlogArticleCard/BlogArticleCard";
 import Link from "next/link";
-import TitleBlog from "../../ui/TitleBlog/TitleBlog";
+import TitleBlog from "../../../ui/TitleBlog/TitleBlog";
 
 const BlogSection: React.FC<{ showViewAllButton?: boolean; numbers?: number; title: string }> = ({
   showViewAllButton = true,

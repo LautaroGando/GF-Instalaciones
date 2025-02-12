@@ -4,7 +4,7 @@ import Header from "@/components/HeaderComponents/Header";
 import BannerHome from "@/components/HomeComponents/BannerHome/BannerHome";
 import clsx from "clsx";
 import Footer from "@/components/FooterComponents/Footer";
-import BlogBanner from "@/components/BlogComponents/ui/BlogBanner/BlogBanner";
+import BlogBanner from "@/components/ui/BlogBanner/BlogBanner";
 
 export const metadata: Metadata = {
   title: "GF Instalaciones",
