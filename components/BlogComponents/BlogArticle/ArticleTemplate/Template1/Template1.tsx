@@ -1,7 +1,7 @@
 import React from "react";
-import BlogParagraph from "../ui/BlogParagraph/BlogParagraph";
+import BlogParagraph from "../../../../ui/BlogParagraph/BlogParagraph";
 import { articleParagraphs } from "@/data/TemplatesData/Template1Data";
-import BlogSocialIcons from "../ui/BlogSocialIcons/BlogSocialIcons";
+import BlogSocialIcons from "../../../../ui/BlogSocialIcons/BlogSocialIcons";
 
 const Template1 = () => {
   return (
