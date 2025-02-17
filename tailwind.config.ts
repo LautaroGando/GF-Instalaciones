@@ -19,18 +19,20 @@ export default {
         error: "#CE1818",
         errorDark: "#FF8383",
         primaryTransparentColor: "#A7935133",
-
+        redColor: "#FF8383",
         blog: {
           letterColor: "#8e8e8e",
-        }
+        },
       },
       fontFamily: {
         textFont: ["Montserrat", "sans-serif"],
         titleFont: ["PlayfairDisplay", "sans-serif"],
       },
       backgroundImage: {
-        signInGradient: "linear-gradient(-165deg, #A79351 70%, #FAFAFA00 70.3%)",
-        signInGradientDark: "linear-gradient(-165deg, #A7935133 70%, #00000000 70.3%)",
+        signInGradient:
+          "linear-gradient(-165deg, #A79351 70%, #FAFAFA00 70.3%)",
+        signInGradientDark:
+          "linear-gradient(-165deg, #A7935133 70%, #00000000 70.3%)",
       },
     },
   },

@@ -5,7 +5,7 @@ import React from "react";
 import clsx from "clsx";
 import { usePath } from "@/hooks/usePath";
 import type { IHeaderLink } from "@/data/HeaderLinks/types";
-import SelectTheme from "@/components/ui/SelectTheme/SelectTheme";
+import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectTheme";
 
 export const HeaderLinks: React.FC = () => {
   const { pathname, hash } = usePath();

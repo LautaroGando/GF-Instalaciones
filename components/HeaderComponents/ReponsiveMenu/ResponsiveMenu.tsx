@@ -4,11 +4,11 @@ import ButtonMenu from "./ButtonMenu/ButtonMenu";
 import clsx from "clsx";
 import { headerLinks } from "@/data/HeaderLinks/header-links";
 import { IHeaderLink } from "@/data/HeaderLinks/types";
-import SelectTheme from "@/components/ui/SelectTheme/SelectTheme";
 import Link from "next/link";
 import { usePath } from "@/hooks/usePath";
 import { useSize } from "@/hooks/useSize";
 import { useEffect, useRef } from "react";
+import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectTheme";
 
 export const ResponsiveMenu: React.FC = () => {
   const { menu, handleCloseMenu } = useMenuStore();

@@ -49,9 +49,17 @@ export const InputAuthField: React.FC<IInputAuthFieldProps> = ({
         {required ? `${label}*` : label}
       </label>
       {type === "radio" ? (
-        <div className="flex justify-center gap-10 mt-5 sm:mt-0 md:gap-3" role="radiogroup" aria-labelledby={name}>
+        <div
+          className="flex justify-center gap-10 mt-5 sm:mt-0 md:gap-3"
+          role="radiogroup"
+          aria-labelledby={name}
+        >
           {options?.map((option, i) => (
-            <label key={i} className="flex gap-3 items-center" htmlFor={`${name}-${i}`}>
+            <label
+              key={i}
+              className="flex gap-3 items-center"
+              htmlFor={`${name}-${i}`}
+            >
               <span
                 className={clsx(
                   errors && touched
@@ -101,7 +109,11 @@ export const InputAuthField: React.FC<IInputAuthFieldProps> = ({
               )}
             >
               {options?.map((option: IUserSignUpOption, i: number) => (
-                <option key={i} value={String(option.value)}>
+                <option
+                  key={i}
+                  value={String(option.value)}
+                  className="text-secondaryColor dark:bg-secondaryColor dark:text-letterColorLight"
+                >
                   {option.option}
                 </option>
               ))}

@@ -1,8 +1,8 @@
-import ButtonChangeSignUp from "@/components/ui/ButtonChangeSignUp/ButtonChangeSignUp";
 import React from "react";
 import FormUser from "./FormUser/FormUser";
 import { useAuthSignUpStore } from "@/store/AuthSignUpStore/authSignUpStore";
 import FormInstaller from "./FormInstaller/FormInstaller";
+import ButtonChangeSignUp from "@/components/ui/AuthComponents/ButtonChangeSignUp/ButtonChangeSignUp";
 
 export const FormSignUp: React.FC = () => {
   const { form } = useAuthSignUpStore();

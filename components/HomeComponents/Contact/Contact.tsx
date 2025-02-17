@@ -1,6 +1,6 @@
-import HomeTitle from "@/components/ui/HomeTitle/HomeTitle";
 import React from "react";
 import FormContact from "./FormContact/FormContact";
+import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 
 export const Contact: React.FC = () => {
   return (

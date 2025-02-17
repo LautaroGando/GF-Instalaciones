@@ -1,9 +1,8 @@
 "use client";
-
 import { useSearchParams } from "next/navigation";
 import React from "react";
-import BlogSocialIcons from "../../ui/BlogSocialIcons/BlogSocialIcons";
 import ArticleTemplate from "./ArticleTemplate/ArticleTemplate";
+import BlogSocialIcons from "@/components/ui/BlogComponents/BlogSocialIcons/BlogSocialIcons";
 
 const BlogArticle: React.FC = () => {
   const searchParams = useSearchParams();

@@ -1,5 +1,3 @@
-import ButtonAuth from "@/components/ui/ButtonAuth/ButtonAuth";
-import InputAuthField from "@/components/ui/InputAuthField/InputAuthField";
 import { formSignUpData } from "@/data/FormSignUpData/form-signup-data";
 import { IFormSignUpData } from "@/data/FormSignUpData/types";
 import { validateSignUp } from "@/helpers/validateSignUp";
@@ -9,6 +7,8 @@ import clsx from "clsx";
 import { Form, Formik, FormikProps } from "formik";
 import React from "react";
 import { motion } from "motion/react";
+import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
+import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 
 export const FormUser: React.FC = () => {
   const { view } = useAuthStore();
