@@ -1,5 +1,3 @@
-import ButtonAuth from "@/components/ui/ButtonAuth/ButtonAuth";
-import InputAuthField from "@/components/ui/InputAuthField/InputAuthField";
 import {
   formSignUpData,
   formSignUpInstallerData,
@@ -10,6 +8,8 @@ import { Form, Formik, FormikProps } from "formik";
 import React from "react";
 import { motion } from "motion/react";
 import { validateSignUpInstaller } from "@/helpers/validateSignUpInstaller";
+import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
+import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 
 export const FormInstaller: React.FC = () => {
   return (

@@ -5,7 +5,7 @@ import Newsletter from "./Newsletter/Newsletter";
 import CoverageArea from "./CoverageArea/CoverageArea";
 import Contact from "./Contact/Contact";
 
-const Home = () => {
+export const Home: React.FC = () => {
   return (
     <div>
       <Graph />

@@ -1,7 +1,7 @@
-import HomeTitle from "@/components/ui/HomeTitle/HomeTitle";
 import React from "react";
 import PreviewJobs from "./PreviewJobs/PreviewJobs";
 import InfoGraph from "./InfoGraph/InfoGraph";
+import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 
 export const Graph: React.FC = () => {
   return (

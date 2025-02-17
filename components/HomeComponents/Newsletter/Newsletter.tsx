@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import newssletterImg from "@/public/assets/ilustrations/home/newsletter.svg";
-import HomeTitle from "@/components/ui/HomeTitle/HomeTitle";
+import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 
 const Newsletter = () => {
   return (
