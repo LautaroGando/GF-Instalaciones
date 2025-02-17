@@ -1,0 +1,1 @@
+export type TAdminBanner = 'panel' | 'users' | 'tracking' | 'blog';

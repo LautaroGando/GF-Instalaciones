@@ -1,9 +1,9 @@
 import React from "react";
-import BlogParagraph from "../../../../ui/BlogParagraph/BlogParagraph";
 import { articleParagraphs } from "@/data/TemplatesData/Template1Data";
-import BlogSocialIcons from "../../../../ui/BlogSocialIcons/BlogSocialIcons";
 import blogImg from "@/public/assets/images/blog/blog.png";
 import Image from "next/image";
+import BlogSocialIcons from "@/components/ui/BlogComponents/BlogSocialIcons/BlogSocialIcons";
+import BlogParagraph from "@/components/ui/BlogComponents/BlogParagraph/BlogParagraph";
 
 const Template2 = () => {
   return (

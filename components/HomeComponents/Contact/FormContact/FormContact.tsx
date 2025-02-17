@@ -5,9 +5,9 @@ import Image from "next/image";
 import { Form, Formik, FormikProps } from "formik";
 import { IContact } from "@/interfaces/IContact";
 import { formContactData } from "@/data/FormContactData/form-contact-data";
-import InputField from "@/components/ui/InputField/InputField";
 import type { IFormContactData } from "@/data/FormContactData/types";
 import { validateContact } from "@/helpers/validateContact";
+import InputField from "@/components/ui/HomeComponents/InputField/InputField";
 
 export const FormContact: React.FC = () => {
   return (

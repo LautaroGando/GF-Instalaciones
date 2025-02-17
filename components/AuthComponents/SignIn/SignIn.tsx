@@ -3,13 +3,13 @@ import React from "react";
 import logoLight from "@/public/assets/images/auth/logoSignIn.svg";
 import logoDark from "@/public/assets/images/auth/logoSignUp.svg";
 import FormSignIn from "./FormSignIn/FormSignIn";
-import ButtonChangeAuth from "@/components/ui/ButtonChangeAuth/ButtonChangeAuth";
 import Link from "next/link";
 import { useAuthStore } from "@/store/AuthStore/authStore";
-import ImageForm from "@/components/ui/ImageForm/ImageForm";
 import clsx from "clsx";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import { useMounted } from "@/hooks/useMounted";
+import ImageForm from "@/components/ui/AuthComponents/ImageForm/ImageForm";
+import ButtonChangeAuth from "@/components/ui/AuthComponents/ButtonChangeAuth/ButtonChangeAuth";
 
 export const SignIn: React.FC = () => {
   const { view } = useAuthStore();

@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import BlogSection from "../BlogHome/BlogSection/BlogSection";
 import { useSearchParams } from "next/navigation";

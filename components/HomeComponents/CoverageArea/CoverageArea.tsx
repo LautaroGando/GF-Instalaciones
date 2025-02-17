@@ -1,7 +1,7 @@
-import HomeTitle from "@/components/ui/HomeTitle/HomeTitle";
 import React from "react";
 import GridImages from "./GridImages/GridImages";
 import CoverageItems from "./CoverageItems/CoverageItems";
+import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 
 export const CoverageArea: React.FC = () => {
   return (

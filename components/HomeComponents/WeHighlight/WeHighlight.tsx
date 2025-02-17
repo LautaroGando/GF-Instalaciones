@@ -1,7 +1,7 @@
 import React from "react";
-import HomeTitle from "@/components/ui/HomeTitle/HomeTitle";
 import HighlightItem from "./HighlightItem/HighlightItem";
 import highlightItems from "@/data/HighlightData/highlight-data";
+import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 
 const WeHighlight = () => {
   return (

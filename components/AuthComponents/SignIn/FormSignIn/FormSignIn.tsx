@@ -1,11 +1,11 @@
-import ButtonAuth from "@/components/ui/ButtonAuth/ButtonAuth";
-import InputAuthField from "@/components/ui/InputAuthField/InputAuthField";
 import { formSignInData } from "@/data/FormSignInData/form-signin-data";
 import { IFormSignInData } from "@/data/FormSignInData/types";
 import { IUserSignIn } from "@/interfaces/IAuth";
 import { Form, Formik, FormikProps } from "formik";
 import React from "react";
 import { motion } from "motion/react";
+import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
+import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 
 export const FormSignIn: React.FC = () => {
   return (
