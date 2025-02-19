@@ -4,7 +4,7 @@ import logo from "@/public/assets/images/auth/logoSignIn.svg";
 
 export const Logo: React.FC = () => {
   return (
-    <div className="flex mx-auto relative w-[170px] h-[90px] mt-20">
+    <div className="flex mx-auto relative w-[170px] h-[90px] mt-20 lg:mt-0 lg:z-50">
       <Image
         className="w-[73px] absolute"
         src={logo}

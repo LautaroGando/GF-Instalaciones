@@ -5,18 +5,10 @@ import SectionLink from "./SectionLink/SectionLink";
 import ButtonLogout from "@/components/ui/AdminComponents/ButtonLogout/ButtonLogout";
 import clsx from "clsx";
 import { useMenuAdminStore } from "@/store/MenuAdminStore/menuAdminStore";
-import { useSize } from "@/hooks/useSize";
 
 export const ResponsiveMenuAdmin: React.FC = () => {
   const { menuAdmin, handleCloseMenuAdmin } = useMenuAdminStore();
   const menuAdminRef = useRef<HTMLDivElement>(null);
-  const { size } = useSize();
-
-  useEffect(() => {
-    if (size >= 1024 && menuAdmin) {
-      handleCloseMenuAdmin();
-    }
-  }, [size, menuAdmin, handleCloseMenuAdmin]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -47,14 +39,16 @@ export const ResponsiveMenuAdmin: React.FC = () => {
         "fixed top-16 left-0 h-[calc(100dvh-64px)] bg-bgColor z-50 rounded-tr-[30px] py-3 transition-all duration-300 flex flex-col justify-between overflow-hidden",
         menuAdmin
           ? "w-[280px] px-3 shadow-lg shadow-bgColorDark/50"
-          : "w-0 px-0"
+          : "w-0 px-0 lg:w-[130px]"
       )}
     >
       <div className="flex flex-col gap-3">
         <SectionInfo />
         <SectionLink />
       </div>
-      <ButtonLogout />
+      <div className="text-center lg:hidden">
+        <ButtonLogout />
+      </div>
     </div>
   );
 };
