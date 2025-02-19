@@ -14,7 +14,7 @@ export const OrderStats: React.FC = () => {
   const regions = [
     {
       title: "Total",
-      data: [{ name: "Total:", value: 890, color: "#000000", isTotal: true }],
+      data: [{ name: "Total:", value: 1, color: "#000000", isTotal: true }],
     },
     {
       title: "CABA/GBA",
@@ -63,9 +63,9 @@ export const OrderStats: React.FC = () => {
   ];
 
   return (
-    <div className="rounded-[5px] shadow-md p-2 w-full overflow-x-scroll">
+    <div className="rounded-[5px] shadow-md p-2 w-full overflow-x-scroll 2xl:overflow-hidden">
       <h2 className="font-medium text-lg">Órdenes</h2>
-      <div className="grid grid-cols-2 gap-4 w-[200%]">
+      <div className="grid grid-cols-2 gap-4 w-[200%] sm:w-full">
         <div className="col-span-2 w-full">
           <ResponsiveContainer width="100%" height={40}>
             <BarChart data={regions[0].data} layout="vertical">
