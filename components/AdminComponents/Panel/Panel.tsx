@@ -5,9 +5,11 @@ import OrderStats from "./OrderStats/OrderStats";
 
 export const Panel: React.FC = () => {
   return (
-    <div className="flex flex-col gap-5">
-      <UserStats />
-      <ArticleStats />
+    <div className="flex flex-col gap-5 2xl:flex-row">
+      <div className="flex flex-col gap-5 w-full md:flex-row 2xl:flex-col">
+        <UserStats />
+        <ArticleStats />
+      </div>
       <OrderStats />
     </div>
   );
