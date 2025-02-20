@@ -29,3 +29,9 @@
     @apply text-error text-xs dark:text-errorDark;
   }
 }
+
+@layer utilities {
+  .hiddenScrollbar::-webkit-scrollbar {
+    width: 0;
+  }
+}

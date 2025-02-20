@@ -9,7 +9,7 @@ export const ButtonOpenMenuAdmin: React.FC = () => {
   const { open, handleToggle } = useAdminProfileStore();
 
   return (
-    <button type="button" onClick={handleToggle} data-ignore-outside-click>
+    <button type="button" onClick={handleToggle} data-ignore-profile-outside-click>
       <FontAwesomeIcon
         className={clsx(
           "text-letterColorLight text-[10px] transition-all duration-300",
