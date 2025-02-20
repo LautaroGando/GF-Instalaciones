@@ -13,7 +13,7 @@ export const AdminMenu: React.FC = () => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
 
-      if (target.closest("[data-ignore-outside-click]")) {
+      if (target.closest("[data-ignore-profile-outside-click]")) {
         return;
       }
 
@@ -38,7 +38,7 @@ export const AdminMenu: React.FC = () => {
     <div
       ref={menuAdminProfileRef}
       className={clsx(
-        "hidden absolute w-full bg-bgColor top-full mt-5 transition-all duration-300 left-0 overflow-hidden border border-bgColor flex-col lg:flex",
+        "hidden absolute w-full bg-bgColor top-full mt-5 transition-all duration-300 shadow-lg shadow-bgColorDark/20 left-0 overflow-hidden border border-bgColor flex-col lg:flex",
         open ? "h-[98px]" : "h-0 p-0 border-none"
       )}
     >
