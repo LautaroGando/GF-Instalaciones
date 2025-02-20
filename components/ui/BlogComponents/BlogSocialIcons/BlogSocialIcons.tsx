@@ -1,4 +1,4 @@
-import { blogSocialLinks } from "@/data/BlogSocialLinks/BlogSocialLinks";
+import { blogSocialLinks } from "@/data/Blog/BlogSocialLinks/BlogSocialLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
