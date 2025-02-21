@@ -39,16 +39,18 @@ export const NotificationMenu: React.FC = () => {
       data-ignore-notifications-outside-click
       ref={menuNotificationsRef}
       className={clsx(
-        "absolute w-full top-full left-0 mt-5 z-50 bg-bgColor shadow-lg shadow-bgColorDark/20 transition-all duration-300 flex flex-col justify-between overflow-y-scroll hiddenScrollbar items-center",
-        openNotifications || openMessages ? "h-[400px]" : "h-0"
+        "fixed top-0 mt-0 lg:absolute w-full lg:top-full left-0 lg:mt-5 z-50 bg-bgColor shadow-lg shadow-bgColorDark/20 transition-all duration-300 flex flex-col justify-between overflow-y-scroll hiddenScrollbar items-center",
+        openNotifications || openMessages ? "h-[100dvh] lg:h-[70dvh]" : "h-0"
       )}
     >
-      <NotificationsOption />
-      <div className="w-full h-full overflow-y-scroll bg-bgColor"></div>
+      <div className="flex flex-col w-full">
+        <NotificationsOption />
+        <div className="w-full h-full overflow-y-scroll hiddenScrollbar bg-bgColor"></div>
+      </div>
       <button
         onClick={handleClose}
         type="button"
-        className="transition-all w-full h-[40px] text-redColor border-t border-redColor hover:bg-redColor hover:text-letterColorLight"
+        className="transition-all w-full min-h-[40px] text-redColor border-t border-redColor hover:bg-redColor hover:text-letterColorLight"
       >
         Cerrar
       </button>
