@@ -2,7 +2,7 @@ import {
   faArrowDownWideShort,
   faNewspaper,
   faUser,
-  faUserPlus,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import type { IBannerPanel } from "./types";
 
@@ -13,8 +13,8 @@ export const bannerPanel: IBannerPanel[] = [
     quantity: 340,
   },
   {
-    icon: faUserPlus,
-    label: "Usuarios Premium",
+    icon: faUsers,
+    label: "Empleados",
     quantity: 120,
   },
   {
