@@ -1,29 +1,59 @@
 "use client";
 import { useAdminNotificationStore } from "@/store/AdminNotificationStore/adminNotificationStore";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import NotificationsOption from "./NotificationsOption/NotificationsOption";
 
 export const NotificationMenu: React.FC = () => {
-  const { open, handleClose } = useAdminNotificationStore();
+  const { openNotifications, openMessages, handleClose } =
+    useAdminNotificationStore();
+  const menuNotificationsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+
+      if (target.closest("[data-ignore-notifications-outside-click]")) {
+        return;
+      }
+
+      if (
+        menuNotificationsRef.current &&
+        !menuNotificationsRef.current.contains(target)
+      ) {
+        handleClose();
+      }
+    };
+
+    if (openNotifications || openMessages) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openNotifications, openMessages, handleClose]);
 
   return (
     <div
+      data-ignore-notifications-outside-click
+      ref={menuNotificationsRef}
       className={clsx(
-        "fixed w-full h-full top-0 left-0 z-50 bg-secondaryColor/80 transition-all duration-300 flex justify-center items-center",
-        open ? "visible opacity-100" : "opacity-0 invisible"
+        "fixed top-0 mt-0 lg:absolute w-full lg:top-full left-0 lg:mt-5 z-50 bg-bgColor shadow-lg shadow-bgColorDark/20 transition-all duration-300 flex flex-col justify-between overflow-y-scroll hiddenScrollbar items-center",
+        openNotifications || openMessages ? "h-[100dvh] lg:h-[70dvh]" : "h-0"
       )}
     >
-      <div className="w-[300px] h-[500px] bg-bgColor rounded-sm relative">
-        <button
-          onClick={handleClose}
-          type="button"
-          className="absolute top-2 right-3 transition-all hover:text-primaryColor"
-        >
-          <FontAwesomeIcon icon={faClose} />
-        </button>
+      <div className="flex flex-col w-full">
+        <NotificationsOption />
+        <div className="w-full h-full overflow-y-scroll hiddenScrollbar bg-bgColor"></div>
       </div>
+      <button
+        onClick={handleClose}
+        type="button"
+        className="transition-all w-full min-h-[40px] text-redColor border-t border-redColor hover:bg-redColor hover:text-letterColorLight"
+      >
+        Cerrar
+      </button>
     </div>
   );
 };
