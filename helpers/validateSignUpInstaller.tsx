@@ -27,7 +27,7 @@ export const validateSignUpInstaller = (input: IUserSignUpInstaller) => {
 
   !input.country ? (errors.country = "Debes seleccionar un país.") : "";
 
-  !input.state ? (errors.state = "Debes seleccionar una provincia.") : "";
+  !input.location ? (errors.location = "Debes seleccionar una provincia.") : "";
 
   !regex.address.test(input.address)
     ? (errors.address =
