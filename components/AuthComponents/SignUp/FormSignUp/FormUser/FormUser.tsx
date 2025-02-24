@@ -9,6 +9,7 @@ import React from "react";
 import { motion } from "motion/react";
 import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
+import { signUpUser } from "@/services/auth";
 
 export const FormUser: React.FC = () => {
   const { view } = useAuthStore();
@@ -32,7 +33,7 @@ export const FormUser: React.FC = () => {
           birthDate: "",
           idNumber: "",
           country: "",
-          state: "",
+          location: "",
           address: "",
           coverage: "+54",
           phone: "",
@@ -40,8 +41,9 @@ export const FormUser: React.FC = () => {
           repeatPassword: "",
         }}
         validate={validateSignUp}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values, { resetForm }) => {
+          await signUpUser(values);
+          resetForm();
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignUp>) => (

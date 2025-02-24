@@ -38,13 +38,11 @@ export const ResponsiveMenuAdmin: React.FC = () => {
       ref={menuAdminRef}
       className={clsx(
         "fixed top-16 left-0 h-[calc(100dvh-64px)] overflow-y-scroll shadow-lg shadow-bgColorDark/50 hiddenScrollbar bg-bgColor z-50 rounded-tr-[30px] py-3 transition-all duration-300 flex flex-col justify-between overflow-hidden gap-5",
-        menuAdmin
-          ? "w-[280px] px-3"
-          : "w-0 px-0 lg:w-[130px]"
+        menuAdmin ? "w-[280px] px-3" : "w-0 px-0 lg:w-[130px]"
       )}
     >
       <div className="absolute right-4 lg:hidden">
-        <SelectTheme />
+        <SelectTheme adminResponsive />
       </div>
       <div className="flex flex-col gap-3">
         <SectionInfo />

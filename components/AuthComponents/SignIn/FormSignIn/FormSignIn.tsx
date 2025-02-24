@@ -6,6 +6,7 @@ import React from "react";
 import { motion } from "motion/react";
 import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
+import { signIn } from "@/services/auth";
 
 export const FormSignIn: React.FC = () => {
   return (
@@ -20,8 +21,11 @@ export const FormSignIn: React.FC = () => {
       <Formik
         initialValues={{ emailSignIn: "", passwordSignIn: "" }}
         validate={() => {}}
-        onSubmit={(values) => {
+        onSubmit={async (values, { resetForm }) => {
+          const data = await signIn(values);
           console.log(values);
+          console.log(data);
+          resetForm();
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignIn>) => (
