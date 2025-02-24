@@ -9,7 +9,7 @@ export interface IUserSignUp {
   birthDate: string;
   idNumber: string;
   country: string;
-  state: string;
+  location: string;
   address: string;
   coverage: string;
   phone: string;

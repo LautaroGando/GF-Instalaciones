@@ -37,7 +37,7 @@ export const formSignUpData: IFormSignUpData[] = [
   },
   {
     label: "Provincia",
-    name: "state",
+    name: "location",
     select: true,
     options: [
       { value: "", option: "Selecciona una opción" },

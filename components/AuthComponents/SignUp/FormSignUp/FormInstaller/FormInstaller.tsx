@@ -10,6 +10,7 @@ import { motion } from "motion/react";
 import { validateSignUpInstaller } from "@/helpers/validateSignUpInstaller";
 import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
+import { signUpInstaller } from "@/services/auth";
 
 export const FormInstaller: React.FC = () => {
   return (
@@ -28,7 +29,7 @@ export const FormInstaller: React.FC = () => {
           birthDate: "",
           idNumber: "",
           country: "",
-          state: "",
+          location: "",
           address: "",
           coverage: "+54",
           phone: "",
@@ -47,8 +48,10 @@ export const FormInstaller: React.FC = () => {
           ownMobility: "",
         }}
         validate={validateSignUpInstaller}
-        onSubmit={(values) => {
+        onSubmit={async (values) => {
           console.log(values);
+          const data = await signUpInstaller(values);
+          console.log(data);
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignUpInstaller>) => (

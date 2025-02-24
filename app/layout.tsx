@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>{children}</body>
+      <body className="bg-bgColor dark:bg-secondaryColor">{children}</body>
     </html>
   );
 }

@@ -23,6 +23,12 @@ export default {
         blog: {
           letterColor: "#8e8e8e",
         },
+        admin: {
+          editColor: "#009DFF",
+          activeColor: '#03835D',
+          inactiveColor: "#E17575",
+          borderColor: '#BDBDBD'
+        },
       },
       fontFamily: {
         textFont: ["Montserrat", "sans-serif"],
