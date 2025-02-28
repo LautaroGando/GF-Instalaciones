@@ -11,7 +11,7 @@ const BlogArticleCard: React.FC<{ post: IBlogPost }> = ({ post }) => {
 
   return (
     <div className="w-full mb-[15px] md:max-w-[230px] lg:max-w-[290px] xl:max-w-[350px]">
-      <Link href="/blog/article?name=articulo1&template=1">
+      <Link href={`/blog/article?articleName=${post.title}&template=1`}>
         <Image src={img} alt="Blog img" className="w-full h-[200px] rounded-[8px] group"></Image>
       </Link>
       <div className="flex flex-col gap-[6px] pt-[20px] pb-[30px] sm:gap-[12px]">

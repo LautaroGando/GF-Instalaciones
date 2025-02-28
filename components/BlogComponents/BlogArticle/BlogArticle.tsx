@@ -9,7 +9,7 @@ const BlogArticle: React.FC = () => {
 
   if (!searchParams) return null;
 
-  const articleName = searchParams.get("name");
+  const articleName = searchParams.get("articleName");
   const template = searchParams.get("template");
 
   if (!articleName || !template || !["1", "2", "3"].includes(template)) {
