@@ -1,15 +1,16 @@
-import { useUsers } from "@/hooks/useUsers";
 import { IUser } from "@/interfaces/IUser";
+import { useUserStore } from "@/store/UserStore/userStore";
 import {
   faPenToSquare,
   faTrash,
   faUserSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import clsx from "clsx";
 import React from "react";
 
 export const UsersTable: React.FC = () => {
-  const { users } = useUsers();
+  const { filterUsers } = useUserStore();
 
   return (
     <div className="w-full overflow-x-auto">
@@ -26,13 +27,65 @@ export const UsersTable: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {users &&
-            users.map((item: IUser, i: number) => (
+          {filterUsers &&
+            filterUsers.map((item: IUser, i: number) => (
               <tr key={i} className="border-b-2 border-admin-borderColor">
-                <td className="h-12">{item.fullName}</td>
-                <td className="h-12">{item.email}</td>
-                <td className="h-12"></td>
-                <td className="h-12">{item.disabledAt}</td>
+                <td
+                  className={clsx(
+                    "h-12",
+                    item.role.name === "Admin"
+                      ? "font-semibold"
+                      : item.role.name === "Instalador"
+                      ? "text-primaryColor"
+                      : item.role.name === "Coordinador"
+                      ? "text-primaryColor font-semibold"
+                      : "text-secondaryColor"
+                  )}
+                >
+                  {item.fullName}
+                </td>
+                <td
+                  className={clsx(
+                    "h-12",
+                    item.role.name === "Admin"
+                      ? "font-semibold"
+                      : item.role.name === "Instalador"
+                      ? "text-primaryColor"
+                      : item.role.name === "Coordinador"
+                      ? "text-primaryColor font-semibold"
+                      : "text-secondaryColor"
+                  )}
+                >
+                  {item.email}
+                </td>
+                <td
+                  className={clsx(
+                    "h-12",
+                    item.role.name === "Admin"
+                      ? "font-semibold"
+                      : item.role.name === "Instalador"
+                      ? "text-primaryColor"
+                      : item.role.name === "Coordinador"
+                      ? "text-primaryColor font-semibold"
+                      : "text-secondaryColor"
+                  )}
+                >
+                  {item.createAt}
+                </td>
+                <td
+                  className={clsx(
+                    "h-12",
+                    item.role.name === "Admin"
+                      ? "font-semibold"
+                      : item.role.name === "Instalador"
+                      ? "text-primaryColor"
+                      : item.role.name === "Coordinador"
+                      ? "text-primaryColor font-semibold"
+                      : "text-secondaryColor"
+                  )}
+                >
+                  {item.disabledAt}
+                </td>
                 <td className="h-12">
                   {!item.disabledAt ? (
                     <span className="h-9 w-[87px] px-3 text-admin-activeColor border border-admin-activeColor flex justify-center items-center">
@@ -44,8 +97,19 @@ export const UsersTable: React.FC = () => {
                     </span>
                   )}
                 </td>
-                <td className="h-12">
-                  {item.role ? item.role.name : "Usuario"}
+                <td
+                  className={clsx(
+                    "h-12",
+                    item.role.name === "Admin"
+                      ? "font-semibold"
+                      : item.role.name === "Instalador"
+                      ? "text-primaryColor"
+                      : item.role.name === "Coordinador"
+                      ? "text-primaryColor font-semibold"
+                      : "text-secondaryColor"
+                  )}
+                >
+                  {item.role && item.role.name}
                 </td>
                 <td className="flex h-12 items-center gap-2 text-base text-letterColorLight">
                   <button className="bg-admin-editColor w-8 h-8 rounded-[3px]">

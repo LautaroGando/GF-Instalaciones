@@ -5,26 +5,32 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import type { IBannerPanel } from "./types";
+import { findUsers } from "@/services/users";
+
+const fetchUsers = async (): Promise<number> => {
+  const users = await findUsers();
+  return users.length;
+};
 
 export const bannerPanel: IBannerPanel[] = [
   {
     icon: faUser,
     label: "Usuarios",
-    quantity: 340,
+    quantity: fetchUsers(),
   },
   {
     icon: faUsers,
     label: "Empleados",
-    quantity: 120,
+    quantity: fetchUsers(),
   },
   {
     icon: faArrowDownWideShort,
     label: "Órdenes",
-    quantity: 30,
+    quantity: fetchUsers(),
   },
   {
     icon: faNewspaper,
     label: "Artículos",
-    quantity: 12,
+    quantity: fetchUsers(),
   },
 ];

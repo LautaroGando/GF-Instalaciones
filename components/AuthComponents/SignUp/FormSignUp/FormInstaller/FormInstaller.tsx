@@ -36,21 +36,25 @@ export const FormInstaller: React.FC = () => {
           password: "",
           repeatPassword: "",
           taxCondition: "",
-          detailJobs: "",
-          expandInformation: "",
-          personalAccidentInsurance: "",
-          installationsAtHeight: "",
-          canvasTensioning: "",
-          installationOfCorporeals: "",
-          installationFrostedVinyls: "",
-          installationOfVinylOnWallsGlasses: "",
-          carwrapping: "",
-          ownMobility: "",
+          queries: "",
+          hasPersonalAccidentInsurance: false,
+          canWorkAtHeight: false,
+          canTensionFrontAndBackLonas: false,
+          canInstallCorporealSigns: false,
+          canInstallFrostedVinyl: false,
+          canInstallVinylOnWallsOrGlass: false,
+          canDoCarWrapping: false,
+          hasOwnTransportation: false,
         }}
         validate={validateSignUpInstaller}
         onSubmit={async (values) => {
-          console.log(values);
-          const data = await signUpInstaller(values);
+          const formattedValues = Object.fromEntries(
+            Object.entries(values).map(([key, value]) => [
+              key,
+              value === "si" ? true : value === "no" ? false : value,
+            ])
+          ) as Record<keyof IUserSignUpInstaller, any>;
+          const data = await signUpInstaller(formattedValues);
           console.log(data);
         }}
       >
