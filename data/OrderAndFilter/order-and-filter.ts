@@ -6,11 +6,11 @@ export const filterUsers: IFilter[] = [
     label: "Todo",
   },
   {
-    value: "users",
+    value: "user",
     label: "Usuarios",
   },
   {
-    value: "installers",
+    value: "installer",
     label: "Instaladores",
   },
   {
@@ -43,13 +43,5 @@ export const orderUsers: IOrder[] = [
   {
     value: "status",
     label: "Estado",
-  },
-  {
-    value: "createDate",
-    label: "Fecha de creación",
-  },
-  {
-    value: "updateDate",
-    label: "Fecha de actualización",
   },
 ];

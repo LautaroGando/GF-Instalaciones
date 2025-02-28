@@ -52,29 +52,29 @@ export const validateSignUpInstaller = (input: IUserSignUpInstaller) => {
     ? (errors.taxCondition = "Debes seleccionar la condición fiscal.")
     : "";
 
-  !input.personalAccidentInsurance
-    ? (errors.personalAccidentInsurance = " ")
+  !input.hasPersonalAccidentInsurance
+    ? (errors.hasPersonalAccidentInsurance = " ")
     : "";
 
-  !input.installationsAtHeight ? (errors.installationsAtHeight = " ") : "";
+  !input.canWorkAtHeight ? (errors.canWorkAtHeight = " ") : "";
 
-  !input.canvasTensioning ? (errors.canvasTensioning = " ") : "";
-
-  !input.installationOfCorporeals
-    ? (errors.installationOfCorporeals = " ")
+  !input.canTensionFrontAndBackLonas
+    ? (errors.canTensionFrontAndBackLonas = " ")
     : "";
 
-  !input.installationFrostedVinyls
-    ? (errors.installationFrostedVinyls = " ")
+  !input.canInstallCorporealSigns
+    ? (errors.canInstallCorporealSigns = " ")
     : "";
 
-  !input.installationOfVinylOnWallsGlasses
-    ? (errors.installationOfVinylOnWallsGlasses = " ")
+  !input.canInstallFrostedVinyl ? (errors.canInstallFrostedVinyl = " ") : "";
+
+  !input.canInstallVinylOnWallsOrGlass
+    ? (errors.canInstallVinylOnWallsOrGlass = " ")
     : "";
 
-  !input.carwrapping ? (errors.carwrapping = " ") : "";
+  !input.canDoCarWrapping ? (errors.canDoCarWrapping = " ") : "";
 
-  !input.ownMobility ? (errors.ownMobility = " ") : "";
+  !input.hasOwnTransportation ? (errors.hasOwnTransportation = " ") : "";
 
   return errors;
 };

@@ -19,7 +19,7 @@ export const FormSignIn: React.FC = () => {
         INGRESAR
       </h2>
       <Formik
-        initialValues={{ emailSignIn: "", passwordSignIn: "" }}
+        initialValues={{ emailSignin: "", passwordSignin: "" }}
         validate={() => {}}
         onSubmit={async (values, { resetForm }) => {
           const data = await signIn(values);

@@ -3,5 +3,5 @@ import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 export interface IBannerPanel {
   icon: IconDefinition;
   label: string;
-  quantity: number;
+  quantity: Promise<number>;
 }

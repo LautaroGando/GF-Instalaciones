@@ -1,7 +1,7 @@
 import CustomTooltip from "@/components/ui/AdminComponents/CustomTooltip/CustomTooltip";
-import { useUsers } from "@/hooks/useUsers";
 import { IUser } from "@/interfaces/IUser";
-import React from "react";
+import { useUserStore } from "@/store/UserStore/userStore";
+import React, { useEffect } from "react";
 import {
   Bar,
   BarChart,
@@ -13,27 +13,34 @@ import {
 } from "recharts";
 
 export const UserStats: React.FC = () => {
-  const { users } = useUsers();
+  const { users } = useUserStore();
 
   const data = [
-    { name: "Total:", value: users.length, color: "#000000" },
+    { name: "Total:", value: users && users.length, color: "#000000" },
     {
       name: "Usuario:",
-      value: users.filter((user: IUser) => !user.role).length,
+      value:
+        users &&
+        users.filter((user: IUser) => user.role && user.role.name === "Usuario")
+          .length,
       color: "#A79351",
     },
     {
       name: "Instalador:",
-      value: users.filter(
-        (user: IUser) => user.role && user.role.name === "Installer"
-      ).length,
+      value:
+        users &&
+        users.filter(
+          (user: IUser) => user.role && user.role.name === "Instalador"
+        ).length,
       color: "#A79351B3",
     },
     {
       name: "Coordinador:",
-      value: users.filter(
-        (user: IUser) => user.role && user.role.name === "Coordinator"
-      ).length,
+      value:
+        users &&
+        users.filter(
+          (user: IUser) => user.role && user.role.name === "Coordinador"
+        ).length,
       color: "#A7935166",
     },
   ];

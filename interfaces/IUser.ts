@@ -13,6 +13,7 @@ export interface IUser {
   password: string;
   coverage: string;
   isSubscribed: boolean;
+  createAt: string;
   disabledAt: string | null;
   role: IRole;
 }
