@@ -5,14 +5,16 @@ import { IUserSignUp } from "@/interfaces/IAuth";
 import { useAuthStore } from "@/store/AuthStore/authStore";
 import clsx from "clsx";
 import { Form, Formik, FormikProps } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 import { signUpUser } from "@/services/auth";
+import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 
 export const FormUser: React.FC = () => {
   const { view } = useAuthStore();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
     <motion.div
@@ -42,8 +44,10 @@ export const FormUser: React.FC = () => {
         }}
         validate={validateSignUp}
         onSubmit={async (values, { resetForm }) => {
+          setIsLoading(true);
           await signUpUser(values);
-          resetForm();
+          setIsLoading(false);
+          /* resetForm(); */
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignUp>) => (
@@ -64,7 +68,13 @@ export const FormUser: React.FC = () => {
                 required={field.required}
               />
             ))}
-            <ButtonAuth label="CREAR CUENTA" form="signUp" />
+            {isLoading ? (
+              <div className="mt-10">
+                <Loading theme="light" />
+              </div>
+            ) : (
+              <ButtonAuth label="CREAR CUENTA" form="signUp" />
+            )}
           </Form>
         )}
       </Formik>

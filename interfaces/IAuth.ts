@@ -1,6 +1,6 @@
 export interface IUserSignIn {
-  emailSignin: string;
-  passwordSignin: string;
+  emailSignIn: string;
+  passwordSignIn: string;
 }
 
 export interface IUserSignUp {

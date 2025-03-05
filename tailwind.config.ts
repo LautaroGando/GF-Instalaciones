@@ -20,14 +20,16 @@ export default {
         errorDark: "#FF8383",
         primaryTransparentColor: "#A7935133",
         redColor: "#FF8383",
+        disabledButton: '#8D8D8D',
         blog: {
           letterColor: "#8e8e8e",
         },
         admin: {
           editColor: "#009DFF",
-          activeColor: '#03835D',
+          activeColor: "#28b463",
           inactiveColor: "#E17575",
-          borderColor: '#BDBDBD'
+          inProccess: "#f1c40f",
+          borderColor: "#BDBDBD",
         },
       },
       fontFamily: {

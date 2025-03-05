@@ -22,9 +22,17 @@ export const filterUsers: IFilter[] = [
     label: "Activo",
   },
   {
+    value: 'in_proccess',
+    label: 'En proceso',
+  },
+  {
     value: "inactive",
     label: "Inactivo",
   },
+  {
+    value: 'rejected',
+    label: 'Rechazado'
+  }
 ];
 
 export const orderUsers: IOrder[] = [
@@ -39,9 +47,5 @@ export const orderUsers: IOrder[] = [
   {
     value: "role",
     label: "Rol",
-  },
-  {
-    value: "status",
-    label: "Estado",
   },
 ];

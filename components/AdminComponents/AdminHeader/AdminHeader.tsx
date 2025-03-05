@@ -10,14 +10,14 @@ import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectThe
 
 export const AdminHeader: React.FC = () => {
   return (
-    <div className="bg-primaryColor p-3 flex flex-col gap-5 lg:pl-[142px] lg:fixed lg:top-0 lg:left-0 lg:right-0 lg:z-50">
+    <header className="bg-primaryColor p-3 flex min-h-[250px] flex-col gap-5 lg:pl-[142px]">
       <div className="w-full h-16 flex justify-between items-center fixed top-0 left-0 px-3 bg-primaryColor z-50 lg:z-40">
         <ButtonMenuAdmin />
       </div>
       <ResponsiveMenuAdmin />
       <div className="relative">
         <Logo />
-        <div className="gap-5 items-center hidden relative lg:flex lg:absolute lg:top-0 lg:right-0 lg:z-50">
+        <div className="gap-5 items-center hidden relative lg:flex lg:fixed lg:top-[6px] lg:right-3 lg:z-50">
           <div className="items-center hidden lg:flex">
             <SelectTheme admin />
           </div>
@@ -32,7 +32,7 @@ export const AdminHeader: React.FC = () => {
         </div>
       </div>
       <Path />
-    </div>
+    </header>
   );
 };
 

@@ -4,9 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import NotificationMenu from "./NotificationsMenu/NotificationsMenu";
 import { useAdminNotificationStore } from "@/store/AdminNotificationStore/adminNotificationStore";
+import { useUserStore } from "@/store/UserStore/userStore";
+import { IUser } from "@/interfaces/IUser";
 
 export const Notifications: React.FC = () => {
   const { handleToggle } = useAdminNotificationStore();
+  const { users } = useUserStore();
 
   return (
     <div className="gap-5 justify-center flex">
@@ -18,7 +21,7 @@ export const Notifications: React.FC = () => {
       >
         <FontAwesomeIcon icon={faInbox} />
         <div className="absolute -top-1 -right-1 w-[15px] h-[15px] rounded-full bg-primaryColor text-letterColorLight flex justify-center items-center">
-          <span className="text-xs">8</span>
+          <span className="text-xs">0</span>
         </div>
       </button>
       <button
@@ -28,7 +31,13 @@ export const Notifications: React.FC = () => {
       >
         <FontAwesomeIcon icon={faBell} />
         <div className="absolute -top-1 -right-1 w-[15px] h-[15px] rounded-full bg-primaryColor text-letterColorLight flex justify-center items-center">
-          <span className="text-xs">2</span>
+          <span className="text-xs">
+            {users
+              ? users?.filter(
+                  (user: IUser) => user.installer?.status === "EN_PROCESO"
+                ).length
+              : 0}
+          </span>
         </div>
       </button>
     </div>

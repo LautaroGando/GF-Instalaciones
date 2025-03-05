@@ -5,14 +5,17 @@ import {
 import { IFormSignUpData } from "@/data/FormSignUpData/types";
 import { IUserSignUpInstaller } from "@/interfaces/IAuth";
 import { Form, Formik, FormikProps } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import { validateSignUpInstaller } from "@/helpers/validateSignUpInstaller";
 import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 import { signUpInstaller } from "@/services/auth";
+import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 
 export const FormInstaller: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   return (
     <motion.div
       animate={{ opacity: [0, 1] }}
@@ -48,14 +51,18 @@ export const FormInstaller: React.FC = () => {
         }}
         validate={validateSignUpInstaller}
         onSubmit={async (values) => {
+          setIsLoading(true);
           const formattedValues = Object.fromEntries(
             Object.entries(values).map(([key, value]) => [
               key,
               value === "si" ? true : value === "no" ? false : value,
             ])
           ) as Record<keyof IUserSignUpInstaller, any>;
-          const data = await signUpInstaller(formattedValues);
-          console.log(data);
+          await signUpInstaller({
+            ...formattedValues,
+            taxCondition: values.taxCondition.toUpperCase(),
+          });
+          setIsLoading(false);
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignUpInstaller>) => (
@@ -127,7 +134,13 @@ export const FormInstaller: React.FC = () => {
                 <div className="w-full h-[1px] bg-primaryColor"></div>
               </div>
             </div>
-            <ButtonAuth label="CREAR CUENTA" form="signUp" />
+            {isLoading ? (
+              <div className="mt-10">
+                <Loading theme="light" />
+              </div>
+            ) : (
+              <ButtonAuth label="CREAR CUENTA" form="signUp" />
+            )}
           </Form>
         )}
       </Formik>
