@@ -18,7 +18,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       <AdminHeader />
       <main
         className={clsx(
-          "px-[15px] py-5 sm:px-[20px] lg:pl-[150px] lg:mt-[250px]"
+          "px-[15px] py-5 sm:px-[20px] lg:pl-[150px]"
         )}
       >
         {children}
