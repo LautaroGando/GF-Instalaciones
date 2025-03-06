@@ -5,6 +5,8 @@ export const findUsers = async () => {
   try {
     const response = await axios.get(`${API_URL}/user/findAllWhitDeleted`);
     const data = response.data;
+    console.log(data);
+
     return data;
   } catch (error) {
     console.log(error);
