@@ -1,7 +1,9 @@
 import IOrder from "@/interfaces/IOrder";
+import InstallationsData from "../InstallationsData/InstallationsData";
 
 export const ordersData: IOrder[] = [
   {
+    id: "1a2b3c4d",
     order_id: "ORD12345",
     order_name: "Instalación de Publicidad",
     order_description: "Colocación de carteles en diferentes ubicaciones",
@@ -11,22 +13,10 @@ export const ordersData: IOrder[] = [
     end_date: "2025-03-15",
     status: "Completada",
     installation_id: "INS001",
-    installations: [
-      {
-        startDate: "2025-03-10",
-        address: {
-          street: "Avenida Siempre Viva",
-          number: "742",
-          note: "Frente a la plaza principal",
-          postalCode: "12345",
-          city: "Springfield",
-          province: "Illinois",
-        },
-        notes: "Confirmar acceso con el encargado",
-      },
-    ],
+    installations: InstallationsData.slice(0, 7),
   },
   {
+    id: "2e3f4g5h",
     order_id: "ORD67890",
     order_name: "Montaje de Stand",
     order_description: "Montaje de estructura para evento corporativo",
@@ -36,22 +26,10 @@ export const ordersData: IOrder[] = [
     end_date: "2025-03-18",
     status: "Completada",
     installation_id: "INS002",
-    installations: [
-      {
-        startDate: "2025-03-15",
-        address: {
-          street: "Calle del Comercio",
-          number: "456",
-          note: "Pabellón 3, entrada B",
-          postalCode: "67890",
-          city: "Shelbyville",
-          province: "Tennessee",
-        },
-        notes: "Requiere permisos especiales",
-      },
-    ],
+    installations: InstallationsData.slice(1, 8),
   },
   {
+    id: "3h4i5j6k",
     order_id: "ORD23456",
     order_name: "Rotulación de Vehículos",
     order_description: "Aplicación de vinilos en flota de transporte",
@@ -61,22 +39,10 @@ export const ordersData: IOrder[] = [
     end_date: "2025-03-22",
     status: "Completada",
     installation_id: "INS003",
-    installations: [
-      {
-        startDate: "2025-03-20",
-        address: {
-          street: "Calle del Sol",
-          number: "321",
-          note: "Estacionamiento trasero",
-          postalCode: "54321",
-          city: "Los Angeles",
-          province: "California",
-        },
-        notes: "Requiere acceso a garaje",
-      },
-    ],
+    installations: InstallationsData.slice(2, 9),
   },
   {
+    id: "4k5l6m7n",
     order_id: "ORD34567",
     order_name: "Colocación de Mobiliario",
     order_description: "Montaje y ajuste de mobiliario corporativo",
@@ -86,22 +52,10 @@ export const ordersData: IOrder[] = [
     end_date: "2025-04-05",
     status: "Completada",
     installation_id: "INS004",
-    installations: [
-      {
-        startDate: "2025-04-01",
-        address: {
-          street: "Avenida Empresarial",
-          number: "654",
-          note: "Piso 2, oficina 4B",
-          postalCode: "98765",
-          city: "Houston",
-          province: "Texas",
-        },
-        notes: "Montaje en horario nocturno",
-      },
-    ],
+    installations: InstallationsData.slice(3, 10),
   },
   {
+    id: "5n6o7p8q",
     order_id: "ORD45678",
     order_name: "Instalación de Pantallas LED",
     order_description: "Colocación y configuración de pantallas publicitarias",
@@ -111,22 +65,10 @@ export const ordersData: IOrder[] = [
     end_date: "2025-04-12",
     status: "Completada",
     installation_id: "INS005",
-    installations: [
-      {
-        startDate: "2025-04-10",
-        address: {
-          street: "Boulevard Central",
-          number: "789",
-          note: "Frente a centro comercial",
-          postalCode: "11223",
-          city: "Miami",
-          province: "Florida",
-        },
-        notes: "Se requiere elevador",
-      },
-    ],
+    installations: InstallationsData.slice(4, 11),
   },
   {
+    id: "6q7r8s9t",
     order_id: "ORD56789",
     order_name: "Señalización de Seguridad",
     order_description: "Colocación de señalética en planta industrial",
@@ -136,22 +78,10 @@ export const ordersData: IOrder[] = [
     end_date: "2025-04-17",
     status: "Completada",
     installation_id: "INS006",
-    installations: [
-      {
-        startDate: "2025-04-15",
-        address: {
-          street: "Calle Industria",
-          number: "159",
-          note: "Acceso por entrada principal",
-          postalCode: "44556",
-          city: "New York",
-          province: "New York",
-        },
-        notes: "Supervisión de seguridad requerida",
-      },
-    ],
+    installations: InstallationsData.slice(5, 12),
   },
   {
+    id: "7t8u9v0w",
     order_id: "ORD67891",
     order_name: "Montaje de Estructuras Metálicas",
     order_description: "Ensamblaje y fijación de estructuras publicitarias",
@@ -161,22 +91,10 @@ export const ordersData: IOrder[] = [
     end_date: "2025-04-25",
     status: "Completada",
     installation_id: "INS007",
-    installations: [
-      {
-        startDate: "2025-04-20",
-        address: {
-          street: "Autopista 51",
-          number: "951",
-          note: "Salida 8B",
-          postalCode: "77889",
-          city: "Las Vegas",
-          province: "Nevada",
-        },
-        notes: "Equipo de seguridad requerido",
-      },
-    ],
+    installations: InstallationsData.slice(6, 13),
   },
   {
+    id: "8w9x0y1z",
     order_id: "ORD78912",
     order_name: "Revisión de Instalaciones",
     order_description: "Inspección de estructuras existentes",
@@ -186,22 +104,10 @@ export const ordersData: IOrder[] = [
     end_date: "2025-04-30",
     status: "Completada",
     installation_id: "INS008",
-    installations: [
-      {
-        startDate: "2025-04-28",
-        address: {
-          street: "Ruta Estatal 12",
-          number: "333",
-          note: "A 2 km de la salida norte",
-          postalCode: "99988",
-          city: "Portland",
-          province: "Oregon",
-        },
-        notes: "Requiere equipo especializado",
-      },
-    ],
+    installations: InstallationsData.slice(0, 7),
   },
   {
+    id: "9z0a1b2c",
     order_id: "ORD89123",
     order_name: "Colocación de Banner Gigante",
     order_description: "Instalación de publicidad en fachada de edificio",
@@ -211,20 +117,7 @@ export const ordersData: IOrder[] = [
     end_date: "2025-05-07",
     status: "Completada",
     installation_id: "INS009",
-    installations: [
-      {
-        startDate: "2025-05-05",
-        address: {
-          street: "Calle Principal",
-          number: "777",
-          note: "Edificio corporativo",
-          postalCode: "66777",
-          city: "Denver",
-          province: "Colorado",
-        },
-        notes: "Trabajo en altura",
-      },
-    ],
+    installations: InstallationsData.slice(1, 8),
   },
 ];
 

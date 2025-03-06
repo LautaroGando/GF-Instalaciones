@@ -3,6 +3,7 @@ import React from "react";
 import { IBannerInfoProps } from "./types";
 import PanelInfo from "./PanelInfo/PanelInfo";
 import UsersInfo from "./UsersInfo/UsersInfo";
+import TrackingInfo from "./TrackingInfo/TrackingInfo";
 
 export const BannerInfo: React.FC<IBannerInfoProps> = ({ type }) => {
   return (
@@ -11,7 +12,9 @@ export const BannerInfo: React.FC<IBannerInfoProps> = ({ type }) => {
         <PanelInfo />
       ) : type === "users" ? (
         <UsersInfo />
-      ) : null}
+      ) : type === "tracking" ?(
+        <TrackingInfo/>
+      ): null}
     </div>
   );
 };
