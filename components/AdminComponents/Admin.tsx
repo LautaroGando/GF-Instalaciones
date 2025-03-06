@@ -4,9 +4,11 @@ import Panel from "./Panel/Panel";
 import { usePathname } from "next/navigation";
 import Users from "./Users/Users";
 import Tracking from "./Tracking/Tracking";
+import Installations from "./Installations/Installations";
 
 export const Admin: React.FC = () => {
   const pathname = usePathname();
+  console.log("Current pathname:", pathname);
 
   return (
     <div>
@@ -16,6 +18,8 @@ export const Admin: React.FC = () => {
         <Users />
       ) : pathname === "/admin/tracking" ? (
         <Tracking />
+      ) : pathname === "/admin/tracking/installations" ? (
+        <Installations />
       ) : null}
     </div>
   );

@@ -1,4 +1,7 @@
+import IInstallation from "./IInstallation";
+
 export interface IOrder {
+  id: string;
   order_id: string;
   order_name: string;
   order_description: string;
@@ -8,18 +11,7 @@ export interface IOrder {
   end_date: string;
   status: string;
   installation_id: string;
-  installations: {
-    startDate: string;
-    address: {
-      street: string;
-      number: string;
-      note: string;
-      postalCode: string;
-      city: string;
-      province: string;
-    };
-    notes: string;
-  }[];
+  installations: IInstallation[];
 }
 
 export default IOrder;
