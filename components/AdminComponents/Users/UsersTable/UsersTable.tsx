@@ -25,7 +25,7 @@ export const UsersTable: React.FC = () => {
 
   useEffect(() => {
     handleFetchUsers();
-  }, []);
+  }, [handleFetchUsers]);
 
   return (
     <div className="w-full h-[calc(100vh-354px)] min-h-[400px] overflow-x-auto">

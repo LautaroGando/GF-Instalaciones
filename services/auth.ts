@@ -27,7 +27,9 @@ export const signUpUser = async (values: IUserSignUp) => {
     if (data) popUpSignUp(data);
     return data;
   } catch (error: unknown) {
-    popUpSignUpError(error.response.data.message);
+    axios.isAxiosError(error) && error.response
+      ? popUpSignUpError(error.response.data.message)
+      : popUpSignUpError("Ocurrió un error inesperado");
   }
 };
 

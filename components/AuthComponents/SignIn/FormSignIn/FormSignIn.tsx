@@ -44,7 +44,7 @@ export const FormSignIn: React.FC = () => {
           setTimeout(() => {
             router.push("/");
           }, 3000);
-          /* resetForm(); */
+          resetForm();
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignIn>) => (

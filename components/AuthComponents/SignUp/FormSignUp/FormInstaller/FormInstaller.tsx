@@ -50,19 +50,20 @@ export const FormInstaller: React.FC = () => {
           hasOwnTransportation: false,
         }}
         validate={validateSignUpInstaller}
-        onSubmit={async (values) => {
+        onSubmit={async (values, { resetForm }) => {
           setIsLoading(true);
           const formattedValues = Object.fromEntries(
             Object.entries(values).map(([key, value]) => [
               key,
               value === "si" ? true : value === "no" ? false : value,
             ])
-          ) as Record<keyof IUserSignUpInstaller, any>;
+          ) as unknown as IUserSignUpInstaller;
           await signUpInstaller({
             ...formattedValues,
             taxCondition: values.taxCondition.toUpperCase(),
           });
           setIsLoading(false);
+          resetForm();
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignUpInstaller>) => (

@@ -7,30 +7,36 @@ import {
 import type { IBannerPanel } from "./types";
 import { findUsers } from "@/services/users";
 
-const fetchUsers = async (): Promise<number> => {
-  const users = await findUsers();
-  return users.length;
+const fetchUsers = async () => {
+  try {
+    const users = await findUsers();
+    return users.length;
+  } catch (error) {
+    console.log(error);
+  }
 };
+
+const quantity = await fetchUsers() ?? 0;
 
 export const bannerPanel: IBannerPanel[] = [
   {
     icon: faUser,
     label: "Usuarios",
-    quantity: fetchUsers(),
+    quantity: quantity | 0,
   },
   {
     icon: faUsers,
     label: "Empleados",
-    quantity: fetchUsers(),
+    quantity: quantity | 0,
   },
   {
     icon: faArrowDownWideShort,
     label: "Órdenes",
-    quantity: fetchUsers(),
+    quantity: quantity | 0,
   },
   {
     icon: faNewspaper,
     label: "Artículos",
-    quantity: fetchUsers(),
+    quantity: quantity | 0,
   },
 ];
