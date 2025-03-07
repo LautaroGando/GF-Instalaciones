@@ -48,22 +48,22 @@ export const formSignUpData: IFormSignUpData[] = [
       { value: "chubut", option: "Chubut" },
       { value: "cordoba", option: "Córdoba" },
       { value: "corrientes", option: "Corrientes" },
-      { value: "entreRios", option: "Entre Ríos" },
+      { value: "entre_Rios", option: "Entre Ríos" },
       { value: "formosa", option: "Formosa" },
       { value: "jujuy", option: "Jujuy" },
-      { value: "laPampa", option: "La Pampa" },
-      { value: "laRioja", option: "La Rioja" },
+      { value: "la_Pampa", option: "La Pampa" },
+      { value: "la_Rioja", option: "La Rioja" },
       { value: "mendoza", option: "Mendoza" },
       { value: "misiones", option: "Misiones" },
       { value: "neuquen", option: "Neuquén" },
-      { value: "rioNegro", option: "Río Negro" },
+      { value: "rio_Negro", option: "Río Negro" },
       { value: "salta", option: "Salta" },
-      { value: "sanJuan", option: "San Juan" },
-      { value: "sanLuis", option: "San Luis" },
-      { value: "santaCruz", option: "Santa Cruz" },
-      { value: "santaFe", option: "Santa Fe" },
-      { value: "santiagoDelEstero", option: "Santiago del Estero" },
-      { value: "tierraDelFuego", option: "Tierra del Fuego" },
+      { value: "san_Juan", option: "San Juan" },
+      { value: "san_Luis", option: "San Luis" },
+      { value: "santa_Cruz", option: "Santa Cruz" },
+      { value: "santa_Fe", option: "Santa Fe" },
+      { value: "santiago_Del_Estero", option: "Santiago del Estero" },
+      { value: "tierra_Del_Fuego", option: "Tierra del Fuego" },
       { value: "tucuman", option: "Tucumán" },
     ],
     required: true,
@@ -109,27 +109,20 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
     options: [
       { value: "", option: "Selecciona una opción" },
       { value: "monotributista", option: "Monotributista" },
-      { value: "responsableInscripto", option: "Responsable Inscripto" },
-      { value: "exentoEnIVA ", option: "Exento en IVA" },
+      { value: "responsable_Inscripto", option: "Responsable Inscripto" },
+      { value: "exento_En_IVA", option: "Exento en IVA" },
     ],
     required: true,
   },
   {
-    label: "Detalle los Trabajos que Sabe Realizar",
-    name: "detailJobs",
-    select: true,
-    options: [{ value: "", option: "Selecciona una opción" }],
-    required: false,
-  },
-  {
     label: "Amplíe Información si es Necesario o Consultas",
-    name: "expandInformation",
+    name: "queries",
     textarea: true,
     required: false,
   },
   {
     label: "¿Posee Seguro de Accidentes Personales?",
-    name: "personalAccidentInsurance",
+    name: "hasPersonalAccidentInsurance",
     type: "radio",
     options: [
       { value: "si", option: "Sí" },
@@ -139,7 +132,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
   },
   {
     label: "¿Instalaciones en Altura?",
-    name: "installationsAtHeight",
+    name: "canWorkAtHeight",
     type: "radio",
     options: [
       { value: "si", option: "Sí" },
@@ -149,7 +142,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
   },
   {
     label: "¿Tensado de Lonas Front y Back?",
-    name: "canvasTensioning",
+    name: "canTensionFrontAndBackLonas",
     type: "radio",
     options: [
       { value: "si", option: "Sí" },
@@ -159,7 +152,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
   },
   {
     label: "¿Instalación de Corpóreos?",
-    name: "installationOfCorporeals",
+    name: "canInstallCorporealSigns",
     type: "radio",
     options: [
       { value: "si", option: "Sí" },
@@ -169,7 +162,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
   },
   {
     label: "¿Instalación de Vinilos Esmerilados?",
-    name: "installationFrostedVinyls",
+    name: "canInstallFrostedVinyl",
     type: "radio",
     options: [
       { value: "si", option: "Sí" },
@@ -179,7 +172,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
   },
   {
     label: "¿Instalación de Vinilos sobre Pared/Vidrios?",
-    name: "installationOfVinylOnWallsGlasses",
+    name: "canInstallVinylOnWallsOrGlass",
     type: "radio",
     options: [
       { value: "si", option: "Sí" },
@@ -189,7 +182,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
   },
   {
     label: "¿Forrado Completo de Autos (Carwrapping)?",
-    name: "carwrapping",
+    name: "canDoCarWrapping",
     type: "radio",
     options: [
       { value: "si", option: "Sí" },
@@ -199,7 +192,7 @@ export const formSignUpInstallerData: IFormSignUpData[] = [
   },
   {
     label: "¿Posee Movilidad Propia?",
-    name: "ownMobility",
+    name: "hasOwnTransportation",
     type: "radio",
     options: [
       { value: "si", option: "Sí" },

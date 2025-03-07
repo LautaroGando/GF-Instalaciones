@@ -3,6 +3,7 @@ import { useAdminNotificationStore } from "@/store/AdminNotificationStore/adminN
 import clsx from "clsx";
 import React, { useEffect, useRef } from "react";
 import NotificationsOption from "./NotificationsOption/NotificationsOption";
+import NotificationsSection from "./NotificationsSection/NotificationsSection";
 
 export const NotificationMenu: React.FC = () => {
   const { openNotifications, openMessages, handleClose } =
@@ -45,12 +46,14 @@ export const NotificationMenu: React.FC = () => {
     >
       <div className="flex flex-col w-full">
         <NotificationsOption />
-        <div className="w-full h-full overflow-y-scroll hiddenScrollbar bg-bgColor"></div>
+        <div className="w-full h-full overflow-y-scroll hiddenScrollbar bg-bgColor">
+          {openNotifications ? <NotificationsSection /> : null}
+        </div>
       </div>
       <button
         onClick={handleClose}
         type="button"
-        className="transition-all w-full min-h-[40px] text-redColor border-t border-redColor hover:bg-redColor hover:text-letterColorLight"
+        className="transition-all w-full min-h-[40px] text-redColor border-t border-redColor sticky bottom-0 bg-bgColor hover:bg-redColor hover:text-letterColorLight"
       >
         Cerrar
       </button>

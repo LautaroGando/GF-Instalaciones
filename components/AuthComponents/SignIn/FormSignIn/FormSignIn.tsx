@@ -2,13 +2,18 @@ import { formSignInData } from "@/data/FormSignInData/form-signin-data";
 import { IFormSignInData } from "@/data/FormSignInData/types";
 import { IUserSignIn } from "@/interfaces/IAuth";
 import { Form, Formik, FormikProps } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 import { signIn } from "@/services/auth";
+import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
+import { useRouter } from "next/navigation";
 
 export const FormSignIn: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+
   return (
     <motion.div
       animate={{ opacity: [0, 1] }}
@@ -22,9 +27,23 @@ export const FormSignIn: React.FC = () => {
         initialValues={{ emailSignIn: "", passwordSignIn: "" }}
         validate={() => {}}
         onSubmit={async (values, { resetForm }) => {
+          setIsLoading(true);
           const data = await signIn(values);
-          console.log(values);
-          console.log(data);
+          {
+            if (data.installer && data.installer.status !== "APROBADO") {
+              return;
+            } else {
+              localStorage.setItem(
+                "userData",
+                JSON.stringify(data.installer ? data.installer : data.user)
+              );
+              localStorage.setItem("token", JSON.stringify(data.token));
+            }
+          }
+          setIsLoading(false);
+          setTimeout(() => {
+            router.push("/");
+          }, 3000);
           resetForm();
         }}
       >
@@ -49,7 +68,13 @@ export const FormSignIn: React.FC = () => {
             >
               ¿Olvidaste tu contraseña?
             </button>
-            <ButtonAuth label="INGRESAR" form="signIn" />
+            {isLoading ? (
+              <div className="mt-10">
+                <Loading theme="dark" />
+              </div>
+            ) : (
+              <ButtonAuth label="INGRESAR" form="signIn" />
+            )}
           </Form>
         )}
       </Formik>

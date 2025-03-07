@@ -6,11 +6,11 @@ export const filterUsers: IFilter[] = [
     label: "Todo",
   },
   {
-    value: "users",
+    value: "user",
     label: "Usuarios",
   },
   {
-    value: "installers",
+    value: "installer",
     label: "Instaladores",
   },
   {
@@ -22,9 +22,17 @@ export const filterUsers: IFilter[] = [
     label: "Activo",
   },
   {
+    value: 'in_proccess',
+    label: 'En proceso',
+  },
+  {
     value: "inactive",
     label: "Inactivo",
   },
+  {
+    value: 'rejected',
+    label: 'Rechazado'
+  }
 ];
 
 export const orderUsers: IOrder[] = [
@@ -40,16 +48,55 @@ export const orderUsers: IOrder[] = [
     value: "role",
     label: "Rol",
   },
+];
+
+export const filterTracking: IFilter[] = [
   {
-    value: "status",
-    label: "Estado",
+    value: "all",
+    label: "Todo",
   },
   {
-    value: "createDate",
-    label: "Fecha de creación",
+    value: "user",
+    label: "Usuarios",
   },
   {
-    value: "updateDate",
-    label: "Fecha de actualización",
+    value: "installer",
+    label: "Instaladores",
+  },
+  {
+    value: "coordinator",
+    label: "Coordinadores",
+  },
+  {
+    value: "active",
+    label: "Activo",
+  },
+  {
+    value: 'in_proccess',
+    label: 'En proceso',
+  },
+  {
+    value: "inactive",
+    label: "Inactivo",
+  },
+  {
+    value: 'rejected',
+    label: 'Rechazado'
+  }
+];
+
+export const orderTracking: IOrder[] = [
+  {
+    value: "latest",
+    label: "Más reciente",
+  },
+  {
+    value: "abc",
+    label: "A - Z",
+  },
+  {
+    value: "role",
+    label: "Rol",
   },
 ];
+

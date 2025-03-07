@@ -5,14 +5,17 @@ import {
 import { IFormSignUpData } from "@/data/FormSignUpData/types";
 import { IUserSignUpInstaller } from "@/interfaces/IAuth";
 import { Form, Formik, FormikProps } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import { validateSignUpInstaller } from "@/helpers/validateSignUpInstaller";
 import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputAuthField";
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 import { signUpInstaller } from "@/services/auth";
+import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 
 export const FormInstaller: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   return (
     <motion.div
       animate={{ opacity: [0, 1] }}
@@ -36,22 +39,31 @@ export const FormInstaller: React.FC = () => {
           password: "",
           repeatPassword: "",
           taxCondition: "",
-          detailJobs: "",
-          expandInformation: "",
-          personalAccidentInsurance: "",
-          installationsAtHeight: "",
-          canvasTensioning: "",
-          installationOfCorporeals: "",
-          installationFrostedVinyls: "",
-          installationOfVinylOnWallsGlasses: "",
-          carwrapping: "",
-          ownMobility: "",
+          queries: "",
+          hasPersonalAccidentInsurance: false,
+          canWorkAtHeight: false,
+          canTensionFrontAndBackLonas: false,
+          canInstallCorporealSigns: false,
+          canInstallFrostedVinyl: false,
+          canInstallVinylOnWallsOrGlass: false,
+          canDoCarWrapping: false,
+          hasOwnTransportation: false,
         }}
         validate={validateSignUpInstaller}
-        onSubmit={async (values) => {
-          console.log(values);
-          const data = await signUpInstaller(values);
-          console.log(data);
+        onSubmit={async (values, { resetForm }) => {
+          setIsLoading(true);
+          const formattedValues = Object.fromEntries(
+            Object.entries(values).map(([key, value]) => [
+              key,
+              value === "si" ? true : value === "no" ? false : value,
+            ])
+          ) as unknown as IUserSignUpInstaller;
+          await signUpInstaller({
+            ...formattedValues,
+            taxCondition: values.taxCondition.toUpperCase(),
+          });
+          setIsLoading(false);
+          resetForm();
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignUpInstaller>) => (
@@ -123,7 +135,13 @@ export const FormInstaller: React.FC = () => {
                 <div className="w-full h-[1px] bg-primaryColor"></div>
               </div>
             </div>
-            <ButtonAuth label="CREAR CUENTA" form="signUp" />
+            {isLoading ? (
+              <div className="mt-10">
+                <Loading theme="light" />
+              </div>
+            ) : (
+              <ButtonAuth label="CREAR CUENTA" form="signUp" />
+            )}
           </Form>
         )}
       </Formik>

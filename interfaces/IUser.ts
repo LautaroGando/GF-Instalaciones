@@ -1,3 +1,4 @@
+import { IInstaller } from "./IInstaller";
 import { IRole } from "./IRole";
 
 export interface IUser {
@@ -13,6 +14,8 @@ export interface IUser {
   password: string;
   coverage: string;
   isSubscribed: boolean;
+  createAt: string;
   disabledAt: string | null;
+  installer: IInstaller | null;
   role: IRole;
 }

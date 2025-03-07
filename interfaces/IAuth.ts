@@ -19,16 +19,15 @@ export interface IUserSignUp {
 
 export interface IUserSignUpInstaller extends IUserSignUp {
   taxCondition: string;
-  detailJobs: string;
-  expandInformation: string;
-  personalAccidentInsurance: string;
-  installationsAtHeight: string;
-  canvasTensioning: string;
-  installationOfCorporeals: string;
-  installationFrostedVinyls: string;
-  installationOfVinylOnWallsGlasses: string;
-  carwrapping: string;
-  ownMobility: string;
+  queries: string;
+  hasPersonalAccidentInsurance: boolean;
+  canWorkAtHeight: boolean;
+  canTensionFrontAndBackLonas: boolean;
+  canInstallCorporealSigns: boolean;
+  canInstallFrostedVinyl: boolean;
+  canInstallVinylOnWallsOrGlass: boolean;
+  canDoCarWrapping: boolean;
+  hasOwnTransportation: boolean;
 }
 
 export interface IUserSignUpOption {
