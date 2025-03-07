@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const themeScript = `
   (function() {
@@ -19,7 +20,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="bg-bgColor dark:bg-secondaryColor">{children}</body>
+      <body className="bg-bgColor dark:bg-secondaryColor">
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
