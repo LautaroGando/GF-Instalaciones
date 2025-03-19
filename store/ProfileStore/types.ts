@@ -1,4 +1,4 @@
-export interface IAdminProfileStoreProps {
+export interface IProfileStoreProps {
   open: boolean;
   handleToggle: () => void;
   handleClose: () => void;

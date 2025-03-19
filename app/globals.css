@@ -28,6 +28,10 @@
   .inputError {
     @apply text-error text-xs dark:text-errorDark;
   }
+
+  .btnAction {
+    @apply border rounded-[3px] w-[140px] h-[100px] flex flex-col justify-center gap-2 items-center px-2 text-sm transition-all duration-300 relative hover:text-letterColorLight after:content-[''] after:absolute after:w-0 after:h-full after:left-0 after:transition-all after:duration-300 after:-z-10 after:hover:w-full;
+  }
 }
 
 @layer utilities {

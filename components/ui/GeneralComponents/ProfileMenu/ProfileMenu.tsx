@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import ButtonProfile from "../../ButtonProfile/ButtonProfile";
-import { useAdminProfileStore } from "@/store/AdminProfileStore/adminProfileStore";
+import ButtonProfile from "../ButtonProfile/ButtonProfile";
 import clsx from "clsx";
-import ButtonLogout from "../../ButtonLogout/ButtonLogout";
+import ButtonLogout from "../ButtonLogout/ButtonLogout";
+import { useProfileStore } from "@/store/ProfileStore/profileStore";
 
-export const AdminMenu: React.FC = () => {
-  const { open, handleClose } = useAdminProfileStore();
+export const ProfileMenu: React.FC = () => {
+  const { open, handleClose } = useProfileStore();
   const menuAdminProfileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,4 +48,4 @@ export const AdminMenu: React.FC = () => {
   );
 };
 
-export default AdminMenu;
+export default ProfileMenu;
