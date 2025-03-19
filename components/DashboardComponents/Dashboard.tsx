@@ -3,14 +3,9 @@ import DashboardHeader from "./DashboardHeader/DashboardHeader";
 import Profile from "./Profile/Profile";
 import Banner from "../ui/DashboardComponents/Banner/Banner";
 import Newslatter from "./Newslatter/Newslatter";
+import { PageProps } from "@/.next/types/app/layout";
 
-interface IDashboardProps {
-  params: {
-    slug: string;
-  };
-}
-
-export const Dashboard = async ({ params }: IDashboardProps) => {
+export const Dashboard = async ({ params }: PageProps) => {
   const { slug } = await params;
 
   return (

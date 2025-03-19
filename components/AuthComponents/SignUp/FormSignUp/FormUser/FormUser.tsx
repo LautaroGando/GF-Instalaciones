@@ -47,7 +47,7 @@ export const FormUser: React.FC = () => {
           setIsLoading(true);
           await signUpUser(values);
           setIsLoading(false);
-          /* resetForm(); */
+          resetForm();
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignUp>) => (

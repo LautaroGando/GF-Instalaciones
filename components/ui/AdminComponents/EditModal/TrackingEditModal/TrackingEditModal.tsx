@@ -76,19 +76,25 @@ const TrackingEditModal = () => {
               orderNumber: selectedOrder.orderNumber ?? "",
               title: selectedOrder.title ?? "",
               description: selectedOrder.description ?? "",
-              startDate: selectedOrder.startDate || null,
+              startDate: selectedOrder.startDate || "",
             }}
             validationSchema={validateEditOrder}
             onSubmit={handleOnSubmit}
           >
             {({ handleSubmit, errors, touched, isSubmitting }) => (
-              <Form onSubmit={handleSubmit} className="space-y-3 text-bgColorDark/60">
+              <Form
+                onSubmit={handleSubmit}
+                className="space-y-3 text-bgColorDark/60"
+              >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
                 >
-                  <label htmlFor="orderNumber" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="orderNumber"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Número de Orden
                   </label>
                   <Field
@@ -100,8 +106,10 @@ const TrackingEditModal = () => {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
-                      opacity: errors.orderNumber && touched.orderNumber ? 1 : 0,
-                      height: errors.orderNumber && touched.orderNumber ? "auto" : 0,
+                      opacity:
+                        errors.orderNumber && touched.orderNumber ? 1 : 0,
+                      height:
+                        errors.orderNumber && touched.orderNumber ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"
@@ -115,7 +123,10 @@ const TrackingEditModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
                 >
-                  <label htmlFor="title" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="title"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Nombre de la Orden
                   </label>
                   <Field
@@ -142,7 +153,10 @@ const TrackingEditModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
                 >
-                  <label htmlFor="description" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="description"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Descripción
                   </label>
                   <Field
@@ -154,8 +168,10 @@ const TrackingEditModal = () => {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
-                      opacity: errors.description && touched.description ? 1 : 0,
-                      height: errors.description && touched.description ? "auto" : 0,
+                      opacity:
+                        errors.description && touched.description ? 1 : 0,
+                      height:
+                        errors.description && touched.description ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"
@@ -169,7 +185,10 @@ const TrackingEditModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
                 >
-                  <label htmlFor="startDate" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="startDate"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Fecha de Inicio
                   </label>
                   <Field
@@ -181,7 +200,8 @@ const TrackingEditModal = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
                       opacity: errors.startDate && touched.startDate ? 1 : 0,
-                      height: errors.startDate && touched.startDate ? "auto" : 0,
+                      height:
+                        errors.startDate && touched.startDate ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"

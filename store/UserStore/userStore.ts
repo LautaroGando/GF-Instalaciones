@@ -40,7 +40,9 @@ export const useUserStore = create<IUserStoreProps>()(
           allUsers = fetchedUsers;
           set({ users: allUsers });
         }
-        set({ installers: allUsers.filter((user) => user.role.name === "installer") });
+        set({
+          installers: allUsers.filter((user) => user.role.name === "installer"),
+        });
       },
       setMaxPage: () => {
         const { filterUsers } = get();
@@ -253,4 +255,3 @@ export const useUserStore = create<IUserStoreProps>()(
     }
   )
 );
-

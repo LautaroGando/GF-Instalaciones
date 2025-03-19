@@ -26,7 +26,7 @@ const InstallationsTable = () => {
 
   useEffect(() => {
     handleFetchOrders();
-  }, []);
+  }, [handleFetchOrders]);
 
   useEffect(() => {
     if (orderId && orders.length) {
