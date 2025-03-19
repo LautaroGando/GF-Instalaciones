@@ -2,9 +2,9 @@ import { IHighlightData } from "./types";
 
 export const highlightItems: IHighlightData[] = [
   {
-    title: "Soluciones Personalizadas",
+    title: "Calidad Superior en Instalaciones",
     description:
-      "Ofrecemos soluciones personalizadas que se adaptan a las necesidades únicas de cada cliente, maximizando el impacto visual de su gráfica.",
+      "En GF Instalaciones, contamos con 28 años de experiencia instalando gráfica de gran formato con la más alta calidad, utilizando materiales de primera y técnicas avanzadas para superar las expectativas de nuestros clientes.",
   },
   {
     title: "Experiencia y Profesionalismo",

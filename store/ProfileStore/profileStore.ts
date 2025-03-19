@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { IAdminProfileStoreProps } from "./types";
+import { IProfileStoreProps } from "./types";
 
-export const useAdminProfileStore = create<IAdminProfileStoreProps>((set) => ({
+export const useProfileStore = create<IProfileStoreProps>((set) => ({
   open: false,
   handleToggle: () => set((state) => ({ open: !state.open })),
   handleClose: () => set(() => ({ open: false })),

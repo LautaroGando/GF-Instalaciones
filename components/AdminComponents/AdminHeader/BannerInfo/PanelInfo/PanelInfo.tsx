@@ -1,9 +1,14 @@
 import { bannerPanel } from "@/data/BannerPanel/banner-panel";
 import { IBannerPanel } from "@/data/BannerPanel/types";
+import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 export const PanelInfo: React.FC = () => {
+  const { users } = useUserStore();
+
+  const quantityUsers = users?.length;
+
   return (
     <div className="flex flex-col gap-5 sm:flex-row sm:gap-3">
       {bannerPanel.map((item: IBannerPanel, i: number) => (
@@ -15,7 +20,9 @@ export const PanelInfo: React.FC = () => {
             <FontAwesomeIcon icon={item.icon} width={30} />
             <h3 className="text-sm sm:text-xs md:text-sm">{item.label}</h3>
           </div>
-          <h3 className="font-semibold">{item.quantity}</h3>
+          <h3 className="font-semibold">
+            {item.label === "Usuarios" ? quantityUsers : 0}
+          </h3>
         </div>
       ))}
     </div>

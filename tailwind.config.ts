@@ -20,7 +20,7 @@ export default {
         errorDark: "#FF8383",
         primaryTransparentColor: "#A7935133",
         redColor: "#FF8383",
-        disabledButton: '#8D8D8D',
+        disabledButton: "#8D8D8D",
         blog: {
           letterColor: "#8e8e8e",
         },
@@ -28,6 +28,7 @@ export default {
           editColor: "#009DFF",
           activeColor: "#28b463",
           inactiveColor: "#E17575",
+          deleteColor: "#CE1818",
           inProccess: "#f1c40f",
           borderColor: "#BDBDBD",
         },
@@ -41,6 +42,7 @@ export default {
           "linear-gradient(-165deg, #A79351 70%, #FAFAFA00 70.3%)",
         signInGradientDark:
           "linear-gradient(-165deg, #A7935133 70%, #00000000 70.3%)",
+        dashboardBanner: 'url("/assets/images/dashboard/banner.svg")',
       },
     },
   },
