@@ -1,4 +1,4 @@
-import ButtonProfile from "@/components/ui/AdminComponents/ButtonProfile/ButtonProfile";
+import ButtonProfile from "@/components/ui/GeneralComponents/ButtonProfile/ButtonProfile";
 import { useMenuAdminStore } from "@/store/MenuAdminStore/menuAdminStore";
 import clsx from "clsx";
 import React from "react";

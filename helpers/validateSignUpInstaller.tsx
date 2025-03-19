@@ -53,28 +53,28 @@ export const validateSignUpInstaller = (input: IUserSignUpInstaller) => {
     : "";
 
   !input.hasPersonalAccidentInsurance
-    ? (errors.hasPersonalAccidentInsurance = " ")
+    ? (errors.hasPersonalAccidentInsurance = true)
     : "";
 
-  !input.canWorkAtHeight ? (errors.canWorkAtHeight = " ") : "";
+  !input.canWorkAtHeight ? (errors.canWorkAtHeight = true) : "";
 
   !input.canTensionFrontAndBackLonas
-    ? (errors.canTensionFrontAndBackLonas = " ")
+    ? (errors.canTensionFrontAndBackLonas = true)
     : "";
 
   !input.canInstallCorporealSigns
-    ? (errors.canInstallCorporealSigns = " ")
+    ? (errors.canInstallCorporealSigns = true)
     : "";
 
-  !input.canInstallFrostedVinyl ? (errors.canInstallFrostedVinyl = " ") : "";
+  !input.canInstallFrostedVinyl ? (errors.canInstallFrostedVinyl = true) : "";
 
   !input.canInstallVinylOnWallsOrGlass
-    ? (errors.canInstallVinylOnWallsOrGlass = " ")
+    ? (errors.canInstallVinylOnWallsOrGlass = true)
     : "";
 
-  !input.canDoCarWrapping ? (errors.canDoCarWrapping = " ") : "";
+  !input.canDoCarWrapping ? (errors.canDoCarWrapping = true) : "";
 
-  !input.hasOwnTransportation ? (errors.hasOwnTransportation = " ") : "";
+  !input.hasOwnTransportation ? (errors.hasOwnTransportation = true) : "";
 
   return errors;
 };

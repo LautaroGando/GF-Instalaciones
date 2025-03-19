@@ -1,8 +1,12 @@
 import OrderAndFilter from "@/components/ui/AdminComponents/OrderAndFilter/OrderAndFilter";
 import Pagination from "@/components/ui/AdminComponents/Pagination/Pagination";
-import { filterUsers, orderUsers } from "@/data/OrderAndFilter/order-and-filter";
-import React from "react";
+import {
+  filterUsers,
+  orderUsers,
+} from "@/data/OrderAndFilter/order-and-filter";
+import React, { Suspense } from "react";
 import InstallationsTable from "./InstallationsTable/InstallationsTable";
+import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 
 const Instalations = () => {
   return (
@@ -16,7 +20,9 @@ const Instalations = () => {
         />
         <Pagination />
       </div>
-      <InstallationsTable />
+      <Suspense fallback={<Loading theme="light" />}>
+        <InstallationsTable />
+      </Suspense>
     </div>
   );
 };

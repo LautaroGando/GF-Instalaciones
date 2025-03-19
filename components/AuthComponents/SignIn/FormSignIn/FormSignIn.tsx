@@ -9,10 +9,12 @@ import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 import { signIn } from "@/services/auth";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/UserStore/userStore";
 
 export const FormSignIn: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+  const { setUser, setToken } = useUserStore();
 
   return (
     <motion.div
@@ -27,24 +29,24 @@ export const FormSignIn: React.FC = () => {
         initialValues={{ emailSignIn: "", passwordSignIn: "" }}
         validate={() => {}}
         onSubmit={async (values, { resetForm }) => {
-          setIsLoading(true);
-          const data = await signIn(values);
-          {
+          try {
+            setIsLoading(true);
+            const data = await signIn(values);
+
             if (data.installer && data.installer.status !== "APROBADO") {
               return;
             } else {
-              localStorage.setItem(
-                "userData",
-                JSON.stringify(data.installer ? data.installer : data.user)
-              );
-              localStorage.setItem("token", JSON.stringify(data.token));
+              setUser(data.installer ? data.installer : data.user);
+              setToken(data.token);
             }
+
+            setTimeout(() => {
+              router.push("/");
+            }, 3000);
+          } catch {
+            resetForm();
+            setIsLoading(false);
           }
-          setIsLoading(false);
-          setTimeout(() => {
-            router.push("/");
-          }, 3000);
-          /* resetForm(); */
         }}
       >
         {({ errors, touched }: FormikProps<IUserSignIn>) => (

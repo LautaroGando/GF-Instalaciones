@@ -4,7 +4,12 @@ import {
   IUserSignUp,
   IUserSignUpInstaller,
 } from "@/interfaces/IAuth";
-import { popUpSignIn, popUpSignUp, popUpSignUpError } from "@/utils/popUp";
+import {
+  popUpSignIn,
+  popUpSignInError,
+  popUpSignUp,
+  popUpSignUpError,
+} from "@/utils/popUp";
 import axios from "axios";
 
 export const signIn = async (values: IUserSignIn) => {
@@ -13,21 +18,25 @@ export const signIn = async (values: IUserSignIn) => {
     const data = response.data;
     if ((data.installer && data.installer.status === "APROBADO") || data.user)
       popUpSignIn();
-    console.log(data);
     return data;
   } catch (error) {
-    console.log(error);
+    axios.isAxiosError(error) && error.response
+      ? popUpSignInError(error.response.data.message)
+      : popUpSignInError("Ocurrió un error inesperado");
   }
 };
 
 export const signUpUser = async (values: IUserSignUp) => {
+  console.log(values);
   try {
     const response = await axios.post(`${API_URL}/auth/signUpUser`, values);
     const data = response.data;
     if (data) popUpSignUp(data);
     return data;
   } catch (error: unknown) {
-    popUpSignUpError(error.response.data.message);
+    axios.isAxiosError(error) && error.response
+      ? popUpSignUpError(error.response.data.message)
+      : popUpSignUpError("Ocurrió un error inesperado");
   }
 };
 
@@ -41,7 +50,9 @@ export const signUpInstaller = async (values: IUserSignUpInstaller) => {
     if (data) popUpSignUp(data);
     else popUpSignUpError(data.response.data.message);
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
+    axios.isAxiosError(error) && error.response
+      ? popUpSignUpError(error.response.data.message)
+      : popUpSignUpError("Ocurrió un error inesperado");
   }
 };

@@ -9,7 +9,7 @@ export const InfoRows: React.FC<IInfoRowsProps> = ({
   return (
     <td
       className={clsx(
-        "h-12",
+        "h-12 px-4",
         item.role.name === "Admin"
           ? "font-semibold"
           : item.role.name === "Instalador"
