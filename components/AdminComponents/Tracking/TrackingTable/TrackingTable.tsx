@@ -27,7 +27,7 @@ const TrackingTable = () => {
     };
 
     fetchData();
-  }, []);
+  }, [handleFetchOrders]);
 
   if (isLoading || isLoadingOrders) {
     return (
