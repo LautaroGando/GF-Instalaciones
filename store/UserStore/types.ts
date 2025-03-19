@@ -6,6 +6,7 @@ import React from "react";
 export interface IUserStoreProps {
   user: IUser | IInstaller | null;
   users: IUser[] | null;
+  installers: IUser[] | null;
   token: string | null;
   filterUsers: IUser[] | null;
   isLoading: boolean;

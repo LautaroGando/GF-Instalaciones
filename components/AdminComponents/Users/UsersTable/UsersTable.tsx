@@ -25,14 +25,14 @@ export const UsersTable: React.FC = () => {
               <thead>
                 <tr className="sticky top-0 bg-bgColor border-b border-primaryColor">
                   <th className="min-w-[170px] h-12 px-4">Nombre Completo</th>
-                  <th className="min-w-[220px] h-12 px-4">Correo electrónico</th>
-                  <th className="min-w-[170px] h-12 px-4">Fecha de creación</th>
+                  <th className="min-w-[220px] h-12 px-4">Correo electr贸nico</th>
+                  <th className="min-w-[170px] h-12 px-4">Fecha de creaci贸n</th>
                   <th className="min-w-[220px] h-12 px-4">
-                    Fecha de deshabilitación
+                    Fecha de deshabilitaci贸n
                   </th>
                   <th className="min-w-[150px] h-12 px-4">Estado</th>
                   <th className="min-w-[150px] h-12 px-4">Rol</th>
-                  <th className="min-w-[150px] h-12 px-4">Acción</th>
+                  <th className="min-w-[150px] h-12 px-4">Acci贸n</th>
                 </tr>
               </thead>
               <tbody>

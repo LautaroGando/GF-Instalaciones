@@ -1,12 +1,6 @@
 export const InstallationsTableHeaders = [
-  "ID",
-  "Calle",
-  "Número",
-  "Nota",
-  "Código Postal",
-  "Ciudad",
-  "Provincia",
   "Fecha de Inicio",
+  "Fecha de Finalización",
   "Estado",
   "Notas",
   "Acción"
