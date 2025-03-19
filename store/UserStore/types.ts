@@ -4,6 +4,7 @@ import React from "react";
 
 export interface IUserStoreProps {
   users: IUser[] | null;
+  installers: IUser[] | null;
   filterUsers: IUser[] | null;
   isLoading: boolean;
   selectedFilter: string;

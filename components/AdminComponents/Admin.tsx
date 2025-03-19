@@ -8,8 +8,7 @@ import Installations from "./Installations/Installations";
 
 export const Admin: React.FC = () => {
   const pathname = usePathname();
-  console.log("Current pathname:", pathname);
-
+  
   return (
     <div>
       {pathname === "/admin/panel" ? (

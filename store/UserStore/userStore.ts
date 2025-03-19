@@ -1,11 +1,6 @@
 import { create } from "zustand";
 import { IUserStoreProps } from "./types";
-import {
-  activeUser,
-  changeStatusInstaller,
-  disabledUser,
-  findUsers,
-} from "@/services/users";
+import { activeUser, changeStatusInstaller, disabledUser, findUsers } from "@/services/users";
 import { IUser } from "@/interfaces/IUser";
 import React from "react";
 import { formatDate } from "@/utils/formatDate";
@@ -13,6 +8,7 @@ import { TInstallerStatus } from "@/types/TInstaller";
 
 export const useUserStore = create<IUserStoreProps>((set, get) => ({
   users: null,
+  installers: null,
   filterUsers: null,
   isLoading: false,
   selectedFilter: "all",
@@ -21,12 +17,19 @@ export const useUserStore = create<IUserStoreProps>((set, get) => ({
   moreInfo: null,
   page: 1,
   maxPage: null,
+  getInstallers: async () => {
+    let allUsers: IUser[] = get().users || [];
+    if (allUsers.length === 0) {
+      const fetchedUsers = await findUsers();
+      if (!fetchedUsers) return;
+      allUsers = fetchedUsers;
+      set({ users: allUsers });
+    }
+    set({ installers: allUsers.filter((user) => user.role.name === "installer") });
+  },
   setMaxPage: () => {
     const { filterUsers } = get();
-    const maxPages =
-      filterUsers && filterUsers.length > 0
-        ? Math.ceil(filterUsers.length / 10)
-        : 1;
+    const maxPages = filterUsers && filterUsers.length > 0 ? Math.ceil(filterUsers.length / 10) : 1;
     set({ maxPage: maxPages });
   },
   setMoreInfo: (id: string) => {
@@ -46,8 +49,7 @@ export const useUserStore = create<IUserStoreProps>((set, get) => ({
     set({ page: page + 1 });
   },
   handleApplyFilter: (resetPage = true) => {
-    const { users, selectedFilter, searchTerm, sortBy, setMaxPage, page } =
-      get();
+    const { users, selectedFilter, searchTerm, sortBy, setMaxPage, page } = get();
 
     let filteredUsers: IUser[] = users ?? [];
 
@@ -116,9 +118,7 @@ export const useUserStore = create<IUserStoreProps>((set, get) => ({
       await disabledUser(id);
       set((state) => ({
         users: state.users?.map((user: IUser) =>
-          user.id === id
-            ? { ...user, disabledAt: formatDate(new Date().toISOString()) }
-            : user
+          user.id === id ? { ...user, disabledAt: formatDate(new Date().toISOString()) } : user
         ),
       }));
       get().handleApplyFilter(false);
