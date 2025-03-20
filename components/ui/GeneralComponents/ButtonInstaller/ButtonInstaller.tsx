@@ -1,13 +1,13 @@
+import { useProfileStore } from "@/store/ProfileStore/profileStore";
+import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
-import { IButtonProfileProps } from "./types";
-import clsx from "clsx";
-import { useProfileStore } from "@/store/ProfileStore/profileStore";
+import { IButtonInstallerOProps } from "./types";
 import { useMenuStore } from "@/store/MenuStore/menuStore";
 
-export const ButtonProfile: React.FC<IButtonProfileProps> = ({
+export const ButtonInstaller: React.FC<IButtonInstallerOProps> = ({
   classes,
-}: IButtonProfileProps) => {
+}: IButtonInstallerOProps) => {
   const { handleClose } = useProfileStore();
   const { handleCloseMenu } = useMenuStore();
 
@@ -17,15 +17,15 @@ export const ButtonProfile: React.FC<IButtonProfileProps> = ({
         handleClose();
         handleCloseMenu();
       }}
-      href="/dashboard/profile"
+      href="/installer"
       className={clsx(
         "text-primaryColor border-b border-b-transparent transition-all duration-500 w-max mx-auto hover:border-b-primaryColor",
         classes
       )}
     >
-      Ver perfil
+      Panel de instalador
     </Link>
   );
 };
 
-export default ButtonProfile;
+export default ButtonInstaller;
