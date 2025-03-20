@@ -32,16 +32,6 @@ export const useUserStore = create<IUserStoreProps>()(
       page: 1,
       maxPage: null,
       actionMenu: null,
-      getInstallers: async () => {
-        let allUsers: IUser[] = get().users || [];
-        if (allUsers.length === 0) {
-          const fetchedUsers = await findUsers();
-          if (!fetchedUsers) return;
-          allUsers = fetchedUsers;
-          set({ users: allUsers });
-        }
-        set({ installers: allUsers.filter((user) => user.role.name === "installer") });
-      },
       setMaxPage: () => {
         const { filterUsers } = get();
         const maxPages =

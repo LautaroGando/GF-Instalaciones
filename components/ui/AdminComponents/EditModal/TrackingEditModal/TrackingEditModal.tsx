@@ -76,7 +76,6 @@ const TrackingEditModal = () => {
               orderNumber: selectedOrder.orderNumber ?? "",
               title: selectedOrder.title ?? "",
               description: selectedOrder.description ?? "",
-              startDate: selectedOrder.startDate || null,
             }}
             validationSchema={validateEditOrder}
             onSubmit={handleOnSubmit}
@@ -161,32 +160,6 @@ const TrackingEditModal = () => {
                     className="text-red-500 text-sm mt-2"
                   >
                     {errors.description}
-                  </motion.div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
-                >
-                  <label htmlFor="startDate" className="text-sm font-medium text-primaryColor/80">
-                    Fecha de Inicio
-                  </label>
-                  <Field
-                    name="startDate"
-                    type="date"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm text-primaryColor"
-                  />
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{
-                      opacity: errors.startDate && touched.startDate ? 1 : 0,
-                      height: errors.startDate && touched.startDate ? "auto" : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                    className="text-red-500 text-sm mt-2"
-                  >
-                    {errors.startDate}
                   </motion.div>
                 </motion.div>
 

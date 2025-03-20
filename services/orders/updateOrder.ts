@@ -8,6 +8,8 @@ export const updateOrder = async (
 ): Promise<IEditOrderFormValues | null> => {
   try {
     const response = await axios.patch<IEditOrderFormValues>(`${API_URL}/orders/${id}`, values);
+   console.log(response);
+   
     return response.data;
   } catch (err) {
     console.log(

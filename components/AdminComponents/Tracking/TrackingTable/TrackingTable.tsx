@@ -47,7 +47,7 @@ const TrackingTable = () => {
             text="Aún no se han añadido órdenes. Intenta más tarde."
           />
         </div>
-        <div className="mx-auto max-w-[200px]">
+        <div className="mx-auto max-w-[166px]">
           <CreateButton />
         </div>
       </div>
