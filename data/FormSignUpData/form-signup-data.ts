@@ -42,7 +42,7 @@ export const formSignUpData: IFormSignUpData[] = [
     options: [
       { value: "", option: "Selecciona una opción" },
       { value: "caba", option: "CABA" },
-      { value: "buenosAires", option: "Buenos Aires" },
+      { value: "buenos_Aires", option: "Buenos Aires" },
       { value: "catamarca", option: "Catamarca" },
       { value: "chaco", option: "Chaco" },
       { value: "chubut", option: "Chubut" },

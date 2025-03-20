@@ -3,7 +3,7 @@ import { useMenuAdminStore } from "@/store/MenuAdminStore/menuAdminStore";
 import clsx from "clsx";
 import React from "react";
 import { IAdminProfileProps } from "./types";
-import AdminMenu from "./AdminMenu/AdminMenu";
+import ProfileMenu from "../../GeneralComponents/ProfileMenu/ProfileMenu";
 
 export const AdminProfile: React.FC<IAdminProfileProps> = ({
   viewAdmin,
@@ -15,7 +15,7 @@ export const AdminProfile: React.FC<IAdminProfileProps> = ({
 
   return (
     <div className={clsx("flex flex-col items-center gap-3", containerClasses)}>
-      <AdminMenu />
+      <ProfileMenu />
       <div
         className={clsx("w-[80px] h-[80px] rounded-full bg-black", imgClasses)}
       ></div>

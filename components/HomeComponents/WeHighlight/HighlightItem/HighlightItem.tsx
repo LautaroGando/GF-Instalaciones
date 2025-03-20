@@ -5,7 +5,7 @@ import { IHighlightItemProps } from "./types";
 
 const HighlightItem: React.FC<IHighlightItemProps> = ({ title, description }) => {
   return (
-    <div className="flex flex-col items-center justify-start gap-[11px] p-4 bg-primaryTransparentColor border-b-[3px] border-primaryColor md:mx-auto md:w-[100%] md:max-w-[280px] lg:max-w-[295px] lg:gap-[17px] xl:max-w-[390px]">
+    <div className="flex flex-col flex-1 items-center justify-start gap-[11px] p-4 min-h-[216px] bg-primaryTransparentColor border-b-[3px] border-primaryColor md:mx-auto md:w-[100%] md:max-w-[280px] lg:max-w-[295px] lg:gap-[17px] xl:max-w-[390px]">
       <div className="mb-2">
         <Image
           src={starImage}

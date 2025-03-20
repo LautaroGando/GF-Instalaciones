@@ -1,10 +1,9 @@
 import TInstallationStatus from "@/types/TInstallationStatus";
-import { IAddress } from "./IAddress";
 
 export interface IInstallation {
-  id: number;
-  startDate: string;
-  address: IAddress;
+  id: string;
+  startDate: string | null; 
+  endDate: string | null; 
   status: TInstallationStatus;
   notes: string;
 }

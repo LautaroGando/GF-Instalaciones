@@ -2,16 +2,15 @@ import IInstallation from "./IInstallation";
 
 export interface IOrder {
   id: string;
-  order_id: string;
-  order_name: string;
-  order_description: string;
-  province: string;
-  client_id: string;
-  start_date: string;
-  end_date: string;
-  status: string;
-  installation_id: string;
-  installations: IInstallation[];
+  orderNumber: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string | null;
+  completed: boolean;
+  instalationsFinished: string;
+  progress: string;
+  instalations: IInstallation[];
 }
 
 export default IOrder;

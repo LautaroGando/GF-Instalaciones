@@ -22,17 +22,17 @@ export const filterUsers: IFilter[] = [
     label: "Activo",
   },
   {
-    value: 'in_proccess',
-    label: 'En proceso',
+    value: "in_proccess",
+    label: "En proceso",
   },
   {
     value: "inactive",
     label: "Inactivo",
   },
   {
-    value: 'rejected',
-    label: 'Rechazado'
-  }
+    value: "rejected",
+    label: "Rechazado",
+  },
 ];
 
 export const orderUsers: IOrder[] = [
@@ -72,17 +72,17 @@ export const filterTracking: IFilter[] = [
     label: "Activo",
   },
   {
-    value: 'in_proccess',
-    label: 'En proceso',
+    value: "in_proccess",
+    label: "En proceso",
   },
   {
     value: "inactive",
     label: "Inactivo",
   },
   {
-    value: 'rejected',
-    label: 'Rechazado'
-  }
+    value: "rejected",
+    label: "Rechazado",
+  },
 ];
 
 export const orderTracking: IOrder[] = [
@@ -91,12 +91,27 @@ export const orderTracking: IOrder[] = [
     label: "Más reciente",
   },
   {
-    value: "abc",
-    label: "A - Z",
+    value: "oldest",
+    label: "Más antigua",
   },
   {
-    value: "role",
-    label: "Rol",
+    value: "completed",
+    label: "Completadas",
+  },
+  {
+    value: "in_process",
+    label: "En proceso",
+  },
+  {
+    value: "canceled",
+    label: "Canceladas",
+  },
+  {
+    value: "az",
+    label: "A - Z por nombre",
+  },
+  {
+    value: "za",
+    label: "Z - A por nombre",
   },
 ];
-

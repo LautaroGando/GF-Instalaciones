@@ -21,7 +21,7 @@ export const SignUp: React.FC = () => {
       <div
         className={clsx(
           "w-full p-3 flex flex-col items-center gap-10 transition-all duration-500",
-          view === "signIn" ? "opacity-0 scale-75" : "opacity-100 scale-100"
+          view === "signIn" ? "hidden scale-75" : "flex scale-100"
         )}
       >
         <ButtonChangeAuth />

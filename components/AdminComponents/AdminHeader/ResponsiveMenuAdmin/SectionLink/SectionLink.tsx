@@ -22,7 +22,7 @@ export const SectionLink: React.FC = () => {
           className={clsx(
             "w-full flex items-center gap-3 h-[50px] transition-all duration-500 border-l-2 border-transparent pl-2 lg:h-[70px] lg:pl-0",
             menuAdmin ? 'lg:justify-start lg:pl-2' : 'lg:justify-center',
-            pathname === link.href
+            pathname.includes(link.label.toLowerCase())
               ? "bg-primaryColor text-letterColorLight"
               : "hover:bg-primaryColor/10 hover:border-primaryColor"
           )}

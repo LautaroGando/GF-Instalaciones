@@ -9,7 +9,7 @@ export const headerLinksAdmin: IHeaderLinkAdmin[] = [
     },
     {
         icon: faUser,
-        label: 'Usuarios',
+        label: 'Users',
         href: '/admin/users',
     },
     {

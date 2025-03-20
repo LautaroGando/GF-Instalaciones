@@ -9,8 +9,13 @@ import { usePath } from "@/hooks/usePath";
 import { useSize } from "@/hooks/useSize";
 import { useEffect, useRef } from "react";
 import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectTheme";
+import { useUserStore } from "@/store/UserStore/userStore";
+import ButtonProfile from "@/components/ui/GeneralComponents/ButtonProfile/ButtonProfile";
+import ButtonInstaller from "@/components/ui/GeneralComponents/ButtonInstaller/ButtonInstaller";
+import ButtonLogout from "@/components/ui/GeneralComponents/ButtonLogout/ButtonLogout";
 
 export const ResponsiveMenu: React.FC = () => {
+  const { user } = useUserStore();
   const { menu, handleCloseMenu } = useMenuStore();
   const { pathname, hash } = usePath();
   const { size } = useSize();
@@ -43,6 +48,8 @@ export const ResponsiveMenu: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menu, handleCloseMenu]);
+
+  const userInfo = user && "user" in user ? user.user : user;
 
   return (
     <div className="lg:hidden">
@@ -84,6 +91,16 @@ export const ResponsiveMenu: React.FC = () => {
               </li>
             );
           })}
+          {userInfo && (
+            <>
+              <div className="w-full max-w-[330px] mx-auto h-[2px] bg-primaryColor"></div>
+              <ButtonProfile classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor lg:hover:text-letterColorLight lg:hover:border-none" />
+              {userInfo?.role.name === "Instalador" && (
+                <ButtonInstaller classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor lg:hover:text-letterColorLight lg:hover:border-none" />
+              )}
+              <ButtonLogout classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-redColor lg:hover:text-letterColorLight lg:hover:border-none" />
+            </>
+          )}
         </ul>
       </div>
     </div>

@@ -14,7 +14,7 @@ export const ImageForm: React.FC = () => {
       transition={{ duration: 0.5 }}
       className={clsx(
         "w-full bg-secondaryColor/80 backdrop-blur-md absolute top-0 left-0 z-10",
-        view === "signUp" ? "h-[1502px]" : "h-full"
+        view === "signUp" ? "h-[1502px]" : "h-full",
       )}
     ></motion.div>
   );

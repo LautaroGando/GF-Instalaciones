@@ -12,7 +12,7 @@ const TrackingInfo = () => {
         type="text"
         name="user"
         id="user"
-        placeholder="Buscar usuario..."
+        placeholder="Buscar Orden..."
       />
     </div>
   );
