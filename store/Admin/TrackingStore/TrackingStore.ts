@@ -8,7 +8,7 @@ import IEditOrderFormValues from "@/interfaces/IEditOrderFormValues";
 import updateOrder from "@/services/orders/updateOrder";
 import { ITrackingProps } from "./types";
 
-export const useTrackingStore = create<ITrackingProps>((set) => ({
+export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   orders: [],
   isLoading: false,
   handleFetchOrders: async () => {
@@ -52,9 +52,11 @@ export const useTrackingStore = create<ITrackingProps>((set) => ({
         ),
       }));
 
+      get().handleFetchOrders();
+
       return updatedOrder;
     } catch (err) {
-      console.error("Error updating order:", err);
+      console.log("Error updating order:", err);
       throw err;
     } finally {
       set({ isLoading: false });

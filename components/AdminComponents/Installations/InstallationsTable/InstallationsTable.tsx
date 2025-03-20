@@ -57,7 +57,7 @@ const InstallationsTable = () => {
         <div className="h-[220px]">
         <EmptyState icon={faBoxOpen} title="Esta orden no tiene instalaciones asignadas." />
         </div>
-        <div className="mx-auto max-w-[200px]">
+        <div className="mx-auto max-w-[166px]">
           <CreateButton />
         </div>
       </div>

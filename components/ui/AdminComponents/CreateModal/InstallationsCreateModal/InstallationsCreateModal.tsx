@@ -237,13 +237,13 @@ const InstallationsCreateModal = () => {
                     <button
                       type="button"
                       onClick={closeModal}
-                      className="w-full mt-4 bg-bgColorDark/30 text-white p-2 rounded-md transition-all duration-200 hover:bg-bgColorDark/40 xl:w-[240px]"
+                      className="w-full mt-4 order-2 bg-bgColorDark/30 text-white p-2 rounded-md transition-all duration-200 hover:bg-bgColorDark/40 xl:order-1 xl:w-[240px]"
                     >
                       Cancelar
                     </button>
                     <button
                       type="submit"
-                      className="w-full mt-4 bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover xl:w-[240px]"
+                      className="w-full mt-4 order-1 bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover xl:w-[240px]"
                     >
                       Crear Instalación
                     </button>
