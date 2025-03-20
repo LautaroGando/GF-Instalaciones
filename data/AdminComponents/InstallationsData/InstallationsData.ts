@@ -1,4 +1,4 @@
-import IInstallation from "@/interfaces/IInstallation";
+/* import IInstallation from "@/interfaces/IInstallation";
 import TInstallationStatus from "@/types/TInstallationStatus";
 
 const streets = [
@@ -41,3 +41,4 @@ const generateInstallations = (count: number): IInstallation[] => {
 const InstallationsData: IInstallation[] = generateInstallations(60);
 
 export default InstallationsData;
+ */

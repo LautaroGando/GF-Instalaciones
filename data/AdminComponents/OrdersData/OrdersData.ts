@@ -1,4 +1,4 @@
-import IOrder from "@/interfaces/IOrder";
+/* import IOrder from "@/interfaces/IOrder";
 import InstallationsData from "../InstallationsData/InstallationsData";
 
 export const ordersData: IOrder[] = [
@@ -132,3 +132,4 @@ export const ordersData: IOrder[] = [
 ];
 
 export default ordersData;
+ */

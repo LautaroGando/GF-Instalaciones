@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { IListButtonActionProps } from "./types";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,24 +26,27 @@ export const ButtonAction: React.FC<IListButtonActionProps> = ({
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
+  const handleClickOutside = useCallback(
+    (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+
+      if (
+        target.closest("[data-ignored-click-outside-popup]") ||
+        document.querySelector(".swal2-container")?.contains(target)
+      ) {
+        return;
+      }
+
+      if (modalRef.current && !modalRef.current.contains(target))
+        handleActionMenu(item.id);
+    },
+    [handleActionMenu, item.id]
+  );
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleClickOutside = (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
-
-    if (
-      target.closest("[data-ignored-click-outside-popup]") ||
-      document.querySelector(".swal2-container")?.contains(target)
-    ) {
-      return;
-    }
-
-    if (modalRef.current && !modalRef.current.contains(target))
-      handleActionMenu(item.id);
-  };
+  }, [handleClickOutside]);
 
   return (
     <AnimatePresence mode="wait">

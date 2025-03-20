@@ -21,7 +21,6 @@ export const useUserStore = create<IUserStoreProps>()(
     (set, get) => ({
       user: null,
       users: null,
-      installers: null,
       token: null,
       filterUsers: null,
       isLoading: false,

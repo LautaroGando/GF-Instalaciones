@@ -1,6 +1,10 @@
 "use client";
 
-import { faBoxOpen, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBoxOpen,
+  faPenToSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import TrackingTableHeader from "./TrackingTableHeader/TackingTableHeader";
@@ -71,7 +75,10 @@ const TrackingTable = () => {
                 <td className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40">
                   <button
                     onClick={() =>
-                      openTrackingCreateModal("Descripción de la Orden", order.description)
+                      openTrackingCreateModal(
+                        "Descripción de la Orden",
+                        order.description
+                      )
                     }
                     className="bg-primaryColor h-[34px] px-5 font-bold text-letterColorLight rounded-[4px] transition-bg duration-200 hover:bg-primaryColorHover"
                   >
@@ -87,7 +94,9 @@ const TrackingTable = () => {
                 </td>
                 <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
                   {order.completed ? (
-                    <span className="text-admin-activeColor font-bold">Completada</span>
+                    <span className="text-admin-activeColor font-bold">
+                      Completada
+                    </span>
                   ) : (
                     <span className="text-admin-inProccess font-bold">
                       {order.instalationsFinished}
@@ -95,7 +104,9 @@ const TrackingTable = () => {
                   )}
                 </td>
                 <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-                  <Link href={`/admin/tracking/installations?orderId=${order.id}`}>
+                  <Link
+                    href={`/admin/tracking/installations?orderId=${order.id}`}
+                  >
                     <button className="bg-primaryColor h-[34px] px-5 font-bold text-letterColorLight rounded-[4px] transition-bg duration-200 hover:bg-primaryColorHover">
                       Ver instalaciones
                     </button>
