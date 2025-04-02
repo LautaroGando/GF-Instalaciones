@@ -31,7 +31,7 @@ const TrackingEditModal = () => {
         title: "Orden actualizada",
         text: "Los cambios se han guardado correctamente.",
         toast: true,
-        position: "bottom-end",
+        position: "top",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
@@ -46,7 +46,7 @@ const TrackingEditModal = () => {
         title: "Error",
         text: "No se pudo actualizar la orden. Inténtalo de nuevo.",
         toast: true,
-        position: "bottom-end",
+        position: "top",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
@@ -57,8 +57,12 @@ const TrackingEditModal = () => {
   };
 
   return (
-    <div className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50">
+    <div
+      onClick={closeModal}
+      className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50"
+    >
       <motion.div
+        onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, scale: 0.8, y: -20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -81,19 +85,13 @@ const TrackingEditModal = () => {
             onSubmit={handleOnSubmit}
           >
             {({ handleSubmit, errors, touched, isSubmitting }) => (
-              <Form
-                onSubmit={handleSubmit}
-                className="space-y-3 text-bgColorDark/60"
-              >
+              <Form onSubmit={handleSubmit} className="space-y-3 text-bgColorDark/60">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
                 >
-                  <label
-                    htmlFor="orderNumber"
-                    className="text-sm font-medium text-primaryColor/80"
-                  >
+                  <label htmlFor="orderNumber" className="text-sm font-medium text-primaryColor/80">
                     Número de Orden
                   </label>
                   <Field
@@ -105,10 +103,8 @@ const TrackingEditModal = () => {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
-                      opacity:
-                        errors.orderNumber && touched.orderNumber ? 1 : 0,
-                      height:
-                        errors.orderNumber && touched.orderNumber ? "auto" : 0,
+                      opacity: errors.orderNumber && touched.orderNumber ? 1 : 0,
+                      height: errors.orderNumber && touched.orderNumber ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"
@@ -122,10 +118,7 @@ const TrackingEditModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
                 >
-                  <label
-                    htmlFor="title"
-                    className="text-sm font-medium text-primaryColor/80"
-                  >
+                  <label htmlFor="title" className="text-sm font-medium text-primaryColor/80">
                     Nombre de la Orden
                   </label>
                   <Field
@@ -152,10 +145,7 @@ const TrackingEditModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
                 >
-                  <label
-                    htmlFor="description"
-                    className="text-sm font-medium text-primaryColor/80"
-                  >
+                  <label htmlFor="description" className="text-sm font-medium text-primaryColor/80">
                     Descripción
                   </label>
                   <Field
@@ -167,10 +157,8 @@ const TrackingEditModal = () => {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
-                      opacity:
-                        errors.description && touched.description ? 1 : 0,
-                      height:
-                        errors.description && touched.description ? "auto" : 0,
+                      opacity: errors.description && touched.description ? 1 : 0,
+                      height: errors.description && touched.description ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"

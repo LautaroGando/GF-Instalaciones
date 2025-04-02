@@ -9,11 +9,18 @@ import useDisableScroll from "@/hooks/useDisableScroll";
 import { useInstallationsEditModal } from "@/store/Admin/AdminModals/EditModals/InstallationsEditModalStore/InstallationsEditModalStore";
 import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValues";
 import validateEditInstallation from "@/helpers/AdminValidations/ValidateEditInstallations";
+import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
+import { useSearchParams } from "next/navigation";
 
 const InstallationEditModal = () => {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderId");
   const { isOpen, closeModal, selectedInstallation } = useInstallationsEditModal();
+  const { handleUpdateInstallation } = useTrackingStore();
 
   useDisableScroll(isOpen);
+
+  if (!orderId) throw new Error('No se encontro el id de la orden.');
 
   if (!isOpen || !selectedInstallation) return null;
 
@@ -29,15 +36,21 @@ const InstallationEditModal = () => {
     values: IEditInstallationFormValues,
     { setSubmitting }: FormikHelpers<IEditInstallationFormValues>
   ) => {
+    const installationId = values.id;
+    handleUpdateInstallation(orderId, installationId, values);
     console.log(values);
-    
+
     closeModal();
     setSubmitting(false);
   };
 
   return (
-    <div className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50">
+    <div
+      onClick={closeModal}
+      className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50"
+    >
       <motion.div
+        onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, scale: 0.8, y: -20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 20 }}

@@ -129,7 +129,7 @@ export const useUserStore = create<IUserStoreProps>()(
               ? a.email.localeCompare(b.email)
               : sortBy === "role"
               ? a.role.name.localeCompare(b.role.name)
-              : parseDate(b.createAt) - parseDate(a.createAt);
+              : parseDate(b.createdAt) - parseDate(a.createdAt);
           });
         }
 
