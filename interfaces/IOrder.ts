@@ -8,9 +8,9 @@ export interface IOrder {
   startDate: string;
   endDate: string | null;
   completed: boolean;
-  instalationsFinished: string;
+  installationsFinished: string;
   progress: string;
-  instalations: IInstallation[];
+  installations: IInstallation[];
 }
 
 export default IOrder;

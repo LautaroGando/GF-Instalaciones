@@ -1,11 +1,13 @@
 import { API_URL } from "@/config/envs";
 import { IUser } from "@/interfaces/IUser";
-import { popUpDeleteUser, popUpDeleteUserError } from "@/utils/popUp";
+import { popUpDeleteUserError } from "@/utils/popUp";
 import axios from "axios";
+
+// BUSCAR USUARIOS
 
 export const findUsers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/user/findAllWhitDeleted`);
+    const response = await axios.get(`${API_URL}/user`);
     const data = response.data;
     return data;
   } catch (error) {
@@ -22,6 +24,8 @@ export const findInstallers = async () => {
     console.log(error);
   }
 };
+
+// ACCIONES PARA USUARIOS
 
 export const disabledUser = async (id: string) => {
   try {

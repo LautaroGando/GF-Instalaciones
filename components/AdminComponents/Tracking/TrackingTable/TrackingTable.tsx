@@ -1,25 +1,20 @@
 "use client";
-
-import {
-  faBoxOpen,
-  faPenToSquare,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import TrackingTableHeader from "./TrackingTableHeader/TackingTableHeader";
-import Link from "next/link";
 import CreateButton from "@/components/ui/AdminComponents/CreateButton/CreateButton";
 import { useTextModalStore } from "@/store/Admin/AdminModals/TextModalStore/TextModalStore";
-import EmptyState from "@/components/ui/AdminComponents/EmptyState/EmptyState";
 import { useTrackingEditModal } from "@/store/Admin/AdminModals/EditModals/TrackingEditModalStore/TrackingEditModalStore";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
+import Swal from "sweetalert2";
+import RenderEmptyState from "@/components/ui/AdminComponents/RenderEmptyState/RenderEmptyState";
+import IOrder from "@/interfaces/IOrder";
+import TrackingRow from "./TrackingRow/TrackingRow";
 
 const TrackingTable = () => {
-  const { openModal: openTrackingCreateModal } = useTextModalStore();
+  const { openModal: openTrackingTextModal } = useTextModalStore();
   const { openModal: openTrackingEditModal } = useTrackingEditModal();
-  const { orders, handleFetchOrders, isLoading } = useTrackingStore();
+  const { orders, handleFetchOrders, handleDeleteOrder, isLoading } = useTrackingStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
 
   useEffect(() => {
@@ -43,89 +38,81 @@ const TrackingTable = () => {
 
   if (!orders || orders.length === 0) {
     return (
-      <div>
-        <div className="h-[220px]">
-          <EmptyState
-            icon={faBoxOpen}
-            title="No hay órdenes registradas"
-            text="Aún no se han añadido órdenes. Intenta más tarde."
-          />
-        </div>
-        <div className="mx-auto max-w-[166px]">
-          <CreateButton />
-        </div>
-      </div>
+      <RenderEmptyState
+        title="No hay órdenes registradas"
+        text="Aún no se han añadido órdenes. Intenta más tarde."
+      />
     );
   }
 
+  const handleEditOrder = (order: IOrder) => {
+    openTrackingEditModal(order);
+  };
+
+  const handleDeleteOrderClick = async (id: string) => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará la orden permanentemente.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      await handleDeleteOrder(id);
+
+      Swal.fire({
+        icon: "success",
+        title: "Orden eliminada",
+        text: "La orden ha sido eliminada correctamente.",
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "No se pudo eliminar la orden. Intenta nuevamente.";
+
+      Swal.fire({
+        icon: "error",
+        title: "Error al eliminar",
+        text: errorMessage,
+        toast: true,
+        position: "bottom-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    }
+  };
+
+  const handleOpenTextModal = (title: string, text: string) => {
+    openTrackingTextModal(title, text);
+  };
+  
   return (
     <>
       <div className="w-full h-[max-content] min-h-[400px] overflow-x-auto">
         <table className="text-sm text-left w-full border-collapse">
           <TrackingTableHeader />
           <tbody>
-            {orders.map((order) => (
-              <tr key={order.id} className="border-b border-admin-borderColor">
-                <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-                  {order.orderNumber}
-                </td>
-                <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-                  {order.title}
-                </td>
-                <td className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40">
-                  <button
-                    onClick={() =>
-                      openTrackingCreateModal(
-                        "Descripción de la Orden",
-                        order.description
-                      )
-                    }
-                    className="bg-primaryColor h-[34px] px-5 font-bold text-letterColorLight rounded-[4px] transition-bg duration-200 hover:bg-primaryColorHover"
-                  >
-                    Leer Descripción
-                  </button>
-                </td>
-
-                <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-                  12/03/2025
-                </td>
-                <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-                  {order.endDate ? order.endDate : "-"}
-                </td>
-                <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-                  {order.completed ? (
-                    <span className="text-admin-activeColor font-bold">
-                      Completada
-                    </span>
-                  ) : (
-                    <span className="text-admin-inProccess font-bold">
-                      {order.instalationsFinished}
-                    </span>
-                  )}
-                </td>
-                <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-                  <Link
-                    href={`/admin/tracking/installations?orderId=${order.id}`}
-                  >
-                    <button className="bg-primaryColor h-[34px] px-5 font-bold text-letterColorLight rounded-[4px] transition-bg duration-200 hover:bg-primaryColorHover">
-                      Ver instalaciones
-                    </button>
-                  </Link>
-                </td>
-                <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40 text-center">
-                  <div className="flex items-center justify-start gap-4 text-base text-letterColorLight">
-                    <button
-                      onClick={() => openTrackingEditModal(order)}
-                      className="bg-admin-editColor w-8 h-8 rounded-[3px]"
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </button>
-                    <button className="bg-admin-inactiveColor w-8 h-8 rounded-[3px]">
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
+          {orders.map((order) => (
+              <TrackingRow
+                key={order.id}
+                order={order}
+                editOrder={() => handleEditOrder(order)}
+                deleteOrder={() => handleDeleteOrderClick(order.id)}
+                openTextModal={() =>
+                  handleOpenTextModal("Descripción de la Orden", order.description)
+                }
+              />
             ))}
           </tbody>
         </table>

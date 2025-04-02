@@ -17,7 +17,9 @@ const TrackingCreateModal = () => {
 
   useDisableScroll(isOpen);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   const handleOnSubmit = async (
     values: ICreateOrderFormValues,
@@ -32,7 +34,7 @@ const TrackingCreateModal = () => {
         title: "Orden creada",
         text: "La orden ha sido creada correctamente.",
         toast: true,
-        position: "bottom-end",
+        position: "top",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
@@ -46,8 +48,11 @@ const TrackingCreateModal = () => {
         icon: "error",
         title: "Error",
         text: "Hubo un problema al crear la orden. Inténtalo de nuevo.",
-        position: "center",
-        showConfirmButton: true,
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
       });
     } finally {
       setSubmitting(false);
@@ -55,8 +60,12 @@ const TrackingCreateModal = () => {
   };
 
   return (
-    <div className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50">
+    <div
+      onClick={closeModal}
+      className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50"
+    >
       <motion.div
+        onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, scale: 0.8, y: -20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -74,6 +83,7 @@ const TrackingCreateModal = () => {
               orderNumber: "",
               title: "",
               description: "",
+              clientId: "f4bf86cc-5c90-40c1-b544-c27a2e476831",
             }}
             validationSchema={orderSchema}
             onSubmit={handleOnSubmit}

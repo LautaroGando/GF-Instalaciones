@@ -10,13 +10,17 @@ const TextModal: React.FC = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed px-4 inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div
+      onClick={closeModal}
+      className="fixed px-4 inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    >
       <motion.div
+        onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, scale: 0.8, y: -20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 20 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md"
+        className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md z-60"
       >
         <h2 className="text-[20px] font-bold text-primaryColor mb-4">{title}:</h2>
         <motion.div
@@ -25,7 +29,7 @@ const TextModal: React.FC = () => {
           transition={{ delay: 0.2 }}
           className="overflow-y-auto max-h-[300px] text-gray-700"
         >
-          {text}
+          <div dangerouslySetInnerHTML={{ __html: text || "" }} />
         </motion.div>
         <button
           onClick={closeModal}
