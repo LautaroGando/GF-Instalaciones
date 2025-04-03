@@ -1,6 +1,6 @@
 import { API_URL } from "@/config/envs";
 import { IUser } from "@/interfaces/IUser";
-import { popUpDeleteUser, popUpDeleteUserError } from "@/utils/popUp";
+import { popUpDeleteUserError } from "@/utils/popUp";
 import axios from "axios";
 
 export const findUsers = async () => {
