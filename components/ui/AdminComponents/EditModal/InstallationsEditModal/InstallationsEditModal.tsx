@@ -20,7 +20,7 @@ const InstallationEditModal = () => {
 
   useDisableScroll(isOpen);
 
-  if (!orderId) throw new Error('No se encontro el id de la orden.');
+  if (!orderId) return;
 
   if (!isOpen || !selectedInstallation) return null;
 
