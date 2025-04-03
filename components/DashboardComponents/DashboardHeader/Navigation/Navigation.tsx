@@ -1,3 +1,4 @@
+"use client";
 import { navigationData } from "@/data/DashboardComponents/NavigationData/NavigationData";
 import { INavigationData } from "@/data/DashboardComponents/NavigationData/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,13 +7,21 @@ import Link from "next/link";
 import React from "react";
 import { INavigationProps } from "./types";
 import ButtonLogout from "@/components/ui/DashboardComponents/ButtonLogout/ButtonLogout";
+import { useUserStore } from "@/store/UserStore/userStore";
 
 export const Navigation: React.FC<INavigationProps> = ({ pathname }) => {
+  const { user } = useUserStore();
+
+  const userInfo = user && "user" in user ? user.user : user;
+
   return (
     <div className="flex gap-2 flex-row-reverse items-center relative">
       <ButtonLogout />
       {navigationData.map((link: INavigationData, i: number) => {
         const modifyPath = link.href.split("/")[2];
+
+        if (userInfo?.role.name === "Instalador" && link.label === "Newslatter")
+          return;
 
         return (
           <Link

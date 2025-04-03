@@ -73,6 +73,7 @@ export const ResponsiveMenu: React.FC = () => {
           <SelectTheme />
           {headerLinks.map((link: IHeaderLink, i: number) => {
             const isActive = link.href === `${pathname}${hash}`;
+            if (user && link.label === "Ingresar") return null;
 
             return (
               <li key={i}>

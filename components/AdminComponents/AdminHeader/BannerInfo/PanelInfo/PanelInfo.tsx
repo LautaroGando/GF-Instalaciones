@@ -7,7 +7,7 @@ import React from "react";
 export const PanelInfo: React.FC = () => {
   const { users } = useUserStore();
 
-  const quantityUsers = users?.length;
+  const quantityUsers = users?.length ?? 0;
 
   return (
     <div className="flex flex-col gap-5 sm:flex-row sm:gap-3">
