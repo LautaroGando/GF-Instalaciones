@@ -1,8 +1,41 @@
+'use client';
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import clsx from "clsx";
+import { motion } from "framer-motion";
 import IInstallationsRowProps from "./types";
+
+const rowVariants = {
+  hidden: {
+    opacity: 0,
+    y: 10,
+    borderColor: "rgba(255,255,255,0)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    borderColor: "rgba(182,182,182,0.4)",
+    transition: {
+      type: "spring",
+      stiffness: 60,
+      damping: 16,
+      delayChildren: 0.05,
+      staggerChildren: 0.05,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    borderColor: "rgba(255,255,255,0)",
+    transition: { duration: 0.2, ease: "easeInOut" },
+  },
+};
+
+const cellVariants = {
+  hidden: { opacity: 0, y: 6 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
 
 const InstallationRow: React.FC<IInstallationsRowProps> = ({
   installation,
@@ -13,23 +46,51 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
   onViewAddress,
 }) => {
   return (
-    <tr className="border-b border-admin-borderColor">
-      <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
+    <motion.tr
+      layout
+      variants={rowVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      style={{ borderBottomWidth: 1 }}
+      className="border-b"
+    >
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+      >
         {installation.startDate || "-"}
-      </td>
-      <td className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40">
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40"
+      >
         {installation.endDate || "-"}
-      </td>
-      <td className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40">
-        <button
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
           onClick={onViewAddress}
-          className="bg-primaryColor h-[34px] px-5 font-bold text-letterColorLight rounded-[4px] transition-bg duration-200 hover:bg-primaryColorHover"
+          className="bg-primaryColor border border-primaryColor h-[36px] px-5 font-bold text-letterColorLight rounded-[2px] transition-all duration-200 hover:bg-white hover:text-primaryColor"
         >
           Ver Dirección
-        </button>
-      </td>
-      <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-        <span
+        </motion.button>
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+      >
+        <motion.span
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", stiffness: 100, damping: 14 }}
           className={clsx(
             "font-bold",
             installation.status === "Pendiente" || installation.status === "En proceso"
@@ -42,43 +103,68 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
           )}
         >
           {installation.status}
-        </span>
-      </td>
-      <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-        <button
+        </motion.span>
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
           onClick={onViewNotes}
-          className="bg-primaryColor h-[34px] px-5 font-bold text-letterColorLight rounded-[4px] transition-bg duration-200 hover:bg-primaryColorHover"
+          className="bg-primaryColor border border-primaryColor h-[36px] px-5 font-bold text-letterColorLight rounded-[2px] transition-all duration-200 hover:bg-white hover:text-primaryColor"
         >
           Ver Notas
-        </button>
-      </td>
-      <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-        <button
+        </motion.button>
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-14 align-middle whitespace-nowrap border-y border-admin-letterColor/40"
+      >
+        <span className="text-letterColor">Jhon Doe</span>
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
           onClick={onViewNotes}
-          className="bg-primaryColor h-[34px] px-5 font-bold text-letterColorLight rounded-[4px] transition-bg duration-200 hover:bg-primaryColorHover"
-        >
-          {}
-        </button>
-      </td>
-      <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
-        <button
-          onClick={onViewNotes}
-          className="bg-primaryColor h-[34px] px-5 font-bold text-letterColorLight rounded-[4px] transition-bg duration-200 hover:bg-primaryColorHover"
+          className="bg-primaryColor border border-primaryColor h-[36px] px-5 font-bold text-letterColorLight rounded-[4px] transition-all duration-200 hover:bg-white hover:text-primaryColor"
         >
           Ver Instaladores
-        </button>
-      </td>
-      <td className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40">
+        </motion.button>
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+      >
         <div className="flex items-center gap-2 text-base text-letterColorLight">
-          <button onClick={onEdit} className="bg-admin-editColor w-8 h-8 rounded-[3px]">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onEdit}
+            className="bg-admin-editColor text-white w-8 h-8 rounded-[2px] border border-admin-editColor transition-all duration-200 hover:bg-white hover:text-admin-editColor"
+          >
             <FontAwesomeIcon icon={faPenToSquare} />
-          </button>
-          <button onClick={onDelete} className="bg-admin-inactiveColor w-8 h-8 rounded-[3px]">
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onDelete}
+            className="bg-admin-inactiveColor text-white w-8 h-8 rounded-[2px] border border-admin-inactiveColor transition-all duration-200 hover:bg-white hover:text-admin-inactiveColor"
+          >
             <FontAwesomeIcon icon={faTrash} />
-          </button>
+          </motion.button>
         </div>
-      </td>
-    </tr>
+      </motion.td>
+    </motion.tr>
   );
 };
 

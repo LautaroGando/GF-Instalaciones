@@ -1,19 +1,57 @@
+'use client';
+import InstallationsTableHeaders from '@/utils/InstallationsTableHeaders';
+import { motion } from 'framer-motion';
+import React from 'react';
 
-import InstallationsTableHeaders from '@/utils/InstallationsTableHeaders'
-import React from 'react'
+const theadVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+      ease: 'easeOut',
+      delayChildren: 0.1,
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const thVariants = {
+  hidden: { opacity: 0, y: -8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 80,
+      damping: 12,
+    },
+  },
+};
 
 const InstallationsTableHeader = () => {
   return (
-    <thead>
-      <tr className="sticky top-0 bg-bgColor border-b border-primaryColor">
+    <motion.thead
+      initial="hidden"
+      animate="visible"
+      variants={theadVariants}
+    >
+      <motion.tr
+        layout
+        className="sticky top-0 bg-bgColor border-b border-primaryColor"
+      >
         {InstallationsTableHeaders.map((item, i) => (
-          <th key={i} className="px-4 h-12 whitespace-nowrap border-b border-primaryColor">
+          <motion.th
+            key={i}
+            variants={thVariants}
+            className="px-4 h-12 whitespace-nowrap border-b border-primaryColor text-bgColorDark/80 text-[14px] font-semibold tracking-wide"
+          >
             {item}
-          </th>
+          </motion.th>
         ))}
-      </tr>
-    </thead>
-  )
-}
+      </motion.tr>
+    </motion.thead>
+  );
+};
 
-export default InstallationsTableHeader
+export default InstallationsTableHeader;

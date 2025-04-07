@@ -9,30 +9,66 @@ import {
   createOrder,
   deleteInstallation,
   deleteOrder,
+  getAllInstallations,
   getAllOrders,
+  getOrderById,
   updateInstallation,
   updateOrder,
 } from "@/services/orders";
 import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormValues";
 import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValues";
+import IInstallation from "@/interfaces/IInstallation";
 
 export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   orders: [],
+  selectedOrder: null as IOrder | null,
   isLoading: false,
-
+  orderFilters: {
+    completed: false,
+  },
+  orderSortParams: {
+    progress: "",
+    createdAt: "",
+    updatedAt: "",
+  },
   handleLoading: (conditional: boolean) => {
     set({ isLoading: conditional });
   },
 
   // ORDERS
+  handleFetchOrders: async (params) => {
+    const defaultSort = {
+      progress: "",
+      createdAt: "",
+      updatedAt: "",
+    };
 
-  handleFetchOrders: async () => {
+    const finalParams = {
+      ...defaultSort,
+      ...get().orderFilters,
+      ...params,
+    };
+
     try {
       get().handleLoading(true);
-      const orders = await getAllOrders();
-      set({ orders });
+      const orders = await getAllOrders(finalParams);
+
+      set({
+        orders,
+        orderFilters: {
+          completed:
+            typeof finalParams.completed === "boolean"
+              ? finalParams.completed
+              : get().orderFilters.completed,
+        },
+        orderSortParams: {
+          progress: finalParams.progress,
+          createdAt: finalParams.createdAt,
+          updatedAt: finalParams.updatedAt,
+        },
+      });
     } catch (err) {
-      console.log("Error al obtener las órdenes:", err);
+      console.error("Error al obtener las órdenes:", err);
     } finally {
       get().handleLoading(false);
     }
@@ -70,7 +106,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         ),
       }));
 
-      get().handleFetchOrders();
+      const fetchOrders = get().handleFetchOrders;
+      if (fetchOrders) await fetchOrders();
 
       return updatedOrder;
     } catch (err) {
@@ -94,6 +131,29 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   },
 
   // INSTALLATIONS
+  handleFetchInstallations: async (orderId: string): Promise<IInstallation[] | null> => {
+    get().handleLoading(true);
+    try {
+      const allInstallations = await getAllInstallations(orderId);
+
+      // Busco la orden en el estado, si no está, la traigo desde la API y la guardo.
+      const existingOrder = get().orders.find((o) => o.id === orderId);
+
+      if (existingOrder) {
+        set({ selectedOrder: existingOrder });
+      } else {
+        const fetchedOrder = await getOrderById(orderId);
+        set({ selectedOrder: fetchedOrder });
+      }
+
+      return allInstallations;
+    } catch (error) {
+      console.error("Error al obtener las instalaciones:", error);
+      return null;
+    } finally {
+      get().handleLoading(false);
+    }
+  },
 
   handleCreateInstallation: async (orderId: string, values: ICreateInstallationFormValues) => {
     try {
