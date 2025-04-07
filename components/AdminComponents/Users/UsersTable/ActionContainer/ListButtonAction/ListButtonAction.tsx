@@ -109,7 +109,7 @@ export const ButtonAction: React.FC<IListButtonActionProps> = ({
                 className="btnAction border-admin-activeColor text-admin-activeColor after:bg-admin-activeColor after:left-0 disabled:bg-disabledButton disabled:line-through disabled:border-disabledButton disabled:text-letterColorLight"
                 disabled={
                   (item.installer?.status !== "APROBADO" &&
-                    item.role.name !== "Usuario") ||
+                    item.userRoles[0].role.name !== "Usuario") ||
                   !!item.disabledAt
                 }
               >
