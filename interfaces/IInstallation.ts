@@ -11,14 +11,8 @@ export interface IInstallation {
     number: string;
     postalCode: string;
     note: string;
-    city: {
-      id: string;
-      name: string;
-      province: {
-        id: string;
-        name: string;
-      };
-    };
+    city: string;
+    province: string;
   };
   status: TInstallationStatus;
   notes: string;

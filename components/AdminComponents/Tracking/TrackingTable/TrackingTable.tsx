@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import RenderEmptyState from "@/components/ui/AdminComponents/RenderEmptyState/RenderEmptyState";
 import IOrder from "@/interfaces/IOrder";
 import TrackingRow from "./TrackingRow/TrackingRow";
+import { AnimatePresence } from "motion/react";
 
 const TrackingTable = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
@@ -30,7 +31,7 @@ const TrackingTable = () => {
 
   if (isLoading || isLoadingOrders) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex items-center justify-center min-h-[770px]">
         <Loading theme="light" />
       </div>
     );
@@ -40,7 +41,7 @@ const TrackingTable = () => {
     return (
       <RenderEmptyState
         title="No hay órdenes registradas"
-        text="Aún no se han añadido órdenes. Intenta más tarde."
+        text="Aún no se han añadido órdenes. Intenta más tarde o utiliza otro filtro."
       />
     );
   }
@@ -96,27 +97,30 @@ const TrackingTable = () => {
   const handleOpenTextModal = (title: string, text: string) => {
     openTrackingTextModal(title, text);
   };
-  
+
   return (
     <>
       <div className="w-full h-[max-content] min-h-[400px] overflow-x-auto">
         <table className="text-sm text-left w-full border-collapse">
           <TrackingTableHeader />
           <tbody>
-          {orders.map((order) => (
-              <TrackingRow
-                key={order.id}
-                order={order}
-                editOrder={() => handleEditOrder(order)}
-                deleteOrder={() => handleDeleteOrderClick(order.id)}
-                openTextModal={() =>
-                  handleOpenTextModal("Descripción de la Orden", order.description)
-                }
-              />
-            ))}
+            <AnimatePresence mode="popLayout">
+              {orders.map((order) => (
+                <TrackingRow
+                  key={order.id}
+                  order={order}
+                  editOrder={() => handleEditOrder(order)}
+                  deleteOrder={() => handleDeleteOrderClick(order.id)}
+                  openTextModal={() =>
+                    handleOpenTextModal("Descripción de la Orden", order.description)
+                  }
+                />
+              ))}
+            </AnimatePresence>
           </tbody>
         </table>
       </div>
+
       <CreateButton />
     </>
   );

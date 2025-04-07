@@ -20,6 +20,29 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #A79351;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8a703e;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #A79351 transparent;
+}
+
 @layer components {
   .input {
     @apply w-full h-11 border-b bg-transparent resize-none outline-none transition-all duration-300 px-3 text-xs focus:border-primaryColor sm:text-base;

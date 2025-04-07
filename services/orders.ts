@@ -3,10 +3,53 @@ import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormV
 import ICreateOrderFormValues from "@/interfaces/ICreateOrderFormValues";
 import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValues";
 import IEditOrderFormValues from "@/interfaces/IEditOrderFormValues";
+import IInstallation from "@/interfaces/IInstallation";
 import IOrder from "@/interfaces/IOrder";
+import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import axios from "axios";
 
 // ORDERS
+export const getAllOrders = async (params: TOrdersQueryParams): Promise<IOrder[]> => {
+  try {
+    const query = new URLSearchParams();
+
+    if (params.progress) query.append("progress", params.progress);
+    if (params.createdAt) query.append("createdAt", params.createdAt);
+    if (params.updatedAt) query.append("updatedAt", params.updatedAt);
+    if (params.completed) query.append("completed", JSON.stringify(params.completed));
+
+    const { data } = await axios.get(`${API_URL}/orders?${query.toString()}`);
+    console.log(data);
+    const url = `${API_URL}/orders?${query.toString()}`;
+    console.log("Request URL:", url);
+
+    return data.result;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      console.error("Error al obtener las órdenes con parámetros");
+      throw new Error("No se pudieron obtener las órdenes.");
+    } else {
+      console.error("Error inesperado al obtener las órdenes");
+      throw new Error("Error inesperado al obtener las órdenes.");
+    }
+  }
+};
+
+export const getOrderById = async (orderId: string): Promise<IOrder> => {
+  try {
+    const res = await axios.get(`${API_URL}/orders/${orderId}`);
+    return res.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      console.error("Error al obtener la orden con parámetros");
+      throw new Error("No se pudo obtener la orden.");
+    } else {
+      console.error("Error inesperado al obtener la orden");
+      throw new Error("Error inesperado al obtener la orden.");
+    }
+  }
+};
+
 export const createOrder = async (values: ICreateOrderFormValues) => {
   try {
     const response = await axios.post(`${API_URL}/orders`, values);
@@ -18,21 +61,6 @@ export const createOrder = async (values: ICreateOrderFormValues) => {
     } else {
       console.error("Error inesperado al crear la orden");
       throw new Error("Error inesperado al crear la orden.");
-    }
-  }
-};
-
-export const getAllOrders = async (): Promise<IOrder[]> => {
-  try {
-    const { data } = await axios.get(`${API_URL}/orders`);
-    return data.result;
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      console.error("Error al obtener las órdenes");
-      throw new Error("No se pudieron obtener las órdenes.");
-    } else {
-      console.error("Error inesperado al obtener las órdenes");
-      throw new Error("Error inesperado al obtener las órdenes.");
     }
   }
 };
@@ -71,6 +99,20 @@ export const deleteOrder = async (id: string) => {
 };
 
 // INSTALLATIONS
+export const getAllInstallations = async (orderId: string): Promise<IInstallation[]> => {
+  try {
+    const response = await axios.get(`${API_URL}/orders/${orderId}/installations`);
+    return response.data;
+  } catch (error) {
+    const message = axios.isAxiosError(error)
+      ? "No se pudieron obtener las instalaciones."
+      : "Error inesperado al obtener las instalaciones.";
+
+    console.error(message, error);
+    throw new Error(message);
+  }
+};
+
 export const createInstallation = async (
   orderId: string,
   values: ICreateInstallationFormValues
