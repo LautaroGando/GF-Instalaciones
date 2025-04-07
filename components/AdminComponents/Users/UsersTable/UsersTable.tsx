@@ -25,8 +25,12 @@ export const UsersTable: React.FC = () => {
               <thead>
                 <tr className="sticky top-0 bg-bgColor border-b border-primaryColor">
                   <th className="min-w-[170px] h-12 px-4">Nombre Completo</th>
-                  <th className="min-w-[220px] h-12 px-4">Correo electr贸nico</th>
-                  <th className="min-w-[170px] h-12 px-4">Fecha de creaci贸n</th>
+                  <th className="min-w-[220px] h-12 px-4">
+                    Correo electr贸nico
+                  </th>
+                  <th className="min-w-[170px] h-12 px-4">
+                    Fecha de creaci贸n
+                  </th>
                   <th className="min-w-[220px] h-12 px-4">
                     Fecha de deshabilitaci贸n
                   </th>
@@ -42,7 +46,7 @@ export const UsersTable: React.FC = () => {
                     <tr key={i} className="border-b border-admin-borderColor">
                       <InfoRows item={item} label={item.fullName} />
                       <InfoRows item={item} label={item.email} />
-                      <InfoRows item={item} label={item.createAt} />
+                      <InfoRows item={item} label={item.createdAt} />
                       <InfoRows
                         item={item}
                         label={item.disabledAt ? item.disabledAt : "-"}
@@ -68,7 +72,7 @@ export const UsersTable: React.FC = () => {
                       </td>
                       <InfoRows
                         item={item}
-                        label={item.role && item.role.name}
+                        label={item.userRoles[0] && item.userRoles[0].role.name}
                       />
                       <td className="px-4">
                         <ActionContainer item={item} />

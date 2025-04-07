@@ -13,7 +13,7 @@ export const InfoUserAction: React.FC<IInfoUserActionProps> = ({
         </li>
         <div className="w-full h-[2px] bg-primaryColor sm:w-[2px] sm:h-[25px]"></div>
         <li>
-          Rol: <span className="font-light">{item.role.name}</span>
+          Rol: <span className="font-light">{item.userRoles[0].role.name}</span>
         </li>
       </ul>
     </div>

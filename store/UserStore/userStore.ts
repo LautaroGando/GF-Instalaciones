@@ -88,11 +88,11 @@ export const useUserStore = create<IUserStoreProps>()(
 
         filteredUsers = filteredUsers.filter((user: IUser) =>
           selectedFilter === "user"
-            ? user.role.name === "Usuario"
+            ? user.userRoles[0].role.name === "Usuario"
             : selectedFilter === "installer"
-            ? user.role.name === "Instalador"
+            ? user.userRoles[0].role.name === "Instalador"
             : selectedFilter === "coordinator"
-            ? user.role.name === "Coordinador"
+            ? user.userRoles[0].role.name === "Coordinador"
             : selectedFilter === "active"
             ? !user.disabledAt &&
               user.installer?.status !== "RECHAZADO" &&
@@ -128,7 +128,7 @@ export const useUserStore = create<IUserStoreProps>()(
             return sortBy === "abc"
               ? a.email.localeCompare(b.email)
               : sortBy === "role"
-              ? a.role.name.localeCompare(b.role.name)
+              ? a.userRoles[0].role.name.localeCompare(b.userRoles[0].role.name)
               : parseDate(b.createdAt) - parseDate(a.createdAt);
           });
         }

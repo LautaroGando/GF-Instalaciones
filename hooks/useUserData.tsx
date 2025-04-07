@@ -31,7 +31,7 @@ export const useUserData = () => {
         },
       ]);
 
-      setUserRole(userInfo.role.name);
+      setUserRole(userInfo.userRoles[0].role.name);
     }
   }, [user]);
 
