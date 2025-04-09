@@ -18,6 +18,8 @@ import {
 import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormValues";
 import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValues";
 import IInstallation from "@/interfaces/IInstallation";
+import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
+import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 
 export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   orders: [],
@@ -31,42 +33,41 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     createdAt: "",
     updatedAt: "",
   },
+  installationFilters: {
+    status: "",
+    province: "",
+    city: "",
+  },
+  installationSort: {
+    createdAt: "",
+    updatedAt: "",
+  },
+
   handleLoading: (conditional: boolean) => {
     set({ isLoading: conditional });
   },
 
   // ORDERS
-  handleFetchOrders: async (params) => {
-    const defaultSort = {
-      progress: "",
-      createdAt: "",
-      updatedAt: "",
-    };
-
-    const finalParams = {
-      ...defaultSort,
-      ...get().orderFilters,
-      ...params,
-    };
+  handleFetchOrders: async (params?: Partial<TOrdersQueryParams>) => {
+    get().handleLoading(true);
 
     try {
-      get().handleLoading(true);
+      const {
+        progress = "",
+        createdAt = "",
+        updatedAt = "",
+        completed = get().orderFilters.completed,
+      } = params || {};
+
+      const finalParams = { progress, createdAt, updatedAt, completed };
+
       const orders = await getAllOrders(finalParams);
 
-      set({
+      set(() => ({
         orders,
-        orderFilters: {
-          completed:
-            typeof finalParams.completed === "boolean"
-              ? finalParams.completed
-              : get().orderFilters.completed,
-        },
-        orderSortParams: {
-          progress: finalParams.progress,
-          createdAt: finalParams.createdAt,
-          updatedAt: finalParams.updatedAt,
-        },
-      });
+        orderFilters: { completed },
+        orderSortParams: { progress, createdAt, updatedAt },
+      }));
     } catch (err) {
       console.error("Error al obtener las órdenes:", err);
     } finally {
@@ -131,17 +132,32 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   },
 
   // INSTALLATIONS
-  handleFetchInstallations: async (orderId: string): Promise<IInstallation[] | null> => {
+  handleFetchInstallations: async (
+    orderId: string,
+    params?: Partial<TInstallationQueryParams>
+  ): Promise<IInstallation[] | null> => {
     get().handleLoading(true);
-    try {
-      const allInstallations = await getAllInstallations(orderId);
 
-      // Busco la orden en el estado, si no está, la traigo desde la API y la guardo.
+    try {
+      const {
+        status = "",
+        province = "",
+        city = "",
+        createdAt = "",
+        updatedAt = "",
+      } = params || {};
+
+      const allInstallations = await getAllInstallations(orderId, params);
+
       const existingOrder = get().orders.find((o) => o.id === orderId);
 
-      if (existingOrder) {
-        set({ selectedOrder: existingOrder });
-      } else {
+      set(() => ({
+        installationFilters: { status, province, city },
+        installationSort: { createdAt, updatedAt },
+        selectedOrder: existingOrder ?? null,
+      }));
+
+      if (!existingOrder) {
         const fetchedOrder = await getOrderById(orderId);
         set({ selectedOrder: fetchedOrder });
       }

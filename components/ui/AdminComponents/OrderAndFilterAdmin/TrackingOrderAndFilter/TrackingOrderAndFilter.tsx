@@ -1,95 +1,117 @@
-import { adminLabelClassName, adminSelectClassName } from "@/constants/classNames";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import Select, { SingleValue } from "react-select";
+import { selectStyles } from "@/constants/classNames";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { orderTableFilterOptions, orderTableOrderOptions } from "@/utils/orderTableOptions";
+import TFiltersSelectOption from "@/data/AdminComponents/installationsFiltersAndOrders/installationFiltersOptions/types";
+import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import { motion } from "framer-motion";
-import React from "react";
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delayChildren: 0.4,
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  },
+};
 
 const TrackingOrderAndFilter = () => {
+  const [mounted, setMounted] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<SingleValue<TFiltersSelectOption>>(null);
+  const [selectedOrder, setSelectedOrder] = useState<SingleValue<TFiltersSelectOption>>(null);
   const { handleFetchOrders } = useTrackingStore();
 
-  // FUNCIONES PARA ORDENAR Y FILTRAR
-  const handleOnChangeOrderSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value;
-    const [key, value] = selectedValue.split("-") as [string, "ASC" | "DESC"];
-    handleFetchOrders({ [key]: value });
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const handleOnChangeFilterSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = e.target.value;
+  const handleChangeOrderAndFilter = (
+    filter: SingleValue<TFiltersSelectOption>,
+    order: SingleValue<TFiltersSelectOption>
+  ) => {
+    const params: Partial<TOrdersQueryParams> = {};
 
-    if (selected === "completed") {
-      handleFetchOrders({ completed: true });
-    } else {
-      handleFetchOrders({ completed: false });
+    if (filter?.value === "completed") {
+      params.completed = true;
+    } else if (!filter) {
+      params.completed = false;
     }
-  };
 
-  // VARIABLES PARA ANIMACIONES
-  const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-        staggerChildren: 0.15,
-        delayChildren: 1,
-      },
-    },
-  };
+    if (order?.value) {
+      const [key, direction] = order.value.split("-");
+      if (key && direction) {
+        params[key as keyof TOrdersQueryParams] = direction as "ASC" | "DESC";
+      }
+    }
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 },
+    handleFetchOrders(params);
   };
 
   return (
     <motion.div
+      className="flex justify-between gap-2 sm:gap-5 flex-wrap"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="flex justify-between sm:gap-5 flex-wrap"
     >
       <motion.div
         variants={itemVariants}
-        className="flex flex-col lg:flex-row lg:gap-3 lg:items-center"
+        className="flex flex-col w-full sm:w-[200px] lg:flex-row lg:gap-3 lg:items-center"
       >
-        <motion.label variants={itemVariants} className={adminLabelClassName}>
-          Filtrar por:
-        </motion.label>
-        <motion.select
-          variants={itemVariants}
-          onChange={handleOnChangeFilterSelect}
-          className={adminSelectClassName}
-        >
-          {orderTableFilterOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </motion.select>
+        {mounted && (
+          <div className="w-full">
+            <Select
+              options={orderTableFilterOptions}
+              placeholder="Filtro"
+              isClearable
+              value={selectedFilter}
+              onChange={(option) => {
+                setSelectedFilter(option);
+                handleChangeOrderAndFilter(option, selectedOrder);
+              }}
+              classNames={selectStyles}
+            />
+          </div>
+        )}
       </motion.div>
 
       <motion.div
         variants={itemVariants}
-        className="flex flex-col lg:flex-row lg:gap-3 lg:items-center"
+        className="flex flex-col w-full sm:w-[200px] lg:flex-row lg:gap-3 lg:items-center"
       >
-        <motion.label variants={itemVariants} className={adminLabelClassName}>
-          Ordenar por:
-        </motion.label>
-        <motion.select
-          variants={itemVariants}
-          onChange={handleOnChangeOrderSelect}
-          className={`${adminSelectClassName} max-w-[130px] truncate`}
-          title="Ordenar por"
-        >
-          {orderTableOrderOptions.map((opt) => (
-            <option key={`${opt.key}-${opt.value}`} value={`${opt.key}-${opt.value}`}>
-              {opt.label}
-            </option>
-          ))}
-        </motion.select>
+        {mounted && (
+          <div className="w-full">
+            <Select
+              options={orderTableOrderOptions}
+              placeholder="Orden"
+              isClearable
+              value={selectedOrder}
+              onChange={(option) => {
+                setSelectedOrder(option);
+                handleChangeOrderAndFilter(selectedFilter, option);
+              }}
+              classNames={selectStyles}
+            />
+          </div>
+        )}
       </motion.div>
     </motion.div>
   );

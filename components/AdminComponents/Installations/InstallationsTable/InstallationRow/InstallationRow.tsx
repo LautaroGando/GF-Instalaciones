@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -39,7 +39,7 @@ const cellVariants = {
 
 const InstallationRow: React.FC<IInstallationsRowProps> = ({
   installation,
-  coordinator,
+  coordinatorName,
   onEdit,
   onDelete,
   onViewNotes,
@@ -124,7 +124,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
         variants={cellVariants}
         className="px-4 h-14 align-middle whitespace-nowrap border-y border-admin-letterColor/40"
       >
-        <span className="text-letterColor">Jhon Doe</span>
+        <span className="text-letterColor">{coordinatorName}</span>
       </motion.td>
 
       <motion.td

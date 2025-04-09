@@ -2,7 +2,7 @@ import IInstallation from "@/interfaces/IInstallation";
 
 export interface IInstallationsRowProps {
   installation: IInstallation;
-  coordinator: { id: string } | null;
+  coordinatorName: string | null;
   onEdit: () => void;
   onDelete: () => void;
   onViewNotes: () => void;

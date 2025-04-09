@@ -5,23 +5,26 @@ import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValue
 import IEditOrderFormValues from "@/interfaces/IEditOrderFormValues";
 import IInstallation from "@/interfaces/IInstallation";
 import IOrder from "@/interfaces/IOrder";
+import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
+import { cleanParams } from "@/utils/cleanParams";
 import axios from "axios";
 
 // ORDERS
 export const getAllOrders = async (params: TOrdersQueryParams): Promise<IOrder[]> => {
   try {
-    const query = new URLSearchParams();
+    const cleanedParams = cleanParams(params);
 
-    if (params.progress) query.append("progress", params.progress);
-    if (params.createdAt) query.append("createdAt", params.createdAt);
-    if (params.updatedAt) query.append("updatedAt", params.updatedAt);
-    if (params.completed) query.append("completed", JSON.stringify(params.completed));
+    const { data } = await axios.get(`${API_URL}/orders`, {
+      params: cleanedParams,
+    });
 
-    const { data } = await axios.get(`${API_URL}/orders?${query.toString()}`);
-    console.log(data);
-    const url = `${API_URL}/orders?${query.toString()}`;
-    console.log("Request URL:", url);
+    console.log(
+      "URL final:",
+      `${API_URL}/orders`,
+      "Params:",
+      cleanedParams
+    );
 
     return data.result;
   } catch (err) {
@@ -99,9 +102,25 @@ export const deleteOrder = async (id: string) => {
 };
 
 // INSTALLATIONS
-export const getAllInstallations = async (orderId: string): Promise<IInstallation[]> => {
+export const getAllInstallations = async (
+  orderId: string,
+  params?: Partial<TInstallationQueryParams>
+): Promise<IInstallation[]> => {
   try {
-    const response = await axios.get(`${API_URL}/orders/${orderId}/installations`);
+    // Formula para limpiar los params (es mas que nada para no enviar datos vacios, null o undefined)
+    const cleanedParams = params ? cleanParams(params) : undefined;
+
+    const response = await axios.get(`${API_URL}/orders/${orderId}/installations`, {
+      params: cleanedParams,
+    });
+
+    console.log(
+      "URL final:",
+      `${API_URL}/orders/${orderId}/installations`,
+      "Params:",
+      cleanedParams
+    );
+
     return response.data;
   } catch (error) {
     const message = axios.isAxiosError(error)
