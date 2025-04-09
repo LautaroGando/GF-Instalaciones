@@ -1,7 +1,7 @@
 import TFiltersSelectOption from "./types";
 
 export const statusOptions: TFiltersSelectOption[] = [
-  { value: "pendiente", label: "Pendiente" },
+  { value: "Pendiente", label: "Pendiente" },
   { value: "en-proceso", label: "En proceso" },
   { value: "a-revisar", label: "A revisar" },
   { value: "pospuesta", label: "Pospuesta" },

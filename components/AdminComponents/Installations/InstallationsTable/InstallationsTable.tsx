@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import InstallationsTableHeader from "./InstallationsTableHeader/InstallationsTableHeader";
 import IInstallation from "@/interfaces/IInstallation";
@@ -9,14 +9,8 @@ import InstallationRow from "./InstallationRow/InstallationRow";
 import useInstallationsTableLogic from "@/hooks/useInstallationsTableLogic";
 
 const InstallationsTable = () => {
-  const {
-    order,
-    isLoading,
-    handleEdit,
-    handleDelete,
-    handleViewAddress,
-    handleViewNotes,
-  } = useInstallationsTableLogic();
+  const { order, isLoading, handleEdit, handleDelete, handleViewAddress, handleViewNotes } =
+    useInstallationsTableLogic();
 
   if (isLoading) {
     return (
@@ -25,11 +19,11 @@ const InstallationsTable = () => {
       </div>
     );
   }
-  
+
   if (!order) {
     return <RenderEmptyState title="No se encontró la orden seleccionada." />;
   }
-  
+
   if (!order.installations?.length) {
     return <RenderEmptyState title="Esta orden no tiene instalaciones asignadas." />;
   }
@@ -42,19 +36,21 @@ const InstallationsTable = () => {
         <table className="text-sm text-left w-full border-collapse">
           <InstallationsTableHeader />
           <tbody>
-            {order.installations.map((installation: IInstallation, i) => (
-              // const coordinatorName = installation.coordinator?.name || "Sin nombre";
+            {order.installations.map((installation: IInstallation, i) => {
+              const coordinatorName = installation.coordinator?.name || "-";
 
-              <InstallationRow
-                key={i}
-                installation={installation}
-                coordinator={installation.coordinator}
-                onEdit={() => handleEdit(installation)}
-                onDelete={() => handleDelete(installation.id)}
-                onViewAddress={() => handleViewAddress(installation)}
-                onViewNotes={() => handleViewNotes(installation)}
-              />
-            ))}
+              return (
+                <InstallationRow
+                  key={i}
+                  installation={installation}
+                  coordinatorName={coordinatorName}
+                  onEdit={() => handleEdit(installation)}
+                  onDelete={() => handleDelete(installation.id)}
+                  onViewAddress={() => handleViewAddress(installation)}
+                  onViewNotes={() => handleViewNotes(installation)}
+                />
+              );
+            })}
           </tbody>
         </table>
       </div>

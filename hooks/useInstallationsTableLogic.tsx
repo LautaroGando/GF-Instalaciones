@@ -77,12 +77,18 @@ export const useInstallationsTableLogic = () => {
   };
 
   const handleViewAddress = (installation: IInstallation) => {
-    const { street, number, note, postalCode, city, province } = installation.address;
+    const {
+      street,
+      number,
+      note,
+      postalCode,
+      city, 
+    } = installation.address;
 
     const address = `
       <strong>Calle:</strong> ${street} ${number}<br/>
-      <strong>Ciudad:</strong> ${city}<br/>
-      <strong>Provincia:</strong> ${province}<br/>
+      <strong>Ciudad:</strong> ${city.name}<br/>
+      <strong>Provincia:</strong> ${city.province.name}<br/>
       <strong>Código Postal:</strong> ${postalCode}<br/>
       <strong>Nota:</strong> ${note}
     `;

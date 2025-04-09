@@ -10,14 +10,19 @@ import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import IInstallation from "@/interfaces/IInstallation";
 import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormValues";
 import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValues";
+import { IInstallationFilters } from "@/interfaces/IInstallationFilters";
+import { IInstallationSortParams } from "@/interfaces/IInstallationSortParams";
+import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 
 export interface ITrackingProps {
   orders: IOrder[];
   selectedOrder: IOrder | null;
   isLoading: boolean;
+  handleLoading: (conditional: boolean) => void;
   orderFilters: IOrderFilters;
   orderSortParams: IOrderSortParams;
-  handleLoading: (conditional: boolean) => void;
+  installationFilters: IInstallationFilters;
+  installationSort: IInstallationSortParams;
 
   //? ORDERS
   handleFetchOrders: (params?: Partial<TOrdersQueryParams>) => Promise<void>;
@@ -26,7 +31,11 @@ export interface ITrackingProps {
   handleDeleteOrder: (id: string) => Promise<void>;
 
   //? INSTALLATIONS
-  handleFetchInstallations: (orderId: string) => Promise<IInstallation[] | null>;
+  handleFetchInstallations: (
+    orderId: string,
+    params?: Partial<TInstallationQueryParams>
+  ) => Promise<IInstallation[] | null>;
+
   handleCreateInstallation: (
     id: string,
     values: ICreateInstallationFormValues
