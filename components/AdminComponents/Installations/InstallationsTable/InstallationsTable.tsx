@@ -25,10 +25,13 @@ const InstallationsTable = () => {
   }
 
   if (!order.installations?.length) {
-    return <RenderEmptyState title="Esta orden no tiene instalaciones asignadas." />;
+    return (
+      <RenderEmptyState
+        title="No se encontraron instalaciones."
+        text="Intenta más tarde o utiliza otro filtro."
+      />
+    );
   }
-
-  console.log(order);
 
   return (
     <>

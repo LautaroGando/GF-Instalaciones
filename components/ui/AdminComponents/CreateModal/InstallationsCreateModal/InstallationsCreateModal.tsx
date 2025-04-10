@@ -69,6 +69,9 @@ const InstallationsCreateModal = () => {
   ) => {
     const installersIds = selectedInstallers.map((installer) => installer.id);
   
+    console.log(values);
+    
+
     const coordinatorId =
       selectedCoordinators[0]?.userRoles.find(
         (userRole) => userRole.role.name.toLowerCase() === "coordinador"
@@ -379,7 +382,7 @@ const InstallationsCreateModal = () => {
                               transition={{ duration: 0.2, ease: "easeOut" }}
                               className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm"
                             >
-                              <p>{installer.fullName}</p>
+                              <p>{installer.user.fullName}</p>
                               <button
                                 type="button"
                                 className="text-admin-inactiveColor hover:text-admin-inactiveColor/80"

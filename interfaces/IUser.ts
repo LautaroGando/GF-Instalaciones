@@ -15,10 +15,10 @@ export interface IUser {
   address: string;
   country: string;
   phone: string;
-  password: string;
   coverage: string;
   isSubscribed: boolean;
   createdAt: string;
   disabledAt: string | null;
   userRoles: IUserRole[];
 }
+

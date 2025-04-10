@@ -4,6 +4,7 @@ export type TInstallationStatus =
   | "A revisar"
   | "Pospuesta"
   | "Finalizada"
+  | "Completada"
   | "Cancelada";
 
 export default TInstallationStatus;

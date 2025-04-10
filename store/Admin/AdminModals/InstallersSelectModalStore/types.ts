@@ -1,9 +1,9 @@
-import { IUser } from "@/interfaces/IUser";
+import { IInstaller } from "@/interfaces/IInstaller";
 
 export interface IInstallersSelectModalProps {
   isOpen: boolean;
-  selectedInstallers: IUser[];
-  addInstaller: (installer: IUser) => void;
+  selectedInstallers: IInstaller[];
+  addInstaller: (installer: IInstaller) => void;
   deleteInstaller: (id: string) => void;
   openModal: () => void;
   closeModal: () => void;
