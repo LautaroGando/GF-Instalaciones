@@ -9,7 +9,8 @@ export const userStats = (users: IUser[] | null) => {
         users &&
         users.filter(
           (user: IUser) =>
-            user.userRoles[0] && user.userRoles[0].role.name === "Admin"
+            user.userRoles[user.userRoles.length - 1] &&
+            user.userRoles[user.userRoles.length - 1].role.name === "Admin"
         ).length,
       color: "#A79351",
     },
@@ -19,7 +20,9 @@ export const userStats = (users: IUser[] | null) => {
         users &&
         users.filter(
           (user: IUser) =>
-            user.userRoles[0] && user.userRoles[0].role.name === "Coordinador"
+            user.userRoles[user.userRoles.length - 1] &&
+            user.userRoles[user.userRoles.length - 1].role.name ===
+              "Coordinador"
         ).length,
       color: "#A7935166",
     },
@@ -29,7 +32,8 @@ export const userStats = (users: IUser[] | null) => {
         users &&
         users.filter(
           (user: IUser) =>
-            user.userRoles[0] && user.userRoles[0].role.name === "Instalador"
+            user.userRoles[user.userRoles.length - 1] &&
+            user.userRoles[user.userRoles.length - 1].role.name === "Instalador"
         ).length,
       color: "#A79351B3",
     },
@@ -39,7 +43,8 @@ export const userStats = (users: IUser[] | null) => {
         users &&
         users.filter(
           (user: IUser) =>
-            user.userRoles[0] && user.userRoles[0].role.name === "Usuario"
+            user.userRoles[user.userRoles.length - 1] &&
+            user.userRoles[user.userRoles.length - 1].role.name === "Usuario"
         ).length,
       color: "#A79351",
     },

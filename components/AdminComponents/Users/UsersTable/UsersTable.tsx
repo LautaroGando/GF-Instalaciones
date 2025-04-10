@@ -11,7 +11,7 @@ export const UsersTable: React.FC = () => {
   useEffect(() => {
     handleFetchUsers();
   }, [handleFetchUsers]);
-
+  
   return (
     <div className="w-full h-[calc(100vh-354px)] min-h-[400px] overflow-x-auto">
       {isLoading ? (
@@ -26,17 +26,17 @@ export const UsersTable: React.FC = () => {
                 <tr className="sticky top-0 bg-bgColor border-b border-primaryColor">
                   <th className="min-w-[170px] h-12 px-4">Nombre Completo</th>
                   <th className="min-w-[220px] h-12 px-4">
-                    Correo electr贸nico
+                    Correo electrónico
                   </th>
                   <th className="min-w-[170px] h-12 px-4">
-                    Fecha de creaci贸n
+                    Fecha de creación
                   </th>
                   <th className="min-w-[220px] h-12 px-4">
-                    Fecha de deshabilitaci贸n
+                    Fecha de deshabilitación
                   </th>
                   <th className="min-w-[150px] h-12 px-4">Estado</th>
                   <th className="min-w-[150px] h-12 px-4">Rol</th>
-                  <th className="min-w-[150px] h-12 px-4">Acci贸n</th>
+                  <th className="min-w-[150px] h-12 px-4">Acción</th>
                 </tr>
               </thead>
               <tbody>
@@ -72,7 +72,10 @@ export const UsersTable: React.FC = () => {
                       </td>
                       <InfoRows
                         item={item}
-                        label={item.userRoles[0] && item.userRoles[0].role.name}
+                        label={
+                          item.userRoles[item.userRoles.length - 1] &&
+                          item.userRoles[item.userRoles.length - 1].role.name
+                        }
                       />
                       <td className="px-4">
                         <ActionContainer item={item} />

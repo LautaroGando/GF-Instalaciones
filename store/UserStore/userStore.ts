@@ -32,6 +32,7 @@ export const useUserStore = create<IUserStoreProps>()(
       page: 1,
       maxPage: null,
       actionMenu: null,
+      editMenu: false,
       setMaxPage: () => {
         const { filterUsers } = get();
         const maxPages =
@@ -68,6 +69,8 @@ export const useUserStore = create<IUserStoreProps>()(
           }
         );
       },
+      handleOpenEditMenu: () => set(() => ({ editMenu: true })),
+      handleCloseEditMenu: () => set(() => ({ editMenu: false })),
       handleFilterUsers: (e: React.ChangeEvent<HTMLSelectElement>) => {
         set({ selectedFilter: e.target.value });
         get().handleApplyFilter(true);
@@ -88,11 +91,13 @@ export const useUserStore = create<IUserStoreProps>()(
 
         filteredUsers = filteredUsers.filter((user: IUser) =>
           selectedFilter === "user"
-            ? user.userRoles[0].role.name === "Usuario"
+            ? user.userRoles[user.userRoles.length - 1].role.name === "Usuario"
             : selectedFilter === "installer"
-            ? user.userRoles[0].role.name === "Instalador"
+            ? user.userRoles[user.userRoles.length - 1].role.name ===
+              "Instalador"
             : selectedFilter === "coordinator"
-            ? user.userRoles[0].role.name === "Coordinador"
+            ? user.userRoles[user.userRoles.length - 1].role.name ===
+              "Coordinador"
             : selectedFilter === "active"
             ? !user.disabledAt &&
               user.installer?.status !== "RECHAZADO" &&
@@ -128,7 +133,9 @@ export const useUserStore = create<IUserStoreProps>()(
             return sortBy === "abc"
               ? a.email.localeCompare(b.email)
               : sortBy === "role"
-              ? a.userRoles[0].role.name.localeCompare(b.userRoles[0].role.name)
+              ? a.userRoles[a.userRoles.length - 1].role.name.localeCompare(
+                  b.userRoles[b.userRoles.length - 1].role.name
+                )
               : parseDate(b.createdAt) - parseDate(a.createdAt);
           });
         }

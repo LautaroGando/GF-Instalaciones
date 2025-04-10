@@ -3,6 +3,7 @@ import { IBannerPanel } from "@/data/BannerPanel/types";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import CountUp from "react-countup";
 
 export const PanelInfo: React.FC = () => {
   const { users } = useUserStore();
@@ -21,7 +22,11 @@ export const PanelInfo: React.FC = () => {
             <h3 className="text-sm sm:text-xs md:text-sm">{item.label}</h3>
           </div>
           <h3 className="font-semibold">
-            {item.label === "Usuarios" ? quantityUsers : 0}
+            <CountUp
+              end={item.label === "Usuarios" ? quantityUsers : 0}
+              duration={3}
+              delay={0.5}
+            />
           </h3>
         </div>
       ))}
