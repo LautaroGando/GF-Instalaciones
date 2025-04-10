@@ -27,17 +27,17 @@ const InstallationEditModal = () => {
   const initialValues: IEditInstallationFormValues = {
     id: selectedInstallation.id ?? "",
     startDate: selectedInstallation.startDate ?? "",
-    endDate: selectedInstallation.endDate ?? "",
-    notes: selectedInstallation.notes ?? "",
-    status: selectedInstallation.status ?? "Pendiente",
   };
+
+  console.log(selectedInstallation);
+  
 
   const handleOnSubmit = async (
     values: IEditInstallationFormValues,
     { setSubmitting }: FormikHelpers<IEditInstallationFormValues>
   ) => {
     const installationId = values.id;
-    handleUpdateInstallation(orderId, installationId, values);
+    handleUpdateInstallation(installationId, values);
     console.log(values);
 
     closeModal();
@@ -73,22 +73,6 @@ const InstallationEditModal = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
-                >
-                  <label htmlFor="id" className="text-sm font-medium text-primaryColor/80">
-                    ID
-                  </label>
-                  <Field
-                    name="id"
-                    type="text"
-                    disabled
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full bg-gray-100 cursor-not-allowed outline-none"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
                 >
                   <label htmlFor="startDate" className="text-sm font-medium text-primaryColor/80">
@@ -110,90 +94,7 @@ const InstallationEditModal = () => {
                     </motion.div>
                   )}
                 </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
-                >
-                  <label htmlFor="endDate" className="text-sm font-medium text-primaryColor/80">
-                    Fecha de Fin
-                  </label>
-                  <Field
-                    name="endDate"
-                    type="date"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none"
-                  />
-                  {errors.endDate && touched.endDate && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
-                    >
-                      {errors.endDate}
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
-                >
-                  <label htmlFor="notes" className="text-sm font-medium text-primaryColor/80">
-                    Notas
-                  </label>
-                  <Field
-                    as="textarea"
-                    name="notes"
-                    placeholder="Ingrese notas adicionales"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full h-[100px] outline-none resize-none"
-                  />
-                  {errors.notes && touched.notes && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
-                    >
-                      {errors.notes}
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
-                >
-                  <label htmlFor="status" className="text-sm font-medium text-primaryColor/80">
-                    Estado
-                  </label>
-                  <Field
-                    as="select"
-                    name="status"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none"
-                  >
-                    <option value="Pendiente">Pendiente</option>
-                    <option value="En proceso">En proceso</option>
-                    <option value="A revisar">A revisar</option>
-                    <option value="Pospuesta">Pospuesta</option>
-                    <option value="Finalizada">Finalizada</option>
-                    <option value="Cancelada">Cancelada</option>
-                  </Field>
-                  {errors.status && touched.status && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
-                    >
-                      {errors.status}
-                    </motion.div>
-                  )}
-                </motion.div>
-
+                
                 <motion.div
                   className="flex flex-col xl:flex-row xl:justify-between"
                   initial={{ opacity: 0, y: 20 }}

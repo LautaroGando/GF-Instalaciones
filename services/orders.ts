@@ -3,7 +3,6 @@ import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormV
 import ICreateOrderFormValues from "@/interfaces/ICreateOrderFormValues";
 import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValues";
 import IEditOrderFormValues from "@/interfaces/IEditOrderFormValues";
-import IInstallation from "@/interfaces/IInstallation";
 import IOrder from "@/interfaces/IOrder";
 import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
@@ -11,7 +10,7 @@ import { cleanParams } from "@/utils/cleanParams";
 import axios from "axios";
 
 // ORDERS
-export const getAllOrders = async (params: TOrdersQueryParams): Promise<IOrder[]> => {
+export const getAllOrders = async (params: TOrdersQueryParams) => {
   try {
     const cleanedParams = cleanParams(params);
 
@@ -19,14 +18,9 @@ export const getAllOrders = async (params: TOrdersQueryParams): Promise<IOrder[]
       params: cleanedParams,
     });
 
-    console.log(
-      "URL final:",
-      `${API_URL}/orders`,
-      "Params:",
-      cleanedParams
-    );
-
-    return data.result;
+    console.log(data);
+  
+    return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       console.error("Error al obtener las órdenes con parámetros");
@@ -105,23 +99,15 @@ export const deleteOrder = async (id: string) => {
 export const getAllInstallations = async (
   orderId: string,
   params?: Partial<TInstallationQueryParams>
-): Promise<IInstallation[]> => {
+) => {
   try {
-    // Formula para limpiar los params (es mas que nada para no enviar datos vacios, null o undefined)
     const cleanedParams = params ? cleanParams(params) : undefined;
 
-    const response = await axios.get(`${API_URL}/orders/${orderId}/installations`, {
+    const { data } = await axios.get(`${API_URL}/orders/${orderId}/installations`, {
       params: cleanedParams,
     });
 
-    console.log(
-      "URL final:",
-      `${API_URL}/orders/${orderId}/installations`,
-      "Params:",
-      cleanedParams
-    );
-
-    return response.data;
+    return data;
   } catch (error) {
     const message = axios.isAxiosError(error)
       ? "No se pudieron obtener las instalaciones."
@@ -138,6 +124,11 @@ export const createInstallation = async (
 ) => {
   try {
     const res = await axios.post(`${API_URL}/orders/${orderId}/installations`, values);
+    console.log("Creando instalación para orden:", orderId);
+    console.log("Payload:", values);
+    console.log("URL:", `${API_URL}/orders/${orderId}/installations`);
+    
+    
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -151,15 +142,17 @@ export const createInstallation = async (
 };
 
 export const updateInstallation = async (
-  orderId: string,
   installationId: string,
   values: IEditInstallationFormValues
 ) => {
   try {
     const res = await axios.patch(
-      `${API_URL}/orders/${orderId}/installation/${installationId}`,
+      `${API_URL}installation/${installationId}`,
       values
     );
+
+    console.log(res.data);
+    
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

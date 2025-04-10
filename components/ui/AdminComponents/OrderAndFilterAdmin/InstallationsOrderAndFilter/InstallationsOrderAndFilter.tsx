@@ -55,9 +55,13 @@ const InstallationsOrderAndFilter = () => {
     const params = {
       status: status?.value || "",
       province: province?.value || "",
-      createdAt: key === "createdAt" ? direction : "",
-      updatedAt: key === "updatedAt" ? direction : "",
+      createdAt: "",
+      updatedAt: "",
     };
+    
+    if (key === "createdAt" || key === "updatedAt") {
+      params[key] = direction;
+    }    
 
     handleFetchInstallations(orderId, params);
   };

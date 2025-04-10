@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { IInstallersSelectModalProps } from "./types";
-import { IUser } from "@/interfaces/IUser";
+import { IInstaller } from "@/interfaces/IInstaller";
 
 export const useInstallersSelectModal = create<IInstallersSelectModalProps>((set) => ({
   isOpen: false,
   selectedInstallers: [],
-  addInstaller: (installer: IUser) => {
+  addInstaller: (installer: IInstaller) => {
     set((state) => {
       if (state.selectedInstallers.some((i) => i.id === installer.id)) {
         return state;

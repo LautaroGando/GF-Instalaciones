@@ -4,7 +4,6 @@ import { popUpDeleteUserError } from "@/utils/popUp";
 import axios from "axios";
 
 // BUSCAR USUARIOS
-
 export const findUsers = async () => {
   try {
     const response = await axios.get(`${API_URL}/user`);
@@ -17,8 +16,7 @@ export const findUsers = async () => {
 
 export const findInstallers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/installer`);
-    const data = response.data;
+    const { data } = await axios.get(`${API_URL}/installer`);
     return data;
   } catch (error) {
     console.log(error);
