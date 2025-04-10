@@ -15,22 +15,42 @@ import { IInstallationSortParams } from "@/interfaces/IInstallationSortParams";
 import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 
 export interface ITrackingProps {
+  // ===========================
+  // 🔘 1. Estados iniciales
+  // ===========================
+
   orders: IOrder[];
   selectedOrder: IOrder | null;
   isLoading: boolean;
+  ordersPage: number;
+  ordersTotalPages: number;
   handleLoading: (conditional: boolean) => void;
   orderFilters: IOrderFilters;
   orderSortParams: IOrderSortParams;
   installationFilters: IInstallationFilters;
   installationSort: IInstallationSortParams;
 
-  //? ORDERS
+  // ===========================
+  // 📕 2. Paginacion
+  // ===========================
+
+  ordersNextPage: () => void;
+  ordersPreviousPage: () => void;
+  installationsNextPage: () => void;
+  installationsPreviousPage: () => void;
+
+  // ===========================
+  // 📦 3. Ordenes
+  // ===========================
   handleFetchOrders: (params?: Partial<TOrdersQueryParams>) => Promise<void>;
   handleCreateOrder: (values: ICreateOrderFormValues) => Promise<IOrder>;
   handleUpdateOrder: (id: string, values: IEditOrderFormValues) => Promise<IEditOrderFormValues>;
   handleDeleteOrder: (id: string) => Promise<void>;
 
-  //? INSTALLATIONS
+  // ===========================
+  // 🧰 4. Instalaciones
+  // ===========================
+
   handleFetchInstallations: (
     orderId: string,
     params?: Partial<TInstallationQueryParams>
@@ -41,7 +61,6 @@ export interface ITrackingProps {
     values: ICreateInstallationFormValues
   ) => Promise<IInstallation>;
   handleUpdateInstallation: (
-    orderId: string,
     installationId: string,
     values: IEditInstallationFormValues
   ) => Promise<void>;

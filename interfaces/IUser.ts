@@ -16,7 +16,6 @@ export interface IUser {
   address: string;
   country: string;
   phone: string;
-  password: string;
   coverage: string;
   isSubscribed: boolean;
   createdAt: string;
@@ -24,3 +23,4 @@ export interface IUser {
   userRoles: IUserRole[];
   installer: IInstaller;
 }
+

@@ -22,9 +22,15 @@ import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 
 export const useTrackingStore = create<ITrackingProps>((set, get) => ({
+  // ===========================
+  // 🔘 1. Estados iniciales
+  // ===========================
+
   orders: [],
   selectedOrder: null as IOrder | null,
   isLoading: false,
+  ordersPage: 1,
+  ordersTotalPages: 1,
   orderFilters: {
     completed: false,
   },
@@ -47,7 +53,37 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     set({ isLoading: conditional });
   },
 
-  // ORDERS
+  // ===========================
+  // 📕 2. Paginacion
+  // ===========================
+
+  ordersNextPage: async () => {
+    const currentPage = get().ordersPage;
+    const totalPages = get().ordersTotalPages;
+
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      set({ ordersPage: newPage });
+      await get().handleFetchOrders({ page: newPage });
+    }
+  },
+
+  ordersPreviousPage: async () => {
+    const currentPage = get().ordersPage;
+
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      set({ ordersPage: newPage });
+      await get().handleFetchOrders({ page: newPage });
+    }
+  },
+  installationsNextPage: () => {},
+  installationsPreviousPage: () => {},
+
+  // ===========================
+  // 📦 3. Ordenes
+  // ===========================
+
   handleFetchOrders: async (params?: Partial<TOrdersQueryParams>) => {
     get().handleLoading(true);
 
@@ -57,16 +93,18 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         createdAt = "",
         updatedAt = "",
         completed = get().orderFilters.completed,
+        page = get().ordersPage,
       } = params || {};
 
-      const finalParams = { progress, createdAt, updatedAt, completed };
+      const finalParams = { progress, createdAt, updatedAt, completed, page };
 
-      const orders = await getAllOrders(finalParams);
+      const { result: orders, totalPages } = await getAllOrders(finalParams);
 
       set(() => ({
         orders,
         orderFilters: { completed },
         orderSortParams: { progress, createdAt, updatedAt },
+        ordersTotalPages: totalPages,
       }));
     } catch (err) {
       console.error("Error al obtener las órdenes:", err);
@@ -131,7 +169,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     }
   },
 
-  // INSTALLATIONS
+  // ===========================
+  // 🧰 4. Instalaciones
+  // ===========================
+
   handleFetchInstallations: async (
     orderId: string,
     params?: Partial<TInstallationQueryParams>
@@ -148,19 +189,17 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       } = params || {};
 
       const allInstallations = await getAllInstallations(orderId, params);
-
       const existingOrder = get().orders.find((o) => o.id === orderId);
+      const fetchedOrder = existingOrder ?? (await getOrderById(orderId));
 
       set(() => ({
         installationFilters: { status, province, city },
         installationSort: { createdAt, updatedAt },
-        selectedOrder: existingOrder ?? null,
+        selectedOrder: {
+          ...fetchedOrder,
+          installations: allInstallations,
+        },
       }));
-
-      if (!existingOrder) {
-        const fetchedOrder = await getOrderById(orderId);
-        set({ selectedOrder: fetchedOrder });
-      }
 
       return allInstallations;
     } catch (error) {
@@ -197,18 +236,17 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   },
 
   handleUpdateInstallation: async (
-    orderId: string,
+
     installationId: string,
     values: IEditInstallationFormValues
   ) => {
     try {
-      const updatedInstallation = await updateInstallation(orderId, installationId, values);
+      const updatedInstallation = await updateInstallation(installationId, values);
       if (!updatedInstallation) throw new Error("Error al actualizar la instalación");
 
       set((state) => ({
         orders: state.orders.map((order) => {
-          if (order.id !== orderId) return order;
-
+          
           return {
             ...order,
             installations: order.installations.map((installation) =>

@@ -8,19 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 
 const InstallersSelectModal: React.FC = () => {
-  const { isOpen, closeModal, addInstaller, selectedInstallers, deleteInstaller } = useInstallersSelectModal();
-  const { users, handleFetchUsers } = useUserStore();
+  const { isOpen, closeModal, addInstaller, selectedInstallers, deleteInstaller } =
+    useInstallersSelectModal();
+  const { installers, handleFetchInstallers } = useUserStore();
 
   useEffect(() => {
-    handleFetchUsers();
-  }, [handleFetchUsers]);
+    handleFetchInstallers();
+  }, [handleFetchInstallers]);
 
   if (!isOpen) return null;
-
-  const installers = users?.filter((user) =>
-    user.userRoles.some((u) => u.role.name.toLowerCase() === "instalador")
-  );
-
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 px-4 sm:px-6">
@@ -43,12 +39,12 @@ const InstallersSelectModal: React.FC = () => {
             >
               <div className="flex items-center gap-3">
                 <FontAwesomeIcon icon={faCircleUser} className="text-gray-500 text-2xl" />
-                <p className="text-gray-800 font-medium">{installer.fullName}</p>
+                <p className="text-gray-800 font-medium">{installer.user.fullName}</p>
               </div>
 
               {selectedInstallers.some((inst) => inst.id === installer.id) ? (
                 <button
-                  onClick={() => deleteInstaller(installer.id)}
+                  onClick={() => deleteInstaller(installer.user.id)}
                   className="border border-red-500 text-red-500 px-4 py-1.5 rounded-lg transition-all duration-200 hover:bg-red-500 hover:text-white"
                 >
                   Desasignar
