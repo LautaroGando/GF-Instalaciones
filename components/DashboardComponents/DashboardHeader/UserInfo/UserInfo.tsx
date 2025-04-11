@@ -5,7 +5,7 @@ import React from "react";
 
 export const UserInfo: React.FC = () => {
   const { user } = useUserStore();
-
+console.log(user)
   if (!user)
     return (
       <div className="flex items-center justify-center w-full h-full">

@@ -6,6 +6,7 @@ export interface IAddress {
   number: string;
   postalCode: string;
   note: string;
-  city: ICity;
+  city: string;
+  province: string;
 }
 export default IAddress;
