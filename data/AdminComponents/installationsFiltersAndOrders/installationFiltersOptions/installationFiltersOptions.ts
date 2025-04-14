@@ -6,7 +6,6 @@ export const statusOptions: TFiltersSelectOption[] = [
   { value: "A revisar", label: "A revisar" },
   { value: "Pospuesta", label: "Pospuesta" },
   { value: "Finalizada", label: "Finalizada" },
-  { value: "Completada", label: "Completada" },
   { value: "Cancelada", label: "Cancelada" },
 ];
 

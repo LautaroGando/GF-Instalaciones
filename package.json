@@ -29,6 +29,7 @@
     "recharts": "^2.15.1",
     "sonner": "^2.0.1",
     "sweetalert2": "^11.6.13",
+    "use-debounce": "^10.0.4",
     "yup": "^1.6.1",
     "zustand": "^5.0.3"
   },

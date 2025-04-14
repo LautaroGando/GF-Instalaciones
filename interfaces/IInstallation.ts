@@ -15,6 +15,7 @@ export interface IInstallation {
     id: string;
     user: IUser;
   };
+  images: string[];
 }
 
 export default IInstallation;

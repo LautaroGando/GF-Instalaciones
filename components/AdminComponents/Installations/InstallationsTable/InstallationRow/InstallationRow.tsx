@@ -43,7 +43,9 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
   onEdit,
   onDelete,
   onViewNotes,
+  onViewInstallers,
   onViewAddress,
+  wasRecentlyEdited,
 }) => {
   return (
     <motion.tr
@@ -52,7 +54,14 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
       initial="hidden"
       animate="visible"
       exit="exit"
-      style={{ borderBottomWidth: 1 }}
+      style={{
+        borderBottomWidth: 1,
+        backgroundColor: wasRecentlyEdited ? "#dcfce7" : "#ffffff",
+      }}
+      transition={{
+        backgroundColor: { duration: wasRecentlyEdited ? 1.5 : 0 },
+        ...rowVariants.visible.transition,
+      }}
       className="border-b"
     >
       <motion.td
@@ -108,6 +117,27 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
+        className="px-4 h-14 align-middle whitespace-nowrap border-y border-admin-letterColor/40"
+      >
+        <span className="text-letterColor">{coordinatorName}</span>
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
+        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={onViewInstallers}
+          className="bg-primaryColor border border-primaryColor h-[36px] px-5 font-bold text-letterColorLight rounded-[2px] transition-all duration-200 hover:bg-white hover:text-primaryColor"
+        >
+          Ver Instaladores
+        </motion.button>
+      </motion.td>
+
+      <motion.td
+        variants={cellVariants}
         className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
       >
         <motion.button
@@ -122,38 +152,28 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-14 align-middle whitespace-nowrap border-y border-admin-letterColor/40"
-      >
-        <span className="text-letterColor">{coordinatorName}</span>
-      </motion.td>
-
-      <motion.td
-        variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
-      >
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.96 }}
-          onClick={onViewNotes}
-          className="bg-primaryColor border border-primaryColor h-[36px] px-5 font-bold text-letterColorLight rounded-[4px] transition-all duration-200 hover:bg-white hover:text-primaryColor"
-        >
-          Ver Instaladores
-        </motion.button>
-      </motion.td>
-
-      <motion.td
-        variants={cellVariants}
         className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
       >
         <div className="flex items-center gap-2 text-base text-letterColorLight">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onEdit}
-            className="bg-admin-editColor text-white w-8 h-8 rounded-[2px] border border-admin-editColor transition-all duration-200 hover:bg-white hover:text-admin-editColor"
-          >
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </motion.button>
+          {installation.status === "Pendiente" ? (
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onEdit}
+              className="bg-admin-editColor text-white w-8 h-8 rounded-[2px] border border-admin-editColor transition-all duration-200 hover:bg-white hover:text-admin-editColor"
+            >
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </motion.button>
+          ) : (
+            <button
+              onClick={onEdit}
+              disabled={true}
+              className="bg-gray-400 text-white w-8 h-8 rounded-[2px] transition-all duration-200 hover:bg-gray-400/70 disabled:cursor-default"
+            >
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </button>
+          )}
+
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}

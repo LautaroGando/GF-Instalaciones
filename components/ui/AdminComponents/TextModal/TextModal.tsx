@@ -2,7 +2,7 @@
 
 import { useTextModalStore } from "@/store/Admin/AdminModals/TextModalStore/TextModalStore";
 import { motion, AnimatePresence } from "framer-motion";
-import React from "react";
+import React, { useEffect } from "react";
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -31,7 +31,19 @@ const modalVariants = {
 };
 
 const TextModal: React.FC = () => {
-  const { isOpen, title, text, closeModal } = useTextModalStore();
+  const { isOpen, title, text, images, closeModal } = useTextModalStore();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -70,6 +82,19 @@ const TextModal: React.FC = () => {
               className="overflow-y-auto max-h-[300px] text-gray-700"
             >
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />
+
+              {images && images.length > 0 && (
+                <div className="mt-5 grid grid-cols-2 gap-3">
+                  {images.map((img, index) => (
+                    <img
+                      key={index}
+                      src={img}
+                      alt={`Imagen ${index + 1}`}
+                      className="w-full h-[160px] object-cover rounded-md shadow"
+                    />
+                  ))}
+                </div>
+              )}
             </motion.div>
 
             <motion.button

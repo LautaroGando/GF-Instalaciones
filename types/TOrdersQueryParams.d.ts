@@ -6,4 +6,9 @@ interface ordersPagination {
   limit?: number;
 }
 
-export type TOrdersQueryParams = IOrderFilters & IOrderSortParams & ordersPagination;
+interface ordersSearch {
+  search?: string;
+}
+
+
+export type TOrdersQueryParams = IOrderFilters & IOrderSortParams & ordersPagination & ordersSearch;

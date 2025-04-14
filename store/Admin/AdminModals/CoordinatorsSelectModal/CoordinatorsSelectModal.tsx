@@ -22,6 +22,8 @@ export const useCoordinatorsSelectModal = create<ICoordinatorsSelectModalProps>(
     }));
   },
 
+  clearCoordinators: () => set({ selectedCoordinators: [] }),
+
   openModal: () => set({ isOpen: true }),
   closeModal: () => set({ isOpen: false }),
 }));

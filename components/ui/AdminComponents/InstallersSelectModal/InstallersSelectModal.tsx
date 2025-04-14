@@ -44,7 +44,7 @@ const InstallersSelectModal: React.FC = () => {
 
               {selectedInstallers.some((inst) => inst.id === installer.id) ? (
                 <button
-                  onClick={() => deleteInstaller(installer.user.id)}
+                  onClick={() => deleteInstaller(installer.id)}
                   className="border border-red-500 text-red-500 px-4 py-1.5 rounded-lg transition-all duration-200 hover:bg-red-500 hover:text-white"
                 >
                   Desasignar

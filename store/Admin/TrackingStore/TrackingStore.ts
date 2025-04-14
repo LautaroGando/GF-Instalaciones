@@ -33,6 +33,9 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   isLoading: false,
   ordersPage: 1,
   ordersTotalPages: 1,
+  installationsPage: 1,
+  installationsTotalPages: 1,
+  editedInstallationId: null,
   orderFilters: {
     completed: false,
   },
@@ -56,6 +59,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   handleLoading: (conditional: boolean) => {
     set({ isLoading: conditional });
   },
+  setEditedInstallationId: (id: string | null) => set({ editedInstallationId: id }),
 
   // ===========================
   // 📕 2. Paginacion
@@ -81,8 +85,30 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       await get().handleFetchOrders({ page: newPage });
     }
   },
-  installationsNextPage: () => {},
-  installationsPreviousPage: () => {},
+  installationsNextPage: async () => {
+    const currentPage = get().installationsPage;
+    const totalPages = get().installationsTotalPages;
+    const orderId = get().selectedOrder?.id;
+
+    if (!orderId) return;
+
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      set({ installationsPage: newPage });
+      await get().handleFetchInstallations(orderId, { page: newPage });
+    }
+  },
+
+  installationsPreviousPage: async () => {
+    const currentPage = get().installationsPage;
+    const orderId = get().selectedOrder?.id;
+
+    if (!orderId || currentPage <= 1) return;
+
+    const newPage = currentPage - 1;
+    set({ installationsPage: newPage });
+    await get().handleFetchInstallations(orderId, { page: newPage });
+  },
 
   // ===========================
   // 📦 3. Ordenes
@@ -190,15 +216,20 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         city = "",
         createdAt = "",
         updatedAt = "",
+        page = get().installationsPage,
       } = params || {};
 
-      const allInstallations = await getAllInstallations(orderId, params);
+      const finalParams = { status, province, city, createdAt, updatedAt, page };
+
+      const { result: allInstallations, totalPages } = await getAllInstallations(orderId, finalParams);
       const existingOrder = get().orders.find((o) => o.id === orderId);
       const fetchedOrder = existingOrder ?? (await getOrderById(orderId));
 
       set(() => ({
         installationFilters: { status, province, city },
         installationSort: { createdAt, updatedAt },
+        installationsPage: page,
+        installationsTotalPages: totalPages,
         selectedOrder: {
           ...fetchedOrder,
           installations: allInstallations,
@@ -219,11 +250,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     values: ICreateInstallationFormValues
   ) => {
     try {
-      get().handleLoading(true);
       const newInstallation = await createInstallation(orderId, values);
 
-      set((state) => ({
-        orders: state.orders.map((order) =>
+      set((state) => {
+        const updatedOrders = state.orders.map((order) =>
           order.id === orderId
             ? {
                 ...order,
@@ -233,22 +263,30 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
                 ],
               }
             : order
-        ),
-      }));
+        );
+
+        const updatedSelectedOrder =
+          state.selectedOrder?.id === orderId
+            ? {
+                ...state.selectedOrder,
+                installations: [...(state.selectedOrder.installations || []), newInstallation],
+              }
+            : state.selectedOrder;
+
+        return {
+          orders: updatedOrders,
+          selectedOrder: updatedSelectedOrder,
+        };
+      });
 
       return newInstallation;
     } catch (err) {
       console.log("Error al crear la instalación:", err);
       throw err;
-    } finally {
-      get().handleLoading(false);
     }
   },
 
-  handleUpdateInstallation: async (
-    installationId: string,
-    values: IEditInstallationFormValues
-  ) => {
+  handleUpdateInstallation: async (installationId: string, values: IEditInstallationFormValues) => {
     try {
       const updatedInstallation = await updateInstallation(
         installationId,
@@ -257,18 +295,32 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       if (!updatedInstallation)
         throw new Error("Error al actualizar la instalación");
 
-      set((state) => ({
-        orders: state.orders.map((order) => {
-          return {
-            ...order,
-            installations: order.installations.map((installation) =>
-              installation.id === installationId
-                ? { ...installation, ...updatedInstallation }
-                : installation
-            ),
-          };
-        }),
-      }));
+      set((state) => {
+        const updatedOrders = state.orders.map((order) => ({
+          ...order,
+          installations: order.installations.map((installation) =>
+            installation.id === installationId
+              ? { ...installation, ...updatedInstallation }
+              : installation
+          ),
+        }));
+
+        const updatedSelectedOrder = state.selectedOrder?.id
+          ? {
+              ...state.selectedOrder,
+              installations: state.selectedOrder.installations.map((installation) =>
+                installation.id === installationId
+                  ? { ...installation, ...updatedInstallation }
+                  : installation
+              ),
+            }
+          : state.selectedOrder;
+
+        return {
+          orders: updatedOrders,
+          selectedOrder: updatedSelectedOrder,
+        };
+      });
 
       return updatedInstallation;
     } catch (err) {
@@ -280,12 +332,25 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   handleDeleteInstallation: async (id: string) => {
     try {
       await deleteInstallation(id);
-      set((state) => ({
-        orders: state.orders.map((order) => ({
+
+      set((state) => {
+        const updatedOrders = state.orders.map((order) => ({
           ...order,
           installations: order.installations.filter((inst) => inst.id !== id),
-        })),
-      }));
+        }));
+
+        const updatedSelectedOrder = state.selectedOrder
+          ? {
+              ...state.selectedOrder,
+              installations: state.selectedOrder.installations.filter((inst) => inst.id !== id),
+            }
+          : state.selectedOrder;
+
+        return {
+          orders: updatedOrders,
+          selectedOrder: updatedSelectedOrder,
+        };
+      });
     } catch (err) {
       console.error("Error al eliminar la instalación:", err);
       throw err;

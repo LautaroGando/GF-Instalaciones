@@ -16,6 +16,7 @@ import { useSearchParams } from "next/navigation";
 import { provincesMock } from "@/utils/pronvicesMock";
 import CoordinatorsSelectModal from "../../CoordinatorsSelectModal/CoordinatorsSelectModal";
 import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
+import Swal from "sweetalert2";
 
 const SyncInstallersWithFormik = () => {
   const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
@@ -47,12 +48,14 @@ const InstallationsCreateModal = () => {
   const {
     selectedInstallers,
     deleteInstaller,
+    clearInstallers,
     openModal: openInstallersModal,
   } = useInstallersSelectModal();
 
   const {
     selectedCoordinators,
     deleteCoordinator,
+    clearCoordinators,
     openModal: openCoordinatorsModal,
   } = useCoordinatorsSelectModal();
   const { handleCreateInstallation } = useTrackingStore();
@@ -67,35 +70,58 @@ const InstallationsCreateModal = () => {
     values: ICreateInstallationFormValues,
     { setSubmitting }: FormikHelpers<ICreateInstallationFormValues>
   ) => {
+    closeModal();
     const installersIds = selectedInstallers.map((installer) => installer.id);
-  
-    console.log(values);
-    
 
     const coordinatorId =
       selectedCoordinators[0]?.userRoles.find(
         (userRole) => userRole.role.name.toLowerCase() === "coordinador"
       )?.id || "";
-  
+
     const installationData: ICreateInstallationFormValues = {
       ...values,
       installersIds,
       coordinatorId,
     };
-  
+
     if (orderId) {
       try {
         await handleCreateInstallation(orderId, installationData);
-        window.location.reload();
+
+        Swal.fire({
+          icon: "success",
+          title: "Instalación creada",
+          text: "La instalación se creó correctamente.",
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
+        clearInstallers();
+        clearCoordinators();
       } catch (err) {
         console.error("Error creando instalación:", err);
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un problema al crear la instalación.",
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
       }
     }
-  
-    closeModal();
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
     setSubmitting(false);
   };
-  
 
   if (!orderId) return;
 
