@@ -77,13 +77,7 @@ export const useInstallationsTableLogic = () => {
   };
 
   const handleViewAddress = (installation: IInstallation) => {
-    const {
-      street,
-      number,
-      note,
-      postalCode,
-      city, 
-    } = installation.address;
+    const { street, number, note, postalCode, city } = installation.address;
 
     const address = `
       <strong>Calle:</strong> ${street} ${number}<br/>
@@ -96,18 +90,18 @@ export const useInstallationsTableLogic = () => {
     openTextModal("Dirección", address.trim());
   };
 
-  const handleViewInstallers = (installation: IInstallation) =>{
+  const handleViewInstallers = (installation: IInstallation) => {
     const installationInstallers = installation.installers
-    .map((inst) => `<strong>Instalador:</strong> ${inst.user.fullName}<br/>`)
-    .join("");
+      .map((inst) => `<strong>Instalador:</strong> ${inst.user.fullName}<br/>`)
+      .join("");
 
-  openTextModal("Instaladores", installationInstallers || "Sin Instalador");
-  }
-
-  const handleViewNotes = (notes: string) => {
-    openTextModal("Notas", notes|| "Sin notas");
+    openTextModal("Instaladores", installationInstallers || "Sin Instalador");
   };
 
+  const handleViewNotes = (notes: string, images: string[]) => {
+    openTextModal("Notas", notes || "Sin notas", images);
+  };
+  
   return {
     order,
     isLoading: isLoading || isLoadingOrder,

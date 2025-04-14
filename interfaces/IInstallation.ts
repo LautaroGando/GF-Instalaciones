@@ -13,8 +13,9 @@ export interface IInstallation {
   installers: IInstaller[];
   coordinator: {
     id: string;
-    user: IUser
+    user: IUser;
   };
+  images: string[];
 }
 
 export default IInstallation;
