@@ -13,6 +13,7 @@ import {
   getAllOrders,
   getOrderById,
   updateInstallation,
+  updateInstallationStatus,
   updateOrder,
 } from "@/services/orders";
 import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormValues";
@@ -20,6 +21,7 @@ import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValue
 import IInstallation from "@/interfaces/IInstallation";
 import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
+import TInstallationStatus from "@/types/TInstallationStatus";
 
 export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   // ===========================
@@ -48,6 +50,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     createdAt: "",
     updatedAt: "",
   },
+  installationStatus: "En proceso" as TInstallationStatus,
+  completeModal: false,
 
   handleLoading: (conditional: boolean) => {
     set({ isLoading: conditional });
@@ -210,7 +214,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     }
   },
 
-  handleCreateInstallation: async (orderId: string, values: ICreateInstallationFormValues) => {
+  handleCreateInstallation: async (
+    orderId: string,
+    values: ICreateInstallationFormValues
+  ) => {
     try {
       get().handleLoading(true);
       const newInstallation = await createInstallation(orderId, values);
@@ -220,7 +227,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
           order.id === orderId
             ? {
                 ...order,
-                installations: [...(order.installations || []), newInstallation],
+                installations: [
+                  ...(order.installations || []),
+                  newInstallation,
+                ],
               }
             : order
         ),
@@ -236,17 +246,19 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   },
 
   handleUpdateInstallation: async (
-
     installationId: string,
     values: IEditInstallationFormValues
   ) => {
     try {
-      const updatedInstallation = await updateInstallation(installationId, values);
-      if (!updatedInstallation) throw new Error("Error al actualizar la instalación");
+      const updatedInstallation = await updateInstallation(
+        installationId,
+        values
+      );
+      if (!updatedInstallation)
+        throw new Error("Error al actualizar la instalación");
 
       set((state) => ({
         orders: state.orders.map((order) => {
-          
           return {
             ...order,
             installations: order.installations.map((installation) =>
@@ -279,4 +291,25 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       throw err;
     }
   },
+  handleInstallationStatus: async (id: string, status: TInstallationStatus) => {
+    try {
+      await updateInstallationStatus(id, status);
+      set((state) => ({
+        orders: state.orders.map((order) => {
+          return {
+            ...order,
+            installations: order.installations.map((installation) =>
+              installation.id === id
+                ? { ...installation, status }
+                : installation
+            ),
+          };
+        }),
+      }));
+    } catch (err) {
+      console.error("Error al actualizar el estado:", err);
+      throw err;
+    }
+  },
+  handleOpenModal: () => set(() => ({ completeModal: true })),
 }));

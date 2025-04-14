@@ -29,7 +29,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #A79351;
+  background-color: #a79351;
   border-radius: 6px;
 }
 
@@ -40,7 +40,7 @@
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #A79351 transparent;
+  scrollbar-color: #a79351 transparent;
 }
 
 @layer components {
@@ -60,5 +60,21 @@
 @layer utilities {
   .hiddenScrollbar::-webkit-scrollbar {
     width: 0;
+  }
+
+  .scrolledHeader {
+    @apply bg-bgColor text-secondaryColor dark:bg-secondaryColor dark:text-letterColorLight;
+  }
+
+  .menu-line {
+    @apply bg-bgColor;
+  }
+
+  .scrolledHeader .menu-line {
+    @apply bg-secondaryColor dark:bg-bgColor;
+  }
+
+  .menu-open .menu-line {
+    @apply bg-secondaryColor dark:bg-bgColor;
   }
 }

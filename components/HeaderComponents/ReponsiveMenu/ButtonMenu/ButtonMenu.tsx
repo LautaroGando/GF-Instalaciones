@@ -1,10 +1,19 @@
 "use client";
 import { useMenuStore } from "@/store/MenuStore/menuStore";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect } from "react";
 
 export const ButtonMenu: React.FC = () => {
   const { menu, handleToggleMenu } = useMenuStore();
+
+  useEffect(() => {
+    const html = document.documentElement;
+    if (menu) {
+      html.classList.add("menu-open");
+    } else {
+      html.classList.remove("menu-open");
+    }
+  }, [menu]);
 
   return (
     <button
@@ -14,19 +23,19 @@ export const ButtonMenu: React.FC = () => {
     >
       <span
         className={clsx(
-          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md dark:bg-bgColor",
+          "menu-line absolute w-7 h-[2px] transition-all rounded-md",
           menu ? "rotate-45 translate-y-0" : "-translate-y-2"
         )}
       ></span>
       <span
         className={clsx(
-          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md dark:bg-bgColor",
+          "menu-line absolute w-7 h-[2px] transition-all rounded-md",
           menu ? "opacity-0" : "opacity-100"
         )}
       ></span>
       <span
         className={clsx(
-          "absolute w-7 h-[2px] bg-secondaryColor transition-all rounded-md dark:bg-bgColor",
+          "menu-line absolute w-7 h-[2px] transition-all rounded-md",
           menu ? "-rotate-45 translate-y-0" : "translate-y-2"
         )}
       ></span>

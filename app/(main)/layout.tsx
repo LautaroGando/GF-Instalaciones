@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
+
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div
@@ -25,7 +26,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
       <Header />
       <BannerHome />
       <BlogBanner />
-      <main className="px-[15px] sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
+      <main className="px-[15px] mt-20 sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
         {children}
       </main>
       <Footer />

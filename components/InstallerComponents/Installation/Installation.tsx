@@ -5,13 +5,18 @@ import IOrder from "@/interfaces/IOrder";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useUserStore } from "@/store/UserStore/userStore";
 import React, { useEffect } from "react";
+import ModalCompleteInstallation from "./ModalCompleteInstallation/ModalCompleteInstallation";
 
 export const Installation: React.FC = () => {
-  const { user, installers, handleFetchInstallers } = useUserStore();
-  const { orders, handleFetchOrders } = useTrackingStore();
+  const { user } = useUserStore();
+  const {
+    orders,
+    handleFetchOrders,
+    handleInstallationStatus,
+    handleOpenModal,
+  } = useTrackingStore();
 
   useEffect(() => {
-    handleFetchInstallers();
     handleFetchOrders();
   }, []);
 
@@ -24,7 +29,7 @@ export const Installation: React.FC = () => {
       )
     )
   );
-  console.log(assignedInstallations);
+
   return (
     <div className="flex flex-col gap-5 mt-[80px] max-h-[calc(100dvh-150px)] overflow-auto">
       <div className="flex flex-col gap-5">
@@ -65,13 +70,21 @@ export const Installation: React.FC = () => {
                   </h4>
                 </div>
               </div>
-              <button className="w-[120px] h-[36px] border rounded-md border-primaryColor text-primaryColor text-sm font-semibold self-center transition-all duration-300 hover:bg-primaryColor hover:text-letterColorLight md:w-full md:max-w-[170px]">
-                LLEGUÉ
+              <button
+                onClick={() =>
+                  installation.status === "Pendiente"
+                    ? handleInstallationStatus(installation.id, "En proceso")
+                    : handleOpenModal()
+                }
+                className="w-[120px] h-[36px] border rounded-md border-primaryColor text-primaryColor text-sm font-semibold self-center transition-all duration-300 hover:bg-primaryColor hover:text-letterColorLight md:w-full md:max-w-[170px]"
+              >
+                {installation.status === "Pendiente" ? "Llegué" : "Completar"}
               </button>
             </div>
           </div>
         ))}
       </div>
+      <ModalCompleteInstallation />
     </div>
   );
 };

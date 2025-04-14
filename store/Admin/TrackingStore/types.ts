@@ -13,6 +13,7 @@ import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValue
 import { IInstallationFilters } from "@/interfaces/IInstallationFilters";
 import { IInstallationSortParams } from "@/interfaces/IInstallationSortParams";
 import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
+import TInstallationStatus from "@/types/TInstallationStatus";
 
 export interface ITrackingProps {
   // ===========================
@@ -29,6 +30,8 @@ export interface ITrackingProps {
   orderSortParams: IOrderSortParams;
   installationFilters: IInstallationFilters;
   installationSort: IInstallationSortParams;
+  installationStatus: TInstallationStatus;
+  completeModal: boolean;
 
   // ===========================
   // 📕 2. Paginacion
@@ -44,7 +47,10 @@ export interface ITrackingProps {
   // ===========================
   handleFetchOrders: (params?: Partial<TOrdersQueryParams>) => Promise<void>;
   handleCreateOrder: (values: ICreateOrderFormValues) => Promise<IOrder>;
-  handleUpdateOrder: (id: string, values: IEditOrderFormValues) => Promise<IEditOrderFormValues>;
+  handleUpdateOrder: (
+    id: string,
+    values: IEditOrderFormValues
+  ) => Promise<IEditOrderFormValues>;
   handleDeleteOrder: (id: string) => Promise<void>;
 
   // ===========================
@@ -65,4 +71,9 @@ export interface ITrackingProps {
     values: IEditInstallationFormValues
   ) => Promise<void>;
   handleDeleteInstallation: (id: string) => Promise<void>;
+  handleInstallationStatus: (
+    id: string,
+    status: TInstallationStatus
+  ) => Promise<void>;
+  handleOpenModal: () => void;
 }

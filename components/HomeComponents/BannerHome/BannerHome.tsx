@@ -8,9 +8,9 @@ const BannerHome = () => {
 
   return (
     <div className="relative mb-[70px]">
-      <div className="bg-black/60 absolute inset-0 w-full h-full z-10"></div>
+      <div className="bg-black/60 absolute inset-0 w-full h-[100vh] z-10"></div>
 
-      <div className="relative w-full min-h-[180px] sm:min-h-[300px] md:min-h-[310px] lg:min-h-[390px] xl:min-h-[600px] overflow-hidden">
+      <div className="relative w-full min-h-[100vh] overflow-hidden">
         <video
           src="/assets/videos/banner-video.mp4"
           autoPlay

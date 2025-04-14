@@ -5,6 +5,7 @@ import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValue
 import IEditOrderFormValues from "@/interfaces/IEditOrderFormValues";
 import IOrder from "@/interfaces/IOrder";
 import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
+import TInstallationStatus from "@/types/TInstallationStatus";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import { cleanParams } from "@/utils/cleanParams";
 import axios from "axios";
@@ -19,7 +20,7 @@ export const getAllOrders = async (params: TOrdersQueryParams) => {
     });
 
     console.log(data);
-  
+
     return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -67,7 +68,10 @@ export const updateOrder = async (
   values: IEditOrderFormValues
 ): Promise<IEditOrderFormValues | null> => {
   try {
-    const response = await axios.patch<IEditOrderFormValues>(`${API_URL}/orders/${id}`, values);
+    const response = await axios.patch<IEditOrderFormValues>(
+      `${API_URL}/orders/${id}`,
+      values
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -103,9 +107,12 @@ export const getAllInstallations = async (
   try {
     const cleanedParams = params ? cleanParams(params) : undefined;
 
-    const { data } = await axios.get(`${API_URL}/orders/${orderId}/installations`, {
-      params: cleanedParams,
-    });
+    const { data } = await axios.get(
+      `${API_URL}/orders/${orderId}/installations`,
+      {
+        params: cleanedParams,
+      }
+    );
 
     return data;
   } catch (error) {
@@ -123,12 +130,14 @@ export const createInstallation = async (
   values: ICreateInstallationFormValues
 ) => {
   try {
-    const res = await axios.post(`${API_URL}/orders/${orderId}/installations`, values);
+    const res = await axios.post(
+      `${API_URL}/orders/${orderId}/installations`,
+      values
+    );
     console.log("Creando instalación para orden:", orderId);
     console.log("Payload:", values);
     console.log("URL:", `${API_URL}/orders/${orderId}/installations`);
-    
-    
+
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -152,7 +161,7 @@ export const updateInstallation = async (
     );
 
     console.log(res.data);
-    
+
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -162,6 +171,20 @@ export const updateInstallation = async (
       console.error("Error inesperado al actualizar la instalación");
       throw new Error("Error inesperado al actualizar la instalación.");
     }
+  }
+};
+
+export const updateInstallationStatus = async (
+  id: string,
+  status: TInstallationStatus
+) => {
+  try {
+    const res = await axios.patch(`${API_URL}/installations/${id}/status`, {
+      status,
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };
 
