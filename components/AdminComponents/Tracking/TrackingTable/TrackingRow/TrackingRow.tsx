@@ -35,6 +35,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
   deleteOrder,
   openTextModal,
 }) => {
+
   return (
     <motion.tr
       layout

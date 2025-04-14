@@ -1,6 +1,6 @@
 export interface IEditInstallationFormValues {
-  id: string;
   startDate: string | null;
+  installersIds: string[];
 }
 
 

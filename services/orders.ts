@@ -18,8 +18,6 @@ export const getAllOrders = async (params: TOrdersQueryParams) => {
       params: cleanedParams,
     });
 
-    console.log(data);
-  
     return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -123,13 +121,9 @@ export const createInstallation = async (
   values: ICreateInstallationFormValues
 ) => {
   try {
-    const res = await axios.post(`${API_URL}/orders/${orderId}/installations`, values);
-    console.log("Creando instalación para orden:", orderId);
-    console.log("Payload:", values);
-    console.log("URL:", `${API_URL}/orders/${orderId}/installations`);
-    
-    
-    return res.data;
+    const { data } = await axios.post(`${API_URL}/orders/${orderId}/installations`, values);
+
+    return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       console.error("Error al crear la instalación");
@@ -146,14 +140,11 @@ export const updateInstallation = async (
   values: IEditInstallationFormValues
 ) => {
   try {
-    const res = await axios.patch(
-      `${API_URL}installation/${installationId}`,
-      values
-    );
-
-    console.log(res.data);
+    console.log(values);
     
-    return res.data;
+    const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values);
+  
+    return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       console.error("Error al actualizar la instalación");
@@ -167,8 +158,9 @@ export const updateInstallation = async (
 
 export const deleteInstallation = async (id: string) => {
   try {
-    const res = await axios.delete(`${API_URL}/installations/${id}`);
-    return res.data;
+    const { data } = await axios.delete(`${API_URL}/installations/${id}`);
+
+    return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       console.error("Error al eliminar la instalación");

@@ -20,6 +20,8 @@ export const useInstallersSelectModal = create<IInstallersSelectModalProps>((set
     }));
   },
   
+  clearInstallers: () => set({ selectedInstallers: [] }),
+
   openModal: () => set({ isOpen: true }),
   closeModal: () => set({ isOpen: false }),
 }));

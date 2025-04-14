@@ -1,6 +1,7 @@
 import TInstallationStatus from "@/types/TInstallationStatus";
 import { IInstaller } from "./IInstaller";
 import IAddress from "./IAddress";
+import { IUser } from "./IUser";
 
 export interface IInstallation {
   id: string;
@@ -12,8 +13,9 @@ export interface IInstallation {
   installers: IInstaller[];
   coordinator: {
     id: string;
-    name: string;
+    user: IUser;
   };
+  images: string[];
 }
 
 export default IInstallation;

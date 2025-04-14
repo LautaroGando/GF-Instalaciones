@@ -5,6 +5,7 @@ export interface ICoordinatorsSelectModalProps {
   selectedCoordinators: IUser[];
   addCoordinator: (coordinator: IUser) => void;
   deleteCoordinator: (id: string) => void;
+  clearCoordinators: () => void;
   openModal: () => void;
   closeModal: () => void;
 }

@@ -3,9 +3,9 @@ export const InstallationsTableHeaders = [
   "Fecha de Finalización",
   "Dirección",
   "Estado",
-  "Notas",
   "Coordinador",
   "Instaladores",
+  "Notas",
   "Acción"
 ];
 
