@@ -5,6 +5,7 @@ export interface IInstallersSelectModalProps {
   selectedInstallers: IInstaller[];
   addInstaller: (installer: IInstaller) => void;
   deleteInstaller: (id: string) => void;
+  clearInstallers: () => void;
   openModal: () => void;
   closeModal: () => void;
 }

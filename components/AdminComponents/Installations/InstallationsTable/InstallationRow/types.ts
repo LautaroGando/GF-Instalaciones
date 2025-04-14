@@ -6,7 +6,9 @@ export interface IInstallationsRowProps {
   onEdit: () => void;
   onDelete: () => void;
   onViewNotes: () => void;
+  onViewInstallers: () => void;
   onViewAddress: () => void;
+  wasRecentlyEdited?: boolean;
 }
 
 export default IInstallationsRowProps;

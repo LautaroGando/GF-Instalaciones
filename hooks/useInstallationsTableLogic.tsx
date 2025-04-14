@@ -96,8 +96,16 @@ export const useInstallationsTableLogic = () => {
     openTextModal("Dirección", address.trim());
   };
 
-  const handleViewNotes = (installation: IInstallation) => {
-    openTextModal("Notas", installation.notes || "Sin notas");
+  const handleViewInstallers = (installation: IInstallation) =>{
+    const installationInstallers = installation.installers
+    .map((inst) => `<strong>Instalador:</strong> ${inst.user.fullName}<br/>`)
+    .join("");
+
+  openTextModal("Instaladores", installationInstallers || "Sin Instalador");
+  }
+
+  const handleViewNotes = (notes: string) => {
+    openTextModal("Notas", notes|| "Sin notas");
   };
 
   return {
@@ -106,6 +114,7 @@ export const useInstallationsTableLogic = () => {
     handleEdit,
     handleDelete,
     handleViewAddress,
+    handleViewInstallers,
     handleViewNotes,
   };
 };

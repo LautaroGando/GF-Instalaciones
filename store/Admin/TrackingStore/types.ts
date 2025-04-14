@@ -24,11 +24,16 @@ export interface ITrackingProps {
   isLoading: boolean;
   ordersPage: number;
   ordersTotalPages: number;
-  handleLoading: (conditional: boolean) => void;
+  installationsPage: number;
+  installationsTotalPages: number;
+  editedInstallationId: string | null;
   orderFilters: IOrderFilters;
   orderSortParams: IOrderSortParams;
   installationFilters: IInstallationFilters;
   installationSort: IInstallationSortParams;
+
+  handleLoading: (conditional: boolean) => void;
+  setEditedInstallationId: (id: string | null) => void;
 
   // ===========================
   // 📕 2. Paginacion

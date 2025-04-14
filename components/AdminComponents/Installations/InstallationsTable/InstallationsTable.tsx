@@ -7,10 +7,21 @@ import RenderEmptyState from "@/components/ui/AdminComponents/RenderEmptyState/R
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import InstallationRow from "./InstallationRow/InstallationRow";
 import useInstallationsTableLogic from "@/hooks/useInstallationsTableLogic";
+import { AnimatePresence } from "framer-motion";
+import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 
 const InstallationsTable = () => {
-  const { order, isLoading, handleEdit, handleDelete, handleViewAddress, handleViewNotes } =
-    useInstallationsTableLogic();
+  const {
+    order,
+    isLoading,
+    handleEdit,
+    handleDelete,
+    handleViewAddress,
+    handleViewInstallers,
+    handleViewNotes,
+  } = useInstallationsTableLogic();
+
+  const { editedInstallationId } = useTrackingStore();
 
   if (isLoading) {
     return (
@@ -35,25 +46,29 @@ const InstallationsTable = () => {
 
   return (
     <>
-      <div className="w-full h-[max-content] min-h-[400px] overflow-x-auto">
+      <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
         <table className="text-sm text-left w-full border-collapse">
           <InstallationsTableHeader />
           <tbody>
-            {order.installations.map((installation: IInstallation, i) => {
-              const coordinatorName = installation.coordinator?.name || "-";
+            <AnimatePresence>
+              {order.installations.map((installation: IInstallation, i) => {
+                const coordinatorName = installation.coordinator?.user.fullName || "-";
 
-              return (
-                <InstallationRow
-                  key={i}
-                  installation={installation}
-                  coordinatorName={coordinatorName}
-                  onEdit={() => handleEdit(installation)}
-                  onDelete={() => handleDelete(installation.id)}
-                  onViewAddress={() => handleViewAddress(installation)}
-                  onViewNotes={() => handleViewNotes(installation)}
-                />
-              );
-            })}
+                return (
+                  <InstallationRow
+                    key={i}
+                    installation={installation}
+                    coordinatorName={coordinatorName}
+                    onEdit={() => handleEdit(installation)}
+                    onDelete={() => handleDelete(installation.id)}
+                    onViewAddress={() => handleViewAddress(installation)}
+                    onViewInstallers={() => handleViewInstallers(installation)}
+                    onViewNotes={() => handleViewNotes("nota")}
+                    wasRecentlyEdited={editedInstallationId === installation.id}
+                  />
+                );
+              })}
+            </AnimatePresence>
           </tbody>
         </table>
       </div>
