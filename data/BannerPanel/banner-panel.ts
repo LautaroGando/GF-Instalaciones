@@ -17,7 +17,7 @@ export const bannerPanel: IBannerPanel[] = [
   },
   {
     icon: faArrowDownWideShort,
-    label: "Órdenes",
+    label: "Instalaciónes",
   },
   {
     icon: faNewspaper,

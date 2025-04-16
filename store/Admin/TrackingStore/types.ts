@@ -25,6 +25,7 @@ export interface ITrackingProps {
   isLoading: boolean;
   ordersPage: number;
   ordersTotalPages: number;
+  installations: IInstallation[] | null;
   installationsPage: number;
   installationsTotalPages: number;
   editedInstallationId: string | null;
@@ -62,6 +63,7 @@ export interface ITrackingProps {
   // 🧰 4. Instalaciones
   // ===========================
 
+  handleFetchInstallationsNotPagination: () => Promise<IInstallation[] | void>;
   handleFetchInstallations: (
     orderId: string,
     params?: Partial<TInstallationQueryParams>
@@ -81,4 +83,5 @@ export interface ITrackingProps {
     status: TInstallationStatus
   ) => Promise<void>;
   handleOpenModal: () => void;
+  handleCloseModal: () => void;
 }

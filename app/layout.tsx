@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ScrollHeaderEffect } from "@/components/ui/GeneralComponents/ScrollHeaderEffect/ScrollHeaderEffect";
 
 const themeScript = `
   (function() {
@@ -14,31 +15,16 @@ const themeScript = `
   })();
 `;
 
-const scrollHeaderScript = `
-  window.addEventListener("scroll", function () {
-    const header = document.getElementById("main-header");
-    if (!header) return;
-
-    if (window.scrollY > 0) {
-      header.classList.add("scrolledHeader");
-    } else {
-      header.classList.remove("scrolledHeader");
-    }
-  });
-`;
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <script
-          dangerouslySetInnerHTML={{ __html: scrollHeaderScript }}
-        ></script>
       </head>
       <body className="bg-bgColor dark:bg-secondaryColor">
         {children}
         <SpeedInsights />
+        <ScrollHeaderEffect />
       </body>
     </html>
   );

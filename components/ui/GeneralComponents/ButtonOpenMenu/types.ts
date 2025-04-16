@@ -1,3 +1,3 @@
 export interface IButtonOpenMenuProps {
-  admin: boolean;
+  admin?: boolean;
 }

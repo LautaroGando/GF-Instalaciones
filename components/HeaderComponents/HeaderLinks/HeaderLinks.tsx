@@ -25,7 +25,7 @@ export const HeaderLinks: React.FC = () => {
             <li key={i}>
               <Link
                 className={clsx(
-                  "font-textFont transition-all duration-500 xl:text-lg",
+                  "font-textFont xl:text-lg",
                   isActive && "text-primaryColor font-semibold"
                 )}
                 href={link.href}

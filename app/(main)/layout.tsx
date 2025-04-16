@@ -15,12 +15,11 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div
       className={clsx(
-        "bg-bgColor transition-all duration-500 font-textFont text-secondaryColor dark:text-letterColorLight dark:bg-secondaryColor"
+        "bg-bgColor transition-all duration-300 font-textFont text-secondaryColor dark:text-letterColorLight dark:bg-secondaryColor"
       )}
     >
       <Header />
