@@ -225,6 +225,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         page = get().installationsPage,
       } = params || {};
 
+
       const finalParams = {
         status,
         province,
@@ -236,6 +237,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
       const { result: allInstallations, totalPages } =
         await getAllInstallations(orderId, finalParams);
+      
       const existingOrder = get().orders.find((o) => o.id === orderId);
       const fetchedOrder = existingOrder ?? (await getOrderById(orderId));
 
@@ -379,11 +381,13 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   handleInstallationStatus: async (id: string, status: TInstallationStatus) => {
     try {
       await updateInstallationStatus(id, status);
+
       set((state) => {
         const updatedInstallations =
           state.installations?.map((installation) =>
             installation.id === id ? { ...installation, status } : installation
           ) || null;
+
         const updatedOrders = state.orders.map((order) => ({
           ...order,
           installations: order.installations.map((installation) =>
@@ -391,9 +395,19 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
           ),
         }));
 
+        const updatedSelectedOrder = state.selectedOrder
+          ? {
+              ...state.selectedOrder,
+              installations: state.selectedOrder.installations.map((installation) =>
+                installation.id === id ? { ...installation, status } : installation
+              ),
+            }
+          : null;
+
         return {
           orders: updatedOrders,
-          installations: updatedInstallations,
+          selectedOrder: updatedSelectedOrder,
+
         };
       });
     } catch (err) {
@@ -401,6 +415,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       throw err;
     }
   },
+
   handleOpenModal: () => set(() => ({ completeModal: true })),
   handleCloseModal: () => set(() => ({ completeModal: false })),
 }));

@@ -44,7 +44,6 @@ const InstallationsTable = () => {
     );
   }
 
-
   return (
     <>
       <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
@@ -64,7 +63,9 @@ const InstallationsTable = () => {
                     onDelete={() => handleDelete(installation.id)}
                     onViewAddress={() => handleViewAddress(installation)}
                     onViewInstallers={() => handleViewInstallers(installation)}
-                    onViewNotes={() => handleViewNotes(installation.notes, installation.images)}
+                    onViewNotes={() =>
+                      handleViewNotes(installation, installation.notes, installation.images)
+                    }
                     wasRecentlyEdited={editedInstallationId === installation.id}
                   />
                 );

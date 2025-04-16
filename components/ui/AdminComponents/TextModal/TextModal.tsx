@@ -31,7 +31,7 @@ const modalVariants = {
 };
 
 const TextModal: React.FC = () => {
-  const { isOpen, title, text, images, closeModal } = useTextModalStore();
+  const { isOpen, title, text, closeModal } = useTextModalStore();
 
   useEffect(() => {
     if (isOpen) {
@@ -79,22 +79,9 @@ const TextModal: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.3 }}
-              className="overflow-y-auto max-h-[300px] text-gray-700"
+              className="overflow-y-auto max-h-[400px] text-gray-700"
             >
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />
-
-              {images && images.length > 0 && (
-                <div className="mt-5 grid grid-cols-2 gap-3">
-                  {images.map((img, index) => (
-                    <img
-                      key={index}
-                      src={img}
-                      alt={`Imagen ${index + 1}`}
-                      className="w-full h-[160px] object-cover rounded-md shadow"
-                    />
-                  ))}
-                </div>
-              )}
             </motion.div>
 
             <motion.button

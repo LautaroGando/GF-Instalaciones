@@ -162,10 +162,8 @@ export const updateInstallation = async (
   try {
     console.log(values);
 
-    const { data } = await axios.patch(
-      `${API_URL}/installations/${installationId}`,
-      values
-    );
+
+    const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values);
 
     return data;
   } catch (err) {
@@ -179,10 +177,8 @@ export const updateInstallation = async (
   }
 };
 
-export const updateInstallationStatus = async (
-  id: string,
-  status: TInstallationStatus
-) => {
+export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
+  
   try {
     const res = await axios.patch(`${API_URL}/installations/${id}/status`, {
       status,
