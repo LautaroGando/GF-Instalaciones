@@ -4,16 +4,11 @@ import { IInstaller } from "@/interfaces/IInstaller";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useUserStore } from "@/store/UserStore/userStore";
 import React, { useEffect } from "react";
-import ModalCompleteInstallation from "./ModalCompleteInstallation/ModalCompleteInstallation";
 
-export const Installation: React.FC = () => {
+export const History: React.FC = () => {
   const { user } = useUserStore();
-  const {
-    installations,
-    handleFetchInstallationsNotPagination,
-    handleInstallationStatus,
-    handleOpenModal,
-  } = useTrackingStore();
+  const { installations, handleFetchInstallationsNotPagination } =
+    useTrackingStore();
 
   useEffect(() => {
     handleFetchInstallationsNotPagination();
@@ -28,10 +23,14 @@ export const Installation: React.FC = () => {
       )
   );
 
+  const filterCompleteInstallations = assignedInstallations?.filter(
+    (installation: IInstallation) => installation.status === "Finalizada"
+  );
+console.log(filterCompleteInstallations)
   return (
     <div className="flex flex-col gap-5 mt-[80px] max-h-[calc(100dvh-150px)] overflow-auto">
       <div className="flex flex-col gap-5">
-        {assignedInstallations?.map((installation: IInstallation) => (
+        {filterCompleteInstallations?.map((installation: IInstallation) => (
           <div key={installation.id}>
             {installation.status !== "Finalizada" && (
               <div className="w-full flex flex-col md:flex-row md:items-center">
@@ -68,25 +67,7 @@ export const Installation: React.FC = () => {
                       </h4>
                     </div>
                   </div>
-                  {installation.status !== "A revisar" && (
-                    <button
-                      onClick={() =>
-                        installation.status === "Pendiente"
-                          ? handleInstallationStatus(
-                              installation.id,
-                              "En proceso"
-                            )
-                          : handleOpenModal()
-                      }
-                      className="w-[120px] h-[36px] border rounded-md border-primaryColor text-primaryColor text-sm font-semibold self-center transition-all duration-300 hover:bg-primaryColor hover:text-letterColorLight md:w-full md:max-w-[170px]"
-                    >
-                      {installation.status === "Pendiente"
-                        ? "Llegué"
-                        : "Completar"}
-                    </button>
-                  )}
                 </div>
-                <ModalCompleteInstallation id={installation.id} />
               </div>
             )}
           </div>
@@ -96,4 +77,4 @@ export const Installation: React.FC = () => {
   );
 };
 
-export default Installation;
+export default History;

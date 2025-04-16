@@ -3,7 +3,6 @@ import { IListButtonActionProps } from "./types";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPenToSquare,
   faTrash,
   faUser,
   faUserSecret,

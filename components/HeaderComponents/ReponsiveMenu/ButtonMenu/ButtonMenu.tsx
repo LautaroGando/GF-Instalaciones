@@ -1,10 +1,12 @@
 "use client";
 import { useMenuStore } from "@/store/MenuStore/menuStore";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
 
 export const ButtonMenu: React.FC = () => {
   const { menu, handleToggleMenu } = useMenuStore();
+  const pathname = usePathname();
 
   useEffect(() => {
     const html = document.documentElement;
@@ -23,19 +25,22 @@ export const ButtonMenu: React.FC = () => {
     >
       <span
         className={clsx(
-          "menu-line absolute w-7 h-[2px] transition-all rounded-md",
+          "absolute w-7 h-[2px] transition-all rounded-md",
+          pathname === "/" ? "menu-line" : "bg-secondaryColor dark:bg-bgColor",
           menu ? "rotate-45 translate-y-0" : "-translate-y-2"
         )}
       ></span>
       <span
         className={clsx(
-          "menu-line absolute w-7 h-[2px] transition-all rounded-md",
+          "absolute w-7 h-[2px] transition-all rounded-md",
+          pathname === "/" ? "menu-line" : "bg-secondaryColor dark:bg-bgColor",
           menu ? "opacity-0" : "opacity-100"
         )}
       ></span>
       <span
         className={clsx(
-          "menu-line absolute w-7 h-[2px] transition-all rounded-md",
+          "absolute w-7 h-[2px] transition-all rounded-md",
+          pathname === "/" ? "menu-line" : "bg-secondaryColor dark:bg-bgColor",
           menu ? "-rotate-45 translate-y-0" : "translate-y-2"
         )}
       ></span>
