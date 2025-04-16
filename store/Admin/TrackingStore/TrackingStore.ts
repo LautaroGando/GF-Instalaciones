@@ -60,8 +60,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   handleLoading: (conditional: boolean) => {
     set({ isLoading: conditional });
   },
-  setEditedInstallationId: (id: string | null) =>
-    set({ editedInstallationId: id }),
+  setEditedInstallationId: (id: string | null) => set({ editedInstallationId: id }),
 
   // ===========================
   // 📕 2. Paginacion
@@ -234,8 +233,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         page,
       };
 
-      const { result: allInstallations, totalPages } =
-        await getAllInstallations(orderId, finalParams);
+      const { result: allInstallations, totalPages } = await getAllInstallations(
+        orderId,
+        finalParams
+      );
 
       const existingOrder = get().orders.find((o) => o.id === orderId);
       const fetchedOrder = existingOrder ?? (await getOrderById(orderId));
@@ -259,10 +260,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       get().handleLoading(false);
     }
   },
-  handleCreateInstallation: async (
-    orderId: string,
-    values: ICreateInstallationFormValues
-  ) => {
+  handleCreateInstallation: async (orderId: string, values: ICreateInstallationFormValues) => {
     try {
       const newInstallation = await createInstallation(orderId, values);
 
@@ -271,10 +269,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
           order.id === orderId
             ? {
                 ...order,
-                installations: [
-                  ...(order.installations || []),
-                  newInstallation,
-                ],
+                installations: [...(order.installations || []), newInstallation],
               }
             : order
         );
@@ -283,10 +278,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
           state.selectedOrder?.id === orderId
             ? {
                 ...state.selectedOrder,
-                installations: [
-                  ...(state.selectedOrder.installations || []),
-                  newInstallation,
-                ],
+                installations: [...(state.selectedOrder.installations || []), newInstallation],
               }
             : state.selectedOrder;
 
@@ -302,17 +294,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       throw err;
     }
   },
-  handleUpdateInstallation: async (
-    installationId: string,
-    values: IEditInstallationFormValues
-  ) => {
+  handleUpdateInstallation: async (installationId: string, values: IEditInstallationFormValues) => {
     try {
-      const updatedInstallation = await updateInstallation(
-        installationId,
-        values
-      );
-      if (!updatedInstallation)
-        throw new Error("Error al actualizar la instalación");
+      const updatedInstallation = await updateInstallation(installationId, values);
+      if (!updatedInstallation) throw new Error("Error al actualizar la instalación");
 
       set((state) => {
         const updatedOrders = state.orders.map((order) => ({
@@ -327,11 +312,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         const updatedSelectedOrder = state.selectedOrder?.id
           ? {
               ...state.selectedOrder,
-              installations: state.selectedOrder.installations.map(
-                (installation) =>
-                  installation.id === installationId
-                    ? { ...installation, ...updatedInstallation }
-                    : installation
+              installations: state.selectedOrder.installations.map((installation) =>
+                installation.id === installationId
+                  ? { ...installation, ...updatedInstallation }
+                  : installation
               ),
             }
           : state.selectedOrder;
@@ -361,9 +345,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         const updatedSelectedOrder = state.selectedOrder
           ? {
               ...state.selectedOrder,
-              installations: state.selectedOrder.installations.filter(
-                (inst) => inst.id !== id
-              ),
+              installations: state.selectedOrder.installations.filter((inst) => inst.id !== id),
             }
           : state.selectedOrder;
 
@@ -407,6 +389,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
           : null;
 
         return {
+          installations: updatedInstallations,
           orders: updatedOrders,
           installations: updatedInstallations,
           selectedOrder: updatedSelectedOrder,

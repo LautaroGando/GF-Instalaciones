@@ -24,7 +24,6 @@ const TrackingEditModal = () => {
     { setSubmitting }: FormikHelpers<IEditOrderFormValues>
   ) => {
     try {
-      console.log(values);
       await handleUpdateOrder(selectedOrder.id, values);
       Swal.fire({
         icon: "success",
@@ -80,6 +79,7 @@ const TrackingEditModal = () => {
               orderNumber: selectedOrder.orderNumber ?? "",
               title: selectedOrder.title ?? "",
               description: selectedOrder.description ?? "",
+              completed: selectedOrder.completed,
             }}
             validationSchema={validateEditOrder}
             onSubmit={handleOnSubmit}

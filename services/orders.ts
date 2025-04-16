@@ -67,12 +67,16 @@ export const updateOrder = async (
   values: IEditOrderFormValues
 ): Promise<IEditOrderFormValues | null> => {
   try {
-    const response = await axios.patch<IEditOrderFormValues>(
-      `${API_URL}/orders/${id}`,
-      values
-    );
+    const response = await axios.patch<IEditOrderFormValues>(`${API_URL}/orders/${id}`, values);
+
+    console.log(values);
+
+    console.log(response.data);
+
     return response.data;
   } catch (err) {
+    console.log(err);
+    
     if (axios.isAxiosError(err)) {
       console.error("Error al actualizar la orden");
       throw new Error("No se pudo actualizar la orden.");
@@ -115,12 +119,9 @@ export const getAllInstallations = async (
   try {
     const cleanedParams = params ? cleanParams(params) : undefined;
 
-    const { data } = await axios.get(
-      `${API_URL}/orders/${orderId}/installations`,
-      {
-        params: cleanedParams,
-      }
-    );
+    const { data } = await axios.get(`${API_URL}/orders/${orderId}/installations`, {
+      params: cleanedParams,
+    });
 
     return data;
   } catch (error) {
@@ -138,10 +139,7 @@ export const createInstallation = async (
   values: ICreateInstallationFormValues
 ) => {
   try {
-    const { data } = await axios.post(
-      `${API_URL}/orders/${orderId}/installations`,
-      values
-    );
+    const { data } = await axios.post(`${API_URL}/orders/${orderId}/installations`, values);
 
     return data;
   } catch (err) {
@@ -162,7 +160,6 @@ export const updateInstallation = async (
   try {
     console.log(values);
 
-
     const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values);
 
     return data;
@@ -178,7 +175,6 @@ export const updateInstallation = async (
 };
 
 export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
-  
   try {
     const res = await axios.patch(`${API_URL}/installations/${id}/status`, {
       status,
@@ -189,10 +185,7 @@ export const updateInstallationStatus = async (id: string, status: TInstallation
   }
 };
 
-export const completeInstallation = async (
-  id: string,
-  values: ICompleteJob
-) => {
+export const completeInstallation = async (id: string, values: ICompleteJob) => {
   const formData = new FormData();
 
   formData.append("commentary", values.commentary ?? "");
@@ -202,15 +195,11 @@ export const completeInstallation = async (
   });
 
   try {
-    const { data } = await axios.post(
-      `${API_URL}/installations/${id}/images`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const { data } = await axios.post(`${API_URL}/installations/${id}/images`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return data;
   } catch (error) {
     console.error("Error al subir la instalación:", error);

@@ -5,6 +5,8 @@ import React from "react";
 import ITrackingRowsProps from "./types";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
+import Swal from "sweetalert2";
 
 const rowVariants = {
   hidden: {
@@ -35,6 +37,42 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
   deleteOrder,
   openTextModal,
 }) => {
+  const { handleUpdateOrder } = useTrackingStore();
+
+  const handleFinishOrder = async () => {
+    try {
+      await handleUpdateOrder(order.id, {
+        orderNumber: order.orderNumber,
+        title: order.title,
+        description: order.description,
+        completed: true,
+      });
+
+      Swal.fire({
+        icon: "success",
+        title: "Orden finalizada",
+        text: "La orden se ha marcado como completada.",
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    } catch (error) {
+      console.error("Error al finalizar la orden:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo finalizar la orden. Intenta de nuevo.",
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    }
+  };
 
   return (
     <motion.tr
@@ -113,7 +151,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
           >
             Completada
           </motion.span>
-        ) : (
+        ) : order.progress !== "100.00" ? (
           <div className="flex flex-col gap-1">
             <motion.span
               initial={{ opacity: 0, y: 5 }}
@@ -123,20 +161,31 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
             >
               {order.installationsFinished}
             </motion.span>
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{
-                width: `${
-                  (parseInt(order.installationsFinished.split("/")[0]) /
-                    parseInt(order.installationsFinished.split("/")[1])) *
-                  100
-                }%`,
-              }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="h-1 bg-yellow-400 rounded-full"
-            />
-            <div className="h-1 w-full bg-gray-300 rounded-full opacity-30 -mt-1" />
+
+            <div className="relative w-full h-1 rounded-full bg-gray-300 opacity-30">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{
+                  width: `${
+                    (parseInt(order.installationsFinished.split("/")[0]) /
+                      parseInt(order.installationsFinished.split("/")[1])) *
+                    100
+                  }%`,
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="absolute top-0 left-0 h-full bg-yellow-400 rounded-full"
+              />
+            </div>
           </div>
+        ) : (
+          <motion.button
+            whileHover={{ scale: 1.0 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={handleFinishOrder}
+            className="bg-admin-activeColor border border-admin-activeColor h-[36px] px-5 rounded-[2px] font-bold text-letterColorLight transition-all duration-200 hover:text-admin-activeColor hover:bg-white"
+          >
+            Finalizar Orden
+          </motion.button>
         )}
       </motion.td>
 
@@ -173,7 +222,6 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
                 hover: { opacity: 1, x: 8 },
               }}
               transition={{ duration: 0.3, delay: 0.2 }}
-             
             >
               <FontAwesomeIcon icon={faArrowRight} />
             </motion.span>
