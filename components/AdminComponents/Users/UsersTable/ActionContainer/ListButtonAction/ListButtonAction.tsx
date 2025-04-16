@@ -3,7 +3,6 @@ import { IListButtonActionProps } from "./types";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPenToSquare,
   faTrash,
   faUser,
   faUserSecret,
@@ -70,10 +69,6 @@ export const ButtonAction: React.FC<IListButtonActionProps> = ({
           >
             <InfoUserAction item={item} />
             <div className="grid grid-cols-2 justify-center gap-3 items-center">
-              <button className="btnAction border-admin-editColor text-admin-editColor after:bg-admin-editColor">
-                <FontAwesomeIcon icon={faPenToSquare} size="xl" />
-                Editar
-              </button>
               <button
                 onClick={() => handleDeleteUser(item.id)}
                 className="btnAction border-admin-deleteColor text-admin-deleteColor  after:bg-admin-deleteColor"
@@ -109,7 +104,8 @@ export const ButtonAction: React.FC<IListButtonActionProps> = ({
                 className="btnAction border-admin-activeColor text-admin-activeColor after:bg-admin-activeColor after:left-0 disabled:bg-disabledButton disabled:line-through disabled:border-disabledButton disabled:text-letterColorLight"
                 disabled={
                   (item.installer?.status !== "APROBADO" &&
-                    item.userRoles[0].role.name !== "Usuario") ||
+                    item.userRoles[item.userRoles.length - 1].role.name !==
+                      "Usuario") ||
                   !!item.disabledAt
                 }
               >

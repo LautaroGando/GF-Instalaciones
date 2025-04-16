@@ -22,7 +22,7 @@ export const AdminHeader: React.FC = () => {
             <SelectTheme admin />
           </div>
           <Notifications />
-          <ButtonOpenMenu theme="light" />
+          <ButtonOpenMenu admin />
           <AdminProfile
             containerClasses="lg:flex-row"
             imgClasses="lg:rounded-none lg:w-[50px] lg:h-[50px]"

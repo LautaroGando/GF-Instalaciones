@@ -28,7 +28,7 @@ export const UserStats: React.FC = () => {
           <Loading theme="light" />
         </div>
       ) : (
-        <ResponsiveContainer className="h-full" width="100%">
+        <ResponsiveContainer className="h-full" width="100%" height={150}>
           <BarChart data={userStats(users)} layout="vertical">
             <XAxis type="number" hide />
             <YAxis

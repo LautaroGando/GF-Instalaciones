@@ -9,6 +9,8 @@ import clsx from "clsx";
 export const NotificationsSection: React.FC = () => {
   const { users, isLoading, moreInfo } = useUserStore();
 
+  console.log(users)
+
   return (
     <div>
       {isLoading ? (

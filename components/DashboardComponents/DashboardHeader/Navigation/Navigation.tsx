@@ -20,7 +20,11 @@ export const Navigation: React.FC<INavigationProps> = ({ pathname }) => {
       {navigationData.map((link: INavigationData, i: number) => {
         const modifyPath = link.href.split("/")[2];
 
-        if (userInfo?.userRoles[0].role.name === "Instalador" && link.label === "Newslatter")
+        if (
+          userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
+            "Instalador" &&
+          link.label === "Newslatter"
+        )
           return;
 
         return (

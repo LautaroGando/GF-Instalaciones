@@ -10,11 +10,12 @@ export const InfoRows: React.FC<IInfoRowsProps> = ({
     <td
       className={clsx(
         "h-12 px-4",
-        item.userRoles[0].role.name === "Admin"
+        item.userRoles[item.userRoles.length - 1].role.name === "Admin"
           ? "font-semibold"
-          : item.userRoles[0].role.name === "Instalador"
+          : item.userRoles[item.userRoles.length - 1].role.name === "Instalador"
           ? "text-primaryColor"
-          : item.userRoles[0].role.name === "Coordinador"
+          : item.userRoles[item.userRoles.length - 1].role.name ===
+            "Coordinador"
           ? "text-primaryColor font-semibold"
           : "text-secondaryColor"
       )}

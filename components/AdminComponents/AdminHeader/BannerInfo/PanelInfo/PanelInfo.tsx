@@ -1,13 +1,24 @@
 import { bannerPanel } from "@/data/BannerPanel/banner-panel";
 import { IBannerPanel } from "@/data/BannerPanel/types";
+import { IUser } from "@/interfaces/IUser";
+import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect } from "react";
+import CountUp from "react-countup";
 
 export const PanelInfo: React.FC = () => {
   const { users } = useUserStore();
+  const { installations, handleFetchInstallationsNotPagination } =
+    useTrackingStore();
 
-  const quantityUsers = users?.length ?? 0;
+  useEffect(() => {
+    handleFetchInstallationsNotPagination();
+  }, [handleFetchInstallationsNotPagination]);
+
+  const employees = users
+    ?.map((user: IUser) => user.userRoles[user.userRoles.length - 1].role.name)
+    .filter((role) => role !== "Admin" && role !== "Usuario");
 
   return (
     <div className="flex flex-col gap-5 sm:flex-row sm:gap-3">
@@ -21,7 +32,19 @@ export const PanelInfo: React.FC = () => {
             <h3 className="text-sm sm:text-xs md:text-sm">{item.label}</h3>
           </div>
           <h3 className="font-semibold">
-            {item.label === "Usuarios" ? quantityUsers : 0}
+            <CountUp
+              end={
+                item.label === "Usuarios"
+                  ? users?.length ?? 0
+                  : item.label === "Empleados"
+                  ? employees?.length ?? 0
+                  : item.label === "Instalaciónes"
+                  ? installations?.length ?? 0
+                  : 0
+              }
+              duration={3}
+              delay={0.5}
+            />
           </h3>
         </div>
       ))}
