@@ -196,9 +196,7 @@ export const popUpLogout = (onConfirm: () => void) => {
           popup.style.right = "0";
         },
       });
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 3000);
+      window.location.href = "/";
     }
   });
 };
@@ -281,6 +279,69 @@ export const popUpDeleteUserError = (error: string) => {
             alt="Imagen de GF"
           />
           <h2 className="font-textFont">Error al eliminar el usuario.</h2>
+          <p className="font-textFont font-light">{error}</p>
+        </div>
+      </>
+    ),
+
+    width: 400,
+    heightAuto: true,
+    background: "#FF8383",
+    color: "#FAFAFA",
+    timerProgressBar: true,
+    showConfirmButton: false,
+    timer: 3000,
+    didOpen: (popup) => {
+      popup.style.borderRadius = "0";
+      popup.style.position = "fixed";
+      popup.style.bottom = "0";
+      popup.style.right = "0";
+    },
+  });
+};
+
+export const popUpEditUser = () => {
+  Swal.fire({
+    html: ReactDOMServer.renderToString(
+      <>
+        <div className="flex flex-col items-center gap-3">
+          <img
+            className="w-[50px] h-[50px]"
+            src="/assets/images/popUp/logoSignUp.svg"
+            alt="Imagen de GF"
+          />
+          <h2 className="font-textFont">Datos modificados con éxito.</h2>
+        </div>
+      </>
+    ),
+
+    width: 400,
+    heightAuto: true,
+    background: "#A79351",
+    color: "#FAFAFA",
+    timerProgressBar: true,
+    showConfirmButton: false,
+    timer: 3000,
+    didOpen: (popup) => {
+      popup.style.borderRadius = "0";
+      popup.style.position = "fixed";
+      popup.style.bottom = "0";
+      popup.style.right = "0";
+    },
+  });
+};
+
+export const popUpEditUserError = (error: string) => {
+  Swal.fire({
+    html: ReactDOMServer.renderToString(
+      <>
+        <div className="flex flex-col items-center gap-3">
+          <img
+            className="w-[50px] h-[50px]"
+            src="/assets/images/popUp/logoSignUp.svg"
+            alt="Imagen de GF"
+          />
+          <h2 className="font-textFont">Error al modificar datos.</h2>
           <p className="font-textFont font-light">{error}</p>
         </div>
       </>

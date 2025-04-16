@@ -37,7 +37,7 @@ export const ResponsiveMenuAdmin: React.FC = () => {
     <div
       ref={menuAdminRef}
       className={clsx(
-        "fixed top-16 left-0 h-[calc(100dvh-64px)] overflow-y-scroll shadow-lg shadow-bgColorDark/50 hiddenScrollbar bg-bgColor z-50 rounded-tr-[30px] py-3 transition-all duration-300 flex flex-col justify-between overflow-hidden gap-5",
+        "fixed top-16 left-0 h-[calc(100dvh-64px)] overflow-y-scroll shadow-lg shadow-bgColorDark/50 hiddenScrollbar bg-bgColor z-50 rounded-tr-[30px] py-3 transition-all duration-300 flex flex-col justify-between overflow-hidden gap-5 lg:overflow-hidden",
         menuAdmin ? "w-[280px] px-3" : "w-0 px-0 lg:w-[130px]"
       )}
     >

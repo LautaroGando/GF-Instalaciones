@@ -1,3 +1,4 @@
+import { IInstaller } from "./IInstaller";
 import { IRole } from "./IRole";
 
 export interface IUserRole {
@@ -20,5 +21,6 @@ export interface IUser {
   createdAt: string;
   disabledAt: string | null;
   userRoles: IUserRole[];
+  installer: IInstaller;
 }
 

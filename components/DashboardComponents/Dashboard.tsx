@@ -9,7 +9,7 @@ export const Dashboard = async ({ params }: PageProps) => {
   const { slug } = await params;
 
   return (
-    <div className="py-5 flex flex-col gap-10 lg:gap-20">
+    <div className="py-5 flex flex-col gap-10 mt-52 lg:gap-20">
       <DashboardHeader slug={slug} />
       {slug === "profile" ? (
         <Profile />

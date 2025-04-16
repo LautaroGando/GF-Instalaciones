@@ -19,7 +19,7 @@ export const SelectTheme: React.FC<ISelectThemeProps> = ({
   }
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="popLayout">
       <motion.button
         key={isDark ? "dark" : "light"}
         animate={{ scale: 1, opacity: 1 }}

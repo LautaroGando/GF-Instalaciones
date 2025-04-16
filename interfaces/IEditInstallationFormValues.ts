@@ -3,5 +3,4 @@ export interface IEditInstallationFormValues {
   installersIds: string[];
 }
 
-
 export default IEditInstallationFormValues;

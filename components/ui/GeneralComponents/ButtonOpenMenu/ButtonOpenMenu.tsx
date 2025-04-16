@@ -7,7 +7,7 @@ import React from "react";
 import { IButtonOpenMenuProps } from "./types";
 
 export const ButtonOpenMenu: React.FC<IButtonOpenMenuProps> = ({
-  theme,
+  admin,
 }: IButtonOpenMenuProps) => {
   const { open, handleToggle } = useProfileStore();
 
@@ -21,7 +21,7 @@ export const ButtonOpenMenu: React.FC<IButtonOpenMenuProps> = ({
         className={clsx(
           "transition-all duration-300",
           open && "-rotate-180",
-          theme === "light" ? "text-letterColorLight" : "text-secondaryColor"
+          admin && "text-letterColorLight"
         )}
         width={10}
         icon={faChevronDown}
