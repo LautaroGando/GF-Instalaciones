@@ -98,8 +98,6 @@ const TrackingTable = () => {
     openTrackingTextModal(title, text);
   };
 
-  console.log(orders);  
-
   return (
     <>
       <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
