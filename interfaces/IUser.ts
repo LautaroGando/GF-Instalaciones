@@ -1,6 +1,11 @@
 import { IInstaller } from "./IInstaller";
 import { IRole } from "./IRole";
 
+export interface IUserRole {
+  id: string;
+  role: IRole;
+}
+
 export interface IUser {
   id: string;
   fullName: string;
@@ -11,11 +16,11 @@ export interface IUser {
   address: string;
   country: string;
   phone: string;
-  password: string;
   coverage: string;
   isSubscribed: boolean;
-  createAt: string;
+  createdAt: string;
   disabledAt: string | null;
-  installer: IInstaller | null;
-  role: IRole;
+  userRoles: IUserRole[];
+  installer: IInstaller;
 }
+

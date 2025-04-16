@@ -19,13 +19,13 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <div
       className={clsx(
-        "bg-bgColor transition-all duration-500 font-textFont text-secondaryColor dark:text-letterColorLight dark:bg-secondaryColor"
+        "bg-bgColor transition-all duration-300 font-textFont text-secondaryColor dark:text-letterColorLight dark:bg-secondaryColor"
       )}
     >
       <Header />
       <BannerHome />
       <BlogBanner />
-      <main className="px-[15px] sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
+      <main className="px-[15px] mt-20 sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
         {children}
       </main>
       <Footer />

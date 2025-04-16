@@ -19,36 +19,19 @@ export const HeaderLinks: React.FC = () => {
         <SelectTheme />
         {headerLinks.map((link: IHeaderLink, i: number) => {
           const isActive = link.href === `${pathname}${hash}`;
+          if (user && link.label === "Ingresar") return null;
 
           return (
             <li key={i}>
-              {user && link.label !== "Ingresar" ? (
-                <Link
-                  className={clsx(
-                    "font-textFont transition-all duration-500 xl:text-lg",
-                    isActive
-                      ? "text-primaryColor font-semibold"
-                      : "text-secondaryColor dark:text-letterColorLight"
-                  )}
-                  href={link.href}
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                !user && (
-                  <Link
-                    className={clsx(
-                      "font-textFont transition-all duration-500 xl:text-lg",
-                      isActive
-                        ? "text-primaryColor font-semibold"
-                        : "text-secondaryColor dark:text-letterColorLight"
-                    )}
-                    href={link.href}
-                  >
-                    {link.label}
-                  </Link>
-                )
-              )}
+              <Link
+                className={clsx(
+                  "font-textFont xl:text-lg",
+                  isActive && "text-primaryColor font-semibold"
+                )}
+                href={link.href}
+              >
+                {link.label}
+              </Link>
             </li>
           );
         })}

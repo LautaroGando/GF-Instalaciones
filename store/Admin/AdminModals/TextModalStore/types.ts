@@ -1,7 +1,7 @@
 export interface ITextModalStateProps {
   isOpen: boolean;
   title: string;
-  text: React.ReactNode;
-  openModal: (title: string, text: React.ReactNode) => void;
+  text: string | null;
+  openModal: (title: string, text: string | null) => void;
   closeModal: () => void;
 }

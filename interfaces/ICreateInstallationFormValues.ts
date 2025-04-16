@@ -1,15 +1,16 @@
-import { IUser } from "./IUser";
-
 export interface ICreateInstallationFormValues {
-  street: string;
-  number: string;
-  city: string;
-  province: string;
-  postalCode: string;
   startDate: string;
   notes?: string;
-  selectInstaller: IUser[];
-  status: "Pendiente" | "En proceso" | "A revisar" | "Pospuesta" | "Finalizada" | "Cancelada";
+  address: {
+    street: string;
+    number: string;
+    note: string;
+    postalCode: string;
+    city: string;
+    province: string;
+  };
+  installersIds: string[];
+  coordinatorId: string;
 }
 
 export default ICreateInstallationFormValues;

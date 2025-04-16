@@ -12,3 +12,8 @@ export const formatDate = (date: string) => {
 
   return `${day}/${month}/${year}`;
 };
+
+export const formatDateToInput = (date: string) => {
+  const [day, month, year] = date.split("/");
+  return `${year}-${month}-${day}`;
+};

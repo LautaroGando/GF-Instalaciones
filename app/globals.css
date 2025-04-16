@@ -20,6 +20,28 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a79351;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8a703e;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #a79351 transparent;
+}
+
 @layer components {
   .input {
     @apply w-full h-11 border-b bg-transparent resize-none outline-none transition-all duration-300 px-3 text-xs focus:border-primaryColor sm:text-base;
@@ -37,5 +59,21 @@
 @layer utilities {
   .hiddenScrollbar::-webkit-scrollbar {
     width: 0;
+  }
+
+  .scrolledHeader {
+    @apply bg-bgColor text-secondaryColor dark:bg-secondaryColor dark:text-letterColorLight;
+  }
+
+  .menu-line {
+    @apply bg-bgColor;
+  }
+
+  .scrolledHeader .menu-line {
+    @apply bg-secondaryColor dark:bg-bgColor;
+  }
+
+  .menu-open .menu-line {
+    @apply bg-secondaryColor dark:bg-bgColor;
   }
 }

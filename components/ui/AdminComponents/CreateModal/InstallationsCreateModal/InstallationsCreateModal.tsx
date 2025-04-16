@@ -1,33 +1,138 @@
-// InstallationsCreateModal.tsx
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Field, Form, Formik, FormikHelpers } from "formik";
+import { Field, Form, Formik, FormikHelpers, useFormikContext } from "formik";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import { useInstallationsCreateModal } from "@/store/Admin/AdminModals/CreateModals/InstallationsCreateModalStore/InstalationsCreateModalStore";
 import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormValues";
 import installationSchema from "@/helpers/AdminValidations/validateCreateInstallation";
 import { useInstallersSelectModal } from "@/store/Admin/AdminModals/InstallersSelectModalStore/InstallersSelectModalStore";
 import InstallersSelectModal from "../../InstallersSelectModal/InstallersSelectModal";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
+import { useSearchParams } from "next/navigation";
+import { provincesMock } from "@/utils/pronvicesMock";
+import CoordinatorsSelectModal from "../../CoordinatorsSelectModal/CoordinatorsSelectModal";
+import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
+import Swal from "sweetalert2";
+
+const SyncInstallersWithFormik = () => {
+  const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
+  const { selectedInstallers } = useInstallersSelectModal();
+
+  useEffect(() => {
+    const ids = selectedInstallers.map((installer) => installer.id);
+    setFieldValue("installersIds", ids);
+  }, [selectedInstallers, setFieldValue]);
+
+  return null;
+};
+
+const SyncCoordinatorWithFormik = () => {
+  const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
+  const { selectedCoordinators } = useCoordinatorsSelectModal();
+
+  useEffect(() => {
+    const id = selectedCoordinators[0]?.id || "";
+    setFieldValue("coordinatorId", id);
+  }, [selectedCoordinators, setFieldValue]);
+
+  return null;
+};
 
 const InstallationsCreateModal = () => {
   const { isOpen, closeModal } = useInstallationsCreateModal();
-  const { openModal: openInstallersModal } = useInstallersSelectModal();
+
+  const {
+    selectedInstallers,
+    deleteInstaller,
+    clearInstallers,
+    openModal: openInstallersModal,
+  } = useInstallersSelectModal();
+
+  const {
+    selectedCoordinators,
+    deleteCoordinator,
+    clearCoordinators,
+    openModal: openCoordinatorsModal,
+  } = useCoordinatorsSelectModal();
+  const { handleCreateInstallation } = useTrackingStore();
+
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderId");
+
   useDisableScroll(isOpen);
   if (!isOpen) return null;
-  const handleOnSubmit = (
+
+  const handleOnSubmit = async (
     values: ICreateInstallationFormValues,
     { setSubmitting }: FormikHelpers<ICreateInstallationFormValues>
   ) => {
-    console.log(values);
     closeModal();
+    const installersIds = selectedInstallers.map((installer) => installer.id);
+
+    const coordinatorId =
+      selectedCoordinators[0]?.userRoles.find(
+        (userRole) => userRole.role.name.toLowerCase() === "coordinador"
+      )?.id || "";
+
+    const installationData: ICreateInstallationFormValues = {
+      ...values,
+      installersIds,
+      coordinatorId,
+    };
+
+    if (orderId) {
+      try {
+        await handleCreateInstallation(orderId, installationData);
+
+        Swal.fire({
+          icon: "success",
+          title: "Instalación creada",
+          text: "La instalación se creó correctamente.",
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
+        clearInstallers();
+        clearCoordinators();
+      } catch (err) {
+        console.error("Error creando instalación:", err);
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Hubo un problema al crear la instalación.",
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+      }
+    }
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
     setSubmitting(false);
   };
+
+  if (!orderId) return;
+
   return (
     <>
-      <div className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50">
+      <div
+        onClick={closeModal}
+        className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50"
+      >
         <motion.div
+          onClick={(e) => e.stopPropagation()}
           initial={{ opacity: 0, scale: 0.8, y: -20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -39,222 +144,416 @@ const InstallationsCreateModal = () => {
             Crear Nueva Instalación
           </h2>
           <div className="overflow-y-auto px-6 pb-6 pt-1">
-            <Formik
+            <Formik<ICreateInstallationFormValues>
               initialValues={{
-                street: "",
-                number: "",
-                city: "",
-                province: "",
-                postalCode: "",
                 startDate: "",
                 notes: "",
-                selectInstaller: [],
-                status: "Pendiente",
+                address: {
+                  street: "",
+                  number: "",
+                  note: "",
+                  postalCode: "",
+                  city: "",
+                  province: "",
+                },
+                installersIds: [],
+                coordinatorId: "",
               }}
               validationSchema={installationSchema}
               onSubmit={handleOnSubmit}
             >
               {({ errors, touched }) => (
-                <Form className="space-y-3 text-bgColorDark/60">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  >
-                    <label htmlFor="street" className="text-sm font-medium text-primaryColor/80">
-                      Calle
-                    </label>
-                    <Field
-                      name="street"
-                      type="text"
-                      placeholder="Ingrese la calle"
-                      className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
-                    />
+                <>
+                  <SyncInstallersWithFormik />
+                  <SyncCoordinatorWithFormik />
+                  <Form className="space-y-3 text-bgColorDark/60">
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: errors.street && touched.street ? 1 : 0,
-                        height: errors.street && touched.street ? "auto" : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      {errors.street}
+                      <label
+                        htmlFor="address.province"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Provincia
+                      </label>
+                      <Field
+                        name="address.province"
+                        as="select"
+                        placeholder="Ingrese la provincia"
+                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] text-sm w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                      >
+                        <option value="">Seleccionar provincia</option>
+                        {provincesMock.map((province, i) => (
+                          <option key={i} value={province.name}>
+                            {province.name}
+                          </option>
+                        ))}
+                      </Field>
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{
+                          opacity: errors.address?.province && touched.address?.province ? 1 : 0,
+                          height:
+                            errors.address?.province && touched.address?.province ? "auto" : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="text-red-500 text-sm mt-2"
+                      >
+                        {errors.address?.province}
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
-                  >
-                    <label htmlFor="number" className="text-sm font-medium text-primaryColor/80">
-                      Número de calle
-                    </label>
-                    <Field
-                      name="number"
-                      type="text"
-                      placeholder="Ingrese el número de calle"
-                      className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
-                    />
+
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: errors.number && touched.number ? 1 : 0,
-                        height: errors.number && touched.number ? "auto" : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
+                      initial={{ opacity: 0, y: 0 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
                     >
-                      {errors.number}
+                      <label
+                        htmlFor="address.city"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Ciudad
+                      </label>
+                      <Field
+                        name="address.city"
+                        type="text"
+                        placeholder="Ingrese la ciudad"
+                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{
+                          opacity: errors.address?.city && touched.address?.city ? 1 : 0,
+                          height: errors.address?.city && touched.address?.city ? "auto" : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="text-red-500 text-sm mt-2"
+                      >
+                        {errors.address?.city}
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 0 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
-                  >
-                    <label htmlFor="city" className="text-sm font-medium text-primaryColor/80">
-                      Ciudad
-                    </label>
-                    <Field
-                      name="city"
-                      type="text"
-                      placeholder="Ingrese la ciudad"
-                      className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
-                    />
+
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: errors.city && touched.city ? 1 : 0,
-                        height: errors.city && touched.city ? "auto" : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
                     >
-                      {errors.city}
+                      <label
+                        htmlFor="address.street"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Calle
+                      </label>
+                      <Field
+                        name="address.street"
+                        type="text"
+                        placeholder="Ingrese la calle"
+                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{
+                          opacity: errors.address?.street && touched.address?.street ? 1 : 0,
+                          height: errors.address?.street && touched.address?.street ? "auto" : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="text-red-500 text-sm mt-2"
+                      >
+                        {errors.address?.street}
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
-                  >
-                    <label htmlFor="province" className="text-sm font-medium text-primaryColor/80">
-                      Provincia
-                    </label>
-                    <Field
-                      name="province"
-                      type="text"
-                      placeholder="Ingrese la provincia"
-                      className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
-                    />
+
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: errors.province && touched.province ? 1 : 0,
-                        height: errors.province && touched.province ? "auto" : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
                     >
-                      {errors.province}
+                      <label
+                        htmlFor="address.number"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Número de calle
+                      </label>
+                      <Field
+                        name="address.number"
+                        type="text"
+                        placeholder="Ingrese el número de calle"
+                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{
+                          opacity: errors.address?.number && touched.address?.number ? 1 : 0,
+                          height: errors.address?.number && touched.address?.number ? "auto" : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="text-red-500 text-sm mt-2"
+                      >
+                        {errors.address?.number}
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
-                  >
-                    <label
-                      htmlFor="postalCode"
-                      className="text-sm font-medium text-primaryColor/80"
-                    >
-                      Código Postal
-                    </label>
-                    <Field
-                      name="postalCode"
-                      type="text"
-                      placeholder="Ingrese el código postal"
-                      className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
-                    />
+
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: errors.postalCode && touched.postalCode ? 1 : 0,
-                        height: errors.postalCode && touched.postalCode ? "auto" : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
                     >
-                      {errors.postalCode}
+                      <label
+                        htmlFor="address.postalCode"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Código Postal
+                      </label>
+                      <Field
+                        name="address.postalCode"
+                        type="text"
+                        placeholder="Ingrese el código postal"
+                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{
+                          opacity:
+                            errors.address?.postalCode && touched.address?.postalCode ? 1 : 0,
+                          height:
+                            errors.address?.postalCode && touched.address?.postalCode ? "auto" : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="text-red-500 text-sm mt-2"
+                      >
+                        {errors.address?.postalCode}
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
-                  >
-                    <label htmlFor="startDate" className="text-sm font-medium text-primaryColor/80">
-                      Fecha de Inicio
-                    </label>
-                    <Field
-                      name="startDate"
-                      type="date"
-                      placeholder="Seleccione la fecha de inicio"
-                      className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm text-primaryColor"
-                    />
+
                     <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: errors.startDate && touched.startDate ? 1 : 0,
-                        height: errors.startDate && touched.startDate ? "auto" : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                      className="text-red-500 text-sm mt-2"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
                     >
-                      {errors.startDate}
+                      <label
+                        htmlFor="address.note"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Nota adicional
+                      </label>
+                      <Field
+                        name="address.note"
+                        type="text"
+                        placeholder="Ingrese una nota (opcional)"
+                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{
+                          opacity: errors.address?.note && touched.address?.note ? 1 : 0,
+                          height: errors.address?.note && touched.address?.note ? "auto" : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="text-red-500 text-sm mt-2"
+                      >
+                        {errors.address?.note}
+                      </motion.div>
                     </motion.div>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
-                  >
-                    <button
-                      type="button"
-                      onClick={openInstallersModal}
-                      className="w-full mt-2 border border-primaryColor text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover hover:text-white"
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
                     >
-                      Seleccionar instaladores
-                    </button>
-                  </motion.div>
-                  <motion.div
-                    className="flex flex-col xl:flex-row xl:justify-between"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
-                  >
-                    <button
-                      type="button"
-                      onClick={closeModal}
-                      className="w-full mt-4 order-2 bg-bgColorDark/30 text-white p-2 rounded-md transition-all duration-200 hover:bg-bgColorDark/40 xl:order-1 xl:w-[240px]"
+                      <label
+                        htmlFor="startDate"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Fecha de Inicio
+                      </label>
+                      <Field
+                        name="startDate"
+                        type="date"
+                        placeholder="Seleccione la fecha de inicio"
+                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm text-primaryColor"
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{
+                          opacity: errors.startDate && touched.startDate ? 1 : 0,
+                          height: errors.startDate && touched.startDate ? "auto" : 0,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="text-red-500 text-sm mt-2"
+                      >
+                        {errors.startDate}
+                      </motion.div>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.7 }}
                     >
-                      Cancelar
-                    </button>
-                    <button
-                      type="submit"
-                      className="w-full mt-4 order-1 bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover xl:w-[240px]"
+                      <label
+                        htmlFor="selectedInstallers"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Instaladores Seleccionados
+                      </label>
+                      <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px]">
+                        {selectedInstallers.length > 0 ? (
+                          selectedInstallers.map((installer) => (
+                            <motion.div
+                              key={installer.id}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.2, ease: "easeOut" }}
+                              className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm"
+                            >
+                              <p>{installer.user.fullName}</p>
+                              <button
+                                type="button"
+                                className="text-admin-inactiveColor hover:text-admin-inactiveColor/80"
+                                onClick={() => deleteInstaller(installer.id)}
+                              >
+                                <FontAwesomeIcon icon={faTimes} />
+                              </button>
+                            </motion.div>
+                          ))
+                        ) : (
+                          <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                            className="text-gray-400 text-sm"
+                          >
+                            No hay instaladores seleccionados
+                          </motion.p>
+                        )}
+                      </div>
+
+                      {errors.installersIds && touched.installersIds && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          transition={{ duration: 0.3 }}
+                          className="text-red-500 text-sm mt-2"
+                        >
+                          {errors.installersIds as string}
+                        </motion.div>
+                      )}
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.8 }}
                     >
-                      Crear Instalación
-                    </button>
-                  </motion.div>
-                </Form>
+                      <button
+                        type="button"
+                        onClick={openInstallersModal}
+                        className="w-full mt-2 border border-primaryColor text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover hover:text-white"
+                      >
+                        Seleccionar instaladores
+                      </button>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.7 }}
+                    >
+                      <label
+                        htmlFor="selectedCoordinators"
+                        className="text-sm font-medium text-primaryColor/80"
+                      >
+                        Coordinador Seleccionado
+                      </label>
+                      <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px]">
+                        {selectedCoordinators.length > 0 ? (
+                          selectedCoordinators.map((coordinator) => (
+                            <motion.div
+                              key={coordinator.id}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.2, ease: "easeOut" }}
+                              className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm"
+                            >
+                              <p>{coordinator.fullName}</p>
+                              <button
+                                type="button"
+                                className="text-admin-inactiveColor hover:text-admin-inactiveColor/80"
+                                onClick={() => deleteCoordinator(coordinator.id)}
+                              >
+                                <FontAwesomeIcon icon={faTimes} />
+                              </button>
+                            </motion.div>
+                          ))
+                        ) : (
+                          <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                            className="text-gray-400 text-sm"
+                          >
+                            No hay coordinadores seleccionados
+                          </motion.p>
+                        )}
+                      </div>
+
+                      {errors.coordinatorId && touched.coordinatorId && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          transition={{ duration: 0.3 }}
+                          className="text-red-500 text-sm mt-2"
+                        >
+                          {errors.coordinatorId as string}
+                        </motion.div>
+                      )}
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.8 }}
+                    >
+                      <button
+                        type="button"
+                        onClick={openCoordinatorsModal}
+                        className="w-full mt-2 border border-primaryColor text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover hover:text-white"
+                      >
+                        Seleccionar coordinador
+                      </button>
+                    </motion.div>
+
+                    <motion.div
+                      className="flex flex-col xl:flex-row xl:justify-between"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.9 }}
+                    >
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        className="w-full mt-4 order-2 bg-bgColorDark/30 text-white p-2 rounded-md transition-all duration-200 hover:bg-bgColorDark/40 xl:order-1 xl:w-[240px]"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        type="submit"
+                        className="w-full mt-4 order-1 bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover xl:w-[240px]"
+                      >
+                        Crear Instalación
+                      </button>
+                    </motion.div>
+                  </Form>
+                </>
               )}
             </Formik>
           </div>
         </motion.div>
       </div>
       <InstallersSelectModal />
+      <CoordinatorsSelectModal />
     </>
   );
 };

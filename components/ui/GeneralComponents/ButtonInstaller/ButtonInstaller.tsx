@@ -17,7 +17,7 @@ export const ButtonInstaller: React.FC<IButtonInstallerOProps> = ({
         handleClose();
         handleCloseMenu();
       }}
-      href="/installer"
+      href="/installer/installations"
       className={clsx(
         "text-primaryColor border-b border-b-transparent transition-all duration-500 w-max mx-auto hover:border-b-primaryColor",
         classes

@@ -1,10 +1,11 @@
+import { ICity } from "./ICity";
+
 export interface IAddress {
+  id: string;
   street: string;
   number: string;
-  note: string;
   postalCode: string;
-  city: string;
-  province: string;
+  note: string;
+  city: ICity;
 }
-
 export default IAddress;

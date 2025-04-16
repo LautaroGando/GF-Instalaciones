@@ -17,7 +17,9 @@ const TrackingCreateModal = () => {
 
   useDisableScroll(isOpen);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   const handleOnSubmit = async (
     values: ICreateOrderFormValues,
@@ -32,7 +34,7 @@ const TrackingCreateModal = () => {
         title: "Orden creada",
         text: "La orden ha sido creada correctamente.",
         toast: true,
-        position: "bottom-end",
+        position: "top",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
@@ -46,8 +48,11 @@ const TrackingCreateModal = () => {
         icon: "error",
         title: "Error",
         text: "Hubo un problema al crear la orden. Inténtalo de nuevo.",
-        position: "center",
-        showConfirmButton: true,
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
       });
     } finally {
       setSubmitting(false);
@@ -55,8 +60,12 @@ const TrackingCreateModal = () => {
   };
 
   return (
-    <div className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50">
+    <div
+      onClick={closeModal}
+      className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50"
+    >
       <motion.div
+        onClick={(e) => e.stopPropagation()}
         initial={{ opacity: 0, scale: 0.8, y: -20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -74,18 +83,25 @@ const TrackingCreateModal = () => {
               orderNumber: "",
               title: "",
               description: "",
+              clientId: "d4821845-497f-49bf-b629-7cd03933da7d",
             }}
             validationSchema={orderSchema}
             onSubmit={handleOnSubmit}
           >
             {({ handleSubmit, errors, touched }) => (
-              <Form onSubmit={handleSubmit} className="space-y-3 text-bgColorDark/60">
+              <Form
+                onSubmit={handleSubmit}
+                className="space-y-3 text-bgColorDark/60"
+              >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <label htmlFor="orderNumber" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="orderNumber"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Número de Orden
                   </label>
                   <Field
@@ -97,8 +113,10 @@ const TrackingCreateModal = () => {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
-                      opacity: errors.orderNumber && touched.orderNumber ? 1 : 0,
-                      height: errors.orderNumber && touched.orderNumber ? "auto" : 0,
+                      opacity:
+                        errors.orderNumber && touched.orderNumber ? 1 : 0,
+                      height:
+                        errors.orderNumber && touched.orderNumber ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"
@@ -112,7 +130,10 @@ const TrackingCreateModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
                 >
-                  <label htmlFor="title" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="title"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Nombre de la Orden
                   </label>
                   <Field
@@ -139,7 +160,10 @@ const TrackingCreateModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
                 >
-                  <label htmlFor="description" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="description"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Descripción
                   </label>
                   <Field
@@ -151,8 +175,10 @@ const TrackingCreateModal = () => {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
-                      opacity: errors.description && touched.description ? 1 : 0,
-                      height: errors.description && touched.description ? "auto" : 0,
+                      opacity:
+                        errors.description && touched.description ? 1 : 0,
+                      height:
+                        errors.description && touched.description ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"

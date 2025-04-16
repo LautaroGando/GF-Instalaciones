@@ -69,10 +69,11 @@ export const ResponsiveMenu: React.FC = () => {
           menu ? "w-full sm:w-[400px]" : "w-0 sm:w-0"
         )}
       >
-        <ul className="flex flex-col gap-7 items-center mt-20 sm:mt-[90px]">
+        <ul className="flex flex-col gap-7 text-secondaryColor items-center mt-20 dark:text-letterColorLight sm:mt-[90px]">
           <SelectTheme />
           {headerLinks.map((link: IHeaderLink, i: number) => {
             const isActive = link.href === `${pathname}${hash}`;
+            if (user && link.label === "Ingresar") return null;
 
             return (
               <li key={i}>
@@ -95,7 +96,8 @@ export const ResponsiveMenu: React.FC = () => {
             <>
               <div className="w-full max-w-[330px] mx-auto h-[2px] bg-primaryColor"></div>
               <ButtonProfile classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor lg:hover:text-letterColorLight lg:hover:border-none" />
-              {userInfo?.role.name === "Instalador" && (
+              {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
+                "Instalador" && (
                 <ButtonInstaller classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor lg:hover:text-letterColorLight lg:hover:border-none" />
               )}
               <ButtonLogout classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-redColor lg:hover:text-letterColorLight lg:hover:border-none" />

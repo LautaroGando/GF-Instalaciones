@@ -45,13 +45,19 @@ export const ProfileMenu: React.FC = () => {
       className={clsx(
         "hidden absolute w-full bg-bgColor top-full mt-5 transition-all duration-300 shadow-lg shadow-bgColorDark/20 left-0 overflow-hidden border border-bgColor flex-col lg:flex",
         open
-          ? `${userInfo?.role.name === "Instalador" ? "h-[147px]" : "h-[98px]"}`
+          ? `${
+              userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
+              "Instalador"
+                ? "h-[147px]"
+                : "h-[98px]"
+            }`
           : "h-0 p-0 border-none"
       )}
     >
       <ButtonProfile classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor lg:hover:text-letterColorLight lg:hover:border-none" />
       {}
-      {userInfo?.role.name === "Instalador" && (
+      {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
+        "Instalador" && (
         <ButtonInstaller classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor lg:hover:text-letterColorLight lg:hover:border-none" />
       )}
       <ButtonLogout classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-redColor lg:hover:text-letterColorLight lg:hover:border-none" />

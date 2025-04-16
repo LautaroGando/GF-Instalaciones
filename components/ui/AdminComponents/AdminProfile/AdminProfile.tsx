@@ -4,6 +4,8 @@ import clsx from "clsx";
 import React from "react";
 import { IAdminProfileProps } from "./types";
 import ProfileMenu from "../../GeneralComponents/ProfileMenu/ProfileMenu";
+import Image from "next/image";
+import photoGaston from "@/public/assets/icons/photo-gaston.png";
 
 export const AdminProfile: React.FC<IAdminProfileProps> = ({
   viewAdmin,
@@ -17,8 +19,10 @@ export const AdminProfile: React.FC<IAdminProfileProps> = ({
     <div className={clsx("flex flex-col items-center gap-3", containerClasses)}>
       <ProfileMenu />
       <div
-        className={clsx("w-[80px] h-[80px] rounded-full bg-black", imgClasses)}
-      ></div>
+        className={clsx("w-[80px] h-[80px] rounded-full bg-black overflow-hidden", imgClasses)}
+      >
+        <Image src={photoGaston} alt="Foto de perfil de Gastón" width={80} height={80} />
+      </div>
       <div className="flex flex-col gap-2">
         {viewAdmin && (
           <h4 className="font-medium text-xs text-letterColorLight/50">

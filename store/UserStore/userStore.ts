@@ -7,6 +7,7 @@ import {
   deleteUser,
   disabledUser,
   editUser,
+  findInstallers,
   findUsers,
 } from "@/services/users";
 import { IUser } from "@/interfaces/IUser";
@@ -22,6 +23,7 @@ export const useUserStore = create<IUserStoreProps>()(
     (set, get) => ({
       user: null,
       users: null,
+      installers: null,
       token: null,
       filterUsers: null,
       isLoading: false,
@@ -32,6 +34,7 @@ export const useUserStore = create<IUserStoreProps>()(
       page: 1,
       maxPage: null,
       actionMenu: null,
+      editMenu: false,
       setMaxPage: () => {
         const { filterUsers } = get();
         const maxPages =
@@ -68,9 +71,21 @@ export const useUserStore = create<IUserStoreProps>()(
           }
         );
       },
+      handleOpenEditMenu: () => set(() => ({ editMenu: true })),
+      handleCloseEditMenu: () => set(() => ({ editMenu: false })),
       handleFilterUsers: (e: React.ChangeEvent<HTMLSelectElement>) => {
         set({ selectedFilter: e.target.value });
         get().handleApplyFilter(true);
+      },
+      handleFetchInstallers: async () => {
+        try {
+          const fetchInstallers = await findInstallers();
+          set(() => ({
+            installers: fetchInstallers,
+          }));
+        } catch (err) {
+          console.log(err);
+        }
       },
       handlePrevPage: () => {
         const { page } = get();
@@ -88,11 +103,13 @@ export const useUserStore = create<IUserStoreProps>()(
 
         filteredUsers = filteredUsers.filter((user: IUser) =>
           selectedFilter === "user"
-            ? user.role.name === "Usuario"
+            ? user.userRoles[user.userRoles.length - 1].role.name === "Usuario"
             : selectedFilter === "installer"
-            ? user.role.name === "Instalador"
+            ? user.userRoles[user.userRoles.length - 1].role.name ===
+              "Instalador"
             : selectedFilter === "coordinator"
-            ? user.role.name === "Coordinador"
+            ? user.userRoles[user.userRoles.length - 1].role.name ===
+              "Coordinador"
             : selectedFilter === "active"
             ? !user.disabledAt &&
               user.installer?.status !== "RECHAZADO" &&
@@ -128,8 +145,10 @@ export const useUserStore = create<IUserStoreProps>()(
             return sortBy === "abc"
               ? a.email.localeCompare(b.email)
               : sortBy === "role"
-              ? a.role.name.localeCompare(b.role.name)
-              : parseDate(b.createAt) - parseDate(a.createAt);
+              ? a.userRoles[a.userRoles.length - 1].role.name.localeCompare(
+                  b.userRoles[b.userRoles.length - 1].role.name
+                )
+              : parseDate(b.createdAt) - parseDate(a.createdAt);
           });
         }
 
@@ -140,12 +159,10 @@ export const useUserStore = create<IUserStoreProps>()(
         try {
           set({ isLoading: true });
           const users = await findUsers();
-          setTimeout(() => {
-            set({ users, filterUsers: users });
-            get().setMaxPage();
-            get().handleApplyFilter(false);
-            set({ isLoading: false });
-          }, 3000);
+          set({ users, filterUsers: users });
+          get().setMaxPage();
+          get().handleApplyFilter(false);
+          set({ isLoading: false });
         } catch (error) {
           console.log(error);
         }

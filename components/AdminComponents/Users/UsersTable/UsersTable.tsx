@@ -12,6 +12,7 @@ export const UsersTable: React.FC = () => {
     handleFetchUsers();
   }, [handleFetchUsers]);
 
+  
   return (
     <div className="w-full h-[calc(100vh-354px)] min-h-[400px] overflow-x-auto">
       {isLoading ? (
@@ -25,14 +26,18 @@ export const UsersTable: React.FC = () => {
               <thead>
                 <tr className="sticky top-0 bg-bgColor border-b border-primaryColor">
                   <th className="min-w-[170px] h-12 px-4">Nombre Completo</th>
-                  <th className="min-w-[220px] h-12 px-4">Correo electr贸nico</th>
-                  <th className="min-w-[170px] h-12 px-4">Fecha de creaci贸n</th>
                   <th className="min-w-[220px] h-12 px-4">
-                    Fecha de deshabilitaci贸n
+                    Correo electrónico
+                  </th>
+                  <th className="min-w-[170px] h-12 px-4">
+                    Fecha de creación
+                  </th>
+                  <th className="min-w-[220px] h-12 px-4">
+                    Fecha de deshabilitación
                   </th>
                   <th className="min-w-[150px] h-12 px-4">Estado</th>
                   <th className="min-w-[150px] h-12 px-4">Rol</th>
-                  <th className="min-w-[150px] h-12 px-4">Acci贸n</th>
+                  <th className="min-w-[150px] h-12 px-4">Acción</th>
                 </tr>
               </thead>
               <tbody>
@@ -42,7 +47,7 @@ export const UsersTable: React.FC = () => {
                     <tr key={i} className="border-b border-admin-borderColor">
                       <InfoRows item={item} label={item.fullName} />
                       <InfoRows item={item} label={item.email} />
-                      <InfoRows item={item} label={item.createAt} />
+                      <InfoRows item={item} label={item.createdAt} />
                       <InfoRows
                         item={item}
                         label={item.disabledAt ? item.disabledAt : "-"}
@@ -68,7 +73,10 @@ export const UsersTable: React.FC = () => {
                       </td>
                       <InfoRows
                         item={item}
-                        label={item.role && item.role.name}
+                        label={
+                          item.userRoles[item.userRoles.length - 1] &&
+                          item.userRoles[item.userRoles.length - 1].role.name
+                        }
                       />
                       <td className="px-4">
                         <ActionContainer item={item} />

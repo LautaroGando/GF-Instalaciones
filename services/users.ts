@@ -1,11 +1,16 @@
 import { API_URL } from "@/config/envs";
 import { IUser } from "@/interfaces/IUser";
-import { popUpDeleteUser, popUpDeleteUserError } from "@/utils/popUp";
+import {
+  popUpDeleteUserError,
+  popUpEditUser,
+  popUpEditUserError,
+} from "@/utils/popUp";
 import axios from "axios";
 
+// BUSCAR USUARIOS
 export const findUsers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/user/findAllWhitDeleted`);
+    const response = await axios.get(`${API_URL}/user`);
     const data = response.data;
     return data;
   } catch (error) {
@@ -15,13 +20,14 @@ export const findUsers = async () => {
 
 export const findInstallers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/installer`);
-    const data = response.data;
+    const { data } = await axios.get(`${API_URL}/installer`);
     return data;
   } catch (error) {
     console.log(error);
   }
 };
+
+// ACCIONES PARA USUARIOS
 
 export const disabledUser = async (id: string) => {
   try {
@@ -59,10 +65,12 @@ export const editUser = async (id: string, values: Partial<IUser>) => {
   try {
     const response = await axios.patch(`${API_URL}/user/${id}`, values);
     const data = response.data;
-    console.log(data);
+    if (data) popUpEditUser();
     return data;
   } catch (error) {
-    console.log(error);
+    axios.isAxiosError(error) && error.response
+      ? popUpEditUserError(error.response.data.message)
+      : popUpEditUserError("Ocurrió un error inesperado");
   }
 };
 

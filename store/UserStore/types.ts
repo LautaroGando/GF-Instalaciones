@@ -6,6 +6,7 @@ import React from "react";
 export interface IUserStoreProps {
   user: IUser | IInstaller | null;
   users: IUser[] | null;
+  installers: IInstaller[] | null;
   token: string | null;
   filterUsers: IUser[] | null;
   isLoading: boolean;
@@ -16,11 +17,15 @@ export interface IUserStoreProps {
   page: number;
   maxPage: number | null;
   actionMenu: string | null;
+  editMenu: boolean;
   setMaxPage: () => void;
   setMoreInfo: (id: string) => void;
   setUser: (user: IUser | IInstaller) => void;
   setToken: (token: string) => void;
+  handleOpenEditMenu: () => void;
+  handleCloseEditMenu: () => void;
   handleFilterUsers: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleFetchInstallers: () => Promise<void>;
   handlePrevPage: () => void;
   handleNextPage: () => void;
   handleApplyFilter: (resetPage: boolean) => void;
