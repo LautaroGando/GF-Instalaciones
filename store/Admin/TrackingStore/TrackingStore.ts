@@ -379,8 +379,11 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         const updatedSelectedOrder = state.selectedOrder
           ? {
               ...state.selectedOrder,
-              installations: state.selectedOrder.installations.map((installation) =>
-                installation.id === id ? { ...installation, status } : installation
+              installations: state.selectedOrder.installations.map(
+                (installation) =>
+                  installation.id === id
+                    ? { ...installation, status }
+                    : installation
               ),
             }
           : null;
@@ -388,6 +391,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         return {
           installations: updatedInstallations,
           orders: updatedOrders,
+          installations: updatedInstallations,
           selectedOrder: updatedSelectedOrder,
         };
       });
