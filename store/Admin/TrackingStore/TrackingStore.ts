@@ -225,7 +225,6 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         page = get().installationsPage,
       } = params || {};
 
-
       const finalParams = {
         status,
         province,
@@ -237,7 +236,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
       const { result: allInstallations, totalPages } =
         await getAllInstallations(orderId, finalParams);
-      
+
       const existingOrder = get().orders.find((o) => o.id === orderId);
       const fetchedOrder = existingOrder ?? (await getOrderById(orderId));
 
@@ -398,16 +397,19 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         const updatedSelectedOrder = state.selectedOrder
           ? {
               ...state.selectedOrder,
-              installations: state.selectedOrder.installations.map((installation) =>
-                installation.id === id ? { ...installation, status } : installation
+              installations: state.selectedOrder.installations.map(
+                (installation) =>
+                  installation.id === id
+                    ? { ...installation, status }
+                    : installation
               ),
             }
           : null;
 
         return {
           orders: updatedOrders,
+          installations: updatedInstallations,
           selectedOrder: updatedSelectedOrder,
-
         };
       });
     } catch (err) {
