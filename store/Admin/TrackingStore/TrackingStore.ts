@@ -391,7 +391,6 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         return {
           installations: updatedInstallations,
           orders: updatedOrders,
-          installations: updatedInstallations,
           selectedOrder: updatedSelectedOrder,
         };
       });

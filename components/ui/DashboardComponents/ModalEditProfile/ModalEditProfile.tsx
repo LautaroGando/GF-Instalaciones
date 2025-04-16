@@ -10,7 +10,7 @@ import { IUserEdit } from "@/interfaces/IProfile";
 import { validateEditUser } from "@/helpers/validateEditUser";
 
 export const ModalEditProfile: React.FC = () => {
-  const { handleCloseEditMenu, handleEditUser, user, editMenu } =
+  const { handleCloseEditMenu, handleEditUser, user } =
     useUserStore();
   const [isVisible, setIsVisible] = useState<boolean>(true);
 

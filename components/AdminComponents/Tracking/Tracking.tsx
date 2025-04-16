@@ -8,7 +8,7 @@ const Tracking = () => {
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-5 sm:flex-row sm:justify-between">
         <TrackingOrderAndFilter />
-        <OrdersPagination/>
+        <OrdersPagination />
       </div>
       <TrackingTable />
     </div>
