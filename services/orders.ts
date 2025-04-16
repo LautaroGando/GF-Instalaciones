@@ -5,6 +5,7 @@ import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValue
 import IEditOrderFormValues from "@/interfaces/IEditOrderFormValues";
 import IOrder from "@/interfaces/IOrder";
 import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
+import TInstallationStatus from "@/types/TInstallationStatus";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import { cleanParams } from "@/utils/cleanParams";
 import axios from "axios";
@@ -141,9 +142,9 @@ export const updateInstallation = async (
 ) => {
   try {
     console.log(values);
-    
+
     const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values);
-  
+
     return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -153,6 +154,17 @@ export const updateInstallation = async (
       console.error("Error inesperado al actualizar la instalación");
       throw new Error("Error inesperado al actualizar la instalación.");
     }
+  }
+};
+
+export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
+  try {
+    const res = await axios.patch(`${API_URL}/installations/${id}/status`, {
+      status,
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };
 

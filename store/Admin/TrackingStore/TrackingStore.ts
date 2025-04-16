@@ -13,6 +13,7 @@ import {
   getAllOrders,
   getOrderById,
   updateInstallation,
+  updateInstallationStatus,
   updateOrder,
 } from "@/services/orders";
 import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormValues";
@@ -20,6 +21,7 @@ import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValue
 import IInstallation from "@/interfaces/IInstallation";
 import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
+import TInstallationStatus from "@/types/TInstallationStatus";
 
 export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   // ===========================
@@ -51,6 +53,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     createdAt: "",
     updatedAt: "",
   },
+  installationStatus: "En proceso" as TInstallationStatus,
+  completeModal: false,
 
   handleLoading: (conditional: boolean) => {
     set({ isLoading: conditional });
@@ -217,7 +221,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
       const finalParams = { status, province, city, createdAt, updatedAt, page };
 
-      const { result: allInstallations, totalPages } = await getAllInstallations(orderId, finalParams);
+      const { result: allInstallations, totalPages } = await getAllInstallations(
+        orderId,
+        finalParams
+      );
       const existingOrder = get().orders.find((o) => o.id === orderId);
       const fetchedOrder = existingOrder ?? (await getOrderById(orderId));
 
@@ -342,4 +349,37 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       throw err;
     }
   },
+  handleInstallationStatus: async (id: string, status: TInstallationStatus) => {
+    try {
+      await updateInstallationStatus(id, status);
+
+      set((state) => {
+        const updatedOrders = state.orders.map((order) => ({
+          ...order,
+          installations: order.installations.map((installation) =>
+            installation.id === id ? { ...installation, status } : installation
+          ),
+        }));
+
+        const updatedSelectedOrder = state.selectedOrder
+          ? {
+              ...state.selectedOrder,
+              installations: state.selectedOrder.installations.map((installation) =>
+                installation.id === id ? { ...installation, status } : installation
+              ),
+            }
+          : null;
+
+        return {
+          orders: updatedOrders,
+          selectedOrder: updatedSelectedOrder,
+        };
+      });
+    } catch (err) {
+      console.error("Error al actualizar el estado:", err);
+      throw err;
+    }
+  },
+
+  handleOpenModal: () => set(() => ({ completeModal: true })),
 }));

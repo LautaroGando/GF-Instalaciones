@@ -50,9 +50,6 @@ const TrackingTable = () => {
     openTrackingEditModal(order);
   };
 
-  console.log(orders);
-  
-
   const handleDeleteOrderClick = async (id: string) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
@@ -100,6 +97,8 @@ const TrackingTable = () => {
   const handleOpenTextModal = (title: string, text: string) => {
     openTrackingTextModal(title, text);
   };
+
+  console.log(orders);  
 
   return (
     <>

@@ -1,5 +1,6 @@
 import IInstallation from "@/interfaces/IInstallation";
 import { useInstallationsEditModal } from "@/store/Admin/AdminModals/EditModals/InstallationsEditModalStore/InstallationsEditModalStore";
+import { useInstallationNoteModalStore } from "@/store/Admin/AdminModals/InstallationNoteModalStore/InstallationNoteModalStore";
 import { useTextModalStore } from "@/store/Admin/AdminModals/TextModalStore/TextModalStore";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useSearchParams } from "next/navigation";
@@ -16,6 +17,7 @@ export const useInstallationsTableLogic = () => {
     handleDeleteInstallation,
   } = useTrackingStore();
   const { openModal: openTextModal } = useTextModalStore();
+  const { openModal: openInstallationsNoteModal } = useInstallationNoteModalStore();
   const { openModal: openInstallationEditModal } = useInstallationsEditModal();
   const [isLoadingOrder, setIsLoadingOrder] = useState(true);
 
@@ -98,10 +100,15 @@ export const useInstallationsTableLogic = () => {
     openTextModal("Instaladores", installationInstallers || "Sin Instalador");
   };
 
-  const handleViewNotes = (notes: string, images: string[]) => {
-    openTextModal("Notas", notes || "Sin notas", images);
+  const handleViewNotes = (installation: IInstallation, text: string, images: string[]) => {
+    openInstallationsNoteModal({
+      installation,
+      title: "Notas",
+      text: text || "Sin notas",
+      images,
+    });
   };
-  
+
   return {
     order,
     isLoading: isLoading || isLoadingOrder,

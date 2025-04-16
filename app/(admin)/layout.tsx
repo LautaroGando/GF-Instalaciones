@@ -8,6 +8,7 @@ import TrackingCreateModal from "@/components/ui/AdminComponents/CreateModal/Tra
 import InstallationsCreateModal from "@/components/ui/AdminComponents/CreateModal/InstallationsCreateModal/InstallationsCreateModal";
 import TrackingEditModal from "@/components/ui/AdminComponents/EditModal/TrackingEditModal/TrackingEditModal";
 import InstallationEditModal from "@/components/ui/AdminComponents/EditModal/InstallationsEditModal/InstallationsEditModal";
+import InstallationNoteModal from "@/components/ui/AdminComponents/InstallationNoteModal/InstallationNoteModal";
 
 export const metadata: Metadata = {
   title: "GF Admin",
@@ -26,6 +27,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       <TrackingEditModal />
       <InstallationsCreateModal />
       <InstallationEditModal />
+      <InstallationNoteModal/>
       <main className={clsx("px-[15px] py-5 sm:px-[20px] lg:pl-[150px]")}>{children}</main>
     </div>
   );
