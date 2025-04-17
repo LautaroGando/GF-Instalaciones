@@ -1,88 +1,61 @@
+"use client";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
-import { IUser } from "@/interfaces/IUser";
 import { useUserStore } from "@/store/UserStore/userStore";
-import React, { useEffect } from "react";
-import InfoRows from "./InfoRows/InfoRows";
-import ActionContainer from "@/components/AdminComponents/Users/UsersTable/ActionContainer/ActionContainer";
+import React, { useEffect, useState } from "react";
+import UserRow from "./UserRow/UserRow";
+import UserTableHeader from "./UserTableHeader/UserTableHeader";
+import EmptyState from "@/components/ui/AdminComponents/EmptyState/EmptyState";
+import { faUserSlash } from "@fortawesome/free-solid-svg-icons";
 
 export const UsersTable: React.FC = () => {
   const { filterUsers, isLoading, page, handleFetchUsers } = useUserStore();
+  const [isLoadingUsers, setIsLoadingUsers] = useState(true);
 
   useEffect(() => {
-    handleFetchUsers();
+    const fetchData = async () => {
+      await handleFetchUsers();
+      setTimeout(() => {
+        setIsLoadingUsers(false);
+      }, 500);
+    };
+
+    fetchData();
   }, [handleFetchUsers]);
 
+  if (isLoading || isLoadingUsers) {
+    return (
+      <div className="flex items-center justify-center min-h-[770px]">
+        <Loading theme="light" />
+      </div>
+    );
+  }
+
+  if (!filterUsers || filterUsers.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-[600px]">
+        <EmptyState
+          icon={faUserSlash}
+          title="No hay usuarios registrados"
+          text="Aún no se han añadido usuarios. Intenta más tarde o ajusta los filtros."
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full h-[calc(100vh-354px)] min-h-[400px] overflow-x-auto">
+    <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
       {isLoading ? (
-        <div className="flex items-center min-h-full">
+        <div className="flex items-center justify-center min-h-full">
           <Loading theme="light" />
         </div>
       ) : (
-        <table className="text-sm text-left w-full">
-          {filterUsers && (
-            <>
-              <thead>
-                <tr className="sticky top-0 bg-bgColor border-b border-primaryColor">
-                  <th className="min-w-[170px] h-12 px-4">Nombre Completo</th>
-                  <th className="min-w-[220px] h-12 px-4">
-                    Correo electrónico
-                  </th>
-                  <th className="min-w-[170px] h-12 px-4">Fecha de creación</th>
-                  <th className="min-w-[220px] h-12 px-4">
-                    Fecha de deshabilitación
-                  </th>
-                  <th className="min-w-[150px] h-12 px-4">Estado</th>
-                  <th className="min-w-[150px] h-12 px-4">Rol</th>
-                  <th className="min-w-[150px] h-12 px-4">Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filterUsers
-                  .slice((page - 1) * 10, page * 10)
-                  .map((item: IUser, i: number) => (
-                    <tr key={i} className="border-b border-admin-borderColor">
-                      <InfoRows item={item} label={item.fullName} />
-                      <InfoRows item={item} label={item.email} />
-                      <InfoRows item={item} label={item.createdAt} />
-                      <InfoRows
-                        item={item}
-                        label={item.disabledAt ? item.disabledAt : "-"}
-                      />
-                      <td className="h-12 px-4">
-                        {item.installer?.status === "EN_PROCESO" ? (
-                          <span className="h-9 w-[110px] px-3 text-admin-inProccess border border-admin-inProccess flex justify-center items-center">
-                            En proceso
-                          </span>
-                        ) : item.installer?.status === "RECHAZADO" ? (
-                          <span className="h-9 w-[110px] px-3 text-admin-inactiveColor border border-admin-inactiveColor flex justify-center items-center">
-                            Rechazado
-                          </span>
-                        ) : !item.disabledAt ? (
-                          <span className="h-9 w-[110px] px-3 text-admin-activeColor border border-admin-activeColor flex justify-center items-center">
-                            Activo
-                          </span>
-                        ) : item.disabledAt ? (
-                          <span className="h-9 w-[110px] px-3 text-admin-inactiveColor border border-admin-inactiveColor flex justify-center items-center">
-                            Inactivo
-                          </span>
-                        ) : null}
-                      </td>
-                      <InfoRows
-                        item={item}
-                        label={
-                          item.userRoles[item.userRoles.length - 1] &&
-                          item.userRoles[item.userRoles.length - 1].role.name
-                        }
-                      />
-                      <td className="px-4">
-                        <ActionContainer item={item} />
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </>
-          )}
+        <table className="text-sm text-left w-full border-collapse">
+          <UserTableHeader />
+          <tbody>
+            {filterUsers.slice((page - 1) * 10, page * 10).map((item) => (
+              <UserRow key={item.id} item={item} />
+            ))}
+          </tbody>
         </table>
       )}
     </div>

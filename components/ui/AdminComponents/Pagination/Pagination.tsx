@@ -1,15 +1,11 @@
 "use client";
 import { useUserStore } from "@/store/UserStore/userStore";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 export const Pagination: React.FC = () => {
-  const { filterUsers, page, maxPage, handlePrevPage, handleNextPage } =
-    useUserStore();
+  const { filterUsers, page, maxPage, handlePrevPage, handleNextPage } = useUserStore();
 
   if (!filterUsers) return null;
 
@@ -18,7 +14,7 @@ export const Pagination: React.FC = () => {
       <button
         onClick={handlePrevPage}
         disabled={page <= 1}
-        className="w-9 h-9 bg-primaryColor text-letterColorLight flex justify-center items-center rounded-[7px] transition-all disabled:bg-disabledButton"
+        className="w-9 h-9 bg-primaryColor text-letterColorLight flex justify-center items-center rounded-[2px] transition-all hover:bg-primaryColorHover disabled:bg-disabledButton disabled:hover:bg-disabledButton/80"
       >
         <FontAwesomeIcon icon={faChevronLeft} />
       </button>
@@ -28,7 +24,7 @@ export const Pagination: React.FC = () => {
       <button
         onClick={handleNextPage}
         disabled={page === maxPage}
-        className="w-9 h-9 bg-primaryColor text-letterColorLight flex justify-center items-center rounded-[7px] transition-all disabled:bg-disabledButton"
+        className="w-9 h-9 bg-primaryColor text-letterColorLight flex justify-center items-center rounded-[2px] transition-all hover:bg-primaryColorHover disabled:bg-disabledButton disabled:hover:bg-disabledButton/80"
       >
         <FontAwesomeIcon icon={faChevronRight} />
       </button>

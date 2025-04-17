@@ -15,7 +15,6 @@ import { useInstallersSelectModal } from "@/store/Admin/AdminModals/InstallersSe
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import InstallersSelectModal from "../../InstallersSelectModal/InstallersSelectModal";
-import Swal from "sweetalert2";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 
 const InstallationEditModal = () => {
@@ -74,8 +73,6 @@ const InstallationEditModal = () => {
       genericFunction: () => handleUpdateInstallation(installationId, payload),
     });
   };
-
-  const handleNoChanges = () => {};
 
   return (
     <>

@@ -24,14 +24,14 @@ export interface IUserStoreProps {
   setToken: (token: string) => void;
   handleOpenEditMenu: () => void;
   handleCloseEditMenu: () => void;
-  handleFilterUsers: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleFilterUsers: (values: string) => void;
   handleFetchInstallers: () => Promise<void>;
   handlePrevPage: () => void;
   handleNextPage: () => void;
   handleApplyFilter: (resetPage: boolean) => void;
   handleFetchUsers: () => Promise<void>;
   handleSearchUsers: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleOrderUsers: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleOrderUsers: (values: string) => void;
   handleDisabledUser: (id: string) => void;
   handleEditUser: (id: string, values: Partial<IUser | IInstaller>) => void;
   handleDeleteUser: (id: string) => void;
