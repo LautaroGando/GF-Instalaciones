@@ -19,6 +19,7 @@ const InstallationsTable = () => {
     handleViewAddress,
     handleViewInstallers,
     handleViewNotes,
+    handleCancelInstallation,
   } = useInstallationsTableLogic();
 
   const { editedInstallationId } = useTrackingStore();
@@ -63,6 +64,7 @@ const InstallationsTable = () => {
                     onDelete={() => handleDelete(installation.id)}
                     onViewAddress={() => handleViewAddress(installation)}
                     onViewInstallers={() => handleViewInstallers(installation)}
+                    onCancel={()=> handleCancelInstallation(installation.id, "Cancelada")}
                     onViewNotes={() =>
                       handleViewNotes(installation, installation.notes, installation.images)
                     }

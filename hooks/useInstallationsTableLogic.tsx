@@ -4,6 +4,7 @@ import { useInstallationsEditModal } from "@/store/Admin/AdminModals/EditModals/
 import { useInstallationNoteModalStore } from "@/store/Admin/AdminModals/InstallationNoteModalStore/InstallationNoteModalStore";
 import { useTextModalStore } from "@/store/Admin/AdminModals/TextModalStore/TextModalStore";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
+import TInstallationStatus from "@/types/TInstallationStatus";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,10 +16,10 @@ export const useInstallationsTableLogic = () => {
     isLoading,
     handleFetchInstallations,
     handleDeleteInstallation,
+    handleInstallationStatus,
   } = useTrackingStore();
   const { openModal: openTextModal } = useTextModalStore();
-  const { openModal: openInstallationsNoteModal } =
-    useInstallationNoteModalStore();
+  const { openModal: openInstallationsNoteModal } = useInstallationNoteModalStore();
   const { openModal: openInstallationEditModal } = useInstallationsEditModal();
   const [isLoadingOrder, setIsLoadingOrder] = useState(true);
 
@@ -33,7 +34,7 @@ export const useInstallationsTableLogic = () => {
     openInstallationEditModal(installation);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = (id: string) => {
     PersonalizedPopUp({
       withResult: true,
       title: "¿Estás seguro?",
@@ -45,6 +46,21 @@ export const useInstallationsTableLogic = () => {
       textSuccess: "La instalación ha sido eliminada correctamente.",
       textError: "No se pudo eliminar la instalación. Intenta nuevamente.",
       genericFunction: () => handleDeleteInstallation(id),
+    });
+  };
+
+  const handleCancelInstallation = (id: string, status: TInstallationStatus) => {
+    PersonalizedPopUp({
+      withResult: true,
+      title: "¿Cancelar instalación?",
+      text: "Esta acción marcará la instalación como cancelada.",
+      confirmButtonText: "Sí, cancelar",
+      cancelButtonText: "Volver",
+      titleSuccess: "Instalación cancelada",
+      titleError: "Error al cancelar",
+      textSuccess: "La instalación fue cancelada correctamente.",
+      textError: "No se pudo cancelar la instalación. Intenta nuevamente.",
+      genericFunction: () => handleInstallationStatus(id, status),
     });
   };
 
@@ -70,11 +86,7 @@ export const useInstallationsTableLogic = () => {
     openTextModal("Instaladores", installationInstallers || "Sin Instalador");
   };
 
-  const handleViewNotes = (
-    installation: IInstallation,
-    text: string,
-    images: string[]
-  ) => {
+  const handleViewNotes = (installation: IInstallation, text: string, images: string[]) => {
     openInstallationsNoteModal({
       installation,
       title: "Notas",
@@ -91,6 +103,7 @@ export const useInstallationsTableLogic = () => {
     handleViewAddress,
     handleViewInstallers,
     handleViewNotes,
+    handleCancelInstallation,
   };
 };
 
