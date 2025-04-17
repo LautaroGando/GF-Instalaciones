@@ -12,7 +12,6 @@ export const UsersTable: React.FC = () => {
     handleFetchUsers();
   }, [handleFetchUsers]);
 
-  
   return (
     <div className="w-full h-[calc(100vh-354px)] min-h-[400px] overflow-x-auto">
       {isLoading ? (
@@ -29,9 +28,7 @@ export const UsersTable: React.FC = () => {
                   <th className="min-w-[220px] h-12 px-4">
                     Correo electrónico
                   </th>
-                  <th className="min-w-[170px] h-12 px-4">
-                    Fecha de creación
-                  </th>
+                  <th className="min-w-[170px] h-12 px-4">Fecha de creación</th>
                   <th className="min-w-[220px] h-12 px-4">
                     Fecha de deshabilitación
                   </th>

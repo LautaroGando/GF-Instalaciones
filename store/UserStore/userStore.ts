@@ -16,6 +16,7 @@ import { formatDate } from "@/utils/formatDate";
 import { TInstallerStatus } from "@/types/TInstaller";
 import { IInstaller } from "@/interfaces/IInstaller";
 import Cookies from "js-cookie";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 
 export const useUserStore = create<IUserStoreProps>()(
   persist(
@@ -259,8 +260,19 @@ export const useUserStore = create<IUserStoreProps>()(
         }
       },
       handleLogout: () => {
-        set({ user: null, token: null });
-        Cookies.remove("user-storage");
+        PersonalizedPopUp({
+          withResult: true,
+          title: "¿Estás seguro que deseas cerrar sesión?",
+          text: "Podrás volver a ingresar nuevamente más tarde.",
+          titleSuccess: "Has cerrado sesión con éxito",
+          textSuccess: "Esperamos tu regreso a GF Instalaciones.",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Sí, cerrar sesión",
+          genericFunction: () => {
+            set({ user: null, token: null });
+            Cookies.remove("user-storage");
+          },
+        });
       },
       handleActionMenu: (id: string) => {
         const { actionMenu } = get();
