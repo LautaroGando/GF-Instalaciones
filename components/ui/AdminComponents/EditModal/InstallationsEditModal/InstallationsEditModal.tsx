@@ -15,13 +15,15 @@ import { useInstallersSelectModal } from "@/store/Admin/AdminModals/InstallersSe
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import InstallersSelectModal from "../../InstallersSelectModal/InstallersSelectModal";
-import Swal from "sweetalert2";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 
 const InstallationEditModal = () => {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const { isOpen, closeModal, selectedInstallation } = useInstallationsEditModal();
-  const { handleUpdateInstallation, setEditedInstallationId } = useTrackingStore();
+  const { isOpen, closeModal, selectedInstallation } =
+    useInstallationsEditModal();
+  const { handleUpdateInstallation, setEditedInstallationId } =
+    useTrackingStore();
 
   const {
     selectedInstallers,
@@ -52,43 +54,24 @@ const InstallationEditModal = () => {
     { setSubmitting }: FormikHelpers<IEditInstallationFormValues>
   ) => {
     const installationId = selectedInstallation.id ?? "";
+
     const payload = {
       ...values,
       installersIds: selectedInstallers.map((i) => i.id),
     };
 
-    try {
-      await handleUpdateInstallation(installationId, payload);
-      setEditedInstallationId(installationId);
-
-      Swal.fire({
-        icon: "success",
-        title: "Instalación actualizada",
-        text: "Los cambios se guardaron correctamente.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-
-      closeModal();
-      setTimeout(() => setEditedInstallationId(null), 2000);
-    } catch (err) {
-      console.error("Error actualizando instalación:", err);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudo actualizar la instalación. Intenta nuevamente.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    await PersonalizedPopUp({
+      withResult: false,
+      titleSuccess: "Instalación actualizada",
+      titleError: "Error",
+      textSuccess: "Los cambios se guardaron correctamente.",
+      textError: "No se pudo actualizar la instalación. Intenta nuevamente.",
+      installationId,
+      setEditedInstallationId,
+      setSubmiting: setSubmitting,
+      closeModal,
+      genericFunction: () => handleUpdateInstallation(installationId, payload),
+    });
   };
 
   return (
@@ -116,75 +99,38 @@ const InstallationEditModal = () => {
               validationSchema={validateEditInstallation}
               onSubmit={(values, formikHelpers) => handleOnSubmit(values, formikHelpers)}
             >
-              {({ handleSubmit, errors, touched, isSubmitting, values, initialValues }) => {
-                const noChanges =
-                  values.startDate === initialValues.startDate &&
-                  JSON.stringify(selectedInstallers.map((i) => i.id).sort()) ===
-                    JSON.stringify(initialValues.installersIds.sort());
-
-                const customSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-                  e.preventDefault();
-
-                  if (noChanges) {
-                    Swal.fire({
-                      icon: "info",
-                      title: "Sin cambios",
-                      text: "No hiciste ningún cambio para guardar.",
-                      toast: true,
-                      position: "top",
-                      showConfirmButton: false,
-                      timer: 2000,
-                      timerProgressBar: true,
-                    });
-                    return;
-                  }
-
-                  if (selectedInstallers.length === 0) {
-                    Swal.fire({
-                      icon: "warning",
-                      title: "Faltan instaladores",
-                      text: "Debes seleccionar al menos un instalador.",
-                      toast: true,
-                      position: "top",
-                      showConfirmButton: false,
-                      timer: 2000,
-                      timerProgressBar: true,
-                    });
-                    return;
-                  }
-
-                  handleSubmit(e);
-                };
-
-                return (
-                  <Form onSubmit={customSubmit} className="space-y-3 text-bgColorDark/60">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
+              {({ handleSubmit, errors, touched, isSubmitting }) => (
+                <Form
+                  onSubmit={handleSubmit}
+                  className="space-y-3 text-bgColorDark/60"
+                >
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
+                  >
+                    <label
+                      htmlFor="startDate"
+                      className="text-sm font-medium text-primaryColor/80"
                     >
-                      <label
-                        htmlFor="startDate"
-                        className="text-sm font-medium text-primaryColor/80"
+                      Fecha de Inicio
+                    </label>
+                    <Field
+                      name="startDate"
+                      type="date"
+                      className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none"
+                    />
+                    {errors.startDate && touched.startDate && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        transition={{ duration: 0.3 }}
+                        className="text-red-500 text-sm mt-2"
                       >
-                        Fecha de Inicio
-                      </label>
-                      <Field
-                        name="startDate"
-                        type="date"
-                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none"
-                      />
-                      {errors.startDate && touched.startDate && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          transition={{ duration: 0.3 }}
-                          className="text-red-500 text-sm mt-2"
-                        >
-                          {errors.startDate}
-                        </motion.div>
-                      )}
-                    </motion.div>
+                        {errors.startDate}
+                      </motion.div>
+                    )}
+                  </motion.div>
 
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}

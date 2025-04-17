@@ -16,7 +16,7 @@ import { useSearchParams } from "next/navigation";
 import { provincesMock } from "@/utils/pronvicesMock";
 import CoordinatorsSelectModal from "../../CoordinatorsSelectModal/CoordinatorsSelectModal";
 import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
-import Swal from "sweetalert2";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 
 const SyncInstallersWithFormik = () => {
   const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
@@ -85,42 +85,23 @@ const InstallationsCreateModal = () => {
     };
 
     if (orderId) {
-      try {
-        await handleCreateInstallation(orderId, installationData);
-
-        Swal.fire({
-          icon: "success",
-          title: "Instalación creada",
-          text: "La instalación se creó correctamente.",
-          toast: true,
-          position: "top",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-        });
-
-        clearInstallers();
-        clearCoordinators();
-      } catch (err) {
-        console.error("Error creando instalación:", err);
-
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Hubo un problema al crear la instalación.",
-          toast: true,
-          position: "top",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-        });
-      }
+      await PersonalizedPopUp({
+        withResult: false,
+        titleSuccess: "Instalación creada",
+        titleError: "Error",
+        textSuccess: "La instalación se creó correctamente.",
+        textError: "Hubo un problema al crear la instalación.",
+        setSubmiting: setSubmitting,
+        genericFunction: () =>
+          handleCreateInstallation(orderId, installationData),
+        clearInstallers: () => clearInstallers(),
+        clearCoordinators: () => clearCoordinators(),
+      });
     }
 
     setTimeout(() => {
       window.location.reload();
     }, 200);
-    setSubmitting(false);
   };
 
   if (!orderId) return;
@@ -194,9 +175,16 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.province && touched.address?.province ? 1 : 0,
+                          opacity:
+                            errors.address?.province &&
+                            touched.address?.province
+                              ? 1
+                              : 0,
                           height:
-                            errors.address?.province && touched.address?.province ? "auto" : 0,
+                            errors.address?.province &&
+                            touched.address?.province
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -208,7 +196,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 0 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.1,
+                      }}
                     >
                       <label
                         htmlFor="address.city"
@@ -225,8 +217,14 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.city && touched.address?.city ? 1 : 0,
-                          height: errors.address?.city && touched.address?.city ? "auto" : 0,
+                          opacity:
+                            errors.address?.city && touched.address?.city
+                              ? 1
+                              : 0,
+                          height:
+                            errors.address?.city && touched.address?.city
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -238,7 +236,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.2,
+                      }}
                     >
                       <label
                         htmlFor="address.street"
@@ -255,8 +257,14 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.street && touched.address?.street ? 1 : 0,
-                          height: errors.address?.street && touched.address?.street ? "auto" : 0,
+                          opacity:
+                            errors.address?.street && touched.address?.street
+                              ? 1
+                              : 0,
+                          height:
+                            errors.address?.street && touched.address?.street
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -268,7 +276,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.3,
+                      }}
                     >
                       <label
                         htmlFor="address.number"
@@ -285,8 +297,14 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.number && touched.address?.number ? 1 : 0,
-                          height: errors.address?.number && touched.address?.number ? "auto" : 0,
+                          opacity:
+                            errors.address?.number && touched.address?.number
+                              ? 1
+                              : 0,
+                          height:
+                            errors.address?.number && touched.address?.number
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -298,7 +316,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.4,
+                      }}
                     >
                       <label
                         htmlFor="address.postalCode"
@@ -316,9 +338,15 @@ const InstallationsCreateModal = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
                           opacity:
-                            errors.address?.postalCode && touched.address?.postalCode ? 1 : 0,
+                            errors.address?.postalCode &&
+                            touched.address?.postalCode
+                              ? 1
+                              : 0,
                           height:
-                            errors.address?.postalCode && touched.address?.postalCode ? "auto" : 0,
+                            errors.address?.postalCode &&
+                            touched.address?.postalCode
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -330,7 +358,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.5,
+                      }}
                     >
                       <label
                         htmlFor="address.note"
@@ -347,8 +379,14 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.note && touched.address?.note ? 1 : 0,
-                          height: errors.address?.note && touched.address?.note ? "auto" : 0,
+                          opacity:
+                            errors.address?.note && touched.address?.note
+                              ? 1
+                              : 0,
+                          height:
+                            errors.address?.note && touched.address?.note
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -360,7 +398,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.6,
+                      }}
                     >
                       <label
                         htmlFor="startDate"
@@ -377,8 +419,10 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.startDate && touched.startDate ? 1 : 0,
-                          height: errors.startDate && touched.startDate ? "auto" : 0,
+                          opacity:
+                            errors.startDate && touched.startDate ? 1 : 0,
+                          height:
+                            errors.startDate && touched.startDate ? "auto" : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -390,7 +434,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.7 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.7,
+                      }}
                     >
                       <label
                         htmlFor="selectedInstallers"
@@ -445,7 +493,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.8 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.8,
+                      }}
                     >
                       <button
                         type="button"
@@ -459,7 +511,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.7 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.7,
+                      }}
                     >
                       <label
                         htmlFor="selectedCoordinators"
@@ -481,7 +537,9 @@ const InstallationsCreateModal = () => {
                               <button
                                 type="button"
                                 className="text-admin-inactiveColor hover:text-admin-inactiveColor/80"
-                                onClick={() => deleteCoordinator(coordinator.id)}
+                                onClick={() =>
+                                  deleteCoordinator(coordinator.id)
+                                }
                               >
                                 <FontAwesomeIcon icon={faTimes} />
                               </button>
@@ -514,7 +572,11 @@ const InstallationsCreateModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.8 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.8,
+                      }}
                     >
                       <button
                         type="button"
@@ -529,7 +591,11 @@ const InstallationsCreateModal = () => {
                       className="flex flex-col xl:flex-row xl:justify-between"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.9 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.9,
+                      }}
                     >
                       <button
                         type="button"

@@ -14,7 +14,6 @@ import { IUser } from "@/interfaces/IUser";
 import React from "react";
 import { formatDate } from "@/utils/formatDate";
 import { TInstallerStatus } from "@/types/TInstaller";
-import { popUpDeleteUser, popUpLogout } from "@/utils/popUp";
 import { IInstaller } from "@/interfaces/IInstaller";
 import Cookies from "js-cookie";
 
@@ -212,23 +211,21 @@ export const useUserStore = create<IUserStoreProps>()(
         }
       },
       handleDeleteUser: async (id: string) => {
-        popUpDeleteUser(async () => {
-          try {
-            const data = await deleteUser(id);
-            if (data) {
-              set((state) => ({
-                users: state.users?.filter((user: IUser) => user.id !== id),
-                filterUsers: state.filterUsers?.filter(
-                  (user: IUser) => user.id !== id
-                ),
-              }));
-            }
-            get().setMaxPage();
-            get().handleApplyFilter(true);
-          } catch (error) {
-            console.log(error);
+        try {
+          const data = await deleteUser(id);
+          if (data) {
+            set((state) => ({
+              users: state.users?.filter((user: IUser) => user.id !== id),
+              filterUsers: state.filterUsers?.filter(
+                (user: IUser) => user.id !== id
+              ),
+            }));
           }
-        });
+          get().setMaxPage();
+          get().handleApplyFilter(true);
+        } catch (error) {
+          console.log(error);
+        }
       },
       handleActiveUser: async (id: string) => {
         try {
@@ -262,10 +259,8 @@ export const useUserStore = create<IUserStoreProps>()(
         }
       },
       handleLogout: () => {
-        popUpLogout(() => {
-          set({ user: null, token: null });
-          Cookies.remove("user-storage");
-        });
+        set({ user: null, token: null });
+        Cookies.remove("user-storage");
       },
       handleActionMenu: (id: string) => {
         const { actionMenu } = get();
