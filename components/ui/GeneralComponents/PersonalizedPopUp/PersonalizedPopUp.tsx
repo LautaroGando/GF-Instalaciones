@@ -1,8 +1,10 @@
 import Swal from "sweetalert2";
-import { IPersonalizedPopUp } from "./types";
+import { IPersonalizedPopUpProps } from "./types";
 
 export const PersonalizedPopUp = async ({
   withResult,
+  simpleModal,
+  icon,
   text,
   textError,
   textSuccess,
@@ -18,7 +20,21 @@ export const PersonalizedPopUp = async ({
   closeModal,
   clearInstallers,
   clearCoordinators,
-}: IPersonalizedPopUp) => {
+}: IPersonalizedPopUpProps) => {
+  if (simpleModal) {
+    Swal.fire({
+      icon: icon,
+      title: title,
+      text: text,
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
+    return;
+  }
+
   if (withResult) {
     const result = await Swal.fire({
       title: title,

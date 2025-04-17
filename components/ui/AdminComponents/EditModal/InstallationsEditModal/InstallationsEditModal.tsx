@@ -21,8 +21,10 @@ import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPop
 const InstallationEditModal = () => {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const { isOpen, closeModal, selectedInstallation } = useInstallationsEditModal();
-  const { handleUpdateInstallation, setEditedInstallationId } = useTrackingStore();
+  const { isOpen, closeModal, selectedInstallation } =
+    useInstallationsEditModal();
+  const { handleUpdateInstallation, setEditedInstallationId } =
+    useTrackingStore();
 
   const {
     selectedInstallers,
@@ -73,6 +75,8 @@ const InstallationEditModal = () => {
     });
   };
 
+  const handleNoChanges = () => {};
+
   return (
     <>
       <div
@@ -96,9 +100,18 @@ const InstallationEditModal = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validateEditInstallation}
-              onSubmit={(values, formikHelpers) => handleOnSubmit(values, formikHelpers)}
+              onSubmit={(values, formikHelpers) =>
+                handleOnSubmit(values, formikHelpers)
+              }
             >
-              {({ handleSubmit, errors, touched, isSubmitting, values, initialValues }) => {
+              {({
+                handleSubmit,
+                errors,
+                touched,
+                isSubmitting,
+                values,
+                initialValues,
+              }) => {
                 const noChanges =
                   values.startDate === initialValues.startDate &&
                   JSON.stringify(selectedInstallers.map((i) => i.id).sort()) ===
@@ -108,29 +121,23 @@ const InstallationEditModal = () => {
                   e.preventDefault();
 
                   if (noChanges) {
-                    Swal.fire({
+                    PersonalizedPopUp({
+                      withResult: false,
+                      simpleModal: true,
                       icon: "info",
                       title: "Sin cambios",
                       text: "No hiciste ningún cambio para guardar.",
-                      toast: true,
-                      position: "top",
-                      showConfirmButton: false,
-                      timer: 2000,
-                      timerProgressBar: true,
                     });
                     return;
                   }
 
                   if (selectedInstallers.length === 0) {
-                    Swal.fire({
+                    PersonalizedPopUp({
+                      withResult: false,
+                      simpleModal: true,
                       icon: "warning",
                       title: "Faltan instaladores",
                       text: "Debes seleccionar al menos un instalador.",
-                      toast: true,
-                      position: "top",
-                      showConfirmButton: false,
-                      timer: 2000,
-                      timerProgressBar: true,
                     });
                     return;
                   }
@@ -139,11 +146,18 @@ const InstallationEditModal = () => {
                 };
 
                 return (
-                  <Form onSubmit={customSubmit} className="space-y-3 text-bgColorDark/60">
+                  <Form
+                    onSubmit={customSubmit}
+                    className="space-y-3 text-bgColorDark/60"
+                  >
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.3,
+                      }}
                     >
                       <label
                         htmlFor="startDate"
@@ -171,7 +185,11 @@ const InstallationEditModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.7 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.7,
+                      }}
                     >
                       <label
                         htmlFor="selectedInstallers"
@@ -226,7 +244,11 @@ const InstallationEditModal = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.8 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.8,
+                      }}
                     >
                       <button
                         type="button"
@@ -241,7 +263,11 @@ const InstallationEditModal = () => {
                       className="flex flex-col xl:flex-row xl:justify-between"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut", delay: 0.7 }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut",
+                        delay: 0.7,
+                      }}
                     >
                       <button
                         type="button"
