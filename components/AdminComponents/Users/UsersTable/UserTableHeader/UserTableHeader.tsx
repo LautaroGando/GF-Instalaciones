@@ -1,5 +1,6 @@
 "use client";
-import TrackingTableHeaders from "@/utils/TrackingTableHeaders";
+
+import UserTableHeaders from "@/utils/userTableHeaders";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -29,17 +30,17 @@ const thVariants = {
   },
 };
 
-export const TrackingTableHeader = () => {
+const UserTableHeader = () => {
   return (
     <motion.thead initial="hidden" animate="visible" variants={theadVariants}>
-      <motion.tr layout className="sticky top-0 border-b border-primaryColor">
-        {TrackingTableHeaders.map((item, i) => (
+      <motion.tr layout className="sticky top-0 border-b border-primaryColor z-10">
+        {UserTableHeaders.map((header, i) => (
           <motion.th
             key={i}
             variants={thVariants}
-            className="px-4 h-12 whitespace-nowrap border-b  border-primaryColor text-bgColorDark/80 text-[14px] font-semibold tracking-wide"
+            className="px-4 h-12 whitespace-nowrap text-letterColorLight border-b border-primaryColor text-bgColorDark/80 text-[14px] font-semibold tracking-wide"
           >
-            {item}
+            {header}
           </motion.th>
         ))}
       </motion.tr>
@@ -47,4 +48,4 @@ export const TrackingTableHeader = () => {
   );
 };
 
-export default TrackingTableHeader;
+export default UserTableHeader;
