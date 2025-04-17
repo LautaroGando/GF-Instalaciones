@@ -5,6 +5,7 @@ import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect } from "react";
+import PersonalizedPopUp from "../../GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -38,6 +39,19 @@ const InstallationNoteModal: React.FC = () => {
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
 
+  const handleFinishInstallation = () =>
+    installation &&
+    PersonalizedPopUp({
+      withResult: false,
+      titleSuccess: "Instalación finalizada",
+      textSuccess: "La instalación ha sido finalizada.",
+      titleError: "Error al finalizar",
+      textError: "No se pudo finalizar la instalación. Intenta nuevamente.",
+      genericFunction: () =>
+        handleInstallationStatus(installation.id, "Finalizada"),
+      closeModal: () => closeModal(),
+    });
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -59,7 +73,9 @@ const InstallationNoteModal: React.FC = () => {
             exit="exit"
             className="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg relative z-60"
           >
-            <h2 className="text-xl font-semibold mb-4 text-neutral-900">{title}</h2>
+            <h2 className="text-xl font-semibold mb-4 text-neutral-900">
+              {title}
+            </h2>
 
             <div className="text-sm text-neutral-800 leading-relaxed max-h-[400px] overflow-y-auto">
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />
@@ -85,12 +101,9 @@ const InstallationNoteModal: React.FC = () => {
             </div>
 
             <div className="mt-6 flex flex-col gap-3">
-              {installation?.id && installation.status === 'A revisar' && (
+              {installation?.id && installation.status === "A revisar" && (
                 <button
-                  onClick={() => {
-                    handleInstallationStatus(installation.id, "Finalizada");
-                    closeModal();
-                  }}
+                  onClick={() => handleFinishInstallation()}
                   className="mt-6 w-full bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover"
                 >
                   Finalizar Instalación
