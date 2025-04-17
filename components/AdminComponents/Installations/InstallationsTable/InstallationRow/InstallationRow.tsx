@@ -1,5 +1,9 @@
 "use client";
-import { faBan, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBan,
+  faPenToSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import clsx from "clsx";
@@ -47,7 +51,6 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
   onViewAddress,
   onCancel,
   wasRecentlyEdited,
-
 }) => {
   return (
     <motion.tr
@@ -58,7 +61,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
       exit="exit"
       style={{
         borderBottomWidth: 1,
-        backgroundColor: wasRecentlyEdited ? "#dcfce7" : "#ffffff",
+        backgroundColor: wasRecentlyEdited ? "#dcfce7" : "",
       }}
       transition={{
         backgroundColor: { duration: wasRecentlyEdited ? 1.5 : 0 },
@@ -104,11 +107,13 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
           transition={{ type: "spring", stiffness: 100, damping: 14 }}
           className={clsx(
             "font-bold",
-            installation.status === "Pendiente" || installation.status === "En proceso"
+            installation.status === "Pendiente" ||
+              installation.status === "En proceso"
               ? "text-primaryColor"
               : installation.status === "A revisar"
               ? "text-admin-editColor"
-              : installation.status === "Pospuesta" || installation.status === "Cancelada"
+              : installation.status === "Pospuesta" ||
+                installation.status === "Cancelada"
               ? "text-admin-inactiveColor"
               : "text-admin-activeColor"
           )}
@@ -142,7 +147,8 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
         variants={cellVariants}
         className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
       >
-        {(installation.notes && installation.notes.trim() !== "") || installation.images ? (
+        {(installation.notes && installation.notes.trim() !== "") ||
+        installation.images ? (
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}

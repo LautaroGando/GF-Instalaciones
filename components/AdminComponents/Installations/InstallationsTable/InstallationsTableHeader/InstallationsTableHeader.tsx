@@ -38,13 +38,13 @@ const InstallationsTableHeader = () => {
     >
       <motion.tr
         layout
-        className="sticky top-0 bg-bgColor border-b border-primaryColor"
+        className="sticky top-0 border-b border-primaryColor"
       >
         {InstallationsTableHeaders.map((item, i) => (
           <motion.th
             key={i}
             variants={thVariants}
-            className="px-4 h-12 whitespace-nowrap border-b border-primaryColor text-bgColorDark/80 text-[14px] font-semibold tracking-wide"
+            className="px-4 h-12 whitespace-nowrap border-b border-primaryColor text-[14px] font-semibold tracking-wide"
           >
             {item}
           </motion.th>

@@ -33,12 +33,15 @@ const thVariants = {
 const UserTableHeader = () => {
   return (
     <motion.thead initial="hidden" animate="visible" variants={theadVariants}>
-      <motion.tr layout className="sticky top-0 border-b border-primaryColor z-10">
+      <motion.tr
+        layout
+        className="sticky top-0 border-b border-primaryColor z-10"
+      >
         {UserTableHeaders.map((header, i) => (
           <motion.th
             key={i}
             variants={thVariants}
-            className="px-4 h-12 whitespace-nowrap text-letterColorLight border-b border-primaryColor text-bgColorDark/80 text-[14px] font-semibold tracking-wide"
+            className="px-4 h-12 whitespace-nowrap border-b border-primaryColor text-[14px] font-semibold tracking-wide"
           >
             {header}
           </motion.th>
