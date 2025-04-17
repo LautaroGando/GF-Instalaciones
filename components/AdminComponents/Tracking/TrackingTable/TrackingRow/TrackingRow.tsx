@@ -1,12 +1,16 @@
 "use client";
-import { faArrowRight, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faPenToSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import ITrackingRowsProps from "./types";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
-import Swal from "sweetalert2";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 
 const rowVariants = {
   hidden: {
@@ -40,38 +44,20 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
   const { handleUpdateOrder } = useTrackingStore();
 
   const handleFinishOrder = async () => {
-    try {
-      await handleUpdateOrder(order.id, {
-        orderNumber: order.orderNumber,
-        title: order.title,
-        description: order.description,
-        completed: true,
-      });
-
-      Swal.fire({
-        icon: "success",
-        title: "Orden finalizada",
-        text: "La orden se ha marcado como completada.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    } catch (error) {
-      console.error("Error al finalizar la orden:", error);
-
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudo finalizar la orden. Intenta de nuevo.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    }
+    PersonalizedPopUp({
+      withResult: false,
+      titleSuccess: "Orden finalizada",
+      titleError: "Error",
+      textSuccess: "La orden se ha marcado como completada.",
+      textError: "No se pudo finalizar la orden. Intenta de nuevo.",
+      genericFunction: () =>
+        handleUpdateOrder(order.id, {
+          orderNumber: order.orderNumber,
+          title: order.title,
+          description: order.description,
+          completed: true,
+        }),
+    });
   };
 
   return (
