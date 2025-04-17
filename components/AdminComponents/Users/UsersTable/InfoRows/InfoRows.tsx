@@ -10,9 +10,7 @@ export const InfoRows: React.FC<IInfoRowsProps> = ({ item, label }) => {
       ? "font-semibold"
       : lastRole === "Instalador"
       ? "text-primaryColor"
-      : lastRole === "Coordinador"
-      ? "text-primaryColor font-semibold"
-      : "text-secondaryColor"
+      : lastRole === "Coordinador" && "text-primaryColor font-semibold"
   );
 
   return <span className={className}>{label}</span>;

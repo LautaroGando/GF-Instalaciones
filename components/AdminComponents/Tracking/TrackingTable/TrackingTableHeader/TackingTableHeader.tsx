@@ -37,7 +37,7 @@ export const TrackingTableHeader = () => {
           <motion.th
             key={i}
             variants={thVariants}
-            className="px-4 h-12 whitespace-nowrap border-b  border-primaryColor text-bgColorDark/80 text-[14px] font-semibold tracking-wide"
+            className="px-4 h-12 whitespace-nowrap border-b  border-primaryColor text-[14px] font-semibold tracking-wide"
           >
             {item}
           </motion.th>

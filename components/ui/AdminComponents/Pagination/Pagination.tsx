@@ -1,16 +1,39 @@
 "use client";
 import { useUserStore } from "@/store/UserStore/userStore";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { motion } from "motion/react";
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.4,
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
 
 export const Pagination: React.FC = () => {
-  const { filterUsers, page, maxPage, handlePrevPage, handleNextPage } = useUserStore();
+  const { filterUsers, page, maxPage, handlePrevPage, handleNextPage } =
+    useUserStore();
 
   if (!filterUsers) return null;
 
   return (
-    <div className="flex items-center justify-between sm:self-end sm:gap-3">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="flex items-center justify-between sm:self-end sm:gap-3"
+    >
       <button
         onClick={handlePrevPage}
         disabled={page <= 1}
@@ -28,7 +51,7 @@ export const Pagination: React.FC = () => {
       >
         <FontAwesomeIcon icon={faChevronRight} />
       </button>
-    </div>
+    </motion.div>
   );
 };
 
