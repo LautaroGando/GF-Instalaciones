@@ -1,3 +1,4 @@
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import IInstallation from "@/interfaces/IInstallation";
 import { useInstallationsEditModal } from "@/store/Admin/AdminModals/EditModals/InstallationsEditModalStore/InstallationsEditModalStore";
 import { useInstallationNoteModalStore } from "@/store/Admin/AdminModals/InstallationNoteModalStore/InstallationNoteModalStore";
@@ -5,7 +6,6 @@ import { useTextModalStore } from "@/store/Admin/AdminModals/TextModalStore/Text
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 
 export const useInstallationsTableLogic = () => {
   const searchParams = useSearchParams();
@@ -17,7 +17,8 @@ export const useInstallationsTableLogic = () => {
     handleDeleteInstallation,
   } = useTrackingStore();
   const { openModal: openTextModal } = useTextModalStore();
-  const { openModal: openInstallationsNoteModal } = useInstallationNoteModalStore();
+  const { openModal: openInstallationsNoteModal } =
+    useInstallationNoteModalStore();
   const { openModal: openInstallationEditModal } = useInstallationsEditModal();
   const [isLoadingOrder, setIsLoadingOrder] = useState(true);
 
@@ -33,49 +34,18 @@ export const useInstallationsTableLogic = () => {
   };
 
   const handleDelete = async (id: string) => {
-    const result = await Swal.fire({
+    PersonalizedPopUp({
+      withResult: true,
       title: "¿Estás seguro?",
       text: "Esta acción eliminará la instalación permanentemente.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
+      titleSuccess: "Instalación eliminada",
+      titleError: "Error al eliminar",
+      textSuccess: "La instalación ha sido eliminada correctamente.",
+      textError: "No se pudo eliminar la instalación. Intenta nuevamente.",
+      genericFunction: () => handleDeleteInstallation(id),
     });
-
-    if (!result.isConfirmed) return;
-
-    try {
-      await handleDeleteInstallation(id);
-
-      Swal.fire({
-        icon: "success",
-        title: "Instalación eliminada",
-        text: "La instalación ha sido eliminada correctamente.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : "No se pudo eliminar la instalación. Intenta nuevamente.";
-
-      Swal.fire({
-        icon: "error",
-        title: "Error al eliminar",
-        text: errorMessage,
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    }
   };
 
   const handleViewAddress = (installation: IInstallation) => {
@@ -100,7 +70,11 @@ export const useInstallationsTableLogic = () => {
     openTextModal("Instaladores", installationInstallers || "Sin Instalador");
   };
 
-  const handleViewNotes = (installation: IInstallation, text: string, images: string[]) => {
+  const handleViewNotes = (
+    installation: IInstallation,
+    text: string,
+    images: string[]
+  ) => {
     openInstallationsNoteModal({
       installation,
       title: "Notas",

@@ -15,13 +15,15 @@ import { useInstallersSelectModal } from "@/store/Admin/AdminModals/InstallersSe
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import InstallersSelectModal from "../../InstallersSelectModal/InstallersSelectModal";
-import Swal from "sweetalert2";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 
 const InstallationEditModal = () => {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const { isOpen, closeModal, selectedInstallation } = useInstallationsEditModal();
-  const { handleUpdateInstallation,setEditedInstallationId } = useTrackingStore();
+  const { isOpen, closeModal, selectedInstallation } =
+    useInstallationsEditModal();
+  const { handleUpdateInstallation, setEditedInstallationId } =
+    useTrackingStore();
 
   const {
     selectedInstallers,
@@ -49,51 +51,30 @@ const InstallationEditModal = () => {
     startDate: selectedInstallation.startDate ?? "",
     installersIds: selectedInstallation.installers?.map((i) => i.id) ?? [],
   };
-  
+
   const handleOnSubmit = async (
     values: IEditInstallationFormValues,
     { setSubmitting }: FormikHelpers<IEditInstallationFormValues>
   ) => {
     const installationId = selectedInstallation.id ?? "";
-  
+
     const payload = {
       ...values,
       installersIds: selectedInstallers.map((i) => i.id),
     };
-  
-    try {
-      await handleUpdateInstallation(installationId, payload);
-      setEditedInstallationId(installationId);
-  
-      Swal.fire({
-        icon: "success",
-        title: "Instalación actualizada",
-        text: "Los cambios se guardaron correctamente.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-  
-      closeModal();
-      setTimeout(() => setEditedInstallationId(null), 2000);
-    } catch (err) {
-      console.error("Error actualizando instalación:", err);
-  
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudo actualizar la instalación. Intenta nuevamente.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    } finally {
-      setSubmitting(false);
-    }
+
+    await PersonalizedPopUp({
+      withResult: false,
+      titleSuccess: "Instalación actualizada",
+      titleError: "Error",
+      textSuccess: "Los cambios se guardaron correctamente.",
+      textError: "No se pudo actualizar la instalación. Intenta nuevamente.",
+      installationId,
+      setEditedInstallationId,
+      setSubmiting: setSubmitting,
+      closeModal,
+      genericFunction: () => handleUpdateInstallation(installationId, payload),
+    });
   };
 
   return (
@@ -122,13 +103,19 @@ const InstallationEditModal = () => {
               onSubmit={handleOnSubmit}
             >
               {({ handleSubmit, errors, touched, isSubmitting }) => (
-                <Form onSubmit={handleSubmit} className="space-y-3 text-bgColorDark/60">
+                <Form
+                  onSubmit={handleSubmit}
+                  className="space-y-3 text-bgColorDark/60"
+                >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
                   >
-                    <label htmlFor="startDate" className="text-sm font-medium text-primaryColor/80">
+                    <label
+                      htmlFor="startDate"
+                      className="text-sm font-medium text-primaryColor/80"
+                    >
                       Fecha de Inicio
                     </label>
                     <Field
