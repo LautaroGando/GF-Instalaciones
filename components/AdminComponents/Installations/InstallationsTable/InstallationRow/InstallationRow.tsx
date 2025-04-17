@@ -1,5 +1,5 @@
 "use client";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import clsx from "clsx";
@@ -45,7 +45,9 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
   onViewNotes,
   onViewInstallers,
   onViewAddress,
+  onCancel,
   wasRecentlyEdited,
+
 }) => {
   return (
     <motion.tr
@@ -183,6 +185,15 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
             className="bg-admin-inactiveColor text-white w-8 h-8 rounded-[2px] border border-admin-inactiveColor transition-all duration-200 hover:bg-white hover:text-admin-inactiveColor"
           >
             <FontAwesomeIcon icon={faTrash} />
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onCancel}
+            className="bg-admin-inactiveColor text-white w-8 h-8 rounded-[2px] border border-admin-inactiveColor transition-all duration-200 hover:bg-white hover:text-admin-inactiveColor"
+          >
+            <FontAwesomeIcon icon={faBan} />
           </motion.button>
         </div>
       </motion.td>

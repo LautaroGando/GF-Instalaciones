@@ -8,6 +8,7 @@ export interface IInstallationsRowProps {
   onViewNotes: () => void;
   onViewInstallers: () => void;
   onViewAddress: () => void;
+  onCancel: ()=>void;
   wasRecentlyEdited?: boolean;
 }
 
