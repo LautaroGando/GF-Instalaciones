@@ -1,11 +1,14 @@
-export interface IPersonalizedPopUp {
+import type { TIcon } from "@/types/TIcon";
+export interface IPersonalizedPopUpProps {
   withResult: boolean;
+  simpleModal?: boolean;
+  icon?: TIcon;
   title?: string;
-  titleSuccess: string;
-  titleError: string;
+  titleSuccess?: string;
+  titleError?: string;
   text?: string;
-  textSuccess: string;
-  textError: string;
+  textSuccess?: string;
+  textError?: string;
   confirmButtonText?: string;
   cancelButtonText?: string;
   installationId?: string;

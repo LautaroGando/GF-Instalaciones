@@ -42,7 +42,7 @@ export const FormSignIn: React.FC = () => {
 
             setTimeout(() => {
               router.push("/");
-            }, 3000);
+            }, 1500);
           } catch {
             resetForm();
             setIsLoading(false);
