@@ -15,9 +15,15 @@ import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPop
 const TrackingTable = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
   const { openModal: openTrackingEditModal } = useTrackingEditModal();
-  const { orders, handleFetchOrders, handleDeleteOrder, isLoading } =
-    useTrackingStore();
+  const {
+    handleFetchOrders,
+    handleDeleteOrder,
+    isLoading,
+    getFilteredOrders,
+  } = useTrackingStore();
+  
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
+  const filteredOrders = getFilteredOrders();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +44,7 @@ const TrackingTable = () => {
     );
   }
 
-  if (!orders || orders.length === 0) {
+  if (!filteredOrders || filteredOrders.length === 0) {
     return (
       <RenderEmptyState
         title="No hay órdenes registradas"
@@ -77,7 +83,7 @@ const TrackingTable = () => {
           <TrackingTableHeader />
           <tbody>
             <AnimatePresence mode="popLayout">
-              {orders.map((order) => (
+              {filteredOrders.map((order) => (
                 <TrackingRow
                   key={order.id}
                   order={order}
