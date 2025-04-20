@@ -27,7 +27,7 @@ export const headerLinks: IHeaderLink[] = [
 
 export const headerLinksInstaller: IHeaderLink[] = [
   {
-    label: "Mis instalaciones",
+    label: "Instalaciones",
     href: "/installer/installations",
   },
   {

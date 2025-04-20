@@ -1,28 +1,45 @@
 "use client";
-import Logo from "@/components/ui/GeneralComponents/Logo/Logo";
 import BackButton from "@/components/ui/InstallerComponents/BackButton/BackButton";
-import React from "react";
-import InstallerLink from "./InstallerLink/InstallerLink";
+import React, { useEffect } from "react";
 import { useMenuInstallerStore } from "@/store/MenuInstallerStore/menuinstallerStore";
 import clsx from "clsx";
+import MenuInstaller from "@/components/ui/InstallerComponents/MenuInstaller/MenuInstaller";
+import Logo from "@/components/ui/GeneralComponents/Logo/Logo";
+import InstallerLink from "./installerLink/InstallerLink";
+import InstallerLinkMenu from "./InstallerLinkMenu/InstallerLinkMenu";
+import { useSize } from "@/hooks/useSize";
+import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectTheme";
 
 export const InstallerHeader: React.FC = () => {
-  const { menu } = useMenuInstallerStore();
+  const { menu, handleCloseMenu } = useMenuInstallerStore();
+  const { size } = useSize();
+
+  useEffect(() => {
+    size <= 768 && handleCloseMenu();
+  }, [size]);
 
   return (
-    <header
-      className={clsx(
-        "fixed w-full top-0 left-0 transition-all duration-300 overflow-hidden bg-primaryColor flex flex-col justify-between lg:min-w-[307px] lg:max-w-[307px] lg:static xl:max-w-[465px]",
-        menu ? "h-[100dvh]" : "h-[0dvh] lg:h-[100dvh]"
-      )}
-    >
-      <div className="flex flex-col gap-5">
-        <div className="w-full border-b-[5px] border-bgColor flex items-center py-10">
-          <Logo label="Instaladores" />
+    <header className="w-full h-[80px] flex items-center justify-between shadow-md px-3">
+      <div className="max-w-[1200px] mx-auto flex items-center justify-between w-full">
+        <Logo label="Instaladores" />
+        <MenuInstaller />
+        <div
+          className={clsx(
+            "fixed top-0 right-0 h-[100dvh] transition-all duration-300 overflow-hidden bg-bgColor flex flex-col justify-between",
+            menu
+              ? "w-full sm:w-[400px] sm:shadow-xl sm:shadow-secondaryColor/50"
+              : "w-0"
+          )}
+        >
+          <InstallerLinkMenu />
+          <BackButton />
         </div>
-        <InstallerLink />
+        <div className="items-center gap-10 hidden md:flex">
+          <SelectTheme />
+          <InstallerLink />
+          <BackButton />
+        </div>
       </div>
-      <BackButton />
     </header>
   );
 };

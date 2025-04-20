@@ -32,6 +32,15 @@ export default {
           inProccess: "#f1c40f",
           borderColor: "#BDBDBD",
         },
+        installer: {
+          backButton: "#FF8383",
+          backButtonHover: "#CE1818",
+          inProccess: "#D1C18A",
+          toReview: "#009DFF",
+          postponed: "#FF8383",
+          cancelled: "#CE1818",
+          finalized: "#28b463",
+        },
       },
       fontFamily: {
         textFont: ["Montserrat", "sans-serif"],
