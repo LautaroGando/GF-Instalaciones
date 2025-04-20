@@ -36,6 +36,9 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   installationsPage: 1,
   installationsTotalPages: 1,
   editedInstallationId: null,
+  ordersSearch: "",
+  installationsSearch: "",
+
   orderFilters: {
     completed: false,
   },
@@ -57,13 +60,65 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   installationStatus: "En proceso" as TInstallationStatus,
   completeModal: false,
 
+  // ===========================
+  // 🛠️ 2. Utilidades Generales
+  // ===========================
+
   handleLoading: (conditional: boolean) => {
     set({ isLoading: conditional });
   },
   setEditedInstallationId: (id: string | null) => set({ editedInstallationId: id }),
 
+  handleOpenModal: () => set(() => ({ completeModal: true })), // habria que colocar un nombre mas especifico
+  handleCloseModal: () => set(() => ({ completeModal: false })), // habria que colocar un nombre mas especifico
+
   // ===========================
-  // 📕 2. Paginacion
+  // 🔎 3. Busqueda
+  // ===========================
+  setOrdersSearch: (search: string) => set({ ordersSearch: search }),
+  getFilteredOrders: () => {
+    const { orders, ordersSearch } = get();
+
+    const normalize = (text: string) =>
+      text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    const search = normalize(ordersSearch);
+
+    return orders.filter(
+      (order) =>
+        normalize(order.orderNumber).includes(search) || normalize(order.title).includes(search)
+    );
+  },
+  setInstallationsSearch: (search: string) => set({ installationsSearch: search }),
+  getFilteredInstallations: () => {
+    const { selectedOrder, installationsSearch } = get();
+
+    const normalize = (text: string) =>
+      text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    const search = normalize(installationsSearch);
+
+    if (!selectedOrder?.installations?.length) return [];
+
+    return selectedOrder.installations.filter(
+      (inst) =>
+        normalize(inst.address.city.name ?? "").includes(search) ||
+        normalize(inst.coordinator?.user.fullName ?? "").includes(search)
+    );
+  },
+
+  // ===========================
+  // 📕 4. Paginacion
   // ===========================
 
   ordersNextPage: async () => {
@@ -111,7 +166,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   },
 
   // ===========================
-  // 📦 3. Ordenes
+  // 📦 5. Ordenes
   // ===========================
 
   handleFetchOrders: async (params?: Partial<TOrdersQueryParams>) => {
@@ -124,9 +179,17 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         updatedAt = "",
         completed = get().orderFilters.completed,
         page = get().ordersPage,
+        ordersSearch = "", // nuevo
       } = params || {};
 
-      const finalParams = { progress, createdAt, updatedAt, completed, page };
+      const finalParams = {
+        progress,
+        createdAt,
+        updatedAt,
+        completed,
+        page,
+        ordersSearch, // nuevo
+      };
 
       const { result: orders, totalPages } = await getAllOrders(finalParams);
 
@@ -142,6 +205,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       get().handleLoading(false);
     }
   },
+
   handleCreateOrder: async (values: ICreateOrderFormValues) => {
     try {
       get().handleLoading(true);
@@ -197,7 +261,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   },
 
   // ===========================
-  // 🧰 4. Instalaciones
+  // 🧰 6. Instalaciones
   // ===========================
 
   handleFetchInstallationsNotPagination: async () => {
@@ -379,11 +443,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         const updatedSelectedOrder = state.selectedOrder
           ? {
               ...state.selectedOrder,
-              installations: state.selectedOrder.installations.map(
-                (installation) =>
-                  installation.id === id
-                    ? { ...installation, status }
-                    : installation
+              installations: state.selectedOrder.installations.map((installation) =>
+                installation.id === id ? { ...installation, status } : installation
               ),
             }
           : null;
@@ -399,7 +460,4 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       throw err;
     }
   },
-
-  handleOpenModal: () => set(() => ({ completeModal: true })),
-  handleCloseModal: () => set(() => ({ completeModal: false })),
 }));
