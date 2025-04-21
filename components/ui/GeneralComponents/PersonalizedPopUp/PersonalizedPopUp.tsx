@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import { IPersonalizedPopUpProps } from "./types";
 
 export const PersonalizedPopUp = async ({
+  color,
   withResult,
   simpleModal,
   icon,
@@ -31,6 +32,7 @@ export const PersonalizedPopUp = async ({
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
+      background: color,
     });
     return;
   }
@@ -45,6 +47,7 @@ export const PersonalizedPopUp = async ({
       cancelButtonColor: "#3085d6",
       confirmButtonText: confirmButtonText,
       cancelButtonText: cancelButtonText,
+      background: color,
     });
 
     if (!result.isConfirmed) return;
@@ -64,6 +67,7 @@ export const PersonalizedPopUp = async ({
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
+      background: color,
     });
 
     closeModal?.();
@@ -87,6 +91,7 @@ export const PersonalizedPopUp = async ({
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
+      background: color,
     });
   } finally {
     setSubmiting?.(false);

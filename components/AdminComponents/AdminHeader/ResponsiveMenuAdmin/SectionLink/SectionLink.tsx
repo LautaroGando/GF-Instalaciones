@@ -20,7 +20,7 @@ export const SectionLink: React.FC = () => {
           onClick={handleCloseMenuAdmin}
           href={link.href}
           className={clsx(
-            "w-full flex items-center gap-3 h-[50px] transition-all duration-500 border-l-2 border-transparent pl-2 lg:h-[70px] lg:pl-0",
+            "w-full flex items-center gap-3 h-[50px] border-l-2 border-transparent pl-2 lg:h-[70px] lg:pl-0",
             menuAdmin ? "lg:justify-start lg:pl-2" : "lg:justify-center",
             pathname.includes(link.label.toLowerCase())
               ? "bg-primaryColor text-letterColorLight"

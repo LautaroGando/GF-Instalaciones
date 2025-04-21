@@ -4,6 +4,7 @@ import { useInstallationsEditModal } from "@/store/Admin/AdminModals/EditModals/
 import { useInstallationNoteModalStore } from "@/store/Admin/AdminModals/InstallationNoteModalStore/InstallationNoteModalStore";
 import { useTextModalStore } from "@/store/Admin/AdminModals/TextModalStore/TextModalStore";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import TInstallationStatus from "@/types/TInstallationStatus";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,9 +20,11 @@ export const useInstallationsTableLogic = () => {
     handleInstallationStatus,
   } = useTrackingStore();
   const { openModal: openTextModal } = useTextModalStore();
-  const { openModal: openInstallationsNoteModal } = useInstallationNoteModalStore();
+  const { openModal: openInstallationsNoteModal } =
+    useInstallationNoteModalStore();
   const { openModal: openInstallationEditModal } = useInstallationsEditModal();
   const [isLoadingOrder, setIsLoadingOrder] = useState(true);
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     if (orderId) {
@@ -36,6 +39,7 @@ export const useInstallationsTableLogic = () => {
 
   const handleDelete = (id: string) => {
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: true,
       title: "¿Estás seguro?",
       text: "Esta acción eliminará la instalación permanentemente.",
@@ -49,8 +53,12 @@ export const useInstallationsTableLogic = () => {
     });
   };
 
-  const handleCancelInstallation = (id: string, status: TInstallationStatus) => {
+  const handleCancelInstallation = (
+    id: string,
+    status: TInstallationStatus
+  ) => {
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: true,
       title: "¿Cancelar instalación?",
       text: "Esta acción marcará la instalación como cancelada.",
@@ -66,6 +74,7 @@ export const useInstallationsTableLogic = () => {
 
   const handlePostpone = (id: string, status: TInstallationStatus) => {
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: true,
       title: "¿Posponer instalación?",
       text: "Esta acción marcará la instalación como pospuesta.",
@@ -101,7 +110,11 @@ export const useInstallationsTableLogic = () => {
     openTextModal("Instaladores", installationInstallers || "Sin Instalador");
   };
 
-  const handleViewNotes = (installation: IInstallation, text: string, images: string[]) => {
+  const handleViewNotes = (
+    installation: IInstallation,
+    text: string,
+    images: string[]
+  ) => {
     openInstallationsNoteModal({
       installation,
       title: "Notas",

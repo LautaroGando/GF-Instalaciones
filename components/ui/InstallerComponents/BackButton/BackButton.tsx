@@ -1,14 +1,20 @@
-import Link from "next/link";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 export const BackButton: React.FC = () => {
   return (
-    <Link
-      href="/"
-      className="text-primaryColor bg-bgColor w-full flex justify-center items-center h-[50px] transition-all [clip-path:ellipse(100%_100%_at_50%_50%)] duration-300 relative hover:h-[80px] hover:[clip-path:ellipse(100%_90%_at_50%_100%)] hover:text-xl"
+    <button
+      onClick={() => (window.location.href = "/")}
+      className="text-installer-backButton w-full flex gap-3 justify-center items-center h-[50px] transition-all duration-300 hover:text-installer-backButtonHover"
     >
-      Volver
-    </Link>
+      Salir
+      <FontAwesomeIcon
+        className="w-5 text-xl"
+        icon={faArrowRightFromBracket}
+        width={20}
+      />
+    </button>
   );
 };
 

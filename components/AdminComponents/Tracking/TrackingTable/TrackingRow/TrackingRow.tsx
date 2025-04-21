@@ -18,6 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const rowVariants = {
   hidden: {
@@ -49,9 +50,11 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
   openTextModal,
 }) => {
   const { handleUpdateOrder } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   const handleFinishOrder = async () => {
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: false,
       titleSuccess: "Orden finalizada",
       titleError: "Error",
@@ -75,13 +78,12 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
       exit="exit"
       variants={rowVariants}
       style={{ borderBottomWidth: 1 }}
-      className="border-b"
     >
       <motion.td
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {order.orderNumber}
       </motion.td>
@@ -90,7 +92,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.05 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {order.title}
       </motion.td>
@@ -99,7 +101,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
-        className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-14 whitespace-nowrap"
       >
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -115,7 +117,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.15 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         12/03/2025
       </motion.td>
@@ -124,7 +126,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.2 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {order.endDate ? order.endDate : "-"}
       </motion.td>
@@ -133,7 +135,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.25 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40 min-w-[140px]"
+        className="px-4 h-12 whitespace-nowrap min-w-[140px]"
       >
         {order.completed ? (
           <motion.span
@@ -186,7 +188,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.3 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         <Link href={`/admin/tracking/installations?orderId=${order.id}`}>
           <motion.button
@@ -226,7 +228,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.35 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40 text-center"
+        className="px-4 h-12 whitespace-nowrap text-center"
       >
         <div className="flex justify-center items-center w-full">
           <DropdownMenu>
@@ -237,7 +239,10 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
                   whileTap={{ scale: 0.95 }}
                   className="w-8 h-8 flex items-center justify-center rounded bg-primaryColor hover:bg-primaryColorHover transition-colors"
                 >
-                  <FontAwesomeIcon icon={faBarsStaggered} className="text-white" />
+                  <FontAwesomeIcon
+                    icon={faBarsStaggered}
+                    className="text-white"
+                  />
                 </motion.button>
               </div>
             </DropdownMenuTrigger>

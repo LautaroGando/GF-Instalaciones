@@ -9,10 +9,12 @@ import IEditOrderFormValues from "@/interfaces/IEditOrderFormValues";
 import validateEditOrder from "@/helpers/AdminValidations/ValidateEditOrder";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const TrackingEditModal = () => {
   const { isOpen, closeModal, selectedOrder } = useTrackingEditModal();
   const { handleUpdateOrder } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useDisableScroll(isOpen);
 
@@ -23,6 +25,7 @@ const TrackingEditModal = () => {
     { setSubmitting }: FormikHelpers<IEditOrderFormValues>
   ) => {
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: false,
       titleSuccess: "Orden actualizada",
       textSuccess: "Los cambios se han guardado correctamente.",

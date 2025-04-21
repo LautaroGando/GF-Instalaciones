@@ -7,7 +7,7 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: ["class", "class"],
+  darkMode: ["class" ],
   theme: {
     extend: {
       colors: {
@@ -73,14 +73,25 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        installer: {
+          backButton: "#FF8383",
+          backButtonHover: "#CE1818",
+          inProccess: "#D1C18A",
+          toReview: "#009DFF",
+          postponed: "#FF8383",
+          cancelled: "#CE1818",
+          finalized: "#28b463",
+        },
       },
       fontFamily: {
         textFont: ["Montserrat", "sans-serif"],
         titleFont: ["PlayfairDisplay", "sans-serif"],
       },
       backgroundImage: {
-        signInGradient: "linear-gradient(-165deg, #A79351 70%, #FAFAFA00 70.3%)",
-        signInGradientDark: "linear-gradient(-165deg, #A7935133 70%, #00000000 70.3%)",
+        signInGradient:
+          "linear-gradient(-165deg, #A79351 70%, #FAFAFA00 70.3%)",
+        signInGradientDark:
+          "linear-gradient(-165deg, #A7935133 70%, #00000000 70.3%)",
         dashboardBanner: 'url("/assets/images/dashboard/banner.svg")',
       },
       borderRadius: {

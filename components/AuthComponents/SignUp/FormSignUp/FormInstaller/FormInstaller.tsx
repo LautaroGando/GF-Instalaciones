@@ -12,9 +12,11 @@ import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputA
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 import { signUpInstaller } from "@/services/auth";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 export const FormInstaller: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isDark } = useThemeStore();
 
   return (
     <motion.div
@@ -58,10 +60,13 @@ export const FormInstaller: React.FC = () => {
               value === "si" ? true : value === "no" ? false : value,
             ])
           ) as unknown as IUserSignUpInstaller;
-          await signUpInstaller({
-            ...formattedValues,
-            taxCondition: values.taxCondition.toUpperCase(),
-          });
+          await signUpInstaller(
+            {
+              ...formattedValues,
+              taxCondition: values.taxCondition.toUpperCase(),
+            },
+            isDark ? "#000000" : "#FAFAFA"
+          );
           setIsLoading(false);
           resetForm();
         }}

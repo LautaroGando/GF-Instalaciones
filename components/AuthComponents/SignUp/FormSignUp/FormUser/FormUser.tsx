@@ -11,10 +11,12 @@ import InputAuthField from "@/components/ui/AuthComponents/InputAuthField/InputA
 import ButtonAuth from "@/components/ui/AuthComponents/ButtonAuth/ButtonAuth";
 import { signUpUser } from "@/services/auth";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 export const FormUser: React.FC = () => {
   const { view } = useAuthStore();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isDark } = useThemeStore();
 
   return (
     <motion.div
@@ -45,7 +47,7 @@ export const FormUser: React.FC = () => {
         validate={validateSignUp}
         onSubmit={async (values, { resetForm }) => {
           setIsLoading(true);
-          await signUpUser(values);
+          await signUpUser(values, isDark ? "#000000" : "#FAFAFA");
           setIsLoading(false);
           resetForm();
         }}

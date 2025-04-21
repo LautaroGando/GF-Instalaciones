@@ -2,6 +2,7 @@ import CustomTooltip from "@/components/ui/AdminComponents/CustomTooltip/CustomT
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import { orderStats } from "@/data/AdminStats/admin-stats";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import React, { useEffect } from "react";
 import {
   Bar,
@@ -16,6 +17,7 @@ import {
 export const OrderStats: React.FC = () => {
   const { installations, handleFetchInstallationsNotPagination } =
     useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     handleFetchInstallationsNotPagination();
@@ -42,12 +44,16 @@ export const OrderStats: React.FC = () => {
                   type="category"
                   width={130}
                   tick={{
-                    style: { fontSize: "12px", textAnchor: "start" },
+                    style: {
+                      fontSize: "12px",
+                      textAnchor: "start",
+                      fill: isDark ? "#FAFAFA" : "#000000",
+                    },
                   }}
                   dx={-120}
                 />
                 <Bar dataKey="value" barSize={20}>
-                  <Cell fill="#000000" />
+                  <Cell fill={isDark ? "#444" : "#000"} />
                 </Bar>
                 <Tooltip
                   content={<CustomTooltip />}
@@ -72,13 +78,24 @@ export const OrderStats: React.FC = () => {
                       type="category"
                       width={130}
                       tick={{
-                        style: { fontSize: "12px", textAnchor: "start" },
+                        style: {
+                          fontSize: "12px",
+                          textAnchor: "start",
+                          fill: isDark ? "#FAFAFA" : "#000000",
+                        },
                       }}
                       dx={-120}
                     />
                     <Bar dataKey="value" barSize={17}>
                       {region.data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={
+                            isDark && entry.name === "Total:"
+                              ? "#444"
+                              : entry.color
+                          }
+                        />
                       ))}
                     </Bar>
                     <Tooltip

@@ -5,14 +5,16 @@ import {
   IUserSignUp,
   IUserSignUpInstaller,
 } from "@/interfaces/IAuth";
+import type { TColor } from "@/types/TColor";
 import axios from "axios";
 
-export const signIn = async (values: IUserSignIn) => {
+export const signIn = async (values: IUserSignIn, color: TColor) => {
   try {
     const response = await axios.post(`${API_URL}/auth/signInUser`, values);
     const data = response.data;
     if ((data.installer && data.installer.status === "APROBADO") || data.user)
       PersonalizedPopUp({
+        color: color,
         withResult: false,
         simpleModal: true,
         title: "Inicio de sesión exitoso",
@@ -24,6 +26,7 @@ export const signIn = async (values: IUserSignIn) => {
     axios.isAxiosError(error) &&
       error.response &&
       PersonalizedPopUp({
+        color: color,
         withResult: false,
         simpleModal: true,
         title: "Error",
@@ -33,13 +36,14 @@ export const signIn = async (values: IUserSignIn) => {
   }
 };
 
-export const signUpUser = async (values: IUserSignUp) => {
+export const signUpUser = async (values: IUserSignUp, color: TColor) => {
   console.log(values);
   try {
     const response = await axios.post(`${API_URL}/auth/signUpUser`, values);
     const data = response.data;
     if (data)
       PersonalizedPopUp({
+        color: color,
         withResult: false,
         simpleModal: true,
         title: "Registro exitoso",
@@ -51,6 +55,7 @@ export const signUpUser = async (values: IUserSignUp) => {
     axios.isAxiosError(error) &&
       error.response &&
       PersonalizedPopUp({
+        color: color,
         withResult: false,
         simpleModal: true,
         title: "Error",
@@ -60,7 +65,7 @@ export const signUpUser = async (values: IUserSignUp) => {
   }
 };
 
-export const signUpInstaller = async (values: IUserSignUpInstaller) => {
+export const signUpInstaller = async (values: IUserSignUpInstaller, color: TColor) => {
   try {
     const response = await axios.post(
       `${API_URL}/auth/signUpInstaller`,
@@ -69,6 +74,7 @@ export const signUpInstaller = async (values: IUserSignUpInstaller) => {
     const data = response.data;
     if (data)
       PersonalizedPopUp({
+        color: color,
         withResult: false,
         simpleModal: true,
         title: "Registro exitoso",
@@ -80,6 +86,7 @@ export const signUpInstaller = async (values: IUserSignUpInstaller) => {
     axios.isAxiosError(error) &&
       error.response &&
       PersonalizedPopUp({
+        color: color,
         withResult: false,
         simpleModal: true,
         title: "Error",

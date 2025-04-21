@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect } from "react";
 import PersonalizedPopUp from "../../GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -32,6 +33,7 @@ const modalVariants = {
 const InstallationNoteModal: React.FC = () => {
   const { isOpen, installation, title, text, images, closeModal } = useInstallationNoteModalStore();
   const { handleInstallationStatus } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     document.body.classList.toggle("overflow-hidden", isOpen);
@@ -41,6 +43,7 @@ const InstallationNoteModal: React.FC = () => {
   const handleFinishInstallation = () =>
     installation &&
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: false,
       titleSuccess: "Instalación finalizada",
       textSuccess: "La instalación ha sido finalizada.",
@@ -69,7 +72,7 @@ const InstallationNoteModal: React.FC = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg relative z-60"
+            className="bg-bgColor p-6 rounded-xl shadow-lg w-full max-w-lg relative z-60 dark:bg-secondaryColor dark:shadow-bgColor/20"
           >
             <motion.h2
               initial={{ opacity: 0, y: -10 }}
@@ -80,7 +83,7 @@ const InstallationNoteModal: React.FC = () => {
               {title}:
             </motion.h2>
 
-            <div className="text-sm text-neutral-800 leading-relaxed max-h-[400px] overflow-y-auto">
+            <div className="text-sm leading-relaxed max-h-[400px] overflow-y-auto">
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />
 
               {images.length > 0 && (

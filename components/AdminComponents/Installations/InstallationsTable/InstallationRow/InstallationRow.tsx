@@ -80,21 +80,21 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
     >
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {installation.startDate || "-"}
       </motion.td>
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-14 whitespace-nowrap"
       >
         {installation.endDate || "-"}
       </motion.td>
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-14 whitespace-nowrap"
       >
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -108,7 +108,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         <motion.span
           initial={{ opacity: 0, scale: 0.95 }}
@@ -131,14 +131,14 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-14 align-middle whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-14 align-middle whitespace-nowrap"
       >
         <span className="text-letterColor">{coordinatorName}</span>
       </motion.td>
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -152,7 +152,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {(installation.notes && installation.notes.trim() !== "") || installation.images ? (
           <motion.button
@@ -168,7 +168,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="mx-auto h-12 whitespace-nowrap border-y border-admin-letterColor/40 text-letterColorLight text-sm"
+        className="mx-auto h-12 whitespace-nowrap text-letterColorLight text-sm"
       >
         <div className="flex justify-center items-center w-full">
           <DropdownMenu>

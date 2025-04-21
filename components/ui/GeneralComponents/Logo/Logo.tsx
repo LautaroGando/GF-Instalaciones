@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import logo from "@/public/assets/images/auth/logoSignIn.svg";
+import logoAdmin from "@/public/assets/images/auth/logoSignIn.svg";
+import logoInstaller from "@/public/assets/images/auth/logoSignUp.svg";
 import { ILogoProps } from "./types";
 import clsx from "clsx";
 
@@ -8,17 +9,29 @@ export const Logo: React.FC<ILogoProps> = ({ label }: ILogoProps) => {
   return (
     <div
       className={clsx(
-        "flex mx-auto relative h-[90px] lg:z-50",
-        label === "Instaladores" ? "w-[270px]" : "w-[170px] mt-20 lg:mt-0"
+        "flex relative lg:z-50",
+        label === "Instaladores"
+          ? "w-[170px] h-[65px]"
+          : "w-[170px] h-[90px] mt-20 mx-auto lg:mt-0"
       )}
     >
       <Image
-        className="w-[73px] absolute"
-        src={logo}
+        className={clsx(
+          "absolute",
+          label === "Instaladores" ? "w-[61px]" : "w-[73px]"
+        )}
+        src={label === "Instaladores" ? logoInstaller : logoAdmin}
         alt="Logo del Admin"
         priority
       />
-      <h2 className="self-end text-right w-full text-[36px] text-letterColorLight">
+      <h2
+        className={clsx(
+          "self-end text-right w-full",
+          label === "Instaladores"
+            ? "text-primaryColor text-xl"
+            : "text-letterColorLight text-[36px]"
+        )}
+      >
         {label}
       </h2>
     </div>

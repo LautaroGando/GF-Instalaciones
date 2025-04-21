@@ -17,12 +17,15 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import InstallersSelectModal from "../../InstallersSelectModal/InstallersSelectModal";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import { IInstaller } from "@/interfaces/IInstaller";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const InstallationEditModal = () => {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const { isOpen, closeModal, selectedInstallation } = useInstallationsEditModal();
-  const { handleUpdateInstallation, setEditedInstallationId } = useTrackingStore();
+  const { isOpen, closeModal, selectedInstallation } =
+    useInstallationsEditModal();
+  const { handleUpdateInstallation, setEditedInstallationId } =
+    useTrackingStore();
 
   const {
     selectedInstallers,
@@ -31,6 +34,7 @@ const InstallationEditModal = () => {
     clearInstallers,
     openModal: openInstallersModal,
   } = useInstallersSelectModal();
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     if (!selectedInstallation?.installers) return;
@@ -77,6 +81,7 @@ const InstallationEditModal = () => {
     };
 
     await PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: false,
       titleSuccess: "Instalación actualizada",
       titleError: "Error",
@@ -113,7 +118,9 @@ const InstallationEditModal = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validateEditInstallation}
-              onSubmit={(values, formikHelpers) => handleOnSubmit(values, formikHelpers)}
+              onSubmit={(values, formikHelpers) =>
+                handleOnSubmit(values, formikHelpers)
+              }
             >
               {({
                 handleSubmit,
@@ -134,6 +141,7 @@ const InstallationEditModal = () => {
 
                   if (noChanges) {
                     PersonalizedPopUp({
+                      color: isDark ? "#000000" : "#FAFAFA",
                       withResult: false,
                       simpleModal: true,
                       icon: "info",
@@ -145,6 +153,7 @@ const InstallationEditModal = () => {
 
                   if (selectedInstallers.length === 0) {
                     PersonalizedPopUp({
+                      color: isDark ? "#000000" : "#FAFAFA",
                       withResult: false,
                       simpleModal: true,
                       icon: "warning",
@@ -164,7 +173,10 @@ const InstallationEditModal = () => {
                       setFieldValue={setFieldValue}
                     />
 
-                    <Form onSubmit={customSubmit} className="space-y-3 text-bgColorDark/60">
+                    <Form
+                      onSubmit={customSubmit}
+                      className="space-y-3 text-bgColorDark/60"
+                    >
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -300,7 +312,9 @@ const InstallationEditModal = () => {
                               : "hover:bg-primaryColorHover"
                           }`}
                         >
-                          {isSubmitting ? "Guardando..." : "Guardar instalación"}
+                          {isSubmitting
+                            ? "Guardando..."
+                            : "Guardar instalación"}
                         </button>
                       </motion.div>
                     </Form>

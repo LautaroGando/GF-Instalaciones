@@ -43,24 +43,24 @@ export const ProfileMenu: React.FC = () => {
     <div
       ref={menuAdminProfileRef}
       className={clsx(
-        "hidden absolute w-full bg-bgColor top-full mt-5 transition-all duration-300 shadow-lg shadow-bgColorDark/20 left-0 overflow-hidden border border-bgColor flex-col lg:flex",
+        "hidden absolute w-[250px] p-0 bg-bgColor top-full mt-[10.3px] transition-all duration-300 shadow-lg shadow-bgColorDark/20 right-0 overflow-hidden flex-col dark:bg-secondaryColor dark:shadow-bgColor/20 lg:flex",
         open
           ? `${
               userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
               "Instalador"
-                ? "h-[147px]"
-                : "h-[98px]"
+                ? "h-[161px] p-2"
+                : "h-[115px] p-2"
             }`
           : "h-0 p-0 border-none"
       )}
     >
-      <ButtonProfile classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor lg:hover:text-letterColorLight lg:hover:border-none" />
+      <ButtonProfile classes="lg:flex lg:gap-3 lg:items-center lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor/20 lg:hover:font-semibold lg:hover:border-none" />
       {}
       {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
         "Instalador" && (
-        <ButtonInstaller classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor lg:hover:text-letterColorLight lg:hover:border-none" />
+        <ButtonInstaller classes="lg:flex lg:gap-3 lg:items-center lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor/20 lg:hover:font-semibold lg:hover:border-none" />
       )}
-      <ButtonLogout classes="lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:bg-redColor lg:hover:text-letterColorLight lg:hover:border-none" />
+      <ButtonLogout classes="lg:flex lg:gap-3 lg:items-center lg:w-full lg:h-full lg:text-center lg:transition-all lg:p-3 lg:hover:text-error" />
     </div>
   );
 };

@@ -33,7 +33,7 @@ export const Navigation: React.FC<INavigationProps> = ({ pathname }) => {
             className={clsx(
               "flex items-center gap-2 transition-all duration-300 p-1 rounded-[20px]",
               pathname === modifyPath
-                ? "border-[5px] border-bgColor w-[150px] relative top-8 bg-primaryColor"
+                ? "border-[5px] border-bgColor w-[150px] relative top-8 bg-primaryColor dark:border-secondaryColor"
                 : "w-[30px]"
             )}
             href={link.href}
