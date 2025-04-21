@@ -31,8 +31,7 @@ const modalVariants = {
 };
 
 const InstallationNoteModal: React.FC = () => {
-  const { isOpen, installation, title, text, images, closeModal } =
-    useInstallationNoteModalStore();
+  const { isOpen, installation, title, text, images, closeModal } = useInstallationNoteModalStore();
   const { handleInstallationStatus } = useTrackingStore();
   const { isDark } = useThemeStore();
 
@@ -50,8 +49,7 @@ const InstallationNoteModal: React.FC = () => {
       textSuccess: "La instalación ha sido finalizada.",
       titleError: "Error al finalizar",
       textError: "No se pudo finalizar la instalación. Intenta nuevamente.",
-      genericFunction: () =>
-        handleInstallationStatus(installation.id, "Finalizada"),
+      genericFunction: () => handleInstallationStatus(installation.id, "Finalizada"),
       closeModal: () => closeModal(),
     });
 
@@ -76,9 +74,14 @@ const InstallationNoteModal: React.FC = () => {
             exit="exit"
             className="bg-bgColor p-6 rounded-xl shadow-lg w-full max-w-lg relative z-60 dark:bg-secondaryColor dark:shadow-bgColor/20"
           >
-            <h2 className="text-xl font-semibold mb-4 text-primaryColor">
-              {title}
-            </h2>
+            <motion.h2
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+              className="text-[20px] font-bold text-primaryColor mb-4"
+            >
+              {title}:
+            </motion.h2>
 
             <div className="text-sm leading-relaxed max-h-[400px] overflow-y-auto">
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />

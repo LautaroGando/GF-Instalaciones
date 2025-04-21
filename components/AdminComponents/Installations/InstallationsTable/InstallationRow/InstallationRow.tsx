@@ -191,7 +191,9 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
               {/* Editar */}
               <DropdownMenuItem
                 onClick={onEdit}
-                disabled={installation.status !== "Pendiente" && installation.status !== "Pospuesta"}
+                disabled={
+                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
+                }
                 title={
                   installation.status !== "Pendiente" && installation.status !== "Pospuesta"
                     ? "Solo se puede editar una instalación pendiente"
@@ -240,7 +242,25 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
               {/* Posponer */}
               <DropdownMenuItem
                 onClick={onPostpone}
-                className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-yellow-600 data-[highlighted]:bg-yellow-100 data-[highlighted]:text-yellow-700 rounded-md transition-colors duration-200"
+                disabled={
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "En proceso" &&
+                  installation.status !== "A revisar"
+                }
+                title={
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "En proceso" &&
+                  installation.status !== "A revisar"
+                    ? "Solo se puede editar una instalación pendiente"
+                    : undefined
+                }
+                className={`text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm rounded-md transition-colors duration-200 ${
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "En proceso" &&
+                  installation.status !== "A revisar"
+                    ? "cursor-not-allowed text-gray-400/60"
+                    : "cursor-pointer text-yellow-600 data-[highlighted]:bg-yellow-100 data-[highlighted]:text-yellow-700"
+                }`}
               >
                 <FontAwesomeIcon icon={faClock} />
                 Posponer
