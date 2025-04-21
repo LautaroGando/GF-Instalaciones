@@ -47,6 +47,14 @@ export const Installation: React.FC = () => {
       )
   );
 
+  const filterIncompleteInstallations = assignedInstallations?.filter(
+    (installation: IInstallation) =>
+      installation.status === "Pendiente" ||
+      installation.status === "En proceso" ||
+      installation.status === "A revisar" ||
+      installation.status === "Pospuesta"
+  );
+
   return (
     <div className="flex flex-col gap-10 max-w-[1200px] mx-auto">
       <h1 className="text-primaryColor text-2xl text-center w-full border-b border-primaryColor py-3 ">
@@ -56,9 +64,10 @@ export const Installation: React.FC = () => {
         <div className="w-full h-[calc(100dvh-217px)] flex items-center">
           <Loading theme="light" />
         </div>
-      ) : assignedInstallations && assignedInstallations.length > 0 ? (
+      ) : filterIncompleteInstallations &&
+        filterIncompleteInstallations.length > 0 ? (
         <div className="grid grid-cols-1 place-items-center place-content-start gap-5 h-[calc(100dvh-217px)] overflow-auto md:grid-cols-2 lg:grid-cols-3">
-          {assignedInstallations?.map((instalattion: IInstallation) => {
+          {filterIncompleteInstallations?.map((instalattion: IInstallation) => {
             if (
               instalattion.status === "Cancelada" ||
               instalattion.status === "Finalizada"
@@ -69,7 +78,7 @@ export const Installation: React.FC = () => {
               <div
                 key={instalattion.id}
                 className={clsx(
-                  "w-full max-w-[320px] min-h-[340px] max-h-[340px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5",
+                  "w-full max-w-[320px] min-h-[340px] max-h-[340px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5 dark:shadow-[3px_0px_2px_#fafafa40]",
                   instalattion.status === "Pendiente"
                     ? "border-primaryColor"
                     : instalattion.status === "En proceso"
@@ -196,7 +205,7 @@ export const Installation: React.FC = () => {
           })}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-[calc(100dvh-217px)]">
+        <div className="flex flex-col items-center justify-center h-[calc(100dvh-217px)] text-center">
           <FontAwesomeIcon
             className="text-[70px] w-[70px] text-gray-400 mb-4"
             icon={faBan}

@@ -1,6 +1,7 @@
 import CustomTooltip from "@/components/ui/AdminComponents/CustomTooltip/CustomTooltip";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import { userStats } from "@/data/AdminStats/admin-stats";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import { useUserStore } from "@/store/UserStore/userStore";
 import React, { useEffect } from "react";
 import {
@@ -15,6 +16,7 @@ import {
 
 export const UserStats: React.FC = () => {
   const { users, isLoading, handleFetchUsers } = useUserStore();
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     handleFetchUsers();
@@ -39,6 +41,7 @@ export const UserStats: React.FC = () => {
                 style: {
                   fontSize: "12px",
                   textAnchor: "start",
+                  fill: isDark ? "#FAFAFA" : "#000000",
                 },
               }}
               dx={-90}
@@ -46,7 +49,12 @@ export const UserStats: React.FC = () => {
             <Bar dataKey="value" barSize={17}>
               {users &&
                 userStats(users).map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={
+                      isDark && entry.name === "Total:" ? "#444" : entry.color
+                    }
+                  />
                 ))}
             </Bar>
             <Tooltip

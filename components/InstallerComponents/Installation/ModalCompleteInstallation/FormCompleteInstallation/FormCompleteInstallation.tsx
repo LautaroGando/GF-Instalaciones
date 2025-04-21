@@ -36,18 +36,18 @@ export const FormCompleteInstallation: React.FC<
       }}
     >
       {({ setFieldValue }: FormikProps<ICompleteJob>) => (
-        <Form className="py-3 px-5 bg-bgColor fixed top-1/2 left-1/2 -translate-x-1/2 justify-between -translate-y-1/2 flex flex-col gap-10 w-[330px] border-t-[10px] border-primaryColor rounded-[4px] sm:w-[600px]">
+        <Form className="py-3 px-5 bg-bgColor fixed top-1/2 left-1/2 -translate-x-1/2 justify-between -translate-y-1/2 flex flex-col gap-10 w-[330px] border-t-[10px] border-primaryColor rounded-[4px] dark:bg-secondaryColor sm:w-[600px]">
           <h2 className="text-primaryColor text-sm text-center font-medium sm:text-lg">
             INFORMACIÓN DE LA INSTALACIÓN
           </h2>
-          <div className="flex flex-col gap-5 text-secondaryColor">
+          <div className="flex flex-col gap-5 text-secondaryColor dark:text-letterColorLight">
             <Field
               className="input min-h-[80px] border-b border-primaryColor"
               name="commentary"
               as="textarea"
               placeholder="Comentarios: (opcional)"
             />
-            <label className="w-full h-[40px] border-2 border-primaryColor bg-bgColor transition-all duration-300 text-primaryColor rounded-[2px] flex items-center relative justify-center cursor-pointer hover:bg-primaryColor hover:text-letterColorLight">
+            <label className="w-full h-[40px] border-2 border-primaryColor transition-all duration-300 text-primaryColor rounded-[2px] flex items-center relative justify-center cursor-pointer hover:bg-primaryColor hover:text-letterColorLight">
               Seleccionar imagenes
               <input
                 className="hidden"

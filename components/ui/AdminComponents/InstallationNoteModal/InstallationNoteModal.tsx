@@ -71,13 +71,13 @@ const InstallationNoteModal: React.FC = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg relative z-60"
+            className="bg-bgColor p-6 rounded-xl shadow-lg w-full max-w-lg relative z-60 dark:bg-secondaryColor dark:shadow-bgColor/20"
           >
-            <h2 className="text-xl font-semibold mb-4 text-neutral-900">
+            <h2 className="text-xl font-semibold mb-4 text-primaryColor">
               {title}
             </h2>
 
-            <div className="text-sm text-neutral-800 leading-relaxed max-h-[400px] overflow-y-auto">
+            <div className="text-sm leading-relaxed max-h-[400px] overflow-y-auto">
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />
 
               {images.length > 0 && (

@@ -50,7 +50,7 @@ export const OrderAndFilter: React.FC<IOrderAndFilterProps> = ({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="flex justify-between flex-wrap gap-2 sm:gap-5 z-30"
+      className="flex justify-between flex-wrap gap-2 z-30 sm:gap-5"
     >
       <motion.div
         variants={itemVariants}

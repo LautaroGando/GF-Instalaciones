@@ -1,5 +1,6 @@
 import CustomTooltip from "@/components/ui/AdminComponents/CustomTooltip/CustomTooltip";
 import { articleStats } from "@/data/AdminStats/admin-stats";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import React from "react";
 import {
   Bar,
@@ -12,6 +13,8 @@ import {
 } from "recharts";
 
 export const ArticleStats: React.FC = () => {
+  const { isDark } = useThemeStore();
+
   return (
     <div className="rounded-[5px] shadow-md p-2 w-full">
       <h2 className="font-medium">Artículos</h2>
@@ -26,13 +29,17 @@ export const ArticleStats: React.FC = () => {
               style: {
                 fontSize: "12px",
                 textAnchor: "start",
+                fill: isDark ? "#FAFAFA" : "#000000",
               },
             }}
             dx={-90}
           />
           <Bar dataKey="value" barSize={17}>
             {articleStats().map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
+              <Cell
+                key={`cell-${index}`}
+                fill={isDark && entry.name === "Total:" ? "#444" : entry.color}
+              />
             ))}
           </Bar>
           <Tooltip

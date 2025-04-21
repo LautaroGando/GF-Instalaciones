@@ -1,3 +1,5 @@
+import { IAdmin } from "./IAdmin";
+import { ICoordinator } from "./ICoordinator";
 import { IInstaller } from "./IInstaller";
 import { IRole } from "./IRole";
 
@@ -22,5 +24,6 @@ export interface IUser {
   disabledAt: string | null;
   userRoles: IUserRole[];
   installer: IInstaller;
+  coordinator: ICoordinator;
+  admin: IAdmin;
 }
-

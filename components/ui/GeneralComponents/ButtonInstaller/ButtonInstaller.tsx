@@ -4,6 +4,8 @@ import Link from "next/link";
 import React from "react";
 import { IButtonInstallerOProps } from "./types";
 import { useMenuStore } from "@/store/MenuStore/menuStore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
 
 export const ButtonInstaller: React.FC<IButtonInstallerOProps> = ({
   classes,
@@ -19,10 +21,11 @@ export const ButtonInstaller: React.FC<IButtonInstallerOProps> = ({
       }}
       href="/installer/installations"
       className={clsx(
-        "text-primaryColor border-b border-b-transparent transition-all duration-500 w-max mx-auto hover:border-b-primaryColor",
+        "text-primaryColor transition-all duration-500 w-max mx-auto",
         classes
       )}
     >
+      <FontAwesomeIcon className="w-[20px] text-lg" icon={faScrewdriverWrench} />
       Panel de instalador
     </Link>
   );

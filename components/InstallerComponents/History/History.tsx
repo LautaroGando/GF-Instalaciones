@@ -72,7 +72,7 @@ export const History: React.FC = () => {
               <div
                 key={instalattion.id}
                 className={clsx(
-                  "w-full max-w-[340px] min-h-[340px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5",
+                  "w-full max-w-[340px] min-h-[340px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5 dark:shadow-[3px_0px_2px_#fafafa40]",
                   instalattion.status === "Cancelada"
                     ? "border-installer-cancelled"
                     : instalattion.status === "Finalizada" &&
@@ -157,7 +157,7 @@ export const History: React.FC = () => {
           })}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-[calc(100dvh-217px)]">
+        <div className="flex flex-col items-center justify-center h-[calc(100dvh-217px)] text-center">
           <FontAwesomeIcon
             className="text-[70px] w-[70px] text-gray-400 mb-4"
             icon={faBan}

@@ -31,7 +31,7 @@ export const ModalEditProfile: React.FC = () => {
           transition={{ duration: 0.3, ease: "backInOut" }}
           className="fixed w-full h-[100vh] bg-secondaryColor/80 left-0 top-0 z-50"
         >
-          <div className="min-w-[330px] max-w-[330px] h-[600px] rounded-lg border-t-[10px] border-primaryColor bg-bgColor shadow-md absolute top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 overflow-auto sm:min-w-[600px] sm:max-w-[600px] md:min-w-[700px] md:max-w-[700px] md:h-max">
+          <div className="min-w-[330px] max-w-[330px] h-[600px] rounded-lg border-t-[10px] border-primaryColor bg-bgColor shadow-md absolute top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 overflow-auto dark:bg-secondaryColor sm:min-w-[600px] sm:max-w-[600px] md:min-w-[700px] md:max-w-[700px] md:h-max">
             <Formik
               initialValues={{
                 fullName: userInfo.fullName,

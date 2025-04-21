@@ -19,15 +19,15 @@ export const InstallerHeader: React.FC = () => {
   }, [size]);
 
   return (
-    <header className="w-full h-[80px] flex items-center justify-between shadow-md px-3">
+    <header className="w-full h-[80px] flex items-center justify-between shadow-md shadow-secondaryColor/20 px-3 dark:shadow-bgColor/20">
       <div className="max-w-[1200px] mx-auto flex items-center justify-between w-full">
         <Logo label="Instaladores" />
         <MenuInstaller />
         <div
           className={clsx(
-            "fixed top-0 right-0 h-[100dvh] transition-all duration-300 overflow-hidden bg-bgColor flex flex-col justify-between",
+            "fixed top-0 right-0 h-[100dvh] transition-all duration-300 overflow-hidden bg-bgColor flex flex-col justify-between dark:bg-secondaryColor",
             menu
-              ? "w-full sm:w-[400px] sm:shadow-xl sm:shadow-secondaryColor/50"
+              ? "w-full shadow-secondaryColor/20 dark:shadow-bgColor/20 sm:w-[400px] sm:shadow-xl"
               : "w-0"
           )}
         >

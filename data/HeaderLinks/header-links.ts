@@ -15,10 +15,10 @@ export const headerLinks: IHeaderLink[] = [
     label: "Servicios",
     href: "/services",
   },
-  {
+ /*  {
     label: "Blog",
     href: "/blog",
-  },
+  }, */
   {
     label: "Ingresar",
     href: "/auth",
