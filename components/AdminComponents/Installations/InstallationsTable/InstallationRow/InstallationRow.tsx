@@ -54,10 +54,11 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
   coordinatorName,
   onEdit,
   onDelete,
+  onCancel,
+  onPostpone,
   onViewNotes,
   onViewInstallers,
   onViewAddress,
-  onCancel,
   wasRecentlyEdited,
 }) => {
   return (
@@ -190,14 +191,14 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
               {/* Editar */}
               <DropdownMenuItem
                 onClick={onEdit}
-                disabled={installation.status !== "Pendiente"}
+                disabled={installation.status !== "Pendiente" && installation.status !== "Pospuesta"}
                 title={
-                  installation.status !== "Pendiente"
+                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
                     ? "Solo se puede editar una instalación pendiente"
                     : undefined
                 }
                 className={`text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm rounded-md transition-colors duration-200 ${
-                  installation.status !== "Pendiente"
+                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
                     ? "cursor-not-allowed text-gray-400/60"
                     : "cursor-pointer text-admin-editColor data-[highlighted]:bg-admin-editColor/10 data-[highlighted]:text-admin-editColor"
                 }`}
@@ -238,7 +239,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
               {/* Posponer */}
               <DropdownMenuItem
-                onClick={onCancel}
+                onClick={onPostpone}
                 className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-yellow-600 data-[highlighted]:bg-yellow-100 data-[highlighted]:text-yellow-700 rounded-md transition-colors duration-200"
               >
                 <FontAwesomeIcon icon={faClock} />
