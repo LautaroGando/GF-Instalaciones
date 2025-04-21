@@ -16,9 +16,9 @@ export const PanelInfo: React.FC = () => {
     handleFetchInstallationsNotPagination();
   }, [handleFetchInstallationsNotPagination]);
 
-  const employees = users
-    ?.map((user: IUser) => user.userRoles[user.userRoles.length - 1].role.name)
-    .filter((role) => role !== "Admin" && role !== "Usuario");
+  const employees = users?.filter(
+    (user: IUser) => user.installer?.status === "APROBADO" || user.coordinator
+  );
 
   return (
     <div className="flex flex-col gap-5 sm:flex-row sm:gap-3">

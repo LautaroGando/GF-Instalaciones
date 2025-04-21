@@ -1,10 +1,5 @@
 import { API_URL } from "@/config/envs";
 import { IUser } from "@/interfaces/IUser";
-import {
-  popUpDeleteUserError,
-  popUpEditUser,
-  popUpEditUserError,
-} from "@/utils/popUp";
 import axios from "axios";
 
 // BUSCAR USUARIOS
@@ -65,12 +60,9 @@ export const editUser = async (id: string, values: Partial<IUser>) => {
   try {
     const response = await axios.patch(`${API_URL}/user/${id}`, values);
     const data = response.data;
-    if (data) popUpEditUser();
     return data;
   } catch (error) {
-    axios.isAxiosError(error) && error.response
-      ? popUpEditUserError(error.response.data.message)
-      : popUpEditUserError("Ocurrió un error inesperado");
+    console.log(error)
   }
 };
 
@@ -80,8 +72,6 @@ export const deleteUser = async (id: string) => {
     const data = response.data;
     return data;
   } catch (error: unknown) {
-    axios.isAxiosError(error) && error.response
-      ? popUpDeleteUserError(error.response.data.message)
-      : popUpDeleteUserError("Ocurrió un error inesperado");
+    console.log(error)
   }
 };

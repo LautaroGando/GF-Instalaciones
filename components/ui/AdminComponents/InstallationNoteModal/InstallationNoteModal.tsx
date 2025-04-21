@@ -5,6 +5,8 @@ import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect } from "react";
+import PersonalizedPopUp from "../../GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -29,14 +31,27 @@ const modalVariants = {
 };
 
 const InstallationNoteModal: React.FC = () => {
-  const { isOpen, installation, title, text, images, closeModal } =
-    useInstallationNoteModalStore();
+  const { isOpen, installation, title, text, images, closeModal } = useInstallationNoteModalStore();
   const { handleInstallationStatus } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     document.body.classList.toggle("overflow-hidden", isOpen);
     return () => document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
+
+  const handleFinishInstallation = () =>
+    installation &&
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: false,
+      titleSuccess: "Instalación finalizada",
+      textSuccess: "La instalación ha sido finalizada.",
+      titleError: "Error al finalizar",
+      textError: "No se pudo finalizar la instalación. Intenta nuevamente.",
+      genericFunction: () => handleInstallationStatus(installation.id, "Finalizada"),
+      closeModal: () => closeModal(),
+    });
 
   return (
     <AnimatePresence>
@@ -57,11 +72,18 @@ const InstallationNoteModal: React.FC = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg relative z-60"
+            className="bg-bgColor p-6 rounded-xl shadow-lg w-full max-w-lg relative z-60 dark:bg-secondaryColor dark:shadow-bgColor/20"
           >
-            <h2 className="text-xl font-semibold mb-4 text-neutral-900">{title}</h2>
+            <motion.h2
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+              className="text-[20px] font-bold text-primaryColor mb-4"
+            >
+              {title}:
+            </motion.h2>
 
-            <div className="text-sm text-neutral-800 leading-relaxed max-h-[400px] overflow-y-auto">
+            <div className="text-sm leading-relaxed max-h-[400px] overflow-y-auto">
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />
 
               {images.length > 0 && (
@@ -85,12 +107,9 @@ const InstallationNoteModal: React.FC = () => {
             </div>
 
             <div className="mt-6 flex flex-col gap-3">
-              {installation?.id && installation.status === 'A revisar' && (
+              {installation?.id && installation.status === "A revisar" && (
                 <button
-                  onClick={() => {
-                    handleInstallationStatus(installation.id, "Finalizada");
-                    closeModal();
-                  }}
+                  onClick={() => handleFinishInstallation()}
                   className="mt-6 w-full bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover"
                 >
                   Finalizar Instalación

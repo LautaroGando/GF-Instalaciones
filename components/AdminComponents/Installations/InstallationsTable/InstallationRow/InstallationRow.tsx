@@ -1,10 +1,22 @@
 "use client";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBan,
+  faBarsStaggered,
+  faClock,
+  faPenToSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import IInstallationsRowProps from "./types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const rowVariants = {
   hidden: {
@@ -42,6 +54,8 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
   coordinatorName,
   onEdit,
   onDelete,
+  onCancel,
+  onPostpone,
   onViewNotes,
   onViewInstallers,
   onViewAddress,
@@ -56,7 +70,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
       exit="exit"
       style={{
         borderBottomWidth: 1,
-        backgroundColor: wasRecentlyEdited ? "#dcfce7" : "#ffffff",
+        backgroundColor: wasRecentlyEdited ? "#dcfce7" : "",
       }}
       transition={{
         backgroundColor: { duration: wasRecentlyEdited ? 1.5 : 0 },
@@ -66,21 +80,21 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
     >
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {installation.startDate || "-"}
       </motion.td>
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-14 whitespace-nowrap"
       >
         {installation.endDate || "-"}
       </motion.td>
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-14 whitespace-nowrap"
       >
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -94,7 +108,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         <motion.span
           initial={{ opacity: 0, scale: 0.95 }}
@@ -117,14 +131,14 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-14 align-middle whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-14 align-middle whitespace-nowrap"
       >
         <span className="text-letterColor">{coordinatorName}</span>
       </motion.td>
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -138,7 +152,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {(installation.notes && installation.notes.trim() !== "") || installation.images ? (
           <motion.button
@@ -154,36 +168,105 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
 
       <motion.td
         variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="mx-auto h-12 whitespace-nowrap text-letterColorLight text-sm"
       >
-        <div className="flex items-center gap-2 text-base text-letterColorLight">
-          {installation.status === "Pendiente" ? (
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={onEdit}
-              className="bg-admin-editColor text-white w-8 h-8 rounded-[2px] border border-admin-editColor transition-all duration-200 hover:bg-white hover:text-admin-editColor"
-            >
-              <FontAwesomeIcon icon={faPenToSquare} />
-            </motion.button>
-          ) : (
-            <button
-              onClick={onEdit}
-              disabled={true}
-              className="bg-gray-400 text-white w-8 h-8 rounded-[2px] transition-all duration-200 hover:bg-gray-400/70 disabled:cursor-default"
-            >
-              <FontAwesomeIcon icon={faPenToSquare} />
-            </button>
-          )}
+        <div className="flex justify-center items-center w-full">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="relative group">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-8 h-8 flex items-center justify-center rounded bg-primaryColor hover:bg-primaryColorHover transition-colors"
+                >
+                  <FontAwesomeIcon icon={faBarsStaggered} />
+                </motion.button>
+              </div>
+            </DropdownMenuTrigger>
 
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onDelete}
-            className="bg-admin-inactiveColor text-white w-8 h-8 rounded-[2px] border border-admin-inactiveColor transition-all duration-200 hover:bg-white hover:text-admin-inactiveColor"
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </motion.button>
+            <DropdownMenuContent
+              align="end"
+              className="w-48 rounded-md shadow-lg border border-gray-200 bg-white"
+            >
+              {/* Editar */}
+              <DropdownMenuItem
+                onClick={onEdit}
+                disabled={
+                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
+                }
+                title={
+                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
+                    ? "Solo se puede editar una instalación pendiente"
+                    : undefined
+                }
+                className={`text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm rounded-md transition-colors duration-200 ${
+                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
+                    ? "cursor-not-allowed text-gray-400/60"
+                    : "cursor-pointer text-admin-editColor data-[highlighted]:bg-admin-editColor/10 data-[highlighted]:text-admin-editColor"
+                }`}
+              >
+                <FontAwesomeIcon icon={faPenToSquare} />
+                Editar
+              </DropdownMenuItem>
+
+              {/* Eliminar */}
+              <DropdownMenuItem
+                onClick={onDelete}
+                className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-admin-deleteColor data-[highlighted]:bg-admin-deleteColor/10 data-[highlighted]:text-admin-deleteColor rounded-md transition-colors duration-200"
+              >
+                <FontAwesomeIcon icon={faTrash} />
+                Eliminar
+              </DropdownMenuItem>
+
+              {/* Cancelar */}
+              <DropdownMenuItem
+                onClick={onCancel}
+                disabled={
+                  installation.status === "Cancelada" || installation.status === "Finalizada"
+                }
+                title={
+                  installation.status === "Cancelada" || installation.status === "Finalizada"
+                    ? "No se puede cancelar una instalación ya cancelada o finalizada"
+                    : undefined
+                }
+                className={`text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm rounded-md transition-colors duration-200 ${
+                  installation.status === "Cancelada" || installation.status === "Finalizada"
+                    ? "cursor-not-allowed text-gray-400/60"
+                    : "cursor-pointer text-admin-inactiveColor data-[highlighted]:bg-admin-inactiveColor/10 data-[highlighted]:text-admin-inactiveColor"
+                }`}
+              >
+                <FontAwesomeIcon icon={faBan} />
+                Cancelar
+              </DropdownMenuItem>
+
+              {/* Posponer */}
+              <DropdownMenuItem
+                onClick={onPostpone}
+                disabled={
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "En proceso" &&
+                  installation.status !== "A revisar"
+                }
+                title={
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "En proceso" &&
+                  installation.status !== "A revisar"
+                    ? "Solo se puede editar una instalación pendiente"
+                    : undefined
+                }
+                className={`text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm rounded-md transition-colors duration-200 ${
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "En proceso" &&
+                  installation.status !== "A revisar"
+                    ? "cursor-not-allowed text-gray-400/60"
+                    : "cursor-pointer text-yellow-600 data-[highlighted]:bg-yellow-100 data-[highlighted]:text-yellow-700"
+                }`}
+              >
+                <FontAwesomeIcon icon={faClock} />
+                Posponer
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </motion.td>
     </motion.tr>

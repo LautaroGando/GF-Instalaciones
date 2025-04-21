@@ -1,11 +1,13 @@
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import IInstallation from "@/interfaces/IInstallation";
 import { useInstallationsEditModal } from "@/store/Admin/AdminModals/EditModals/InstallationsEditModalStore/InstallationsEditModalStore";
 import { useInstallationNoteModalStore } from "@/store/Admin/AdminModals/InstallationNoteModalStore/InstallationNoteModalStore";
 import { useTextModalStore } from "@/store/Admin/AdminModals/TextModalStore/TextModalStore";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import TInstallationStatus from "@/types/TInstallationStatus";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 
 export const useInstallationsTableLogic = () => {
   const searchParams = useSearchParams();
@@ -15,11 +17,14 @@ export const useInstallationsTableLogic = () => {
     isLoading,
     handleFetchInstallations,
     handleDeleteInstallation,
+    handleInstallationStatus,
   } = useTrackingStore();
   const { openModal: openTextModal } = useTextModalStore();
-  const { openModal: openInstallationsNoteModal } = useInstallationNoteModalStore();
+  const { openModal: openInstallationsNoteModal } =
+    useInstallationNoteModalStore();
   const { openModal: openInstallationEditModal } = useInstallationsEditModal();
   const [isLoadingOrder, setIsLoadingOrder] = useState(true);
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     if (orderId) {
@@ -32,50 +37,55 @@ export const useInstallationsTableLogic = () => {
     openInstallationEditModal(installation);
   };
 
-  const handleDelete = async (id: string) => {
-    const result = await Swal.fire({
+  const handleDelete = (id: string) => {
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: true,
       title: "¿Estás seguro?",
       text: "Esta acción eliminará la instalación permanentemente.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
+      titleSuccess: "Instalación eliminada",
+      titleError: "Error al eliminar",
+      textSuccess: "La instalación ha sido eliminada correctamente.",
+      textError: "No se pudo eliminar la instalación. Intenta nuevamente.",
+      genericFunction: () => handleDeleteInstallation(id),
     });
+  };
 
-    if (!result.isConfirmed) return;
+  const handleCancelInstallation = (
+    id: string,
+    status: TInstallationStatus
+  ) => {
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: true,
+      title: "¿Cancelar instalación?",
+      text: "Esta acción marcará la instalación como cancelada.",
+      confirmButtonText: "Sí, cancelar",
+      cancelButtonText: "Volver",
+      titleSuccess: "Instalación cancelada",
+      titleError: "Error al cancelar",
+      textSuccess: "La instalación fue cancelada correctamente.",
+      textError: "No se pudo cancelar la instalación. Intenta nuevamente.",
+      genericFunction: () => handleInstallationStatus(id, status),
+    });
+  };
 
-    try {
-      await handleDeleteInstallation(id);
-
-      Swal.fire({
-        icon: "success",
-        title: "Instalación eliminada",
-        text: "La instalación ha sido eliminada correctamente.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : "No se pudo eliminar la instalación. Intenta nuevamente.";
-
-      Swal.fire({
-        icon: "error",
-        title: "Error al eliminar",
-        text: errorMessage,
-        toast: true,
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    }
+  const handlePostpone = (id: string, status: TInstallationStatus) => {
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: true,
+      title: "¿Posponer instalación?",
+      text: "Esta acción marcará la instalación como pospuesta.",
+      confirmButtonText: "Sí, Posponer",
+      cancelButtonText: "Volver",
+      titleSuccess: "Instalación cancelada",
+      titleError: "Error al cancelar",
+      textSuccess: "La instalación fue pospuesta correctamente.",
+      textError: "No se pudo posponer la instalación. Intenta nuevamente.",
+      genericFunction: () => handleInstallationStatus(id, status),
+    });
   };
 
   const handleViewAddress = (installation: IInstallation) => {
@@ -100,7 +110,11 @@ export const useInstallationsTableLogic = () => {
     openTextModal("Instaladores", installationInstallers || "Sin Instalador");
   };
 
-  const handleViewNotes = (installation: IInstallation, text: string, images: string[]) => {
+  const handleViewNotes = (
+    installation: IInstallation,
+    text: string,
+    images: string[]
+  ) => {
     openInstallationsNoteModal({
       installation,
       title: "Notas",
@@ -114,6 +128,8 @@ export const useInstallationsTableLogic = () => {
     isLoading: isLoading || isLoadingOrder,
     handleEdit,
     handleDelete,
+    handleCancelInstallation,
+    handlePostpone,
     handleViewAddress,
     handleViewInstallers,
     handleViewNotes,

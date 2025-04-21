@@ -40,20 +40,20 @@ export const NotificationMenu: React.FC = () => {
       data-ignore-notifications-outside-click
       ref={menuNotificationsRef}
       className={clsx(
-        "fixed top-0 mt-0 lg:absolute w-full lg:top-full left-0 lg:mt-5 z-50 bg-bgColor shadow-lg shadow-bgColorDark/20 transition-all duration-300 flex flex-col justify-between overflow-y-scroll hiddenScrollbar items-center",
+        "fixed top-0 mt-0 w-full right-0 lg:mt-5 z-50 bg-bgColor shadow-lg shadow-bgColorDark/20 transition-all duration-300 flex flex-col justify-between overflow-y-scroll hiddenScrollbar items-center dark:shadow-bgColor/20 dark:bg-secondaryColor lg:top-full lg:absolute lg:w-[400px]",
         openNotifications || openMessages ? "h-[100dvh] lg:h-[70dvh]" : "h-0"
       )}
     >
       <div className="flex flex-col w-full">
         <NotificationsOption />
-        <div className="w-full h-full overflow-y-scroll hiddenScrollbar bg-bgColor">
+        <div className="w-full h-full bg-bgColor dark:bg-secondaryColor">
           {openNotifications ? <NotificationsSection /> : null}
         </div>
       </div>
       <button
         onClick={handleClose}
         type="button"
-        className="transition-all w-full min-h-[40px] text-redColor border-t border-redColor sticky bottom-0 bg-bgColor hover:bg-redColor hover:text-letterColorLight"
+        className="transition-all w-full min-h-[40px] text-redColor border-t border-redColor sticky bottom-0 bg-bgColor dark:bg-secondaryColor hover:bg-redColor hover:text-letterColorLight dark:hover:bg-redColor"
       >
         Cerrar
       </button>

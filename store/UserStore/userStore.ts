@@ -14,9 +14,10 @@ import { IUser } from "@/interfaces/IUser";
 import React from "react";
 import { formatDate } from "@/utils/formatDate";
 import { TInstallerStatus } from "@/types/TInstaller";
-import { popUpDeleteUser, popUpLogout } from "@/utils/popUp";
 import { IInstaller } from "@/interfaces/IInstaller";
 import Cookies from "js-cookie";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import type { TColor } from "@/types/TColor";
 
 export const useUserStore = create<IUserStoreProps>()(
   persist(
@@ -73,10 +74,11 @@ export const useUserStore = create<IUserStoreProps>()(
       },
       handleOpenEditMenu: () => set(() => ({ editMenu: true })),
       handleCloseEditMenu: () => set(() => ({ editMenu: false })),
-      handleFilterUsers: (e: React.ChangeEvent<HTMLSelectElement>) => {
-        set({ selectedFilter: e.target.value });
+      handleFilterUsers: (value: string) => {
+        set({ selectedFilter: value });
         get().handleApplyFilter(true);
       },
+
       handleFetchInstallers: async () => {
         try {
           const fetchInstallers = await findInstallers();
@@ -171,10 +173,11 @@ export const useUserStore = create<IUserStoreProps>()(
         set({ searchTerm: e.target.value });
         get().handleApplyFilter(false);
       },
-      handleOrderUsers: (e: React.ChangeEvent<HTMLSelectElement>) => {
-        set({ sortBy: e.target.value });
+      handleOrderUsers: (value: string) => {
+        set({ sortBy: value });
         get().handleApplyFilter(false);
       },
+
       handleDisabledUser: async (id: string) => {
         try {
           await disabledUser(id);
@@ -212,23 +215,21 @@ export const useUserStore = create<IUserStoreProps>()(
         }
       },
       handleDeleteUser: async (id: string) => {
-        popUpDeleteUser(async () => {
-          try {
-            const data = await deleteUser(id);
-            if (data) {
-              set((state) => ({
-                users: state.users?.filter((user: IUser) => user.id !== id),
-                filterUsers: state.filterUsers?.filter(
-                  (user: IUser) => user.id !== id
-                ),
-              }));
-            }
-            get().setMaxPage();
-            get().handleApplyFilter(true);
-          } catch (error) {
-            console.log(error);
+        try {
+          const data = await deleteUser(id);
+          if (data) {
+            set((state) => ({
+              users: state.users?.filter((user: IUser) => user.id !== id),
+              filterUsers: state.filterUsers?.filter(
+                (user: IUser) => user.id !== id
+              ),
+            }));
           }
-        });
+          get().setMaxPage();
+          get().handleApplyFilter(true);
+        } catch (error) {
+          console.log(error);
+        }
       },
       handleActiveUser: async (id: string) => {
         try {
@@ -261,10 +262,21 @@ export const useUserStore = create<IUserStoreProps>()(
           console.log(error);
         }
       },
-      handleLogout: () => {
-        popUpLogout(() => {
-          set({ user: null, token: null });
-          Cookies.remove("user-storage");
+      handleLogout: (color: TColor) => {
+        PersonalizedPopUp({
+          color: color,
+          withResult: true,
+          title: "¿Estás seguro que deseas cerrar sesión?",
+          text: "Podrás volver a ingresar nuevamente más tarde.",
+          titleSuccess: "Has cerrado sesión con éxito",
+          textSuccess: "Esperamos tu regreso a GF Instalaciones.",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Sí, cerrar sesión",
+          genericFunction: () => {
+            window.location.href = "/";
+            set({ user: null, token: null });
+            Cookies.remove("user-storage");
+          },
         });
       },
       handleActionMenu: (id: string) => {

@@ -64,7 +64,7 @@ const TextModal: React.FC = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative z-60"
+            className="bg-bgColor p-6 rounded-lg shadow-lg w-full max-w-md relative z-60 dark:bg-secondaryColor dark:shadow-bgColor/20"
           >
             <motion.h2
               initial={{ opacity: 0, y: -10 }}
@@ -79,7 +79,7 @@ const TextModal: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.3 }}
-              className="overflow-y-auto max-h-[400px] text-gray-700"
+              className="overflow-y-auto max-h-[400px] text-gray-700 dark:text-letterColorLight"
             >
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />
             </motion.div>

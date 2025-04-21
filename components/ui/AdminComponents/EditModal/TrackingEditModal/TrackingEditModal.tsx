@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Field, Form, Formik } from "formik";
@@ -8,12 +7,14 @@ import useDisableScroll from "@/hooks/useDisableScroll";
 import { useTrackingEditModal } from "@/store/Admin/AdminModals/EditModals/TrackingEditModalStore/TrackingEditModalStore";
 import IEditOrderFormValues from "@/interfaces/IEditOrderFormValues";
 import validateEditOrder from "@/helpers/AdminValidations/ValidateEditOrder";
-import Swal from "sweetalert2";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const TrackingEditModal = () => {
   const { isOpen, closeModal, selectedOrder } = useTrackingEditModal();
   const { handleUpdateOrder } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useDisableScroll(isOpen);
 
@@ -23,36 +24,17 @@ const TrackingEditModal = () => {
     values: IEditOrderFormValues,
     { setSubmitting }: FormikHelpers<IEditOrderFormValues>
   ) => {
-    try {
-      await handleUpdateOrder(selectedOrder.id, values);
-      Swal.fire({
-        icon: "success",
-        title: "Orden actualizada",
-        text: "Los cambios se han guardado correctamente.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-
-      closeModal();
-    } catch (err) {
-      console.error("Error al actualizar la orden:", err);
-
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudo actualizar la orden. Inténtalo de nuevo.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: false,
+      titleSuccess: "Orden actualizada",
+      textSuccess: "Los cambios se han guardado correctamente.",
+      titleError: "Error",
+      textError: "No se pudo actualizar la orden. Inténtalo de nuevo.",
+      setSubmiting: setSubmitting,
+      genericFunction: () => handleUpdateOrder(selectedOrder.id, values),
+      closeModal: () => closeModal(),
+    });
   };
 
   return (
@@ -85,13 +67,19 @@ const TrackingEditModal = () => {
             onSubmit={handleOnSubmit}
           >
             {({ handleSubmit, errors, touched, isSubmitting }) => (
-              <Form onSubmit={handleSubmit} className="space-y-3 text-bgColorDark/60">
+              <Form
+                onSubmit={handleSubmit}
+                className="space-y-3 text-bgColorDark/60"
+              >
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
                 >
-                  <label htmlFor="orderNumber" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="orderNumber"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Número de Orden
                   </label>
                   <Field
@@ -103,8 +91,10 @@ const TrackingEditModal = () => {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
-                      opacity: errors.orderNumber && touched.orderNumber ? 1 : 0,
-                      height: errors.orderNumber && touched.orderNumber ? "auto" : 0,
+                      opacity:
+                        errors.orderNumber && touched.orderNumber ? 1 : 0,
+                      height:
+                        errors.orderNumber && touched.orderNumber ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"
@@ -118,7 +108,10 @@ const TrackingEditModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
                 >
-                  <label htmlFor="title" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="title"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Nombre de la Orden
                   </label>
                   <Field
@@ -145,7 +138,10 @@ const TrackingEditModal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
                 >
-                  <label htmlFor="description" className="text-sm font-medium text-primaryColor/80">
+                  <label
+                    htmlFor="description"
+                    className="text-sm font-medium text-primaryColor/80"
+                  >
                     Descripción
                   </label>
                   <Field
@@ -157,8 +153,10 @@ const TrackingEditModal = () => {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{
-                      opacity: errors.description && touched.description ? 1 : 0,
-                      height: errors.description && touched.description ? "auto" : 0,
+                      opacity:
+                        errors.description && touched.description ? 1 : 0,
+                      height:
+                        errors.description && touched.description ? "auto" : 0,
                     }}
                     transition={{ duration: 0.3 }}
                     className="text-red-500 text-sm mt-2"

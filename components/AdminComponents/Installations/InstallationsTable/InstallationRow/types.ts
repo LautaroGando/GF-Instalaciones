@@ -5,9 +5,12 @@ export interface IInstallationsRowProps {
   coordinatorName: string | null;
   onEdit: () => void;
   onDelete: () => void;
+  onCancel: () => void;
+  onPostpone: () => void;
   onViewNotes: () => void;
   onViewInstallers: () => void;
   onViewAddress: () => void;
+
   wasRecentlyEdited?: boolean;
 }
 

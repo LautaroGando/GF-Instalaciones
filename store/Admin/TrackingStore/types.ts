@@ -29,6 +29,9 @@ export interface ITrackingProps {
   installationsPage: number;
   installationsTotalPages: number;
   editedInstallationId: string | null;
+  ordersSearch: string;
+  installationsSearch: string;
+
   orderFilters: IOrderFilters;
   orderSortParams: IOrderSortParams;
   installationFilters: IInstallationFilters;
@@ -36,31 +39,42 @@ export interface ITrackingProps {
   installationStatus: TInstallationStatus;
   completeModal: boolean;
 
+  // ===========================
+  // 🛠️ 2. Utilidades Generales
+  // ===========================
+
   handleLoading: (conditional: boolean) => void;
   setEditedInstallationId: (id: string | null) => void;
+  handleOpenModal: () => void;
+  handleCloseModal: () => void;
 
   // ===========================
-  // 📕 2. Paginacion
+  // 🔎 3. Busqueda
   // ===========================
 
+  setOrdersSearch: (search: string) => void;
+  getFilteredOrders: () => IOrder[];
+  setInstallationsSearch: (search: string) => void;
+  getFilteredInstallations: () => IInstallation[];
+
+  // ===========================
+  // 📕 4. Paginacion
+  // ===========================
   ordersNextPage: () => void;
   ordersPreviousPage: () => void;
   installationsNextPage: () => void;
   installationsPreviousPage: () => void;
 
   // ===========================
-  // 📦 3. Ordenes
+  // 📦 5. Ordenes
   // ===========================
   handleFetchOrders: (params?: Partial<TOrdersQueryParams>) => Promise<void>;
   handleCreateOrder: (values: ICreateOrderFormValues) => Promise<IOrder>;
-  handleUpdateOrder: (
-    id: string,
-    values: IEditOrderFormValues
-  ) => Promise<IEditOrderFormValues>;
+  handleUpdateOrder: (id: string, values: IEditOrderFormValues) => Promise<IEditOrderFormValues>;
   handleDeleteOrder: (id: string) => Promise<void>;
 
   // ===========================
-  // 🧰 4. Instalaciones
+  // 🧰 6. Instalaciones
   // ===========================
 
   handleFetchInstallationsNotPagination: () => Promise<IInstallation[] | void>;
@@ -78,11 +92,5 @@ export interface ITrackingProps {
     values: IEditInstallationFormValues
   ) => Promise<void>;
   handleDeleteInstallation: (id: string) => Promise<void>;
-  handleInstallationStatus: (
-    id: string,
-    status: TInstallationStatus
-  ) => Promise<void>;
-  handleOpenModal: () => void;
-  handleCloseModal: () => void;
+  handleInstallationStatus: (id: string, status: TInstallationStatus) => Promise<void>;
 }
-

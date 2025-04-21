@@ -1,5 +1,6 @@
 import { IInstaller } from "@/interfaces/IInstaller";
 import { IUser } from "@/interfaces/IUser";
+import type { TColor } from "@/types/TColor";
 import { TInstallerStatus } from "@/types/TInstaller";
 import React from "react";
 
@@ -24,19 +25,19 @@ export interface IUserStoreProps {
   setToken: (token: string) => void;
   handleOpenEditMenu: () => void;
   handleCloseEditMenu: () => void;
-  handleFilterUsers: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleFilterUsers: (values: string) => void;
   handleFetchInstallers: () => Promise<void>;
   handlePrevPage: () => void;
   handleNextPage: () => void;
   handleApplyFilter: (resetPage: boolean) => void;
   handleFetchUsers: () => Promise<void>;
   handleSearchUsers: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleOrderUsers: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleOrderUsers: (values: string) => void;
   handleDisabledUser: (id: string) => void;
   handleEditUser: (id: string, values: Partial<IUser | IInstaller>) => void;
   handleDeleteUser: (id: string) => void;
   handleActiveUser: (id: string) => void;
   handleChangeStatusInstaller: (id: string, status: TInstallerStatus) => void;
-  handleLogout: () => void;
+  handleLogout: (color: TColor) => void;
   handleActionMenu: (id: string) => void;
 }

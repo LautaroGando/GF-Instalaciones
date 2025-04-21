@@ -9,11 +9,13 @@ import ICreateOrderFormValues from "@/interfaces/ICreateOrderFormValues";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import { useTrackingCreateModal } from "@/store/Admin/AdminModals/CreateModals/TrackingCreateModalStore/TrackingCreateModalStore";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
-import Swal from "sweetalert2";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const TrackingCreateModal = () => {
   const { isOpen, closeModal } = useTrackingCreateModal();
   const { handleCreateOrder } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useDisableScroll(isOpen);
 
@@ -25,38 +27,17 @@ const TrackingCreateModal = () => {
     values: ICreateOrderFormValues,
     { setSubmitting }: FormikHelpers<ICreateOrderFormValues>
   ) => {
-    try {
-      console.log(values);
-      await handleCreateOrder(values);
-
-      Swal.fire({
-        icon: "success",
-        title: "Orden creada",
-        text: "La orden ha sido creada correctamente.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-
-      closeModal();
-    } catch (error) {
-      console.error("Error al crear la orden:", error);
-
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Hubo un problema al crear la orden. Inténtalo de nuevo.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: false,
+      titleSuccess: "Orden creada",
+      titleError: "Error",
+      textSuccess: "La orden ha sido creada correctamente.",
+      textError: "Hubo un problema al crear la orden. Inténtalo de nuevo.",
+      setSubmiting: setSubmitting,
+      genericFunction: () => handleCreateOrder(values),
+      closeModal: () => closeModal(),
+    });
   };
 
   return (
@@ -83,7 +64,7 @@ const TrackingCreateModal = () => {
               orderNumber: "",
               title: "",
               description: "",
-              clientId: "d4821845-497f-49bf-b629-7cd03933da7d",
+              clientId: "056802ff-1dff-4d31-88b0-895be3aa85cb",
             }}
             validationSchema={orderSchema}
             onSubmit={handleOnSubmit}

@@ -16,12 +16,16 @@ const InstallationsTable = () => {
     isLoading,
     handleEdit,
     handleDelete,
+    handleCancelInstallation,
+    handlePostpone,
     handleViewAddress,
     handleViewInstallers,
     handleViewNotes,
   } = useInstallationsTableLogic();
 
-  const { editedInstallationId } = useTrackingStore();
+  const editedInstallationId = useTrackingStore((state) => state.editedInstallationId);
+  const getFilteredInstallations = useTrackingStore((state) => state.getFilteredInstallations);
+  const filteredInstallations = getFilteredInstallations();
 
   if (isLoading) {
     return (
@@ -35,11 +39,11 @@ const InstallationsTable = () => {
     return <RenderEmptyState title="No se encontró la orden seleccionada." />;
   }
 
-  if (!order.installations?.length) {
+  if (!filteredInstallations.length) {
     return (
       <RenderEmptyState
         title="No se encontraron instalaciones."
-        text="Intenta más tarde o utiliza otro filtro."
+        text="Intenta más tarde o utiliza otro filtro o búsqueda."
       />
     );
   }
@@ -51,7 +55,7 @@ const InstallationsTable = () => {
           <InstallationsTableHeader />
           <tbody>
             <AnimatePresence>
-              {order.installations.map((installation: IInstallation, i) => {
+              {filteredInstallations.map((installation: IInstallation, i) => {
                 const coordinatorName = installation.coordinator?.user.fullName || "-";
 
                 return (
@@ -63,6 +67,8 @@ const InstallationsTable = () => {
                     onDelete={() => handleDelete(installation.id)}
                     onViewAddress={() => handleViewAddress(installation)}
                     onViewInstallers={() => handleViewInstallers(installation)}
+                    onCancel={() => handleCancelInstallation(installation.id, "Cancelada")}
+                    onPostpone={() => handlePostpone(installation.id, "Pospuesta")}
                     onViewNotes={() =>
                       handleViewNotes(installation, installation.notes, installation.images)
                     }

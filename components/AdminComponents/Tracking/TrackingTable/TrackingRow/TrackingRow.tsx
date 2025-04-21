@@ -1,12 +1,24 @@
 "use client";
-import { faArrowRight, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faBarsStaggered,
+  faPenToSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import ITrackingRowsProps from "./types";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
-import Swal from "sweetalert2";
+import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const rowVariants = {
   hidden: {
@@ -38,40 +50,24 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
   openTextModal,
 }) => {
   const { handleUpdateOrder } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   const handleFinishOrder = async () => {
-    try {
-      await handleUpdateOrder(order.id, {
-        orderNumber: order.orderNumber,
-        title: order.title,
-        description: order.description,
-        completed: true,
-      });
-
-      Swal.fire({
-        icon: "success",
-        title: "Orden finalizada",
-        text: "La orden se ha marcado como completada.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    } catch (error) {
-      console.error("Error al finalizar la orden:", error);
-
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudo finalizar la orden. Intenta de nuevo.",
-        toast: true,
-        position: "top",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-    }
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: false,
+      titleSuccess: "Orden finalizada",
+      titleError: "Error",
+      textSuccess: "La orden se ha marcado como completada.",
+      textError: "No se pudo finalizar la orden. Intenta de nuevo.",
+      genericFunction: () =>
+        handleUpdateOrder(order.id, {
+          orderNumber: order.orderNumber,
+          title: order.title,
+          description: order.description,
+          completed: true,
+        }),
+    });
   };
 
   return (
@@ -82,13 +78,12 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
       exit="exit"
       variants={rowVariants}
       style={{ borderBottomWidth: 1 }}
-      className="border-b"
     >
       <motion.td
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {order.orderNumber}
       </motion.td>
@@ -97,7 +92,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.05 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {order.title}
       </motion.td>
@@ -106,7 +101,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
-        className="px-4 h-14 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-14 whitespace-nowrap"
       >
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -122,7 +117,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.15 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         12/03/2025
       </motion.td>
@@ -131,7 +126,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.2 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         {order.endDate ? order.endDate : "-"}
       </motion.td>
@@ -140,7 +135,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.25 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40 min-w-[140px]"
+        className="px-4 h-12 whitespace-nowrap min-w-[140px]"
       >
         {order.completed ? (
           <motion.span
@@ -193,7 +188,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.3 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40"
+        className="px-4 h-12 whitespace-nowrap"
       >
         <Link href={`/admin/tracking/installations?orderId=${order.id}`}>
           <motion.button
@@ -233,25 +228,46 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.35 }}
-        className="px-4 h-12 whitespace-nowrap border-y border-admin-letterColor/40 text-center"
+        className="px-4 h-12 whitespace-nowrap text-center"
       >
-        <div className="flex items-center justify-start gap-4 text-base text-letterColorLight">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => editOrder()}
-            className="bg-admin-editColor text-white w-8 h-8 rounded-[2px] transition-all duration-200 hover:bg-white hover:text-admin-editColor border border-admin-editColor"
-          >
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => deleteOrder()}
-            className="bg-admin-inactiveColor text-white w-8 h-8 rounded-[3px] border border-admin-inactiveColor transition-all duration-200 hover:bg-white hover:text-admin-inactiveColor"
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </motion.button>
+        <div className="flex justify-center items-center w-full">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="relative group">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-8 h-8 flex items-center justify-center rounded bg-primaryColor hover:bg-primaryColorHover transition-colors"
+                >
+                  <FontAwesomeIcon
+                    icon={faBarsStaggered}
+                    className="text-white"
+                  />
+                </motion.button>
+              </div>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent
+              align="end"
+              className="w-48 rounded-md shadow-lg border border-gray-200 bg-white"
+            >
+              <DropdownMenuItem
+                onClick={editOrder}
+                className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-admin-editColor data-[highlighted]:bg-admin-editColor/10 data-[highlighted]:text-admin-editColor rounded-md transition-colors duration-200"
+              >
+                <FontAwesomeIcon icon={faPenToSquare} />
+                Editar
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                onClick={deleteOrder}
+                className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-admin-deleteColor data-[highlighted]:bg-admin-deleteColor/10 data-[highlighted]:text-admin-deleteColor rounded-md transition-colors duration-200"
+              >
+                <FontAwesomeIcon icon={faTrash} />
+                Eliminar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </motion.td>
     </motion.tr>
