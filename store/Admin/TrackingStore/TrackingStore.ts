@@ -179,7 +179,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         updatedAt = "",
         completed = get().orderFilters.completed,
         page = get().ordersPage,
-        ordersSearch = "", // nuevo
+        ordersSearch = "",
       } = params || {};
 
       const finalParams = {
@@ -188,7 +188,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         updatedAt,
         completed,
         page,
-        ordersSearch, // nuevo
+        ordersSearch,
       };
 
       const { result: orders, totalPages } = await getAllOrders(finalParams);
@@ -211,7 +211,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       get().handleLoading(true);
       const newOrder: IOrder = await createOrder(values);
       setTimeout(() => {
-        set((state) => ({ orders: [...state.orders, newOrder] }));
+        set((state) => ({ orders: [newOrder, ...state.orders] }));
       }, 500);
       return newOrder;
     } catch (err) {
