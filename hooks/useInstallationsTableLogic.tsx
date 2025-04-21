@@ -69,7 +69,7 @@ export const useInstallationsTableLogic = () => {
       withResult: true,
       title: "¿Posponer instalación?",
       text: "Esta acción marcará la instalación como pospuesta.",
-      confirmButtonText: "Sí, cancelar",
+      confirmButtonText: "Sí, Posponer",
       cancelButtonText: "Volver",
       titleSuccess: "Instalación cancelada",
       titleError: "Error al cancelar",
