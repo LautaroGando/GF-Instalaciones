@@ -1,6 +1,7 @@
 "use client";
 import {
   faArrowRight,
+  faBarsStaggered,
   faPenToSquare,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +12,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const rowVariants = {
   hidden: {
@@ -220,23 +227,41 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         transition={{ duration: 0.3, delay: 0.35 }}
         className="px-4 h-12 whitespace-nowrap text-center"
       >
-        <div className="flex items-center justify-start gap-4 text-base text-letterColorLight">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => editOrder()}
-            className="bg-admin-editColor text-white w-8 h-8 rounded-[2px] transition-all duration-200 hover:bg-white hover:text-admin-editColor border border-admin-editColor"
-          >
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => deleteOrder()}
-            className="bg-admin-inactiveColor text-white w-8 h-8 rounded-[3px] border border-admin-inactiveColor transition-all duration-200 hover:bg-white hover:text-admin-inactiveColor"
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </motion.button>
+        <div className="flex justify-center items-center w-full">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="relative group">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-8 h-8 flex items-center justify-center rounded bg-primaryColor hover:bg-primaryColorHover transition-colors"
+                >
+                  <FontAwesomeIcon icon={faBarsStaggered} className="text-white" />
+                </motion.button>
+              </div>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent
+              align="end"
+              className="w-48 rounded-md shadow-lg border border-gray-200 bg-white"
+            >
+              <DropdownMenuItem
+                onClick={editOrder}
+                className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-admin-editColor data-[highlighted]:bg-admin-editColor/10 data-[highlighted]:text-admin-editColor rounded-md transition-colors duration-200"
+              >
+                <FontAwesomeIcon icon={faPenToSquare} />
+                Editar
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                onClick={deleteOrder}
+                className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-admin-deleteColor data-[highlighted]:bg-admin-deleteColor/10 data-[highlighted]:text-admin-deleteColor rounded-md transition-colors duration-200"
+              >
+                <FontAwesomeIcon icon={faTrash} />
+                Eliminar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </motion.td>
     </motion.tr>

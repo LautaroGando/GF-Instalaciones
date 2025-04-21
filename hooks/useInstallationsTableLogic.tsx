@@ -64,6 +64,21 @@ export const useInstallationsTableLogic = () => {
     });
   };
 
+  const handlePostpone = (id: string, status: TInstallationStatus) => {
+    PersonalizedPopUp({
+      withResult: true,
+      title: "¿Posponer instalación?",
+      text: "Esta acción marcará la instalación como pospuesta.",
+      confirmButtonText: "Sí, cancelar",
+      cancelButtonText: "Volver",
+      titleSuccess: "Instalación cancelada",
+      titleError: "Error al cancelar",
+      textSuccess: "La instalación fue pospuesta correctamente.",
+      textError: "No se pudo posponer la instalación. Intenta nuevamente.",
+      genericFunction: () => handleInstallationStatus(id, status),
+    });
+  };
+
   const handleViewAddress = (installation: IInstallation) => {
     const { street, number, note, postalCode, city } = installation.address;
 
@@ -100,10 +115,11 @@ export const useInstallationsTableLogic = () => {
     isLoading: isLoading || isLoadingOrder,
     handleEdit,
     handleDelete,
+    handleCancelInstallation,
+    handlePostpone,
     handleViewAddress,
     handleViewInstallers,
     handleViewNotes,
-    handleCancelInstallation,
   };
 };
 
