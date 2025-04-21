@@ -10,11 +10,13 @@ import { signIn } from "@/services/auth";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/UserStore/userStore";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 export const FormSignIn: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const { setUser, setToken } = useUserStore();
+  const { isDark } = useThemeStore();
 
   return (
     <motion.div
@@ -31,7 +33,7 @@ export const FormSignIn: React.FC = () => {
         onSubmit={async (values, { resetForm }) => {
           try {
             setIsLoading(true);
-            const data = await signIn(values);
+            const data = await signIn(values, isDark ? '#000000' : '#FAFAFA');
 
             if (data.installer && data.installer.status !== "APROBADO") {
               return;

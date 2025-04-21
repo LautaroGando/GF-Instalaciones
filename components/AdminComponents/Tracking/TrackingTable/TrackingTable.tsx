@@ -11,19 +11,16 @@ import IOrder from "@/interfaces/IOrder";
 import TrackingRow from "./TrackingRow/TrackingRow";
 import { AnimatePresence } from "framer-motion";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const TrackingTable = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
   const { openModal: openTrackingEditModal } = useTrackingEditModal();
-  const {
-    handleFetchOrders,
-    handleDeleteOrder,
-    isLoading,
-    getFilteredOrders,
-  } = useTrackingStore();
-  
+  const { handleFetchOrders, handleDeleteOrder, isLoading, getFilteredOrders } =
+    useTrackingStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
   const filteredOrders = getFilteredOrders();
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +56,7 @@ const TrackingTable = () => {
 
   const handleDeleteOrderClick = async (id: string) => {
     await PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: true,
       text: "Esta acción eliminará la orden permanentemente.",
       textError: "No se pudo eliminar la orden. Intenta nuevamente.",

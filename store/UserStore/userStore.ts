@@ -17,6 +17,7 @@ import { TInstallerStatus } from "@/types/TInstaller";
 import { IInstaller } from "@/interfaces/IInstaller";
 import Cookies from "js-cookie";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import type { TColor } from "@/types/TColor";
 
 export const useUserStore = create<IUserStoreProps>()(
   persist(
@@ -261,8 +262,9 @@ export const useUserStore = create<IUserStoreProps>()(
           console.log(error);
         }
       },
-      handleLogout: () => {
+      handleLogout: (color: TColor) => {
         PersonalizedPopUp({
+          color: color,
           withResult: true,
           title: "¿Estás seguro que deseas cerrar sesión?",
           text: "Podrás volver a ingresar nuevamente más tarde.",

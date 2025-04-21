@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import React, { useEffect } from "react";
 import PersonalizedPopUp from "../../GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -33,6 +34,7 @@ const InstallationNoteModal: React.FC = () => {
   const { isOpen, installation, title, text, images, closeModal } =
     useInstallationNoteModalStore();
   const { handleInstallationStatus } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     document.body.classList.toggle("overflow-hidden", isOpen);
@@ -42,6 +44,7 @@ const InstallationNoteModal: React.FC = () => {
   const handleFinishInstallation = () =>
     installation &&
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: false,
       titleSuccess: "Instalación finalizada",
       textSuccess: "La instalación ha sido finalizada.",

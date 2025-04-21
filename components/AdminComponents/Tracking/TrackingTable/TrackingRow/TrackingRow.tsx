@@ -18,6 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const rowVariants = {
   hidden: {
@@ -49,9 +50,11 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
   openTextModal,
 }) => {
   const { handleUpdateOrder } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   const handleFinishOrder = async () => {
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: false,
       titleSuccess: "Orden finalizada",
       titleError: "Error",
@@ -236,7 +239,10 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
                   whileTap={{ scale: 0.95 }}
                   className="w-8 h-8 flex items-center justify-center rounded bg-primaryColor hover:bg-primaryColorHover transition-colors"
                 >
-                  <FontAwesomeIcon icon={faBarsStaggered} className="text-white" />
+                  <FontAwesomeIcon
+                    icon={faBarsStaggered}
+                    className="text-white"
+                  />
                 </motion.button>
               </div>
             </DropdownMenuTrigger>

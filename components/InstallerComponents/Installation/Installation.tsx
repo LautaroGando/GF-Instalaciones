@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBan, faUser } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 export const Installation: React.FC = () => {
   const { user } = useUserStore();
@@ -20,6 +21,7 @@ export const Installation: React.FC = () => {
     handleOpenModal,
   } = useTrackingStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -156,6 +158,7 @@ export const Installation: React.FC = () => {
                     <button
                       onClick={() => {
                         PersonalizedPopUp({
+                          color: isDark ? "#000000" : "#FAFAFA",
                           withResult: true,
                           text: "Esta acción indicará que has llegado al lugar de destino.",
                           textError:

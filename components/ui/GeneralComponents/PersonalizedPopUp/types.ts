@@ -1,5 +1,7 @@
+import { TColor } from "@/types/TColor";
 import type { TIcon } from "@/types/TIcon";
 export interface IPersonalizedPopUpProps {
+  color: TColor;
   withResult: boolean;
   simpleModal?: boolean;
   icon?: TIcon;

@@ -1,5 +1,6 @@
 import { IInstaller } from "@/interfaces/IInstaller";
 import { IUser } from "@/interfaces/IUser";
+import type { TColor } from "@/types/TColor";
 import { TInstallerStatus } from "@/types/TInstaller";
 import React from "react";
 
@@ -37,6 +38,6 @@ export interface IUserStoreProps {
   handleDeleteUser: (id: string) => void;
   handleActiveUser: (id: string) => void;
   handleChangeStatusInstaller: (id: string, status: TInstallerStatus) => void;
-  handleLogout: () => void;
+  handleLogout: (color: TColor) => void;
   handleActionMenu: (id: string) => void;
 }

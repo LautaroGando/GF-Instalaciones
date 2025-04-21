@@ -10,10 +10,12 @@ import useDisableScroll from "@/hooks/useDisableScroll";
 import { useTrackingCreateModal } from "@/store/Admin/AdminModals/CreateModals/TrackingCreateModalStore/TrackingCreateModalStore";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const TrackingCreateModal = () => {
   const { isOpen, closeModal } = useTrackingCreateModal();
   const { handleCreateOrder } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useDisableScroll(isOpen);
 
@@ -26,6 +28,7 @@ const TrackingCreateModal = () => {
     { setSubmitting }: FormikHelpers<ICreateOrderFormValues>
   ) => {
     PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
       withResult: false,
       titleSuccess: "Orden creada",
       titleError: "Error",

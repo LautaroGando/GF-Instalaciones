@@ -10,11 +10,13 @@ import { IUserEdit } from "@/interfaces/IProfile";
 import { validateEditUser } from "@/helpers/validateEditUser";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import PersonalizedPopUp from "../../GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 export const ModalEditProfile: React.FC = () => {
   const { handleCloseEditMenu, handleEditUser, user } = useUserStore();
   const [isVisible, setIsVisible] = useState<boolean>(true);
   useDisableScroll(true);
+  const { isDark } = useThemeStore();
 
   const userInfo = user && "user" in user ? user.user : user;
 
@@ -47,6 +49,7 @@ export const ModalEditProfile: React.FC = () => {
               validate={validateEditUser}
               onSubmit={(values) => {
                 PersonalizedPopUp({
+                  color: isDark ? "#000000" : "#FAFAFA",
                   withResult: false,
                   titleSuccess: "Datos actualizados",
                   titleError: "Error",

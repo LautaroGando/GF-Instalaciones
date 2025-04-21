@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { IFormCompleteInstallationProps } from "./types";
 import { motion } from "motion/react";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 export const FormCompleteInstallation: React.FC<
   IFormCompleteInstallationProps
@@ -14,6 +15,7 @@ export const FormCompleteInstallation: React.FC<
   const { handleCloseModal, handleFetchInstallationsNotPagination } =
     useTrackingStore();
   const [localFiles, setLocalFiles] = useState<File[]>([]);
+  const { isDark } = useThemeStore();
 
   return (
     <Formik<ICompleteJob>
@@ -21,6 +23,7 @@ export const FormCompleteInstallation: React.FC<
       validate={validateCompleteJob}
       onSubmit={async (values) => {
         PersonalizedPopUp({
+          color: isDark ? "#000000" : "#FAFAFA",
           withResult: false,
           titleSuccess: "Instalación finalizada",
           titleError: "Error",

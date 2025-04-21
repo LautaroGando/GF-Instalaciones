@@ -17,6 +17,7 @@ import { provincesMock } from "@/utils/pronvicesMock";
 import CoordinatorsSelectModal from "../../CoordinatorsSelectModal/CoordinatorsSelectModal";
 import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const SyncInstallersWithFormik = () => {
   const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
@@ -59,6 +60,7 @@ const InstallationsCreateModal = () => {
     openModal: openCoordinatorsModal,
   } = useCoordinatorsSelectModal();
   const { handleCreateInstallation } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
@@ -86,6 +88,7 @@ const InstallationsCreateModal = () => {
 
     if (orderId) {
       await PersonalizedPopUp({
+        color: isDark ? "#000000" : "#FAFAFA",
         withResult: false,
         titleSuccess: "Instalación creada",
         titleError: "Error",
