@@ -15,8 +15,10 @@ export const InstallerHeader: React.FC = () => {
   const { size } = useSize();
 
   useEffect(() => {
-    size <= 768 && handleCloseMenu();
-  }, [size]);
+    if (size <= 768) {
+      handleCloseMenu();
+    }
+  }, [size, handleCloseMenu]);
 
   return (
     <header className="w-full h-[80px] flex items-center justify-between shadow-md shadow-secondaryColor/20 px-3 dark:shadow-bgColor/20">

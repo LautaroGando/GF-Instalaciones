@@ -1,6 +1,5 @@
 import { bannerPanel } from "@/data/BannerPanel/banner-panel";
 import { IBannerPanel } from "@/data/BannerPanel/types";
-import { IInstaller } from "@/interfaces/IInstaller";
 import { IUser } from "@/interfaces/IUser";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useUserStore } from "@/store/UserStore/userStore";

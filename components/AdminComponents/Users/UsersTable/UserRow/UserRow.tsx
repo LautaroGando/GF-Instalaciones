@@ -17,7 +17,6 @@ import {
   faUserSecret,
   faUserSlash,
   faUserTie,
-  faUserXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useUserStore } from "@/store/UserStore/userStore";
 
@@ -46,10 +45,8 @@ const cellVariants = {
 
 const UserRow: React.FC<Props> = ({ item }) => {
   const {
-    actionMenu,
     handleActiveUser,
     handleDisabledUser,
-    handleActionMenu,
     handleDeleteUser,
   } = useUserStore();
 
