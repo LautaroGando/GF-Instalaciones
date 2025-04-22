@@ -5,7 +5,7 @@ import { useMenuInstallerStore } from "@/store/MenuInstallerStore/menuinstallerS
 import clsx from "clsx";
 import MenuInstaller from "@/components/ui/InstallerComponents/MenuInstaller/MenuInstaller";
 import Logo from "@/components/ui/GeneralComponents/Logo/Logo";
-import InstallerLink from "./installerLink/InstallerLink";
+import InstallerLink from "./InstallerLink/InstallerLink";
 import InstallerLinkMenu from "./InstallerLinkMenu/InstallerLinkMenu";
 import { useSize } from "@/hooks/useSize";
 import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectTheme";
