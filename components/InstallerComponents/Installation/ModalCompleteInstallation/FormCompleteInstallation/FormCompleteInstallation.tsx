@@ -75,7 +75,7 @@ export const FormCompleteInstallation: React.FC<
               initial={{ opacity: 0, height: "0px" }}
               animate={{ opacity: 1, height: "60px" }}
               transition={{ duration: 0.3 }}
-              className="w-full overflow-auto text-sm text-secondaryColor"
+              className="w-full overflow-auto text-sm text-secondaryColor dark:text-letterColorLight"
             >
               {localFiles.map((file: File, i: number) => (
                 <span key={i}>

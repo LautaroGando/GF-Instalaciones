@@ -259,7 +259,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
                   installation.status !== "En proceso" &&
                   installation.status !== "A revisar"
                     ? "cursor-not-allowed text-gray-400/60"
-                    : "cursor-pointer text-yellow-600 data-[highlighted]:bg-yellow-100 data-[highlighted]:text-yellow-700"
+                    : "cursor-pointer text-yellow-600 data-[highlighted]:bg-yellow-600/10 data-[highlighted]:text-yellow-600"
                 }`}
               >
                 <FontAwesomeIcon icon={faClock} />
