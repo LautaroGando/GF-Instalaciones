@@ -44,11 +44,8 @@ const cellVariants = {
 };
 
 const UserRow: React.FC<Props> = ({ item }) => {
-  const {
-    handleActiveUser,
-    handleDisabledUser,
-    handleDeleteUser,
-  } = useUserStore();
+  const { handleActiveUser, handleDisabledUser, handleDeleteUser } =
+    useUserStore();
 
   return (
     <motion.tr
@@ -198,7 +195,7 @@ const UserRow: React.FC<Props> = ({ item }) => {
               ) && (
                 <DropdownMenuItem
                   onClick={() => {}}
-                  className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-admin-inProccess data-[highlighted]:bg-admin-inProccess/10 data-[highlighted]:text-admin-inProccess rounded-md transition-colors duration-200"
+                  className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-yellow-600 data-[highlighted]:bg-yellow-600/10 data-[highlighted]:text-yellow-600 rounded-md transition-colors duration-200"
                 >
                   <FontAwesomeIcon icon={faUserSecret} />
                   Coordinador
