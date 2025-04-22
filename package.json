@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@radix-ui/react-dropdown-menu": "^2.1.11",
     "@sweetalert2/theme-dark": "^5.0.26",
+    "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
