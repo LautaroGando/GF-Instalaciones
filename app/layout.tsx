@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ScrollHeaderEffect } from "@/components/ui/GeneralComponents/ScrollHeaderEffect/ScrollHeaderEffect";
+import { Analytics } from "@vercel/analytics/react";
 
 const themeScript = `
   (function() {
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="bg-bgColor dark:bg-secondaryColor">
         {children}
         <SpeedInsights />
+        <Analytics />
         <ScrollHeaderEffect />
       </body>
     </html>
