@@ -1,11 +1,12 @@
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import React from "react";
 
 export const BackButton: React.FC = () => {
   return (
-    <button
-      onClick={() => (window.location.href = "/")}
+    <Link
+      href="/"
       className="text-installer-backButton w-full flex gap-3 justify-center items-center h-[50px] transition-all duration-300 hover:text-installer-backButtonHover"
     >
       Salir
@@ -14,7 +15,7 @@ export const BackButton: React.FC = () => {
         icon={faArrowRightFromBracket}
         width={20}
       />
-    </button>
+    </Link>
   );
 };
 

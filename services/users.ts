@@ -5,8 +5,7 @@ import axios from "axios";
 // BUSCAR USUARIOS
 export const findUsers = async () => {
   try {
-    const response = await axios.get(`${API_URL}/user`);
-    const data = response.data;
+    const { data } = await axios.get(`${API_URL}/user`);
     return data;
   } catch (error) {
     console.log(error);
@@ -26,30 +25,40 @@ export const findInstallers = async () => {
 
 export const disabledUser = async (id: string) => {
   try {
-    const response = await axios.delete(`${API_URL}/user/disabled/${id}`);
-    const data = response.data;
+    const { data } = await axios.delete(`${API_URL}/user/disabled/${id}`);
+    console.log(data)
     return data;
   } catch (error) {
-    console.log(error);
+    console.log(error)
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(
+        error.response.data.message || "Error al desactivar usuario"
+      );
+    }
+    throw new Error("Error al desactivar usuario");
   }
 };
 
 export const activeUser = async (id: string) => {
   try {
-    const response = await axios.put(`${API_URL}/user/restore/${id}`);
-    const data = response.data;
+    const { data } = await axios.put(`${API_URL}/user/restore/${id}`);
     return data;
   } catch (error) {
-    console.log(error);
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(
+        error.response.data.message || "Error al activar usuario"
+      );
+    }
+    throw new Error("Error al activar usuario");
   }
 };
 
 export const changeStatusInstaller = async (id: string, status: string) => {
   try {
-    const response = await axios.patch(`${API_URL}/installer/${id}`, {
+    const { data } = await axios.patch(`${API_URL}/installer/${id}/status`, {
       status,
     });
-    const data = response.data;
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -58,20 +67,23 @@ export const changeStatusInstaller = async (id: string, status: string) => {
 
 export const editUser = async (id: string, values: Partial<IUser>) => {
   try {
-    const response = await axios.patch(`${API_URL}/user/${id}`, values);
-    const data = response.data;
+    const { data } = await axios.patch(`${API_URL}/user/${id}`, values);
     return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
 export const deleteUser = async (id: string) => {
   try {
-    const response = await axios.delete(`${API_URL}/user/${id}`);
-    const data = response.data;
+    const { data } = await axios.delete(`${API_URL}/user/deleted/${id}`);
+    console.log(data);
     return data;
   } catch (error: unknown) {
-    console.log(error)
+    console.log(error);
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message || "Error al eliminar rol");
+    }
+    throw new Error("Error al eliminar rol");
   }
 };

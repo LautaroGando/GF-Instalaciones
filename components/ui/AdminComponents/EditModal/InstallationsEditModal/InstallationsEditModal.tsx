@@ -107,10 +107,10 @@ const InstallationEditModal = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="relative bg-white rounded-lg shadow-lg pt-4 w-full max-w-[600px] max-h-[90vh] my-auto flex flex-col overflow-hidden"
+          className="relative bg-bgColor rounded-lg shadow-lg pt-4 w-full max-w-[600px] max-h-[90vh] my-auto flex flex-col overflow-hidden dark:bg-bgColorDark"
         >
           <div className="absolute w-full h-[7px] bg-primaryColor top-0 left-0" />
-          <h2 className="text-[20px] font-bold text-bgColorDark/60 mt-[7px] mb-4 px-6">
+          <h2 className="text-[20px] font-bold text-primaryColor mt-[7px] mb-4 px-6">
             Editar Instalación
           </h2>
 
@@ -188,14 +188,14 @@ const InstallationEditModal = () => {
                       >
                         <label
                           htmlFor="startDate"
-                          className="text-sm font-medium text-primaryColor/80"
+                          className="text-sm font-medium text-primaryColor/80 dark:text-letterColorLight/80"
                         >
                           Fecha de Inicio
                         </label>
                         <Field
                           name="startDate"
                           type="date"
-                          className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none"
+                          className="shadow-sm shadow-primaryColor/60 bg-transparent p-2 rounded-[4px] w-full outline-none dark:text-letterColorLight"
                         />
                         {errors.startDate && touched.startDate && (
                           <motion.div
@@ -220,11 +220,11 @@ const InstallationEditModal = () => {
                       >
                         <label
                           htmlFor="selectedInstallers"
-                          className="text-sm font-medium text-primaryColor/80"
+                          className="text-sm font-medium text-primaryColor/80 dark:text-letterColorLight/80"
                         >
                           Instaladores Seleccionados
                         </label>
-                        <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px]">
+                        <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px] dark:bg-gray-100/10 dark:border-gray-300/20">
                           {selectedInstallers.length > 0 ? (
                             selectedInstallers.map((installer) => (
                               <motion.div
@@ -280,7 +280,7 @@ const InstallationEditModal = () => {
                         <button
                           type="button"
                           onClick={openInstallersModal}
-                          className="w-full mt-2 border bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:border-primaryColorHover hover:bg-white hover:text-primaryColor"
+                          className="w-full mt-2 border bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:border-primaryColorHover hover:bg-white hover:text-primaryColor dark:hover:bg-bgColorDark"
                         >
                           Seleccionar instaladores
                         </button>
@@ -299,7 +299,7 @@ const InstallationEditModal = () => {
                         <button
                           type="button"
                           onClick={closeModal}
-                          className="w-full mt-4 bg-bgColorDark/30 text-white p-2 rounded-md order-2 transition-all duration-200 hover:bg-bgColorDark/40 xl:order-1 xl:w-[240px]"
+                          className="w-full mt-4 bg-gray-400 text-white p-2 rounded-md order-2 transition-all duration-200 hover:bg-gray-500 xl:order-1 xl:w-[240px]"
                         >
                           Cancelar
                         </button>

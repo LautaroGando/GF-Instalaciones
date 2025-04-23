@@ -5,7 +5,7 @@ import React from "react";
 
 const SocialMedia = () => {
   return (
-    <div className="flex justify-between items-center w-[250px] mx-auto my-[19px] sm:w-[340px] lg:mb-[30px] xl:w-[400px]">
+    <div className="flex justify-between items-center w-[250px] mx-auto sm:w-[340px] xl:w-[400px]">
       {socialMediaData.map((item, i) => (
         <Link
           key={i}

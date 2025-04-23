@@ -39,7 +39,7 @@ const InstallersSelectModal: React.FC = () => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-[500px] sm:p-8"
+        className="bg-bgColor rounded-2xl shadow-xl p-6 w-full max-w-[500px] dark:bg-bgColorDark sm:p-8"
       >
         <div className="flex flex-col items-center gap-4 mb-6 ">
           <h2 className="text-xl font-semibold text-primaryColor text-center">
@@ -56,7 +56,7 @@ const InstallersSelectModal: React.FC = () => {
               placeholder="Buscar instaladores por nombre"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor transition"
+              className="w-full border border-gray-300 rounded-lg bg-transparent py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor transition"
             />
           </div>
         </div>
@@ -72,11 +72,11 @@ const InstallersSelectModal: React.FC = () => {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
                   layout
-                  className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200"
+                  className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 dark:bg-gray-100/10"
                 >
                   <div className="flex items-center gap-3">
-                    <FontAwesomeIcon icon={faCircleUser} className="text-gray-500 text-2xl" />
-                    <p className="text-gray-800 font-medium">{installer.user.fullName}</p>
+                    <FontAwesomeIcon icon={faCircleUser} className="text-gray-500 text-2xl dark:text-gray-200" />
+                    <p className="text-gray-800 font-medium dark:text-gray-100">{installer.user.fullName}</p>
                   </div>
 
                   {selectedInstallers.some((inst) => inst.id === installer.id) ? (

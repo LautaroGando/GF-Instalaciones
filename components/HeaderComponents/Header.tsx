@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Logo from "./Logo/Logo";
 import HeaderLinks from "./HeaderLinks/HeaderLinks";
 import ResponsiveMenu from "./ReponsiveMenu/ResponsiveMenu";
@@ -8,6 +8,24 @@ import clsx from "clsx";
 
 export const Header: React.FC = () => {
   const pathname = usePathname();
+
+  useEffect(() => {
+    const header = document.getElementById("main-header");
+    if (!header) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        header.classList.add("scrolledHeader");
+      } else {
+        header.classList.remove("scrolledHeader");
+      }
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
