@@ -10,8 +10,7 @@ import axios from "axios";
 
 export const signIn = async (values: IUserSignIn, color: TColor) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/signInUser`, values);
-    const data = response.data;
+    const { data } = await axios.post(`${API_URL}/auth/signInUser`, values);
     if ((data.installer && data.installer.status === "APROBADO") || data.user)
       PersonalizedPopUp({
         color: color,
@@ -39,8 +38,7 @@ export const signIn = async (values: IUserSignIn, color: TColor) => {
 export const signUpUser = async (values: IUserSignUp, color: TColor) => {
   console.log(values);
   try {
-    const response = await axios.post(`${API_URL}/auth/signUpUser`, values);
-    const data = response.data;
+    const { data } = await axios.post(`${API_URL}/auth/signUpUser`, values);
     if (data)
       PersonalizedPopUp({
         color: color,
@@ -65,13 +63,16 @@ export const signUpUser = async (values: IUserSignUp, color: TColor) => {
   }
 };
 
-export const signUpInstaller = async (values: IUserSignUpInstaller, color: TColor) => {
+export const signUpInstaller = async (
+  values: IUserSignUpInstaller,
+  color: TColor
+) => {
   try {
-    const response = await axios.post(
+    const { data } = await axios.post(
       `${API_URL}/auth/signUpInstaller`,
       values
     );
-    const data = response.data;
+    console.log(data)
     if (data)
       PersonalizedPopUp({
         color: color,

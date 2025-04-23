@@ -45,7 +45,10 @@ export const Installation: React.FC = () => {
   const assignedInstallations = installations?.filter(
     (installation: IInstallation) =>
       installation.installers.some(
-        (installer: IInstaller) => installer.id === userInfo?.installer.id
+        (installer: IInstaller) =>
+          userInfo &&
+          userInfo.installer &&
+          installer.id === userInfo?.installer.id
       )
   );
 

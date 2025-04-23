@@ -23,7 +23,7 @@ export interface IUser {
   createdAt: string;
   disabledAt: string | null;
   userRoles: IUserRole[];
-  installer: IInstaller;
-  coordinator: ICoordinator;
-  admin: IAdmin;
+  installer: IInstaller | null;
+  coordinator: ICoordinator | null;
+  admin: IAdmin | null;
 }

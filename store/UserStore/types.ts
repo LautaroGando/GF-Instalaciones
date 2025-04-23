@@ -1,3 +1,4 @@
+import { Role } from "@/enums/Role";
 import { IInstaller } from "@/interfaces/IInstaller";
 import { IUser } from "@/interfaces/IUser";
 import type { TColor } from "@/types/TColor";
@@ -33,11 +34,13 @@ export interface IUserStoreProps {
   handleFetchUsers: () => Promise<void>;
   handleSearchUsers: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleOrderUsers: (values: string) => void;
-  handleDisabledUser: (id: string) => void;
+  handleDisabledUser: (id: string, color: TColor) => void;
   handleEditUser: (id: string, values: Partial<IUser | IInstaller>) => void;
-  handleDeleteUser: (id: string) => void;
-  handleActiveUser: (id: string) => void;
+  handleDeleteUser: (id: string, color: TColor) => void;
+  handleActiveUser: (id: string, color: TColor) => void;
   handleChangeStatusInstaller: (id: string, status: TInstallerStatus) => void;
   handleLogout: (color: TColor) => void;
   handleActionMenu: (id: string) => void;
+  handleAssignRoleUser: (roleId: Role, userId: string, color: TColor) => void;
+  handleDeleteRoleUser: (roleId: Role, userId: string, color: TColor) => void;
 }

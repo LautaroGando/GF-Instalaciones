@@ -21,7 +21,7 @@ export const ButtonInstaller: React.FC<IButtonInstallerOProps> = ({
       }}
       href="/installer/installations"
       className={clsx(
-        "text-primaryColor transition-all duration-500 w-max mx-auto",
+        "text-primaryColor transition-all duration-500 w-max mx-auto flex items-center gap-2",
         classes
       )}
     >

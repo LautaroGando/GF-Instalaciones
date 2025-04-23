@@ -21,7 +21,7 @@ export const ButtonLogout: React.FC<IButtonLogoutProps> = ({
         handleLogout(isDark ? "#000000" : "#FAFAFA");
       }}
       className={clsx(
-        "text-redColor transition-all duration-500 w-max mx-auto",
+        "text-redColor transition-all duration-500 w-max mx-auto flex items-center gap-2",
         classes
       )}
     >

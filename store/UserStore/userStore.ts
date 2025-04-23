@@ -18,6 +18,8 @@ import { IInstaller } from "@/interfaces/IInstaller";
 import Cookies from "js-cookie";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import type { TColor } from "@/types/TColor";
+import { Role } from "@/enums/Role";
+import { assignRole, deleteRole } from "@/services/roles";
 
 export const useUserStore = create<IUserStoreProps>()(
   persist(
@@ -115,9 +117,9 @@ export const useUserStore = create<IUserStoreProps>()(
             : selectedFilter === "active"
             ? !user.disabledAt &&
               user.installer?.status !== "RECHAZADO" &&
-              user.installer?.status !== "EN_PROCESO"
+              user.installer?.status !== "EN PROCESO"
             : selectedFilter === "in_proccess"
-            ? user.installer?.status === "EN_PROCESO"
+            ? user.installer?.status === "EN PROCESO"
             : selectedFilter === "inactive"
             ? user.disabledAt
             : selectedFilter === "rejected"
@@ -177,22 +179,6 @@ export const useUserStore = create<IUserStoreProps>()(
         set({ sortBy: value });
         get().handleApplyFilter(false);
       },
-
-      handleDisabledUser: async (id: string) => {
-        try {
-          await disabledUser(id);
-          set((state) => ({
-            users: state.users?.map((user: IUser) =>
-              user.id === id
-                ? { ...user, disabledAt: formatDate(new Date().toISOString()) }
-                : user
-            ),
-          }));
-          get().handleApplyFilter(false);
-        } catch (error) {
-          console.log(error);
-        }
-      },
       handleEditUser: async (
         id: string,
         values: Partial<IUser | IInstaller>
@@ -214,35 +200,89 @@ export const useUserStore = create<IUserStoreProps>()(
           console.log(error);
         }
       },
-      handleDeleteUser: async (id: string) => {
-        try {
-          const data = await deleteUser(id);
-          if (data) {
+      handleDeleteUser: async (id: string, color: TColor) => {
+        await PersonalizedPopUp({
+          color: color,
+          withResult: true,
+          simpleModal: false,
+          title: "¿Deseas eliminar el usuario?",
+          text: "Este cambio no será reversible.",
+          titleSuccess: "Usuario eliminado",
+          textSuccess: "El usuario ha sido eliminado con éxito.",
+          titleError: "Error",
+          textError: "No se pudo eliminar el usuario. Intenta nuevamente.",
+          icon: "success",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Sí, eliminar",
+          genericFunction: async () => {
+            const data = await deleteUser(id);
+            if (data) {
+              set((state) => ({
+                users: state.users?.filter((user: IUser) => user.id !== id),
+                filterUsers: state.filterUsers?.filter(
+                  (user: IUser) => user.id !== id
+                ),
+              }));
+            }
+            get().setMaxPage();
+            get().handleApplyFilter(true);
+          },
+        });
+      },
+      handleDisabledUser: async (id: string, color: TColor) => {
+        await PersonalizedPopUp({
+          color: color,
+          withResult: true,
+          simpleModal: false,
+          title: "¿Deseas desactivar el usuario?",
+          text: "Este cambio podrá ser reversible.",
+          titleSuccess: "Usuario desactivado",
+          textSuccess: "El usuario ha sido desactivado con éxito.",
+          titleError: "Error",
+          textError: "No se pudo desactivar el usuario. Intenta nuevamente.",
+          icon: "success",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Sí, desactivar",
+          genericFunction: async () => {
+            await disabledUser(id);
             set((state) => ({
-              users: state.users?.filter((user: IUser) => user.id !== id),
-              filterUsers: state.filterUsers?.filter(
-                (user: IUser) => user.id !== id
+              users: state.users?.map((user: IUser) =>
+                user.id === id
+                  ? {
+                      ...user,
+                      disabledAt: formatDate(new Date().toISOString()),
+                    }
+                  : user
               ),
             }));
-          }
-          get().setMaxPage();
-          get().handleApplyFilter(true);
-        } catch (error) {
-          console.log(error);
-        }
+            get().handleApplyFilter(false);
+          },
+        });
       },
-      handleActiveUser: async (id: string) => {
-        try {
-          await activeUser(id);
-          set((state) => ({
-            users: state.users?.map((user: IUser) =>
-              user.id === id ? { ...user, disabledAt: null } : user
-            ),
-          }));
-          get().handleApplyFilter(false);
-        } catch (error) {
-          console.log(error);
-        }
+      handleActiveUser: async (id: string, color: TColor) => {
+        await PersonalizedPopUp({
+          color: color,
+          withResult: true,
+          simpleModal: false,
+          title: "¿Deseas activar el usuario?",
+          text: "Este cambio podrá ser reversible.",
+          titleSuccess: "Usuario activado",
+          textSuccess: "El usuario ha sido activado con éxito.",
+          titleError: "Error",
+          textError: "No se pudo activar el usuario. Intenta nuevamente.",
+          icon: "success",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Sí, activar",
+          genericFunction: async () => {
+            await activeUser(id);
+            set((state) => ({
+              users: state.users?.map((user: IUser) =>
+                user.id === id ? { ...user, disabledAt: null } : user
+              ),
+            }));
+            get().handleApplyFilter(false);
+          },
+        });
       },
       handleChangeStatusInstaller: async (
         id: string,
@@ -282,6 +322,58 @@ export const useUserStore = create<IUserStoreProps>()(
       handleActionMenu: (id: string) => {
         const { actionMenu } = get();
         set({ actionMenu: actionMenu === id ? null : id });
+      },
+      handleAssignRoleUser: async (
+        roleId: Role,
+        userId: string,
+        color: TColor
+      ) => {
+        await PersonalizedPopUp({
+          color: color,
+          withResult: true,
+          simpleModal: false,
+          title: "¿Deseas añadir el siguiente rol?",
+          text: "Podrás eliminarlo cuando lo desees.",
+          titleSuccess: "Rol eliminado",
+          textSuccess: `Rol ${
+            roleId === Role.COORDINADOR ? "coordinador" : "administrador"
+          } asignado con éxito.`,
+          titleError: "Error",
+          textError: "No se pudo asignar el rol. Intenta nuevamente.",
+          icon: "success",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Sí, asignar",
+          genericFunction: async () => {
+            await assignRole(roleId, userId);
+            await get().handleFetchUsers();
+          },
+        });
+      },
+      handleDeleteRoleUser: async (
+        roleId: Role,
+        userId: string,
+        color: TColor
+      ) => {
+        await PersonalizedPopUp({
+          color: color,
+          withResult: true,
+          simpleModal: false,
+          title: "¿Deseas eliminar el siguiente rol?",
+          text: "Podrás asignarlo nuevamente cuando lo desees.",
+          titleSuccess: "Rol eliminado",
+          textSuccess: `Rol ${
+            roleId === Role.COORDINADOR ? "coordinador" : "administrador"
+          } eliminado con éxito.`,
+          titleError: "Error",
+          textError: "No se pudo eliminar el rol. Intenta nuevamente.",
+          icon: "success",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Sí, eliminar",
+          genericFunction: async () => {
+            await deleteRole(roleId, userId);
+            await get().handleFetchUsers();
+          },
+        });
       },
     }),
     {
