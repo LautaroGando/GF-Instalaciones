@@ -8,7 +8,7 @@ export const EditSection: React.FC = () => {
         ¿Deseas modificar algunos de tus <br /> datos?
       </h3>
       <p className="text-sm font-light leading-loose sm:text-base sm:leading-8">
-        Puedes modificar tus datos una vez al <br /> año apretando y llenando el{" "}
+        Puedes modificar tus datos <br /> apretando y llenando el{" "}
         <br /> formulario en el siguiente botón:
       </p>
       <ButtonEditProfile />

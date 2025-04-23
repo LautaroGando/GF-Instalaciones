@@ -48,10 +48,10 @@ const TrackingEditModal = () => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 20 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="relative bg-white rounded-lg shadow-lg pt-4 w-full max-w-[600px] max-h-[90vh] my-auto flex flex-col overflow-hidden"
+        className="relative bg-bgColor rounded-lg shadow-lg pt-4 w-full max-w-[600px] max-h-[90vh] my-auto flex flex-col overflow-hidden dark:bg-bgColorDark"
       >
         <div className="absolute w-full h-[7px] bg-primaryColor top-0 left-0"></div>
-        <h2 className="text-[20px] font-bold text-bgColorDark/60 mt-[7px] mb-4 px-6">
+        <h2 className="text-[20px] font-bold text-primaryColor mt-[7px] mb-4 px-6">
           Editar Orden
         </h2>
 
@@ -78,7 +78,7 @@ const TrackingEditModal = () => {
                 >
                   <label
                     htmlFor="orderNumber"
-                    className="text-sm font-medium text-primaryColor/80"
+                    className="text-sm font-medium text-primaryColor/80 dark:text-letterColorLight/80"
                   >
                     Número de Orden
                   </label>
@@ -86,7 +86,7 @@ const TrackingEditModal = () => {
                     name="orderNumber"
                     type="text"
                     placeholder="Ingrese el número de la orden"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 bg-transparent focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:text-letterColorLight dark:placeholder:text-letterColorLight/50"
                   />
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -110,7 +110,7 @@ const TrackingEditModal = () => {
                 >
                   <label
                     htmlFor="title"
-                    className="text-sm font-medium text-primaryColor/80"
+                    className="text-sm font-medium text-primaryColor/80 dark:text-letterColorLight/80"
                   >
                     Nombre de la Orden
                   </label>
@@ -118,7 +118,7 @@ const TrackingEditModal = () => {
                     name="title"
                     type="text"
                     placeholder="Ingrese el nombre de la orden"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 bg-transparent focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:text-letterColorLight dark:placeholder:text-letterColorLight/50"
                   />
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -140,7 +140,7 @@ const TrackingEditModal = () => {
                 >
                   <label
                     htmlFor="description"
-                    className="text-sm font-medium text-primaryColor/80"
+                    className="text-sm font-medium text-primaryColor/80 dark:text-letterColorLight/80"
                   >
                     Descripción
                   </label>
@@ -148,7 +148,7 @@ const TrackingEditModal = () => {
                     as="textarea"
                     name="description"
                     placeholder="Ingrese la descripción"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none h-[100px] md:h-[150px] transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none h-[100px] md:h-[150px] transition-all duration-200 bg-transparent focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:text-letterColorLight dark:placeholder:text-letterColorLight/50"
                   />
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -168,7 +168,7 @@ const TrackingEditModal = () => {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="w-full mt-4 order-2 bg-bgColorDark/50 text-white p-2 rounded-md transition-all duration-200 hover:bg-bgColorDark/60 xl:w-[120px] xl:order-1"
+                    className="w-full mt-4 order-2 bg-gray-400 text-white p-2 rounded-md transition-all duration-200 hover:bg-gray-500 xl:w-[120px] xl:order-1"
                   >
                     Cancelar
                   </button>

@@ -9,8 +9,6 @@ import clsx from "clsx";
 export const NotificationsSection: React.FC = () => {
   const { users, isLoading, moreInfo } = useUserStore();
 
-  console.log(users)
-
   return (
     <div>
       {isLoading ? (
@@ -21,7 +19,7 @@ export const NotificationsSection: React.FC = () => {
         users &&
         users.map(
           (user: IUser) =>
-            user.installer?.status === "EN_PROCESO" && (
+            user.installer?.status === "EN PROCESO" && (
               <div
                 key={user.installer.id}
                 className={clsx(

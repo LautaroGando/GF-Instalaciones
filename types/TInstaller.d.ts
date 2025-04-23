@@ -1,1 +1,1 @@
-export type TInstallerStatus = "EN_PROCESO" | "RECHAZADO" | "APROBADO";
+export type TInstallerStatus = "EN PROCESO" | "RECHAZADO" | "APROBADO";

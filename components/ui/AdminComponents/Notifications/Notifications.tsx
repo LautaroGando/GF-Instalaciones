@@ -34,7 +34,7 @@ export const Notifications: React.FC = () => {
           <span className="text-xs">
             {users
               ? users?.filter(
-                  (user: IUser) => user.installer?.status === "EN_PROCESO"
+                  (user: IUser) => user.installer?.status === "EN PROCESO"
                 ).length
               : 0}
           </span>

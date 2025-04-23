@@ -33,7 +33,7 @@ export const SignIn: React.FC = () => {
           <FormSignIn />
         </div>
         <Link
-          href=""
+          href="/terms-and-conditions"
           className="underline text-xs self-start dark:text-primaryColor"
         >
           Términos y condiciones.
