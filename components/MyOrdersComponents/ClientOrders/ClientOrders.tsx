@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
-import ClientOrdersHeader from "./ClientOrders/ClientOrdersHeader/ClientOrdersHeader";
-import ClientOrdersContent from "./ClientOrders/ClientOrdersContent/ClientOrdersContent";
+import ClientOrdersHeader from "./ClientOrdersHeader/ClientOrdersHeader";
+import ClientOrdersContent from "./ClientOrdersContent/ClientOrdersContent";
 
-const MyOrdersComponents = () => {
+const ClientOrders = () => {
   const { orders, handleFetchOrders, isLoading } = useTrackingStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
   const [contentToShow, setContentToShow] = useState<"in process" | "completed">("in process");
@@ -54,4 +54,4 @@ const MyOrdersComponents = () => {
   );
 };
 
-export default MyOrdersComponents;
+export default ClientOrders;

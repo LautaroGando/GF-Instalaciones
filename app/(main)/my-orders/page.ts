@@ -1,1 +1,1 @@
-export { default } from "@/components/MyOrdersComponents/MyOrdersComponents";
+export { default } from "@/components/MyOrdersComponents/ClientOrders/ClientOrders";

@@ -94,6 +94,9 @@ export default {
           "linear-gradient(-165deg, #A7935133 70%, #00000000 70.3%)",
         dashboardBanner: 'url("/assets/images/dashboard/banner.svg")',
       },
+      boxShadow: {
+        'admin-active': '0px 1px 4px rgba(40, 180, 99, 0.67)',
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
