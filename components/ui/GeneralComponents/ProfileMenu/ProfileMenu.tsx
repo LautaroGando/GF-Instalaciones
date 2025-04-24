@@ -6,6 +6,7 @@ import ButtonLogout from "../ButtonLogout/ButtonLogout";
 import { useProfileStore } from "@/store/ProfileStore/profileStore";
 import ButtonInstaller from "../ButtonInstaller/ButtonInstaller";
 import { useUserStore } from "@/store/UserStore/userStore";
+import ButtonOrdersHeader from "../ButtonOrdersHeader/ButtonOrdersHeader";
 
 export const ProfileMenu: React.FC = () => {
   const { user } = useUserStore();
@@ -20,10 +21,7 @@ export const ProfileMenu: React.FC = () => {
         return;
       }
 
-      if (
-        menuAdminProfileRef.current &&
-        !menuAdminProfileRef.current.contains(target)
-      ) {
+      if (menuAdminProfileRef.current && !menuAdminProfileRef.current.contains(target)) {
         handleClose();
       }
     };
@@ -48,9 +46,10 @@ export const ProfileMenu: React.FC = () => {
       )}
     >
       <ButtonProfile classes="lg:flex lg:gap-3 lg:items-center lg:w-full lg:h-[50px] lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor/20 lg:hover:font-semibold lg:hover:border-none" />
-      {}
-      {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
-        "Instalador" && (
+      {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name === "Usuario" && (
+        <ButtonOrdersHeader classes="lg:flex lg:gap-3 lg:items-center lg:w-full lg:h-[50px] lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor/20 lg:hover:font-semibold lg:hover:border-none" />
+      )}
+      {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name === "Instalador" && (
         <ButtonInstaller classes="lg:flex lg:gap-3 lg:items-center lg:w-full lg:h-[50px] lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor/20 lg:hover:font-semibold lg:hover:border-none" />
       )}
       <ButtonLogout classes="lg:flex lg:gap-3 lg:items-center lg:w-full lg:h-[50px] lg:text-center lg:transition-all lg:p-3 lg:hover:text-error" />
