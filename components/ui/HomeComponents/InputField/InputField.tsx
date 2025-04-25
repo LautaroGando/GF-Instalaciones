@@ -21,13 +21,13 @@ export const InputField = <T,>({
           : !values[name]
           ? "border-secondaryColor dark:border-bgColor"
           : "border-primaryColor",
-        as === "textarea" && "h-40"
+        as === "textarea" && "h-20"
       )}
       type={type}
       name={name as string}
       as={as}
       placeholder={clsx(
-        errors[name] && touched[name] ? `${placeholder}*` : placeholder
+        errors[name] && touched[name] ? `${placeholder} *` : placeholder
       )}
     />
     {errors[name] && touched[name] && (

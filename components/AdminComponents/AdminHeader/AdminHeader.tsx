@@ -19,7 +19,7 @@ export const AdminHeader: React.FC = () => {
         <Logo label="Admin" />
         <div className="gap-5 items-center hidden relative lg:flex lg:fixed lg:top-[6px] lg:right-3 lg:z-50">
           <div className="items-center hidden lg:flex">
-            <SelectTheme admin />
+            <SelectTheme />
           </div>
           <Notifications />
           <ButtonOpenMenu admin />

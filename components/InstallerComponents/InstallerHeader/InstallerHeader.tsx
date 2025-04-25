@@ -36,7 +36,7 @@ export const InstallerHeader: React.FC = () => {
           <InstallerLinkMenu />
           <BackButton />
         </div>
-        <div className="items-center gap-10 hidden md:flex">
+        <div className="items-center gap-5 hidden md:flex">
           <SelectTheme />
           <InstallerLink />
           <BackButton />

@@ -6,7 +6,7 @@ import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 export const CoverageArea: React.FC = () => {
   return (
     <section className="flex flex-col gap-10">
-      <HomeTitle text="Cobertura Nacional que Llega a Todo el País" />
+      <HomeTitle text="Cobertura nacional que llega a todo el país" />
       <div className="flex flex-col gap-4 md:flex-row-reverse md:items-center md:justify-between">
         <GridImages />
         <CoverageItems />
