@@ -4,7 +4,7 @@ export const privacyAndPolicyData: IPrivacyAndPolicy[] = [
   {
     id: 1,
     title: "Responsable del tratamiento",
-    text: "GF Recursos Gráficos SRL, con domicilio legal en [incluir si se desea], es responsable del tratamiento de los datos personales ingresados por los usuarios en el sitio www.gfrecursosgraficos.com.ar.",
+    text: "GF Recursos Gráficos SRL, con domicilio legal en Av. Juan B. Justo 9100, es responsable del tratamiento de los datos personales ingresados por los usuarios en el sitio www.gfrecursosgraficos.com.ar.",
   },
   {
     id: 2,

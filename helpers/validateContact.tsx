@@ -19,6 +19,11 @@ export const validateContact = (input: IContact) => {
         "El correo electrónico no es válido. Asegúrate de que tenga un formato correcto, como usuario@ejemplo.com.")
     : "";
 
+  !regex.phone.test(input.phone)
+    ? (errors.phone =
+        "El número de teléfono debe contener solo dígitos, sin espacios ni símbolos, y tener entre 7 y 15 caracteres.")
+    : "";
+
   !regex.message.test(input.message)
     ? (errors.message = "El mensaje debe tener entre 6 y 200 caracteres.")
     : "";

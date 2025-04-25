@@ -40,7 +40,7 @@ export const NotificationMenu: React.FC = () => {
       data-ignore-notifications-outside-click
       ref={menuNotificationsRef}
       className={clsx(
-        "fixed top-0 mt-0 w-full right-0 lg:mt-5 z-50 bg-bgColor shadow-lg shadow-bgColorDark/20 transition-all duration-300 flex flex-col justify-between overflow-y-scroll hiddenScrollbar items-center dark:shadow-bgColor/20 dark:bg-secondaryColor lg:top-full lg:absolute lg:w-[400px]",
+        "fixed top-0 mt-0 w-full right-0 lg:mt-5 z-50 bg-bgColor shadow-lg shadow-bgColorDark/20 transition-all duration-300 flex flex-col justify-between overflow-y-auto hiddenScrollbar items-center dark:shadow-bgColor/20 dark:bg-secondaryColor lg:top-full lg:absolute lg:w-[400px]",
         openNotifications || openMessages ? "h-[100dvh] lg:h-[70dvh]" : "h-0"
       )}
     >

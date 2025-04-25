@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="bg-primaryTransparentColor p-[22px]">
       <div className="flex flex-col gap-5">
         <p className="font-semibold text-primaryColor text-[16px] text-center sm:text-[22px] lg:text-[24px] xl:text-[28px]">
-          Seguínos en Nuestras Redes
+          Seguínos en nuestras redes
         </p>
         <SocialMedia />
         <Image
@@ -18,7 +18,7 @@ const Footer = () => {
           className="w-full max-w-[520px] mx-auto"
         />
         <div className="w-full max-w-[1200px] mx-auto">
-          <div className="flex items-center justify-center text-primaryColor text-sm gap-2 sm:text-base">
+          <div className="flex items-center justify-center text-primaryColor text-xs gap-2 sm:text-base">
             <Link className="hover:underline" href="/terms-and-conditions">
               Términos y condiciones
             </Link>
