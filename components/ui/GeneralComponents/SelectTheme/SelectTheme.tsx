@@ -4,13 +4,8 @@ import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "motion/react";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import { useMounted } from "@/hooks/useMounted";
-import { ISelectThemeProps } from "./types";
-import clsx from "clsx";
 
-export const SelectTheme: React.FC<ISelectThemeProps> = ({
-  admin,
-  adminResponsive,
-}) => {
+export const SelectTheme: React.FC = () => {
   const { isDark, changeTheme } = useThemeStore();
   const { mounted } = useMounted();
 
@@ -26,14 +21,7 @@ export const SelectTheme: React.FC<ISelectThemeProps> = ({
         initial={{ scale: 0, opacity: 0 }}
         exit={{ scale: 0, opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className={clsx(
-          "leading-[0%] text-xl",
-          admin
-            ? "text-letterColorLight"
-            : adminResponsive
-            ? "text-secondaryColor"
-            : null
-        )}
+        className="text-xl bg-primaryColor text-[#f5eac7] min-w-[30px] min-h-[30px] max-w-[30px] max-h-[30px] rounded-full flex items-center justify-center"
         onClick={changeTheme}
       >
         {isDark ? (

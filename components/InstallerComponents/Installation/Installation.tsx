@@ -11,6 +11,7 @@ import { faBan, faUser } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import { formatDate, formatHour } from "@/utils/formatDate";
 
 export const Installation: React.FC = () => {
   const { user } = useUserStore();
@@ -71,7 +72,7 @@ export const Installation: React.FC = () => {
         </div>
       ) : filterIncompleteInstallations &&
         filterIncompleteInstallations.length > 0 ? (
-        <div className="grid grid-cols-1 place-items-center place-content-start gap-5 h-[calc(100dvh-217px)] overflow-auto md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 place-items-center place-content-start gap-5 py-2 h-[calc(100dvh-217px)] overflow-auto md:grid-cols-2 lg:grid-cols-3">
           {filterIncompleteInstallations?.map((instalattion: IInstallation) => {
             if (
               instalattion.status === "Cancelada" ||
@@ -83,7 +84,7 @@ export const Installation: React.FC = () => {
               <div
                 key={instalattion.id}
                 className={clsx(
-                  "w-full max-w-[320px] min-h-[340px] max-h-[340px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5 dark:shadow-[3px_0px_2px_#fafafa40]",
+                  "w-full max-w-[320px] min-h-[370px] max-h-[370px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5 dark:shadow-[3px_0px_2px_#fafafa40]",
                   instalattion.status === "Pendiente"
                     ? "border-primaryColor"
                     : instalattion.status === "En proceso"
@@ -110,7 +111,10 @@ export const Installation: React.FC = () => {
                   >
                     {instalattion.status}
                   </h6>
-                  <p className="text-xs">{instalattion.startDate}</p>
+                  <p className="text-xs">
+                    {instalattion.startDate &&
+                      formatDate(instalattion.startDate)}
+                  </p>
                 </div>
                 <div className="text-sm font-semibold flex flex-col gap-1 px-2">
                   <h3>
@@ -139,6 +143,13 @@ export const Installation: React.FC = () => {
                     CP:{" "}
                     <span className="font-normal">
                       {instalattion.address.postalCode}
+                    </span>
+                  </h3>
+                  <h3>
+                    Horario:{" "}
+                    <span className="font-normal">
+                      {instalattion.startDate &&
+                        formatHour(instalattion.startDate)}
                     </span>
                   </h3>
                 </div>
