@@ -12,6 +12,7 @@ import TFiltersSelectOption from "@/data/AdminComponents/installationsFiltersAnd
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { motion } from "framer-motion";
 import useCurrentOrderId from "@/hooks/useCurrentOrderId";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -36,10 +37,13 @@ const itemVariants = {
 
 const InstallationsOrderAndFilter = () => {
   const [mounted, setMounted] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState<SingleValue<TFiltersSelectOption>>(null);
-  const [selectedProvince, setSelectedProvince] = useState<SingleValue<TFiltersSelectOption>>(null);
-  const [selectedOrder, setSelectedOrder] = useState<SingleValue<TFiltersSelectOption>>(null);
-
+  const [selectedStatus, setSelectedStatus] =
+    useState<SingleValue<TFiltersSelectOption>>(null);
+  const [selectedProvince, setSelectedProvince] =
+    useState<SingleValue<TFiltersSelectOption>>(null);
+  const [selectedOrder, setSelectedOrder] =
+    useState<SingleValue<TFiltersSelectOption>>(null);
+  const { isDark } = useThemeStore();
   const { handleFetchInstallations } = useTrackingStore();
   const orderId = useCurrentOrderId();
 
@@ -58,10 +62,10 @@ const InstallationsOrderAndFilter = () => {
       createdAt: "",
       updatedAt: "",
     };
-    
+
     if (key === "createdAt" || key === "updatedAt") {
       params[key] = direction;
-    }    
+    }
 
     handleFetchInstallations(orderId, params);
   };
@@ -92,13 +96,34 @@ const InstallationsOrderAndFilter = () => {
             value={selectedStatus}
             onChange={(option) => {
               setSelectedStatus(option);
-              handleChangeOrderAndFilter(option, selectedProvince, selectedOrder);
+              handleChangeOrderAndFilter(
+                option,
+                selectedProvince,
+                selectedOrder
+              );
             }}
-            classNames={{
-              control: () => "border border-gray-300 rounded-md px-2 py-1 shadow-sm",
-              option: ({ isFocused }) =>
-                isFocused ? "bg-blue-100 text-blue-900 px-2 py-1" : "px-2 py-1",
-              menu: () => "bg-white shadow-md rounded-md mt-1",
+            styles={{
+              control: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                padding: 4,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                boxShadow: isFocused
+                  ? "0 0 0 1px #A79351"
+                  : baseStyles.boxShadow,
+                "&:hover": {
+                  borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                },
+              }),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                boxShadow: isDark ? "0 1px 3px #FAFAFA" : "0 0 3px #000000",
+              }),
+              option: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                backgroundColor: isFocused ? "#A7935144" : "",
+              }),
             }}
           />
         </div>
@@ -113,11 +138,28 @@ const InstallationsOrderAndFilter = () => {
               setSelectedProvince(option);
               handleChangeOrderAndFilter(selectedStatus, option, selectedOrder);
             }}
-            classNames={{
-              control: () => "border border-gray-300 rounded-md px-2 py-1 shadow-sm",
-              option: ({ isFocused }) =>
-                isFocused ? "bg-blue-100 text-blue-900 px-2 py-1" : "px-2 py-1",
-              menu: () => "bg-white shadow-md rounded-md mt-1",
+            styles={{
+              control: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                padding: 4,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                boxShadow: isFocused
+                  ? "0 0 0 1px #A79351"
+                  : baseStyles.boxShadow,
+                "&:hover": {
+                  borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                },
+              }),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                boxShadow: isDark ? "0 1px 3px #FAFAFA" : "0 0 3px #000000",
+              }),
+              option: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                backgroundColor: isFocused ? "#A7935144" : "",
+              }),
             }}
           />
         </div>
@@ -136,13 +178,34 @@ const InstallationsOrderAndFilter = () => {
             value={selectedOrder}
             onChange={(option) => {
               setSelectedOrder(option);
-              handleChangeOrderAndFilter(selectedStatus, selectedProvince, option);
+              handleChangeOrderAndFilter(
+                selectedStatus,
+                selectedProvince,
+                option
+              );
             }}
-            classNames={{
-              control: () => "border border-gray-300 rounded-md px-2 py-1 shadow-sm",
-              option: ({ isFocused }) =>
-                isFocused ? "bg-blue-100 text-blue-900 px-2 py-1" : "px-2 py-1",
-              menu: () => "bg-white shadow-md rounded-md mt-1",
+            styles={{
+              control: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                padding: 4,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                boxShadow: isFocused
+                  ? "0 0 0 1px #A79351"
+                  : baseStyles.boxShadow,
+                "&:hover": {
+                  borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                },
+              }),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                boxShadow: isDark ? "0 1px 3px #FAFAFA" : "0 0 3px #000000",
+              }),
+              option: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                backgroundColor: isFocused ? "#A7935144" : "",
+              }),
             }}
           />
         </div>

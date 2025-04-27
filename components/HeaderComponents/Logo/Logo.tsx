@@ -5,7 +5,10 @@ import Link from "next/link";
 
 export const Logo: React.FC = () => {
   return (
-    <Link href="/" className="flex gap-2 items-center">
+    <Link
+      href="/"
+      className="flex gap-2 items-center transition-all duration-300 active:scale-95"
+    >
       <Image
         className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px]"
         src={logo}

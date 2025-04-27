@@ -51,11 +51,11 @@ const TrackingCreateModal = () => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.8, y: 20 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="relative bg-white rounded-lg shadow-lg pt-4 w-full max-w-[600px] max-h-[90vh] my-auto flex flex-col overflow-hidden"
+        className="relative bg-bgColor rounded-lg shadow-lg pt-4 w-full max-w-[600px] max-h-[90vh] my-auto flex flex-col overflow-hidden dark:bg-bgColorDark"
       >
         <div className="absolute w-full h-[7px] bg-primaryColor top-0 left-0"></div>
-        <h2 className="text-[20px] font-bold text-bgColorDark/60 mt-[7px] mb-4 px-6">
-          Crear Nueva Orden
+        <h2 className="text-[20px] font-bold text-primaryColor mt-[7px] mb-4 px-6">
+          Crear nueva orden
         </h2>
 
         <div className="overflow-y-auto px-6 pb-6 pt-1">
@@ -83,13 +83,13 @@ const TrackingCreateModal = () => {
                     htmlFor="orderNumber"
                     className="text-sm font-medium text-primaryColor/80"
                   >
-                    Número de Orden
+                    Número de orden
                   </label>
                   <Field
                     name="orderNumber"
                     type="text"
                     placeholder="Ingrese el número de la orden"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                    className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl dark:text-letterColorLight focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                   />
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -115,13 +115,13 @@ const TrackingCreateModal = () => {
                     htmlFor="title"
                     className="text-sm font-medium text-primaryColor/80"
                   >
-                    Nombre de la Orden
+                    Nombre de la orden
                   </label>
                   <Field
                     name="title"
                     type="text"
                     placeholder="Ingrese el nombre de la orden"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                    className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl dark:text-letterColorLight focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                   />
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -151,7 +151,7 @@ const TrackingCreateModal = () => {
                     as="textarea"
                     name="description"
                     placeholder="Ingrese la descripción de la orden"
-                    className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 h-[100px] focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm md:h-[150px]"
+                    className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] w-full outline-none transition-all duration-200 h-[100px] focus:border-primaryColor-xl dark:text-letterColorLight focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50 md:h-[150px]"
                   />
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -177,7 +177,7 @@ const TrackingCreateModal = () => {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="w-full mt-4 bg-bgColorDark/30 text-white p-2 rounded-md order-2 transition-all duration-200 hover:bg-bgColorDark/40 xl:order-1 xl:w-[240px]"
+                    className="w-full mt-4 bg-gray-400 text-white p-2 rounded-md order-2 transition-all duration-200 hover:bg-gray-500 xl:order-1 xl:w-[240px]"
                   >
                     Cancelar
                   </button>

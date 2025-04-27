@@ -7,7 +7,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="bg-primaryTransparentColor p-[22px]">
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-7">
         <p className="font-semibold text-primaryColor text-[16px] text-center sm:text-[22px] lg:text-[24px] xl:text-[28px]">
           Seguínos en nuestras redes
         </p>
