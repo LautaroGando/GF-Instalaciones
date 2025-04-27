@@ -318,7 +318,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
       return allInstallations;
     } catch (error) {
-      console.error("Error al obtener las instalaciones:", error);
+      console.log("Error al obtener las instalaciones:", error);
       return null;
     } finally {
       get().handleLoading(false);

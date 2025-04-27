@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { numberToText } from "@/utils/numberToText";
 import React from "react";
 import IClientOrdersHeaderProps from "./types";
@@ -13,37 +16,70 @@ const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
   const textToShow = isCompleted ? "órdenes completadas" : "órdenes en proceso";
 
   return (
-    <section className="xl:w-[780px] xl:mx-auto">
-      <h2 className="text-primaryColor text-[24px] text-center sm:text-[28px] md:text-[32px]">
-        MIS ORDENES
-      </h2>
+    <motion.section
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+        },
+      }}
+      className="xl:w-[780px] w-full mx-auto px-4"
+    >
 
-      <div className="flex items-start justify-center mt-2 mb-8 h-[45px] sm:h-[52px] md:mt-7 md:mb-12">
+      <motion.h2
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+        }}
+        className="text-primaryColor text-2xl sm:text-3xl md:text-4xl font-bold text-center"
+      >
+        MIS ÓRDENES
+      </motion.h2>
+
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+        }}
+        className="flex items-center justify-center gap-2 mt-6 mb-6 sm:mb-10 h-[48px] sm:h-[56px]"
+      >
         <button
           onClick={() => onViewChange("in process")}
           className={clsx(
-            "w-[50%] h-full flex items-center justify-center font-semibold transition-colors duration-300",
+            "flex-1 h-full flex items-center justify-center rounded-md text-sm sm:text-base font-semibold transition-all duration-300",
             contentToShow === "in process"
-              ? "bg-primaryColor/20 border-b border-primaryColor text-primaryColor"
-              : "text-gray-400 hover:text-primaryColor"
+              ? "bg-primaryColor/20 text-primaryColor border-b-2 border-primaryColor"
+              : "text-gray-400 hover:text-primaryColor hover:scale-105"
           )}
         >
           Órdenes
         </button>
+
         <button
           onClick={() => onViewChange("completed")}
           className={clsx(
-            "w-[50%] h-full flex items-center justify-center font-medium transition-colors duration-300",
+            "flex-1 h-full flex items-center justify-center rounded-md text-sm sm:text-base font-semibold transition-all duration-300",
             contentToShow === "completed"
-              ? "bg-admin-activeColor/20 border-b border-admin-activeColor text-admin-activeColor"
-              : "text-gray-400 hover:text-admin-activeColor"
+              ? "bg-admin-activeColor/20 text-admin-activeColor border-b-2 border-admin-activeColor"
+              : "text-gray-400 hover:text-admin-activeColor hover:scale-105"
           )}
         >
           Historial
         </button>
-      </div>
+      </motion.div>
 
-      <p className="text-base text-center text-gray-500 font-medium tracking-[0.1em] mb-6">
+      <motion.p
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: { duration: 0.4, delay: 1.5, ease: "easeOut" },
+          },
+        }}
+        className="text-sm md:text-base text-center text-gray-500 font-medium tracking-wide mb-8"
+      >
         {textToShow}:{" "}
         <span
           className={clsx(
@@ -54,8 +90,8 @@ const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
           {orderCount}
         </span>{" "}
         ({orderText})
-      </p>
-    </section>
+      </motion.p>
+    </motion.section>
   );
 };
 
