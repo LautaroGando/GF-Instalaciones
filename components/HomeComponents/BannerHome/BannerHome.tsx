@@ -42,7 +42,7 @@ const BannerHome = () => {
               transition={{ duration: 0.8 }}
             >
               <Image
-                className="w-full h-[100vh] object-cover"
+                className="w-full h-[100vh] object-cover object-center"
                 src={img.img}
                 alt="Imagen de instalacion"
                 priority

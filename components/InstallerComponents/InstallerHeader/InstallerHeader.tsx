@@ -27,7 +27,7 @@ export const InstallerHeader: React.FC = () => {
         <MenuInstaller />
         <div
           className={clsx(
-            "fixed top-0 right-0 h-[100dvh] transition-all duration-300 overflow-hidden bg-bgColor flex flex-col justify-between dark:bg-secondaryColor",
+            "fixed top-0 right-0 h-[100dvh] transition-all z-40 duration-300 overflow-hidden bg-bgColor flex flex-col justify-between dark:bg-secondaryColor",
             menu
               ? "w-full shadow-secondaryColor/20 dark:shadow-bgColor/20 sm:w-[400px] sm:shadow-xl"
               : "w-0"

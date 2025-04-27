@@ -43,7 +43,7 @@ const InstallersSelectModal: React.FC = () => {
       >
         <div className="flex flex-col items-center gap-4 mb-6 ">
           <h2 className="text-xl font-semibold text-primaryColor text-center">
-            Seleccionar Instalador
+            Seleccionar instalador
           </h2>
 
           <div className="relative w-full">

@@ -1,8 +1,8 @@
 import { IBannerHomeData } from "./types";
-import img1 from "@/public/assets/images/prueba/1.jpg";
-import img2 from "@/public/assets/images/prueba/2.jpg";
-import img3 from "@/public/assets/images/prueba/3.jpg";
-import img4 from "@/public/assets/images/prueba/4.jpg";
+import img1 from "@/public/assets/images/photoCarousel/1.jpg";
+import img2 from "@/public/assets/images/photoCarousel/2.jpg";
+import img3 from "@/public/assets/images/photoCarousel/3.jpg";
+import img4 from "@/public/assets/images/photoCarousel/4.jpg";
 
 export const bannerHomeData: IBannerHomeData[] = [
   {
