@@ -76,7 +76,7 @@ export const updateOrder = async (
     return response.data;
   } catch (err) {
     console.log(err);
-    
+
     if (axios.isAxiosError(err)) {
       console.error("Error al actualizar la orden");
       throw new Error("No se pudo actualizar la orden.");
@@ -128,9 +128,7 @@ export const getAllInstallations = async (
     const message = axios.isAxiosError(error)
       ? "No se pudieron obtener las instalaciones."
       : "Error inesperado al obtener las instalaciones.";
-
-    console.error(message, error);
-    throw new Error(message);
+    console.log(message);
   }
 };
 

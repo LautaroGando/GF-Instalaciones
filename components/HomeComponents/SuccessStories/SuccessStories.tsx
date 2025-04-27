@@ -25,7 +25,7 @@ export const SuccessStories: React.FC = () => {
                   </span>
                   <CountUp
                     end={data.data}
-                    delay={1}
+                    delay={0.3}
                     duration={3}
                     className="text-6xl text-primaryColor font-bold"
                   />

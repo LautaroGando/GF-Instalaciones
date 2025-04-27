@@ -13,6 +13,7 @@ import { useUserStore } from "@/store/UserStore/userStore";
 import ButtonProfile from "@/components/ui/GeneralComponents/ButtonProfile/ButtonProfile";
 import ButtonInstaller from "@/components/ui/GeneralComponents/ButtonInstaller/ButtonInstaller";
 import ButtonLogout from "@/components/ui/GeneralComponents/ButtonLogout/ButtonLogout";
+import Logo from "@/components/ui/GeneralComponents/Logo/Logo";
 
 export const ResponsiveMenu: React.FC = () => {
   const { user } = useUserStore();
@@ -70,6 +71,7 @@ export const ResponsiveMenu: React.FC = () => {
         )}
       >
         <ul className="flex flex-col gap-7 text-secondaryColor items-center mt-20 dark:text-letterColorLight sm:mt-[90px]">
+          <Logo label="Instalaciones" />
           <SelectTheme />
           {headerLinks.map((link: IHeaderLink, i: number) => {
             const isActive = link.href === `${pathname}${hash}`;

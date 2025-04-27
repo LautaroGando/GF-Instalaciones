@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
     <header
       id="main-header"
       className={clsx(
-        "w-full flex justify-center transition-all duration-300 items-center text-letterColorLight h-[60px] px-[12px] fixed top-0 z-50 sm:px-[20px] sm:h-[70px] lg:h-[80px]",
+        "w-full flex justify-center transition-all duration-300 items-center text-letterColorLight h-[80px] px-[12px] fixed top-0 z-50 sm:px-[20px]",
         pathname !== "/" &&
           "bg-bgColor text-secondaryColor dark:bg-secondaryColor dark:text-letterColorLight"
       )}

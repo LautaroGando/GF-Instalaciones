@@ -4,12 +4,20 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleUser,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
 
 const CoordinatorsSelectModal: React.FC = () => {
-  const { isOpen, closeModal, addCoordinator, selectedCoordinators, deleteCoordinator } =
-    useCoordinatorsSelectModal();
+  const {
+    isOpen,
+    closeModal,
+    addCoordinator,
+    selectedCoordinators,
+    deleteCoordinator,
+  } = useCoordinatorsSelectModal();
   const { users, handleFetchUsers } = useUserStore();
 
   const [search, setSearch] = useState("");
@@ -43,7 +51,7 @@ const CoordinatorsSelectModal: React.FC = () => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-[500px] sm:p-8"
+        className="bg-bgColor rounded-2xl shadow-xl p-6 w-full max-w-[500px] dark:bg-bgColorDark sm:p-8"
       >
         <div className="flex flex-col items-center gap-4 mb-6">
           <h2 className="text-xl font-semibold text-primaryColor text-center">
@@ -60,7 +68,7 @@ const CoordinatorsSelectModal: React.FC = () => {
               placeholder="Buscar coordinadores por nombre"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor transition"
+              className="w-full border border-gray-300 rounded-lg bg-transparent py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primaryColor transition"
             />
           </div>
         </div>
@@ -76,14 +84,21 @@ const CoordinatorsSelectModal: React.FC = () => {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
                   layout
-                  className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200"
+                  className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 dark:bg-gray-100/10"
                 >
                   <div className="flex items-center gap-3">
-                    <FontAwesomeIcon icon={faCircleUser} className="text-gray-500 text-2xl" />
-                    <p className="text-gray-800 font-medium">{coordinator.fullName}</p>
+                    <FontAwesomeIcon
+                      icon={faCircleUser}
+                      className="text-gray-500 text-2xl dark:text-gray-200"
+                    />
+                    <p className="text-gray-800 font-medium dark:text-gray-100">
+                      {coordinator.fullName}
+                    </p>
                   </div>
 
-                  {selectedCoordinators.some((sc) => sc.id === coordinator.id) ? (
+                  {selectedCoordinators.some(
+                    (sc) => sc.id === coordinator.id
+                  ) ? (
                     <button
                       onClick={() => deleteCoordinator(coordinator.id)}
                       className="border border-red-500 text-red-500 px-4 py-1.5 rounded-lg text-sm hover:bg-red-500 hover:text-white transition"

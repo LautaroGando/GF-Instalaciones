@@ -10,9 +10,9 @@ export const Logo: React.FC<ILogoProps> = ({ label }: ILogoProps) => {
     <div
       className={clsx(
         "flex relative lg:z-50",
-        label === "Instaladores"
-          ? "w-[170px] h-[65px]"
-          : "w-[170px] h-[90px] mt-20 mx-auto lg:mt-0"
+        label === "Instaladores" || label === 'Instalaciones'
+          ? "w-[180px] h-[65px]"
+          : "w-[180px] h-[90px] mt-20 mx-auto lg:mt-0"
       )}
     >
       <Image
@@ -20,14 +20,14 @@ export const Logo: React.FC<ILogoProps> = ({ label }: ILogoProps) => {
           "absolute",
           label === "Instaladores" ? "w-[61px]" : "w-[73px]"
         )}
-        src={label === "Instaladores" ? logoInstaller : logoAdmin}
+        src={label === "Instaladores" || label === 'Instalaciones' ? logoInstaller : logoAdmin}
         alt="Logo del Admin"
         priority
       />
       <h2
         className={clsx(
           "self-end text-right w-full",
-          label === "Instaladores"
+          label === "Instaladores" || label === 'Instalaciones'
             ? "text-primaryColor text-xl"
             : "text-letterColorLight text-[36px]"
         )}

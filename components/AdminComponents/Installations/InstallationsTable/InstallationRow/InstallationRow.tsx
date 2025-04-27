@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const rowVariants = {
   hidden: {
@@ -61,6 +62,8 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
   onViewAddress,
   wasRecentlyEdited,
 }) => {
+  const { isDark } = useThemeStore();
+
   return (
     <motion.tr
       layout
@@ -70,7 +73,12 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
       exit="exit"
       style={{
         borderBottomWidth: 1,
-        backgroundColor: wasRecentlyEdited ? "#dcfce7" : "",
+        backgroundColor:
+          wasRecentlyEdited && isDark
+            ? "#444444"
+            : wasRecentlyEdited && !isDark
+            ? "#DCFCE7"
+            : "",
       }}
       transition={{
         backgroundColor: { duration: wasRecentlyEdited ? 1.5 : 0 },
@@ -116,11 +124,13 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
           transition={{ type: "spring", stiffness: 100, damping: 14 }}
           className={clsx(
             "font-bold",
-            installation.status === "Pendiente" || installation.status === "En proceso"
+            installation.status === "Pendiente" ||
+              installation.status === "En proceso"
               ? "text-primaryColor"
               : installation.status === "A revisar"
               ? "text-admin-editColor"
-              : installation.status === "Pospuesta" || installation.status === "Cancelada"
+              : installation.status === "Pospuesta" ||
+                installation.status === "Cancelada"
               ? "text-admin-inactiveColor"
               : "text-admin-activeColor"
           )}
@@ -154,7 +164,8 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
         variants={cellVariants}
         className="px-4 h-12 whitespace-nowrap"
       >
-        {(installation.notes && installation.notes.trim() !== "") || installation.images ? (
+        {(installation.notes && installation.notes.trim() !== "") ||
+        installation.images ? (
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
@@ -192,15 +203,18 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
               <DropdownMenuItem
                 onClick={onEdit}
                 disabled={
-                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "Pospuesta"
                 }
                 title={
-                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "Pospuesta"
                     ? "Solo se puede editar una instalación pendiente"
                     : undefined
                 }
                 className={`text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm rounded-md transition-colors duration-200 ${
-                  installation.status !== "Pendiente" && installation.status !== "Pospuesta"
+                  installation.status !== "Pendiente" &&
+                  installation.status !== "Pospuesta"
                     ? "cursor-not-allowed text-gray-400/60"
                     : "cursor-pointer text-admin-editColor data-[highlighted]:bg-admin-editColor/10 data-[highlighted]:text-admin-editColor"
                 }`}
@@ -222,15 +236,18 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
               <DropdownMenuItem
                 onClick={onCancel}
                 disabled={
-                  installation.status === "Cancelada" || installation.status === "Finalizada"
+                  installation.status === "Cancelada" ||
+                  installation.status === "Finalizada"
                 }
                 title={
-                  installation.status === "Cancelada" || installation.status === "Finalizada"
+                  installation.status === "Cancelada" ||
+                  installation.status === "Finalizada"
                     ? "No se puede cancelar una instalación ya cancelada o finalizada"
                     : undefined
                 }
                 className={`text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm rounded-md transition-colors duration-200 ${
-                  installation.status === "Cancelada" || installation.status === "Finalizada"
+                  installation.status === "Cancelada" ||
+                  installation.status === "Finalizada"
                     ? "cursor-not-allowed text-gray-400/60"
                     : "cursor-pointer text-admin-inactiveColor data-[highlighted]:bg-admin-inactiveColor/10 data-[highlighted]:text-admin-inactiveColor"
                 }`}

@@ -6,6 +6,7 @@ import { IFilter, IOrder } from "@/data/OrderAndFilter/types";
 import { IOrderAndFilterProps } from "./types";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { motion } from "motion/react";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -38,6 +39,7 @@ export const OrderAndFilter: React.FC<IOrderAndFilterProps> = ({
     useState<SingleValue<IFilter>>(null);
   const [selectedOrder, setSelectedOrder] = useState<SingleValue<IOrder>>(null);
   const [mounted, setMounted] = useState(false);
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     setMounted(true);
@@ -67,12 +69,28 @@ export const OrderAndFilter: React.FC<IOrderAndFilterProps> = ({
               setSelectedFilter(option);
               handleFilterUsers(option?.value || "");
             }}
-            classNames={{
-              control: () =>
-                "border border-gray-300 rounded-md px-2 py-1 shadow-sm",
-              option: ({ isFocused }) =>
-                isFocused ? "bg-blue-100 text-blue-900 px-2 py-1" : "px-2 py-1",
-              menu: () => "bg-white shadow-md rounded-md mt-1",
+            styles={{
+              control: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                padding: 4,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                boxShadow: isFocused
+                  ? "0 0 0 1px #A79351"
+                  : baseStyles.boxShadow,
+                "&:hover": {
+                  borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                },
+              }),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                boxShadow: isDark ? "0 1px 3px #FAFAFA" : "0 0 3px #000000",
+              }),
+              option: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                backgroundColor: isFocused ? "#A7935144" : "",
+              }),
             }}
           />
         </div>
@@ -93,12 +111,28 @@ export const OrderAndFilter: React.FC<IOrderAndFilterProps> = ({
               setSelectedOrder(option);
               handleOrderUsers(option?.value || "");
             }}
-            classNames={{
-              control: () =>
-                "border border-gray-300 rounded-md px-2 py-1 shadow-sm",
-              option: ({ isFocused }) =>
-                isFocused ? "bg-blue-100 text-blue-900 px-2 py-1" : "px-2 py-1",
-              menu: () => "bg-white shadow-md rounded-md mt-1",
+            styles={{
+              control: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                padding: 4,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                boxShadow: isFocused
+                  ? "0 0 0 1px #A79351"
+                  : baseStyles.boxShadow,
+                "&:hover": {
+                  borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                },
+              }),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                boxShadow: isDark ? "0 1px 3px #FAFAFA" : "0 0 3px #000000",
+              }),
+              option: (baseStyles, { isFocused }) => ({
+                ...baseStyles,
+                backgroundColor: isFocused ? "#A7935144" : "",
+              }),
             }}
           />
         </div>
