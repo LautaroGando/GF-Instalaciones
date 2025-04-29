@@ -22,10 +22,8 @@ import { useThemeStore } from "@/store/ThemeStore/themeStore";
 const InstallationEditModal = () => {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const { isOpen, closeModal, selectedInstallation } =
-    useInstallationsEditModal();
-  const { handleUpdateInstallation, setEditedInstallationId } =
-    useTrackingStore();
+  const { isOpen, closeModal, selectedInstallation } = useInstallationsEditModal();
+  const { handleUpdateInstallation, setEditedInstallationId } = useTrackingStore();
 
   const {
     selectedInstallers,
@@ -118,9 +116,7 @@ const InstallationEditModal = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validateEditInstallation}
-              onSubmit={(values, formikHelpers) =>
-                handleOnSubmit(values, formikHelpers)
-              }
+              onSubmit={(values, formikHelpers) => handleOnSubmit(values, formikHelpers)}
             >
               {({
                 handleSubmit,
@@ -173,10 +169,7 @@ const InstallationEditModal = () => {
                       setFieldValue={setFieldValue}
                     />
 
-                    <Form
-                      onSubmit={customSubmit}
-                      className="space-y-3 text-bgColorDark/60"
-                    >
+                    <Form onSubmit={customSubmit} className="space-y-3 text-bgColorDark/60">
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -194,7 +187,8 @@ const InstallationEditModal = () => {
                         </label>
                         <Field
                           name="startDate"
-                          type="date"
+                          type="datetime-local"
+                          step="900"
                           className="shadow-sm shadow-primaryColor/60 bg-transparent p-2 rounded-[4px] w-full outline-none dark:text-letterColorLight"
                         />
                         {errors.startDate && touched.startDate && (
@@ -312,9 +306,7 @@ const InstallationEditModal = () => {
                               : "hover:bg-primaryColorHover"
                           }`}
                         >
-                          {isSubmitting
-                            ? "Guardando..."
-                            : "Guardar instalación"}
+                          {isSubmitting ? "Guardando..." : "Guardar instalación"}
                         </button>
                       </motion.div>
                     </Form>
