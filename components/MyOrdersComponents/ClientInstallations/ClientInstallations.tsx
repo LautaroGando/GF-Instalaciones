@@ -30,7 +30,7 @@ const ClientInstallations = () => {
 
   if (isLoading || isLoadingInstallations) {
     return (
-      <div className="flex items-center justify-center min-h-[600px]">
+      <div className="mb-5 py-5 flex items-center justify-center min-h-[600px]">
         <Loading theme="light" />
       </div>
     );

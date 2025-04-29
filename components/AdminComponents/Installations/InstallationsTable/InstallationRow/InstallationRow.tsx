@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { formatDateWithTime } from "@/utils/formatDateWithTime";
 
 const rowVariants = {
   hidden: {
@@ -78,24 +79,15 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
       }}
       className="border-b"
     >
-      <motion.td
-        variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap"
-      >
-        {installation.startDate || "-"}
+      <motion.td variants={cellVariants} className="px-4 h-12 whitespace-nowrap">
+        {installation.startDate ? formatDateWithTime(installation.startDate) : "-"}
       </motion.td>
 
-      <motion.td
-        variants={cellVariants}
-        className="px-4 h-14 whitespace-nowrap"
-      >
-        {installation.endDate || "-"}
+      <motion.td variants={cellVariants} className="px-4 h-12 whitespace-nowrap">
+        {installation.endDate ? formatDateWithTime(installation.startDate) : "-"}
       </motion.td>
 
-      <motion.td
-        variants={cellVariants}
-        className="px-4 h-14 whitespace-nowrap"
-      >
+      <motion.td variants={cellVariants} className="px-4 h-14 whitespace-nowrap">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
@@ -106,10 +98,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
         </motion.button>
       </motion.td>
 
-      <motion.td
-        variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap"
-      >
+      <motion.td variants={cellVariants} className="px-4 h-12 whitespace-nowrap">
         <motion.span
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -129,17 +118,11 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
         </motion.span>
       </motion.td>
 
-      <motion.td
-        variants={cellVariants}
-        className="px-4 h-14 align-middle whitespace-nowrap"
-      >
+      <motion.td variants={cellVariants} className="px-4 h-14 align-middle whitespace-nowrap">
         <span className="text-letterColor">{coordinatorName}</span>
       </motion.td>
 
-      <motion.td
-        variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap"
-      >
+      <motion.td variants={cellVariants} className="px-4 h-12 whitespace-nowrap">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
@@ -150,10 +133,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
         </motion.button>
       </motion.td>
 
-      <motion.td
-        variants={cellVariants}
-        className="px-4 h-12 whitespace-nowrap"
-      >
+      <motion.td variants={cellVariants} className="px-4 h-12 whitespace-nowrap">
         {(installation.notes && installation.notes.trim() !== "") || installation.images ? (
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -188,7 +168,6 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
               align="end"
               className="w-48 rounded-md shadow-lg border border-gray-200 bg-white"
             >
-              {/* Editar */}
               <DropdownMenuItem
                 onClick={onEdit}
                 disabled={
@@ -209,7 +188,6 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
                 Editar
               </DropdownMenuItem>
 
-              {/* Eliminar */}
               <DropdownMenuItem
                 onClick={onDelete}
                 className="text-inherit flex items-center gap-3 px-4 py-3 min-h-[48px] text-base sm:text-sm cursor-pointer text-admin-deleteColor data-[highlighted]:bg-admin-deleteColor/10 data-[highlighted]:text-admin-deleteColor rounded-md transition-colors duration-200"
@@ -218,7 +196,6 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
                 Eliminar
               </DropdownMenuItem>
 
-              {/* Cancelar */}
               <DropdownMenuItem
                 onClick={onCancel}
                 disabled={
@@ -239,7 +216,6 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
                 Cancelar
               </DropdownMenuItem>
 
-              {/* Posponer */}
               <DropdownMenuItem
                 onClick={onPostpone}
                 disabled={

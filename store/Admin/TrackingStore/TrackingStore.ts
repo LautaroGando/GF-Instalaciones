@@ -112,7 +112,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
     return selectedOrder.installations.filter(
       (inst) =>
-        normalize(inst.address.city.name ?? "").includes(search) ||
+        normalize(inst.address?.city?.name ?? "").includes(search) ||
         normalize(inst.coordinator?.user.fullName ?? "").includes(search)
     );
   },
@@ -170,8 +170,6 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   // ===========================
 
   handleFetchOrders: async (params?: Partial<TOrdersQueryParams>) => {
-    get().handleLoading(true);
-
     try {
       const {
         progress = "",
@@ -201,8 +199,6 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       }));
     } catch (err) {
       console.error("Error al obtener las órdenes:", err);
-    } finally {
-      get().handleLoading(false);
     }
   },
 
@@ -210,6 +206,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     try {
       get().handleLoading(true);
       const newOrder: IOrder = await createOrder(values);
+      console.log(newOrder);
+      
       setTimeout(() => {
         set((state) => ({ orders: [newOrder, ...state.orders] }));
       }, 500);
@@ -327,30 +325,32 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   handleCreateInstallation: async (orderId: string, values: ICreateInstallationFormValues) => {
     try {
       const newInstallation = await createInstallation(orderId, values);
+      console.log(newInstallation);
 
-      set((state) => {
-        const updatedOrders = state.orders.map((order) =>
+      const normalizedInstallation = Array.isArray(newInstallation)
+        ? newInstallation[0]
+        : newInstallation;
+
+      set((state) => ({
+        orders: state.orders.map((order) =>
           order.id === orderId
             ? {
                 ...order,
-                installations: [...(order.installations || []), newInstallation],
+                installations: [normalizedInstallation, ...(order.installations || [])],
               }
             : order
-        );
-
-        const updatedSelectedOrder =
+        ),
+        selectedOrder:
           state.selectedOrder?.id === orderId
             ? {
                 ...state.selectedOrder,
-                installations: [...(state.selectedOrder.installations || []), newInstallation],
+                installations: [
+                  normalizedInstallation,
+                  ...(state.selectedOrder.installations || []),
+                ],
               }
-            : state.selectedOrder;
-
-        return {
-          orders: updatedOrders,
-          selectedOrder: updatedSelectedOrder,
-        };
-      });
+            : state.selectedOrder,
+      }));
 
       return newInstallation;
     } catch (err) {
