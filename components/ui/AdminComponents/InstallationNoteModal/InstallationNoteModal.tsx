@@ -112,7 +112,7 @@ const InstallationNoteModal: React.FC = () => {
                   onClick={() => handleFinishInstallation()}
                   className="mt-6 w-full bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover"
                 >
-                  Finalizar Instalación
+                  Finalizar instalación
                 </button>
               )}
               <button

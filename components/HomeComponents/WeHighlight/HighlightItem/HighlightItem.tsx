@@ -1,22 +1,25 @@
 import React from "react";
-import Image from "next/image";
-import starImage from "@/public/assets/ilustrations/home/star.svg";
 import { IHighlightItemProps } from "./types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const HighlightItem: React.FC<IHighlightItemProps> = ({ title, description }) => {
+const HighlightItem: React.FC<IHighlightItemProps> = ({
+  title,
+  description,
+  icon,
+}) => {
   return (
     <div className="flex flex-col flex-1 items-center justify-start gap-[11px] p-4 min-h-[216px] bg-primaryTransparentColor border-b-[3px] border-primaryColor md:mx-auto md:w-[100%] md:max-w-[280px] lg:max-w-[295px] lg:gap-[17px] xl:max-w-[390px]">
       <div className="mb-2">
-        <Image
-          src={starImage}
-          alt="Imagen de estrella"
-          className="size-[40px] select-none lg:size-[55px] xl:size-[80px]"
+        <FontAwesomeIcon
+          icon={icon}
+          className="size-[40px] text-primaryColor select-none lg:size-[55px] xl:size-[80px]"
+          width={80}
         />
       </div>
-      <h3 className="text-center text-[14px] text-primaryColor font-semibold sm:w-[90%] md:w-[70%] lg:text-[18px] xl:text-[24px]">
+      <h3 className="text-center text-lg text-primaryColor font-semibold sm:w-[90%] md:w-[80%] lg:text-xl xl:text-2xl">
         {title}
       </h3>
-      <p className="text-center text-[12px] text-primaryColor lg:text-[14px] xl:text-[16px]">
+      <p className="text-center text-primaryColor xl:text-lg">
         {description}
       </p>
     </div>

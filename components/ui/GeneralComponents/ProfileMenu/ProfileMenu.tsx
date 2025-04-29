@@ -42,7 +42,9 @@ export const ProfileMenu: React.FC = () => {
       ref={menuAdminProfileRef}
       className={clsx(
         "hidden absolute w-[250px] p-0 overflow-hidden bg-bgColor top-full mt-[10.3px] transition-all duration-300 shadow-lg shadow-bgColorDark/20 right-0 dark:bg-secondaryColor dark:shadow-bgColor/20 lg:flex lg:flex-col",
-        open ? "h-[144px]" : "h-0 p-0 border-none"
+        open
+          ? `${userInfo?.admin ? "h-[96px]" : "h-[144px]"}`
+          : "h-0 p-0 border-none"
       )}
     >
       <ButtonProfile classes="lg:flex lg:gap-3 lg:items-center lg:w-full lg:h-[50px] lg:text-center lg:transition-all lg:p-3 lg:hover:bg-primaryColor/20 lg:hover:font-semibold lg:hover:border-none" />

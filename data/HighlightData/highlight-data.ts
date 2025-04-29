@@ -1,20 +1,28 @@
+import {
+  faMagnifyingGlass,
+  faRocket,
+  faScrewdriverWrench,
+} from "@fortawesome/free-solid-svg-icons";
 import { IHighlightData } from "./types";
 
 export const highlightItems: IHighlightData[] = [
   {
-    title: "Calidad Superior en Instalaciones",
+    title: "Simultaneidad nacional real",
     description:
-      "En GF Instalaciones, contamos con 28 años de experiencia instalando gráfica de gran formato con la más alta calidad, utilizando materiales de primera y técnicas avanzadas para superar las expectativas de nuestros clientes.",
+      "Más de 120 instaladores activos, permitiendo acciones simultáneas en todo el país.",
+    icon: faRocket,
   },
   {
-    title: "Experiencia y Profesionalismo",
+    title: "Seguimiento en tiempo real",
     description:
-      "Nuestro equipo de profesionales expertos asegura que cada proyecto se complete con eficacia y precisión, garantizando la satisfacción total del cliente.",
+      "Nuestro sistema de Tracking te permitirá seguir tus instalaciones en tiempo real, recibir reportes fotográficos y validar cada proyecto al instante.",
+    icon: faMagnifyingGlass,
   },
   {
-    title: "Soluciones Personalizadas",
+    title: "Especialización exclusiva",
     description:
-      "Ofrecemos soluciones personalizadas que se adaptan a las necesidades únicas de cada cliente, maximizando el impacto visual de su gráfica.",
+      "Nos dedicamos únicamente a la instalación de gráfica de gran formato.",
+    icon: faScrewdriverWrench,
   },
 ];
 

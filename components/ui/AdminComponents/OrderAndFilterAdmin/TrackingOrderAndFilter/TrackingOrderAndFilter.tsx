@@ -2,12 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import Select, { SingleValue } from "react-select";
-import { selectStyles } from "@/constants/classNames";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
-import { orderTableFilterOptions, orderTableOrderOptions } from "@/utils/orderTableOptions";
+import {
+  orderTableFilterOptions,
+  orderTableOrderOptions,
+} from "@/utils/orderTableOptions";
 import TFiltersSelectOption from "@/data/AdminComponents/installationsFiltersAndOrders/installationFiltersOptions/types";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import { motion } from "framer-motion";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -35,9 +38,12 @@ const itemVariants = {
 
 const TrackingOrderAndFilter = () => {
   const [mounted, setMounted] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState<SingleValue<TFiltersSelectOption>>(null);
-  const [selectedOrder, setSelectedOrder] = useState<SingleValue<TFiltersSelectOption>>(null);
+  const [selectedFilter, setSelectedFilter] =
+    useState<SingleValue<TFiltersSelectOption>>(null);
+  const [selectedOrder, setSelectedOrder] =
+    useState<SingleValue<TFiltersSelectOption>>(null);
   const { handleFetchOrders } = useTrackingStore();
+  const { isDark } = useThemeStore();
 
   useEffect(() => {
     setMounted(true);
@@ -87,7 +93,29 @@ const TrackingOrderAndFilter = () => {
                 setSelectedFilter(option);
                 handleChangeOrderAndFilter(option, selectedOrder);
               }}
-              classNames={selectStyles}
+              styles={{
+                control: (baseStyles, { isFocused }) => ({
+                  ...baseStyles,
+                  padding: 4,
+                  backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                  borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                  boxShadow: isFocused
+                    ? "0 0 0 1px #A79351"
+                    : baseStyles.boxShadow,
+                  "&:hover": {
+                    borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                  },
+                }),
+                menu: (baseStyles) => ({
+                  ...baseStyles,
+                  backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                  boxShadow: isDark ? "0 1px 3px #FAFAFA" : "0 0 3px #000000",
+                }),
+                option: (baseStyles, { isFocused }) => ({
+                  ...baseStyles,
+                  backgroundColor: isFocused ? "#A7935144" : "",
+                }),
+              }}
             />
           </div>
         )}
@@ -108,7 +136,29 @@ const TrackingOrderAndFilter = () => {
                 setSelectedOrder(option);
                 handleChangeOrderAndFilter(selectedFilter, option);
               }}
-              classNames={selectStyles}
+              styles={{
+                control: (baseStyles, { isFocused }) => ({
+                  ...baseStyles,
+                  padding: 4,
+                  backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                  borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                  boxShadow: isFocused
+                    ? "0 0 0 1px #A79351"
+                    : baseStyles.boxShadow,
+                  "&:hover": {
+                    borderColor: isFocused ? "#A79351" : baseStyles.borderColor,
+                  },
+                }),
+                menu: (baseStyles) => ({
+                  ...baseStyles,
+                  backgroundColor: isDark ? "#000000" : "#FAFAFA",
+                  boxShadow: isDark ? "0 1px 3px #FAFAFA" : "0 0 3px #000000",
+                }),
+                option: (baseStyles, { isFocused }) => ({
+                  ...baseStyles,
+                  backgroundColor: isFocused ? "#A7935144" : "",
+                }),
+              }}
             />
           </div>
         )}

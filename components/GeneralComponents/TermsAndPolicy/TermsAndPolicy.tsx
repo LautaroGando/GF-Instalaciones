@@ -27,10 +27,10 @@ export const TermsAndPolicy: React.FC<
         >
           <div
             className={clsx(
-              "text-primaryColor flex items-center w-full min-h-[50px] cursor-pointer justify-between transition-all duration-300 px-3 hover:bg-primaryColor/5",
+              "text-primaryColor flex items-center w-full min-h-[50px] cursor-pointer justify-between transition-all duration-300 px-3",
               isOpen === d.id
                 ? "bg-primaryColor/10"
-                : "bg-bgColor dark:bg-bgColorDark"
+                : "bg-bgColor hover:bg-primaryColor/5 dark:bg-bgColorDark dark:hover:bg-primaryColor/5"
             )}
           >
             <h2

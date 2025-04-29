@@ -8,7 +8,7 @@ const HomeTitle: React.FC<IHomeTitleProps> = ({ text, justLine = false }) => {
       <span className="block w-[200px] h-[1px] bg-primaryColor sm:w-[350px] lg:w-[450px] xl:w-[600px]"></span>
       <h2
         className={clsx(
-          "font-titleFont font-bold text-primaryColor text-center text-[20px] sm:text-[24px] lg:text-[32px] xl:text-[36px]",
+          "font-titleFont font-bold text-primaryColor text-center mt-5 text-[20px] sm:text-[24px] lg:text-[32px] xl:text-[36px]",
           { hidden: justLine }
         )}
       >

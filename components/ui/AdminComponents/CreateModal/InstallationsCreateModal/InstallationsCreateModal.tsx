@@ -120,11 +120,11 @@ const InstallationsCreateModal = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="bg-white relative rounded-lg shadow-lg pt-4 w-full max-w-[600px] max-h-[90vh] my-auto flex flex-col overflow-hidden"
+          className="bg-bgColor relative rounded-lg shadow-lg pt-4 w-full max-w-[600px] max-h-[90vh] my-auto flex flex-col overflow-hidden dark:bg-bgColorDark"
         >
           <div className="absolute w-full h-[7px] bg-primaryColor top-0 left-0"></div>
           <h2 className="text-[20px] font-bold text-primaryColor mt-[7px] mb-4 px-6">
-            Crear Nueva Instalación
+            Crear nueva instalación
           </h2>
           <div className="overflow-y-auto px-6 pb-6 pt-1">
             <Formik<ICreateInstallationFormValues>
@@ -165,11 +165,20 @@ const InstallationsCreateModal = () => {
                         name="address.province"
                         as="select"
                         placeholder="Ingrese la provincia"
-                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] text-sm w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                        className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] text-sm w-full outline-none transition-all duration-200 dark:text-letterColorLight focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                       >
-                        <option value="">Seleccionar provincia</option>
+                        <option
+                          value=""
+                          className="bg-bgColor dark:bg-bgColorDark"
+                        >
+                          Seleccionar provincia
+                        </option>
                         {provincesMock.map((province, i) => (
-                          <option key={i} value={province.name}>
+                          <option
+                            key={i}
+                            value={province.name}
+                            className="bg-bgColor dark:bg-bgColorDark"
+                          >
                             {province.name}
                           </option>
                         ))}
@@ -207,7 +216,7 @@ const InstallationsCreateModal = () => {
                         name="address.city"
                         type="text"
                         placeholder="Ingrese la ciudad"
-                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                        className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] w-full outline-none transition-all duration-200 dark:text-letterColorLight focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                       />
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
@@ -241,7 +250,7 @@ const InstallationsCreateModal = () => {
                         name="address.street"
                         type="text"
                         placeholder="Ingrese la calle"
-                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                        className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] w-full outline-none transition-all duration-200 dark:text-letterColorLight focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                       />
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
@@ -275,7 +284,7 @@ const InstallationsCreateModal = () => {
                         name="address.number"
                         type="text"
                         placeholder="Ingrese el número de calle"
-                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                        className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] w-full outline-none transition-all duration-200 dark:text-letterColorLight focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                       />
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
@@ -303,13 +312,13 @@ const InstallationsCreateModal = () => {
                         htmlFor="address.postalCode"
                         className="text-sm font-medium text-primaryColor/80"
                       >
-                        Código Postal
+                        Código postal
                       </label>
                       <Field
                         name="address.postalCode"
                         type="text"
                         placeholder="Ingrese el código postal"
-                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                        className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] w-full outline-none transition-all duration-200 dark:text-letterColorLight focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                       />
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
@@ -345,7 +354,7 @@ const InstallationsCreateModal = () => {
                         name="address.note"
                         type="text"
                         placeholder="Ingrese una nota (opcional)"
-                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm"
+                        className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] w-full outline-none transition-all duration-200 dark:text-letterColorLight focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                       />
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
@@ -373,7 +382,7 @@ const InstallationsCreateModal = () => {
                         htmlFor="startDate"
                         className="text-sm font-medium text-primaryColor/80"
                       >
-                        Fecha de Inicio
+                        Fecha de inicio
                       </label>
                       <Field
                         name="startDate"
@@ -408,9 +417,9 @@ const InstallationsCreateModal = () => {
                         htmlFor="selectedInstallers"
                         className="text-sm font-medium text-primaryColor/80"
                       >
-                        Instaladores Seleccionados
+                        Instaladores seleccionados
                       </label>
-                      <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px]">
+                      <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px] dark:bg-gray-100/10 dark:border-gray-300/20">
                         {selectedInstallers.length > 0 ? (
                           selectedInstallers.map((installer) => (
                             <motion.div
@@ -418,7 +427,7 @@ const InstallationsCreateModal = () => {
                               initial={{ opacity: 0, scale: 0.8 }}
                               animate={{ opacity: 1, scale: 1 }}
                               transition={{ duration: 0.2, ease: "easeOut" }}
-                              className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm"
+                              className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm "
                             >
                               <p>{installer.user.fullName}</p>
                               <button
@@ -466,7 +475,7 @@ const InstallationsCreateModal = () => {
                       <button
                         type="button"
                         onClick={openInstallersModal}
-                        className="w-full mt-2 border border-primaryColor text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover hover:text-white"
+                        className="w-full mt-2 border border-primaryColor bg-primaryColor text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-transparent hover:text-primaryColor"
                       >
                         Seleccionar instaladores
                       </button>
@@ -485,9 +494,9 @@ const InstallationsCreateModal = () => {
                         htmlFor="selectedCoordinators"
                         className="text-sm font-medium text-primaryColor/80"
                       >
-                        Coordinador Seleccionado
+                        Coordinador seleccionado
                       </label>
-                      <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px]">
+                      <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px] dark:bg-gray-100/10 dark:border-gray-300/20">
                         {selectedCoordinators.length > 0 ? (
                           selectedCoordinators.map((coordinator) => (
                             <motion.div
@@ -543,7 +552,7 @@ const InstallationsCreateModal = () => {
                       <button
                         type="button"
                         onClick={openCoordinatorsModal}
-                        className="w-full mt-2 border border-primaryColor text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover hover:text-white"
+                        className="w-full mt-2 border border-primaryColor bg-primaryColor text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-transparent hover:text-primaryColor"
                       >
                         Seleccionar coordinador
                       </button>
@@ -562,7 +571,7 @@ const InstallationsCreateModal = () => {
                       <button
                         type="button"
                         onClick={closeModal}
-                        className="w-full mt-4 order-2 bg-bgColorDark/30 text-white p-2 rounded-md transition-all duration-200 hover:bg-bgColorDark/40 xl:order-1 xl:w-[240px]"
+                        className="w-full mt-4 order-2 bg-gray-400 text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-gray-500 xl:order-1 xl:w-[240px]"
                       >
                         Cancelar
                       </button>
@@ -570,7 +579,7 @@ const InstallationsCreateModal = () => {
                         type="submit"
                         className="w-full mt-4 order-1 bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover xl:w-[240px]"
                       >
-                        Crear Instalación
+                        Crear instalación
                       </button>
                     </motion.div>
                   </Form>

@@ -1,4 +1,5 @@
 export const formatDate = (date: string) => {
+  console.log(date);
   const objectDate = new Date(date);
   const year = objectDate.getFullYear();
   const month =
@@ -18,3 +19,11 @@ export const formatDateToInput = (date: string) => {
   return `${year}-${month}-${day}`;
 };
 
+export const formatHour = (date: string) => {
+  const objectDate = new Date(date);
+
+  const hours = objectDate.getHours().toString().padStart(2, "0");
+  const minutes = objectDate.getMinutes().toString().padStart(2, "0");
+
+  return `${hours}:${minutes}hs`;
+};

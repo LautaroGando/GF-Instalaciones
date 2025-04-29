@@ -5,7 +5,7 @@ import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 export const Contact: React.FC = () => {
   return (
     <section className="flex flex-col gap-10">
-      <HomeTitle text="Contacto" />
+      <HomeTitle text="Hablemos de tu próximo proyecto" />
       <FormContact />
     </section>
   );

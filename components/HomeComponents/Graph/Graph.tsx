@@ -6,7 +6,7 @@ import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 export const Graph: React.FC = () => {
   return (
     <section className="flex flex-col gap-10 -mt-[70px]">
-      <HomeTitle text="¿Necesitas Instalar gráfica?" />
+      <HomeTitle text="¿Necesitas instalar gráfica?" />
       <div className="flex flex-col gap-4 lg:flex-row lg:gap-10">
         <PreviewJobs />
         <InfoGraph />

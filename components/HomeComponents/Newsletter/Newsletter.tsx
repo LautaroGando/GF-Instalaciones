@@ -16,7 +16,7 @@ const Newsletter = () => {
         />
         <div className="flex flex-col items-center gap-y-4 lg:items-start">
           <h3 className="flex flex-col text-center text-[20px] font-bold sm:text-[26px] lg:text-left xl:text-[28px]">
-            <span>Suscríbete a Nuestro</span> <span>Newsletter</span>
+            <span>Suscríbete a nuestro</span> <span>newsletter</span>
           </h3>
           <p className="flex flex-col text-center text-[14px] sm:text-[16px] lg:text-left xl:text-[18px]">
             <span className="hidden sm:block">

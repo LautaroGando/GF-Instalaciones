@@ -19,13 +19,23 @@ export const FormContact: React.FC = () => {
         priority
       />
       <Formik
-        initialValues={{ name: "", surname: "", email: "", message: "" }}
+        initialValues={{
+          name: "",
+          surname: "",
+          email: "",
+          phone: "",
+          company: "",
+          message: "",
+        }}
         validate={validateContact}
         onSubmit={() => {}}
       >
         {({ errors, touched, values }: FormikProps<IContact>) => (
-          <Form className="w-full flex flex-col gap-[14px] max-w-[496px]">
-            <div className="flex flex-col gap-5 h-[500px]">
+          <Form className="w-full flex flex-col gap-3 max-w-[496px]">
+            <h3 className="text-primaryColor font-semibold text-2xl">
+              Contacto:
+            </h3>
+            <div className="flex flex-col gap-7 sm:gap-2">
               {formContactData.map((field: IFormContactData, i: number) => (
                 <InputField<IContact>
                   key={i}
@@ -38,7 +48,7 @@ export const FormContact: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="bg-primaryColor text-letterColorLight font-titleFont transition-all duration-300 border border-transparent text-lg font-bold h-[52px] rounded-tl-[20px] rounded-br-[20px] hover:bg-transparent hover:text-primaryColor hover:border-primaryColor sm:rounded-tl-[30px] sm:rounded-br-[30px] sm:h-[60px] sm:text-xl"
+              className="bg-primaryColor mt-5 text-letterColorLight transition-all duration-300 border border-transparent text-lg font-medium w-[200px] mx-auto h-[40px] rounded-sm hover:bg-primaryColorHover"
             >
               Enviar
             </button>
