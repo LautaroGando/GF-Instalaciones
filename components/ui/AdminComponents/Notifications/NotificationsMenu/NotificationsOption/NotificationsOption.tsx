@@ -7,7 +7,7 @@ export const NotificationsOption: React.FC = () => {
     useAdminNotificationStore();
 
   return (
-    <div className="flex h-[40px] w-full sticky top-0 bg-bgColor dark:bg-secondaryColor">
+    <div className="flex min-h-[60px] w-full sticky top-0 z-30 bg-bgColor border-b dark:bg-secondaryColor">
       <button
         onClick={() => handleToggle("messages")}
         className={clsx(
@@ -18,9 +18,7 @@ export const NotificationsOption: React.FC = () => {
       >
         Mensajes
       </button>
-      <div
-        className="w-[1px] h-full bg-primaryColor"
-      ></div>
+      <div className="w-[1px] h-full bg-primaryColor"></div>
       <button
         onClick={() => handleToggle("notifications")}
         className={clsx(

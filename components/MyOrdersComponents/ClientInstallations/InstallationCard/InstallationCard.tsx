@@ -10,7 +10,7 @@ const InstallationCard: React.FC<IInstallationCardProps> = ({ styles, installati
 
   return (
     <div
-      className="relative rounded-2xl border-t-4 bg-white p-6 rounded-br-none shadow-md transition-all duration-500 hover:shadow-[0_4px_8px_rgba(0,0,0,0.12)] dark:bg-gray-900 group"
+      className="relative rounded-2xl border-t-4 bg-white p-6 rounded-br-none shadow-md transition-all duration-300 hover:shadow-[0_4px_8px_rgba(0,0,0,0.12)] dark:bg-gray-900 group"
       style={{ borderColor: styles.border, }}
     >
       {/* id, direccion y estado */}

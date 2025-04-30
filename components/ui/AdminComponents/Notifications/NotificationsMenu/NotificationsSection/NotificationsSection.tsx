@@ -5,14 +5,33 @@ import React from "react";
 import ButtonAction from "./ButtonAction/ButtonAction";
 import { capitalize } from "@/utils/capitalize";
 import clsx from "clsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBellSlash } from "@fortawesome/free-solid-svg-icons";
 
 export const NotificationsSection: React.FC = () => {
   const { users, isLoading, moreInfo } = useUserStore();
 
+  const filterUsersInProccess = users?.filter(
+    (user: IUser) => user.installer?.status === "EN PROCESO"
+  );
+
+  if (filterUsersInProccess?.length === 0) {
+    return (
+      <div className="flex items-center gap-3 text-gray-400 h-[500px]  justify-center lg:h-[385px]">
+        <FontAwesomeIcon
+          className="text-[25px] w-[25px]"
+          icon={faBellSlash}
+          width={25}
+        />
+        <p>No se encontraron notificaciones.</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       {isLoading ? (
-        <div className="h-[560px] flex items-center">
+        <div className="h-[385px] flex items-center">
           <Loading theme="light" />
         </div>
       ) : (

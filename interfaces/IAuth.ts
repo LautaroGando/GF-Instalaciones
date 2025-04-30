@@ -34,3 +34,8 @@ export interface IUserSignUpOption {
   value: string;
   option: string;
 }
+
+export interface IUserRecoveryPassword {
+  newPassword: string;
+  repeatPassword: string;
+}

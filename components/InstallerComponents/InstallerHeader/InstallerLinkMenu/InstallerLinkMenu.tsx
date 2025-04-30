@@ -14,7 +14,7 @@ export const InstallerLinkMenu: React.FC = () => {
   const { handleCloseMenu } = useMenuInstallerStore();
 
   return (
-    <div className="flex flex-col gap-10 items-center mt-[85px]">
+    <div className="flex flex-col gap-10 items-center">
       <Logo label="Instaladores" />
       <SelectTheme />
       <div className="flex flex-col items-center w-full">

@@ -15,7 +15,7 @@ export const headerLinks: IHeaderLink[] = [
     label: "Servicios",
     href: "/services",
   },
- /*  {
+  /*  {
     label: "Blog",
     href: "/blog",
   }, */
@@ -33,6 +33,17 @@ export const headerLinksInstaller: IHeaderLink[] = [
   {
     label: "Historial",
     href: "/installer/history",
+  },
+];
+
+export const headerLinksCoordinator: IHeaderLink[] = [
+  {
+    label: "Instalaciones",
+    href: "/coordinator/installations",
+  },
+  {
+    label: "Historial",
+    href: "/coordinator/history",
   },
 ];
 

@@ -7,6 +7,7 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 import PersonalizedPopUp from "../../GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import clsx from "clsx";
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -31,7 +32,8 @@ const modalVariants = {
 };
 
 const InstallationNoteModal: React.FC = () => {
-  const { isOpen, installation, title, text, images, closeModal } = useInstallationNoteModalStore();
+  const { isOpen, installation, title, text, images, closeModal } =
+    useInstallationNoteModalStore();
   const { handleInstallationStatus } = useTrackingStore();
   const { isDark } = useThemeStore();
 
@@ -49,7 +51,8 @@ const InstallationNoteModal: React.FC = () => {
       textSuccess: "La instalación ha sido finalizada.",
       titleError: "Error al finalizar",
       textError: "No se pudo finalizar la instalación. Intenta nuevamente.",
-      genericFunction: () => handleInstallationStatus(installation.id, "Finalizada"),
+      genericFunction: () =>
+        handleInstallationStatus(installation.id, "Finalizada"),
       closeModal: () => closeModal(),
     });
 
@@ -72,7 +75,10 @@ const InstallationNoteModal: React.FC = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="bg-bgColor p-6 rounded-xl shadow-lg w-full max-w-lg relative z-60 dark:bg-secondaryColor dark:shadow-bgColor/20"
+            className={clsx(
+              "bg-bgColor p-6 rounded-xl shadow-lg max-h-[600px] border-t-[10px] border-primaryColor flex flex-col justify-between overflow-y-auto w-full max-w-lg relative z-60 dark:bg-secondaryColor dark:shadow-bgColor/20",
+              images.length > 0 ? "h-[90%]" : ""
+            )}
           >
             <motion.h2
               initial={{ opacity: 0, y: -10 }}
@@ -83,7 +89,12 @@ const InstallationNoteModal: React.FC = () => {
               {title}:
             </motion.h2>
 
-            <div className="text-sm leading-relaxed max-h-[400px] overflow-y-auto">
+            <div
+              className={clsx(
+                "text-sm leading-relaxed overflow-y-auto",
+                images.length > 0 ? "min-h-[400px]" : ""
+              )}
+            >
               <div dangerouslySetInnerHTML={{ __html: text || "" }} />
 
               {images.length > 0 && (
