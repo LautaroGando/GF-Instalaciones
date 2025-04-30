@@ -3,7 +3,6 @@ import Logo from "@/components/ui/GeneralComponents/Logo/Logo";
 import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectTheme";
 import {
   headerLinksCoordinator,
-  headerLinksInstaller,
 } from "@/data/HeaderLinks/header-links";
 import { IHeaderLink } from "@/data/HeaderLinks/types";
 import { useMenuInstallerStore } from "@/store/MenuInstallerStore/menuinstallerStore";

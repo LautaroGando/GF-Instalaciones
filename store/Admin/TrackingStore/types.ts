@@ -83,10 +83,7 @@ export interface ITrackingProps {
     params?: Partial<TInstallationQueryParams>
   ) => Promise<IInstallation[] | null>;
 
-  handleCreateInstallation: (
-    id: string,
-    values: ICreateInstallationFormValues
-  ) => Promise<IInstallation>;
+  handleCreateInstallation: (id: string, values: ICreateInstallationFormValues) => Promise<IOrder>
   handleUpdateInstallation: (
     installationId: string,
     values: IEditInstallationFormValues

@@ -72,7 +72,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
 
   return (
     <motion.tr
-      layout
+      layout="position"
       initial="hidden"
       animate="visible"
       exit="exit"
@@ -239,10 +239,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
                   whileTap={{ scale: 0.95 }}
                   className="w-8 h-8 flex items-center justify-center rounded bg-primaryColor hover:bg-primaryColorHover transition-colors"
                 >
-                  <FontAwesomeIcon
-                    icon={faBarsStaggered}
-                    className="text-white"
-                  />
+                  <FontAwesomeIcon icon={faBarsStaggered} className="text-white" />
                 </motion.button>
               </div>
             </DropdownMenuTrigger>

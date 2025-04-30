@@ -5,7 +5,6 @@ import ResponsiveMenuAdmin from "./ResponsiveMenuAdmin/ResponsiveMenuAdmin";
 import ButtonMenuAdmin from "./ResponsiveMenuAdmin/ButtonMenuAdmin/ButtonMenuAdmin";
 import Notifications from "../../ui/AdminComponents/Notifications/Notifications";
 import AdminProfile from "@/components/ui/AdminComponents/AdminProfile/AdminProfile";
-import ButtonOpenMenu from "@/components/ui/GeneralComponents/ButtonOpenMenu/ButtonOpenMenu";
 import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectTheme";
 
 export const AdminHeader: React.FC = () => {

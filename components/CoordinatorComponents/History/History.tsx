@@ -1,7 +1,6 @@
 "use client";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import IInstallation from "@/interfaces/IInstallation";
-import { IInstaller } from "@/interfaces/IInstaller";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { formatDate, formatHour } from "@/utils/formatDate";

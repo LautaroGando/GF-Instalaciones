@@ -43,7 +43,7 @@ const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
         }}
-        className="flex items-center justify-center gap-2 mt-6 mb-6 sm:mb-10 h-[48px] sm:h-[56px]"
+        className="flex items-center justify-center gap-2 mt-6 mb-6 sm:mb-12 h-[48px] sm:h-[56px]"
       >
         <button
           onClick={() => onViewChange("in process")}

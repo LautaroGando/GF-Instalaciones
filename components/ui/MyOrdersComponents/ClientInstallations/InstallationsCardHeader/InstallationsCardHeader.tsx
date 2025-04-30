@@ -8,7 +8,7 @@ const InstallationsCardHeader: React.FC<IInstallationsCardHeaderProps> = ({
   return (
     <div className="flex flex-col mb-3 sm:flex-row sm:justify-between sm:items-center sm:mb-6">
       <div className="order-2 flex items-center sm:order-1">
-        <div className="h-[68px] mt-4 sm:mt-0 sm:h-max">
+        <div className="h-[88px] mt-4 sm:mt-0 sm:h-max">
           <p className="text-xs text-gray-500">ID: {installation.id}</p>
           <p className="text-secondaryColor/60 font-medium my-1">
             {installation.address.street} {installation.address.number},{" "}

@@ -30,7 +30,7 @@ const ClientOrders = () => {
   }
 
   return (
-    <div className="mb-16 md:max-w-[780px] md:mx-auto xl:max-w-none">
+    <div className="mb-5 py-5 md:max-w-[780px] md:mx-auto xl:max-w-none">
       <ClientOrdersHeader
         orderCount={orderCount}
         contentToShow={contentToShow}
