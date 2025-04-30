@@ -62,36 +62,36 @@ export const Installation: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col gap-10 max-w-[1200px] mx-auto">
+    <div className="flex flex-col gap-10 max-w-[1200px] min-h-[calc(100dvh-120px)] mx-auto">
       <h1 className="text-primaryColor text-2xl text-center w-full border-b border-primaryColor py-3 ">
         INSTALACIONES
       </h1>
       {isLoading ? (
-        <div className="w-full h-[calc(100dvh-217px)] flex items-center">
+        <div className="w-full flex items-center h-[calc(100vh-181px)]">
           <Loading theme="light" />
         </div>
       ) : filterIncompleteInstallations &&
         filterIncompleteInstallations.length > 0 ? (
-        <div className="grid grid-cols-1 place-items-center place-content-start gap-5 py-2 h-[calc(100dvh-217px)] overflow-auto md:grid-cols-2 lg:grid-cols-3">
-          {filterIncompleteInstallations?.map((instalattion: IInstallation) => {
+        <div className="grid grid-cols-1 place-items-center place-content-start gap-5 py-2 md:grid-cols-2 lg:grid-cols-3">
+          {filterIncompleteInstallations?.map((installation: IInstallation) => {
             if (
-              instalattion.status === "Cancelada" ||
-              instalattion.status === "Finalizada"
+              installation.status === "Cancelada" ||
+              installation.status === "Finalizada"
             )
               return;
 
             return (
               <div
-                key={instalattion.id}
+                key={installation.id}
                 className={clsx(
                   "w-full max-w-[320px] min-h-[370px] max-h-[370px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5 dark:shadow-[3px_0px_2px_#fafafa40]",
-                  instalattion.status === "Pendiente"
+                  installation.status === "Pendiente"
                     ? "border-primaryColor"
-                    : instalattion.status === "En proceso"
+                    : installation.status === "En proceso"
                     ? "border-installer-inProccess bg-primaryColor text-letterColorLight"
-                    : instalattion.status === "A revisar"
+                    : installation.status === "A revisar"
                     ? "border-installer-toReview"
-                    : instalattion.status === "Pospuesta" &&
+                    : installation.status === "Pospuesta" &&
                       "border-installer-postponed"
                 )}
               >
@@ -99,57 +99,57 @@ export const Installation: React.FC = () => {
                   <h6
                     className={clsx(
                       "text-xs font-bold border-l-[3px] pl-1",
-                      instalattion.status === "Pendiente"
+                      installation.status === "Pendiente"
                         ? "text-primaryColor border-primaryColor"
-                        : instalattion.status === "En proceso"
+                        : installation.status === "En proceso"
                         ? "text-letterColorLight border-bgColor"
-                        : instalattion.status === "A revisar"
+                        : installation.status === "A revisar"
                         ? "text-installer-toReview border-installer-toReview"
-                        : instalattion.status === "Pospuesta" &&
+                        : installation.status === "Pospuesta" &&
                           "text-installer-postponed border-installer-postponed"
                     )}
                   >
-                    {instalattion.status}
+                    {installation.status}
                   </h6>
                   <p className="text-xs">
-                    {instalattion.startDate &&
-                      formatDate(instalattion.startDate)}
+                    {installation.startDate &&
+                      formatDate(installation.startDate)}
                   </p>
                 </div>
                 <div className="text-sm font-semibold flex flex-col gap-1 px-2">
                   <h3>
-                    ID: <span className="font-normal">{instalattion.id}</span>
+                    ID: <span className="font-normal">{installation.id}</span>
                   </h3>
                   <h3>
                     Dirección:{" "}
                     <span className="font-normal">
-                      {instalattion.address.street}{" "}
-                      {instalattion.address.number}
+                      {installation.address.street}{" "}
+                      {installation.address.number}
                     </span>
                   </h3>
                   <h3>
                     Ciudad:{" "}
                     <span className="font-normal">
-                      {instalattion.address.city.province.name}
+                      {installation.address.city.province.name}
                     </span>
                   </h3>
                   <h3>
                     Localidad:{" "}
                     <span className="font-normal">
-                      {instalattion.address.city.name}
+                      {installation.address.city.name}
                     </span>
                   </h3>
                   <h3>
                     CP:{" "}
                     <span className="font-normal">
-                      {instalattion.address.postalCode}
+                      {installation.address.postalCode}
                     </span>
                   </h3>
                   <h3>
                     Horario:{" "}
                     <span className="font-normal">
-                      {instalattion.startDate &&
-                        formatHour(instalattion.startDate)}
+                      {installation.startDate &&
+                        formatHour(installation.startDate)}
                     </span>
                   </h3>
                 </div>
@@ -162,13 +162,13 @@ export const Installation: React.FC = () => {
                   <div className="flex flex-col text-sm">
                     <h3 className="font-bold">Coordinador</h3>
                     <h4>
-                      {instalattion.coordinator?.user?.fullName ||
+                      {installation.coordinator?.user?.fullName ||
                         "Sin coordinador"}
                     </h4>
                   </div>
                 </div>
                 <div className="flex justify-center text-sm">
-                  {instalattion.status === "Pendiente" ? (
+                  {installation.status === "Pendiente" ? (
                     <button
                       onClick={() => {
                         PersonalizedPopUp({
@@ -185,7 +185,7 @@ export const Installation: React.FC = () => {
                           confirmButtonText: "Sí, confirmar",
                           genericFunction: () =>
                             handleInstallationStatus(
-                              instalattion.id,
+                              installation.id,
                               "En proceso"
                             ),
                         });
@@ -194,29 +194,29 @@ export const Installation: React.FC = () => {
                     >
                       Llegué
                     </button>
-                  ) : instalattion.status === "En proceso" ? (
+                  ) : installation.status === "En proceso" ? (
                     <button
                       onClick={handleOpenModal}
                       className="rounded-sm w-[200px] h-[40px] bg-bgColor border border-bgColor text-primaryColor transition-all duration-300 font-semibold hover:bg-primaryColor hover:text-letterColorLight"
                     >
                       Completar
                     </button>
-                  ) : instalattion.status === "A revisar" ? (
+                  ) : installation.status === "A revisar" ? (
                     <div className="w-full h-[40px] bg-installer-toReview/15 text-installer-toReview flex items-center justify-center font-bold">
                       <h3>EN REVISIÓN</h3>
                     </div>
                   ) : (
-                    instalattion.status === "Pospuesta" && (
+                    installation.status === "Pospuesta" && (
                       <div className="w-full h-[40px] bg-installer-postponed/15 text-installer-postponed flex flex-col items-center justify-center font-bold">
                         <h3>POSPUESTA</h3>
                         <h4 className="font-normal">
-                          {instalattion.startDate}
+                          {installation.startDate}
                         </h4>
                       </div>
                     )
                   )}
                 </div>
-                <ModalCompleteInstallation id={instalattion.id} />
+                <ModalCompleteInstallation id={installation.id} />
               </div>
             );
           })}

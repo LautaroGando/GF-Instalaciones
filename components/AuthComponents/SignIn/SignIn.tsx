@@ -21,7 +21,7 @@ export const SignIn: React.FC = () => {
       {view === "signUp" && <ImageForm />}
       <div
         className={clsx(
-          "w-full p-3 bg-signInGradient flex flex-col justify-between gap-10 min-h-[900px] max-h-[900px] transition-all duration-500 dark:bg-signInGradientDark",
+          "w-full p-3 bg-signInGradient flex flex-col justify-between gap-10 min-h-[900px] max-h-[900px] transition-all duration-300 dark:bg-signInGradientDark",
           view === "signUp" ? "hidden scale-75" : "flex scale-100"
         )}
       >

@@ -20,7 +20,7 @@ export const SignUp: React.FC = () => {
       {view === "signIn" && <ImageForm />}
       <div
         className={clsx(
-          "w-full p-3 flex flex-col items-center gap-10 transition-all duration-500",
+          "w-full p-3 flex flex-col items-center gap-10 transition-all duration-300",
           view === "signIn" ? "hidden scale-75" : "flex scale-100"
         )}
       >

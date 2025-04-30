@@ -52,34 +52,34 @@ export const History: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col gap-10 max-w-[1200px] mx-auto">
+    <div className="flex flex-col gap-10 max-w-[1200px] min-h-[calc(100dvh-120px)] mx-auto">
       <h1 className="text-primaryColor text-2xl text-center w-full border-b border-primaryColor py-3 ">
         HISTORIAL
       </h1>
       {isLoading ? (
-        <div className="w-full h-[calc(100dvh-217px)] flex items-center">
+        <div className="w-full flex items-center h-[calc(100vh-181px)]">
           <Loading theme="light" />
         </div>
       ) : filterCompleteInstallations &&
         filterCompleteInstallations.length > 0 ? (
-        <div className="grid grid-cols-1 place-items-center py-2 place-content-start gap-5 h-[calc(100dvh-217px)] overflow-auto md:grid-cols-2 lg:grid-cols-3">
-          {filterCompleteInstallations?.map((instalattion: IInstallation) => {
+        <div className="grid grid-cols-1 place-items-center py-2 place-content-start gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {filterCompleteInstallations?.map((installation: IInstallation) => {
             if (
-              instalattion.status === "A revisar" ||
-              instalattion.status === "En proceso" ||
-              instalattion.status === "Pendiente" ||
-              instalattion.status === "Pospuesta"
+              installation.status === "A revisar" ||
+              installation.status === "En proceso" ||
+              installation.status === "Pendiente" ||
+              installation.status === "Pospuesta"
             )
               return;
 
             return (
               <div
-                key={instalattion.id}
+                key={installation.id}
                 className={clsx(
                   "w-full max-w-[320px] min-h-[370px] max-h-[370px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5 dark:shadow-[3px_0px_2px_#fafafa40]",
-                  instalattion.status === "Cancelada"
+                  installation.status === "Cancelada"
                     ? "border-installer-cancelled"
-                    : instalattion.status === "Finalizada" &&
+                    : installation.status === "Finalizada" &&
                         "border-installer-finalized"
                 )}
               >
@@ -87,53 +87,53 @@ export const History: React.FC = () => {
                   <h6
                     className={clsx(
                       "text-xs font-bold border-l-[3px] pl-1",
-                      instalattion.status === "Cancelada"
+                      installation.status === "Cancelada"
                         ? "text-installer-cancelled border-installer-cancelled"
-                        : instalattion.status === "Finalizada" &&
+                        : installation.status === "Finalizada" &&
                             "text-installer-finalized border-installer-finalized"
                     )}
                   >
-                    {instalattion.status}
+                    {installation.status}
                   </h6>
                   <p className="text-xs">
-                    {instalattion.startDate &&
-                      formatDate(instalattion.startDate)}
+                    {installation.startDate &&
+                      formatDate(installation.startDate)}
                   </p>
                 </div>
                 <div className="text-sm font-semibold flex flex-col gap-1 px-2">
                   <h3>
-                    ID: <span className="font-normal">{instalattion.id}</span>
+                    ID: <span className="font-normal">{installation.id}</span>
                   </h3>
                   <h3>
                     Dirección:{" "}
                     <span className="font-normal">
-                      {instalattion.address.street}{" "}
-                      {instalattion.address.number}
+                      {installation.address.street}{" "}
+                      {installation.address.number}
                     </span>
                   </h3>
                   <h3>
                     Ciudad:{" "}
                     <span className="font-normal">
-                      {instalattion.address.city.province.name}
+                      {installation.address.city.province.name}
                     </span>
                   </h3>
                   <h3>
                     Localidad:{" "}
                     <span className="font-normal">
-                      {instalattion.address.city.name}
+                      {installation.address.city.name}
                     </span>
                   </h3>
                   <h3>
                     CP:{" "}
                     <span className="font-normal">
-                      {instalattion.address.postalCode}
+                      {installation.address.postalCode}
                     </span>
                   </h3>
                   <h3>
                     Horario:{" "}
                     <span className="font-normal">
-                      {instalattion.startDate &&
-                        formatHour(instalattion.startDate)}
+                      {installation.startDate &&
+                        formatHour(installation.startDate)}
                     </span>
                   </h3>
                 </div>
@@ -146,22 +146,22 @@ export const History: React.FC = () => {
                   <div className="flex flex-col text-sm">
                     <h3 className="font-bold">Coordinador</h3>
                     <h4>
-                      {instalattion.coordinator?.user?.fullName ||
+                      {installation.coordinator?.user?.fullName ||
                         "Sin coordinador"}
                     </h4>
                   </div>
                 </div>
                 <div className="flex justify-center text-sm">
-                  {instalattion.status === "Cancelada" ? (
+                  {installation.status === "Cancelada" ? (
                     <div className="w-full h-[40px] bg-installer-cancelled/15 text-installer-cancelled flex flex-col items-center justify-center font-bold">
                       <h3>CANCELADA</h3>
-                      <h4 className="font-normal">{instalattion.endDate}</h4>
+                      <h4 className="font-normal">{installation.endDate}</h4>
                     </div>
                   ) : (
-                    instalattion.status === "Finalizada" && (
+                    installation.status === "Finalizada" && (
                       <div className="w-full h-[40px] bg-installer-finalized/15 text-installer-finalized flex flex-col items-center justify-center font-bold">
                         <h3>FINALIZADA</h3>
-                        <h4 className="font-normal">{instalattion.endDate}</h4>
+                        <h4 className="font-normal">{installation.endDate}</h4>
                       </div>
                     )
                   )}
