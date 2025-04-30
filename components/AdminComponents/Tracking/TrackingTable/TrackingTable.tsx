@@ -16,8 +16,7 @@ import { useThemeStore } from "@/store/ThemeStore/themeStore";
 const TrackingTable = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
   const { openModal: openTrackingEditModal } = useTrackingEditModal();
-  const { handleFetchOrders, handleDeleteOrder, isLoading, getFilteredOrders } =
-    useTrackingStore();
+  const { handleFetchOrders, handleDeleteOrder, isLoading, getFilteredOrders } = useTrackingStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
   const filteredOrders = getFilteredOrders();
   const { isDark } = useThemeStore();
@@ -74,13 +73,15 @@ const TrackingTable = () => {
     openTrackingTextModal(title, text);
   };
 
+  console.log(filteredOrders);
+
   return (
     <>
       <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
         <table className="text-sm text-left w-full border-collapse">
           <TrackingTableHeader />
-          <tbody>
-            <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="popLayout">
+            <tbody>
               {filteredOrders.map((order) => (
                 <TrackingRow
                   key={order.id}
@@ -88,15 +89,12 @@ const TrackingTable = () => {
                   editOrder={() => handleEditOrder(order)}
                   deleteOrder={() => handleDeleteOrderClick(order.id)}
                   openTextModal={() =>
-                    handleOpenTextModal(
-                      "Descripción de la Orden",
-                      order.description
-                    )
+                    handleOpenTextModal("Descripción de la Orden", order.description)
                   }
                 />
               ))}
-            </AnimatePresence>
-          </tbody>
+            </tbody>
+          </AnimatePresence>
         </table>
       </div>
 

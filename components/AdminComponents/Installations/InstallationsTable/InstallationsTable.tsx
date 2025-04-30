@@ -48,6 +48,9 @@ const InstallationsTable = () => {
     );
   }
 
+  console.log(filteredInstallations);
+  
+
   return (
     <>
       <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
@@ -55,13 +58,13 @@ const InstallationsTable = () => {
           <InstallationsTableHeader />
           <tbody>
             <AnimatePresence>
-              {filteredInstallations.map((installation: IInstallation, i) => {
+              {filteredInstallations.map((installation: IInstallation) => {
                 const coordinatorName = installation.coordinator?.user.fullName || "-";
 
                 return (
                   <InstallationRow
-                    key={i}
-                    installation={installation}
+                    key={installation.id}
+                    installation={Array.isArray(installation) ? installation[0]: installation}
                     coordinatorName={coordinatorName}
                     onEdit={() => handleEdit(installation)}
                     onDelete={() => handleDelete(installation.id)}

@@ -43,7 +43,7 @@ const ClientInstallationsHeader: React.FC<{ order: IOrder }> = ({ order }) => {
       >
         <Link
           href="/my-orders"
-          className="inline-flex items-center gap-2 rounded-md border border-primaryColor px-4 py-2 text-primaryColor text-sm font-semibold transition-all hover:bg-primaryColor/80 hover:text-white hover:shadow-md active:bg-primaryColor"
+          className="inline-flex items-center gap-2 mb-3 rounded-md border border-primaryColor px-4 py-2 text-primaryColor text-sm font-semibold transition-all hover:bg-primaryColor/80 hover:text-white hover:shadow-md active:bg-primaryColor"
         >
           ← Volver
         </Link>
