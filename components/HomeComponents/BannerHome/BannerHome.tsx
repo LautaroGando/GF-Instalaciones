@@ -53,9 +53,9 @@ const BannerHome = () => {
       </div>
 
       <div className="absolute bottom-[20px] left-[8px] flex items-center justify-center gap-2 z-20 sm:bottom-[26px] sm:left-[20px] md:gap-[12px]">
-        <span className="h-[94.9px] w-[4px] rounded-[100px] bg-primaryColor block sm:h-[162.14px] md:h-[176.81px] lg:h-[202.4px] xl:h-[225.07px]"></span>
+        <span className="h-[94.9px] w-[4px] rounded-[100px] bg-primaryColor block sm:h-[129.23px] lg:h-[202.4px] xl:h-[225.07px]"></span>
         <div>
-          <p className="flex flex-col text-white text-[15px] font-bold leading-[122%] sm:text-[29px] md:text-[33px] lg:text-[40px] xl:text-[44px]">
+          <p className="flex flex-col text-white text-[15px] font-bold leading-[122%] sm:text-[20px] lg:text-[40px] xl:text-[44px]">
             <span>SOMOS LA RED DE INSTALADORES DE</span>
             <span>GRÁFICA LIVIANA MÁS</span>
             <span>GRANDE DEL PAÍS</span>

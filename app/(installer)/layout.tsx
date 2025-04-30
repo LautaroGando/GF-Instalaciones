@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function InstallerPanel({ children }: { children: ReactNode }) {
+export default function InstallerLayout({ children }: { children: ReactNode }) {
   return (
     <div className="bg-bgColor transition-all duration-300 font-textFont text-secondaryColor dark:text-letterColorLight dark:bg-secondaryColor">
       <InstallerHeader />
