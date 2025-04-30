@@ -1,6 +1,5 @@
 import {
   headerLinksCoordinator,
-  headerLinksInstaller,
 } from "@/data/HeaderLinks/header-links";
 import { IHeaderLink } from "@/data/HeaderLinks/types";
 import clsx from "clsx";
