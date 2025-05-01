@@ -26,7 +26,7 @@ export const UserStats: React.FC = () => {
     <div className="rounded-[5px] shadow-md p-2 w-full min-h-[200px] flex flex-col">
       <h2 className="font-medium">Usuarios</h2>
       {isLoading ? (
-        <div className="h-full flex items-center">
+        <div className="h-[160px] flex items-center">
           <Loading theme="light" />
         </div>
       ) : (

@@ -17,7 +17,7 @@ export const Newslatter: React.FC = () => {
   const userInfo = "user" in user ? user.user : user;
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 py-20 sm:py-0">
       <h2 className="text-xl text-center">¿Qué es nuestro Newsletter?</h2>
       <p className="font-light max-w-[700px] mx-auto">
         Nuestro newsletter te mantiene informado sobre las últimas novedades en

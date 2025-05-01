@@ -11,7 +11,7 @@ export const Profile: React.FC = () => {
   const { editMenu } = useUserStore();
 
   return (
-    <div className="flex flex-col gap-5 py-14 lg:flex-row lg:items-center">
+    <div className="flex flex-col gap-5 py-20 sm:py-0 lg:flex-row lg:items-center">
       {editMenu && <ModalEditProfile />}
       <div className="flex flex-col gap-5 w-max sm:mx-auto lg:flex-1">
         <h2 className="font-medium text-primaryColor sm:self-start">

@@ -2,10 +2,10 @@
 import React, { useEffect, useRef } from "react";
 import SectionInfo from "./SectionInfo/SectionInfo";
 import SectionLink from "./SectionLink/SectionLink";
-import ButtonLogout from "@/components/ui/GeneralComponents/ButtonLogout/ButtonLogout";
 import clsx from "clsx";
 import { useMenuAdminStore } from "@/store/MenuAdminStore/menuAdminStore";
 import SelectTheme from "@/components/ui/GeneralComponents/SelectTheme/SelectTheme";
+import BackButton from "@/components/ui/GeneralComponents/BackButton/BackButton";
 
 export const ResponsiveMenuAdmin: React.FC = () => {
   const { menuAdmin, handleCloseMenuAdmin } = useMenuAdminStore();
@@ -48,8 +48,8 @@ export const ResponsiveMenuAdmin: React.FC = () => {
         <SectionInfo />
         <SectionLink />
       </div>
-      <div className="text-center lg:hidden">
-        <ButtonLogout />
+      <div className="text-center">
+        <BackButton />
       </div>
     </div>
   );

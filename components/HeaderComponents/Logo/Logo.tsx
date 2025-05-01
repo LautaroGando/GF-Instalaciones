@@ -7,7 +7,7 @@ export const Logo: React.FC = () => {
   return (
     <Link
       href="/"
-      className="flex gap-2 items-center transition-all duration-300 active:scale-95"
+      className="flex gap-2 items-center"
     >
       <Image
         className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px]"

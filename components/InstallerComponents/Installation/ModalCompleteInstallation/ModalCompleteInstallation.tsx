@@ -10,22 +10,20 @@ export const ModalCompleteInstallation: React.FC<
   const { completeModal } = useTrackingStore();
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        {completeModal && (
-          <motion.div
-            key={id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "backInOut" }}
-            className="fixed w-full h-[100vh] bg-secondaryColor/30 left-0 top-0 z-50"
-          >
-            <FormCompleteInstallation id={id} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <AnimatePresence mode="wait">
+      {completeModal && (
+        <motion.div
+          key={id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "backInOut" }}
+          className="fixed w-full h-[100vh] bg-secondaryColor/30 left-0 top-0 z-50"
+        >
+          <FormCompleteInstallation id={id} />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
