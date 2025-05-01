@@ -7,11 +7,11 @@ import IClientOrdersHeaderProps from "./types";
 import clsx from "clsx";
 
 const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
-  orderCount,
+  finalCount,
   contentToShow,
   onViewChange,
 }) => {
-  const orderText = numberToText(orderCount);
+  const orderText = numberToText(finalCount);
   const isCompleted = contentToShow === "completed";
   const textToShow = isCompleted ? "órdenes completadas" : "órdenes en proceso";
 
@@ -27,13 +27,12 @@ const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
       }}
       className="xl:w-[780px] w-full mx-auto px-4"
     >
-
       <motion.h2
         variants={{
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
         }}
-        className="text-primaryColor text-2xl sm:text-3xl md:text-4xl font-bold text-center"
+        className="text-primaryColor text-2xl sm:text-3xl md:text-4xl font-bold text-center "
       >
         MIS ÓRDENES
       </motion.h2>
@@ -48,10 +47,10 @@ const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
         <button
           onClick={() => onViewChange("in process")}
           className={clsx(
-            "flex-1 h-full flex items-center justify-center rounded-md text-sm sm:text-base font-semibold transition-all duration-300",
+            "flex-1 h-full flex items-center justify-center text-sm sm:text-base font-semibold rounded-xl transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primaryColor",
             contentToShow === "in process"
-              ? "bg-primaryColor/20 text-primaryColor border-b-2 border-primaryColor"
-              : "text-gray-400 hover:text-primaryColor hover:scale-105"
+              ? "bg-primaryColor/10 text-primaryColor border-b-2 border-primaryColor shadow-inner dark:bg-primaryColor/10 dark:text-primaryColor"
+              : "text-gray-500 dark:text-gray-300 hover:text-primaryColor hover:bg-primaryColor/5 dark:hover:bg-primaryColor/10 hover:shadow-md hover:scale-[1.02]"
           )}
         >
           Órdenes
@@ -60,10 +59,10 @@ const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
         <button
           onClick={() => onViewChange("completed")}
           className={clsx(
-            "flex-1 h-full flex items-center justify-center rounded-md text-sm sm:text-base font-semibold transition-all duration-300",
+            "flex-1 h-full flex items-center justify-center text-sm sm:text-base font-semibold rounded-xl transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-admin-activeColor",
             contentToShow === "completed"
-              ? "bg-admin-activeColor/20 text-admin-activeColor border-b-2 border-admin-activeColor"
-              : "text-gray-400 hover:text-admin-activeColor hover:scale-105"
+              ? "bg-admin-activeColor/10 text-admin-activeColor border-b-2 border-admin-activeColor shadow-inner dark:bg-admin-activeColor/10 dark:text-admin-activeColor"
+              : "text-gray-500 dark:text-gray-300 hover:text-admin-activeColor hover:bg-admin-activeColor/5 dark:hover:bg-admin-activeColor/10 hover:shadow-md hover:scale-[1.02]"
           )}
         >
           Historial
@@ -78,7 +77,7 @@ const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
             transition: { duration: 0.4, delay: 1.5, ease: "easeOut" },
           },
         }}
-        className="text-sm md:text-base text-center text-gray-500 font-medium tracking-wide mb-8"
+        className="text-sm min-h-[40px] dark:text-white/70 md:text-base text-center text-gray-500 font-medium tracking-wide mb-8"
       >
         {textToShow}:{" "}
         <span
@@ -87,7 +86,7 @@ const ClientOrdersHeader: React.FC<IClientOrdersHeaderProps> = ({
             isCompleted ? "text-admin-activeColor" : "text-primaryColor"
           )}
         >
-          {orderCount}
+          {finalCount}
         </span>{" "}
         ({orderText})
       </motion.p>

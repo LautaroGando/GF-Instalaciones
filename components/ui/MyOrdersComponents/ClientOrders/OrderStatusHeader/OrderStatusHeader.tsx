@@ -4,6 +4,8 @@ import { IOrderCardStatusProps } from "./types";
 import clsx from "clsx";
 
 const OrderStatusHeader: React.FC<IOrderCardStatusProps> = ({ orderIsCompleted, order }) => {
+  console.log(order);
+  
   return (
     <motion.div
       initial="hidden"
@@ -28,7 +30,7 @@ const OrderStatusHeader: React.FC<IOrderCardStatusProps> = ({ orderIsCompleted, 
       >
         {orderIsCompleted ? "Completada" : "En Proceso"}
       </span>
-      <span className="text-gray-500">
+      <span className="text-gray-500 dark:text-white">
         {new Date(order.startDate).toLocaleDateString("es-AR")}
       </span>
     </motion.div>

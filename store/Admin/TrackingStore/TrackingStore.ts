@@ -11,6 +11,7 @@ import {
   getAllInstallations,
   getAllInstallationsNotPagination,
   getAllOrders,
+  getAllOrdersWithParams,
   getOrderById,
   updateInstallation,
   updateInstallationStatus,
@@ -29,6 +30,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   // ===========================
 
   orders: [],
+  allOrders: [],
   selectedOrder: null as IOrder | null,
   isLoading: false,
   ordersPage: 1,
@@ -153,7 +155,6 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       await get().handleFetchInstallations(orderId, { page: newPage });
     }
   },
-
   installationsPreviousPage: async () => {
     const currentPage = get().installationsPage;
     const orderId = get().selectedOrder?.id;
@@ -169,8 +170,22 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   // 📦 5. Ordenes
   // ===========================
 
+  handleFetchAllOrders: async () => {
+    try {
+      get().handleLoading(true);
+      const { result: allOrdersData } = await getAllOrders();
+      set(() => ({
+        allOrders: allOrdersData,
+      }));
+    } catch (err) {
+      console.error("Error al obtener las órdenes:", err);
+    }finally{
+      get().handleLoading(false);
+    }
+  },
   handleFetchOrders: async (params?: Partial<TOrdersQueryParams>) => {
     try {
+      get().handleLoading(true);
       const {
         progress = "",
         createdAt = "",
@@ -189,7 +204,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         ordersSearch,
       };
 
-      const { result: orders, totalPages } = await getAllOrders(finalParams);
+      const { result: orders, totalPages } = await getAllOrdersWithParams(finalParams);
 
       set(() => ({
         orders,
@@ -199,15 +214,19 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       }));
     } catch (err) {
       console.error("Error al obtener las órdenes:", err);
+    }finally{
+      get().handleLoading(false);
     }
   },
-
   handleCreateOrder: async (values: ICreateOrderFormValues) => {
     try {
       get().handleLoading(true);
       const newOrder: IOrder = await createOrder(values);
       console.log(newOrder);
+
       
+      
+
       setTimeout(() => {
         set((state) => ({ orders: [newOrder, ...state.orders] }));
       }, 500);
@@ -274,9 +293,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     orderId: string,
     params?: Partial<TInstallationQueryParams>
   ): Promise<IInstallation[] | null> => {
-    get().handleLoading(true);
-
     try {
+      get().handleLoading(true);
       const {
         status = "",
         province = "",
@@ -318,7 +336,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     } catch (error) {
       console.log("Error al obtener las instalaciones:", error);
       return null;
-    } finally {
+    }finally{
       get().handleLoading(false);
     }
   },
