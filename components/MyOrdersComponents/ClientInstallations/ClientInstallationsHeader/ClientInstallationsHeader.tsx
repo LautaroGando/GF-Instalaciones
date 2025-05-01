@@ -2,7 +2,7 @@
 import IOrder from "@/interfaces/IOrder";
 import React, { useEffect } from "react";
 import { motion, useAnimation, useMotionValue, animate, useTransform } from "framer-motion";
-import Link from "next/link";
+import BackToOrdersButton from "@/components/ui/MyOrdersComponents/ClientInstallations/BackToOrdersButton/BackToOrdersButton";
 
 const ClientInstallationsHeader: React.FC<{ order: IOrder }> = ({ order }) => {
   const progress = useMotionValue(0);
@@ -32,22 +32,7 @@ const ClientInstallationsHeader: React.FC<{ order: IOrder }> = ({ order }) => {
         },
       }}
     >
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, x: -30 },
-          visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
-        }}
-        initial="hidden"
-        animate="visible"
-        className="mb-4 flex"
-      >
-        <Link
-          href="/my-orders"
-          className="inline-flex items-center gap-2 mb-3 rounded-md border border-primaryColor px-4 py-2 text-primaryColor text-sm font-semibold transition-all hover:bg-primaryColor/80 hover:text-white hover:shadow-md active:bg-primaryColor"
-        >
-          ← Volver
-        </Link>
-      </motion.div>
+      <BackToOrdersButton />
 
       <motion.h2
         variants={{
@@ -66,7 +51,7 @@ const ClientInstallationsHeader: React.FC<{ order: IOrder }> = ({ order }) => {
         }}
         className="mt-4 mb-8 sm:mb-12"
       >
-        <p className="text-sm sm:text-base text-center text-muted-foreground tracking-wide font-medium mb-2">
+        <p className="text-[14px] sm:text-[16px] text-center text-muted-foreground tracking-wide font-medium mb-2 dark:text-white">
           Instalaciones completadas
         </p>
 
@@ -78,7 +63,7 @@ const ClientInstallationsHeader: React.FC<{ order: IOrder }> = ({ order }) => {
               visible: { opacity: 1, transition: { duration: 0.8 } },
             }}
           >
-            <div className="w-[300px] sm:w-[400px] h-3 bg-gray-200 rounded-full overflow-hidden">
+            <div className="w-[300px] sm:w-[400px] h-3 bg-gray-200 rounded-full overflow-hidden dark:bg-white">
               <motion.div
                 style={{ width }}
                 className="h-full rounded-full bg-admin-activeColor/70"

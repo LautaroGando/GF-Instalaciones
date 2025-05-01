@@ -21,6 +21,7 @@ export interface ITrackingProps {
   // ===========================
 
   orders: IOrder[];
+  allOrders: IOrder[];
   selectedOrder: IOrder | null;
   isLoading: boolean;
   ordersPage: number;
@@ -68,6 +69,7 @@ export interface ITrackingProps {
   // ===========================
   // 📦 5. Ordenes
   // ===========================
+  handleFetchAllOrders: () => Promise<void>;
   handleFetchOrders: (params?: Partial<TOrdersQueryParams>) => Promise<void>;
   handleCreateOrder: (values: ICreateOrderFormValues) => Promise<IOrder>;
   handleUpdateOrder: (id: string, values: IEditOrderFormValues) => Promise<IEditOrderFormValues>;
@@ -83,7 +85,7 @@ export interface ITrackingProps {
     params?: Partial<TInstallationQueryParams>
   ) => Promise<IInstallation[] | null>;
 
-  handleCreateInstallation: (id: string, values: ICreateInstallationFormValues) => Promise<IOrder>
+  handleCreateInstallation: (id: string, values: ICreateInstallationFormValues) => Promise<IOrder>;
   handleUpdateInstallation: (
     installationId: string,
     values: IEditInstallationFormValues

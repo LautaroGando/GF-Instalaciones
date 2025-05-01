@@ -16,9 +16,10 @@ const OrderCard: React.FC<{ order: IOrder }> = ({ order }) => {
       href={`/my-orders/${order.id}`}
       title={`Ver detalles de la orden: ${order.title}`}
       aria-label={`Ver detalles de la orden: ${order.title}`}
-      className="group block rounded-[8px] border border-gray-200 overflow-hidden 
-                 shadow-[0_4px_4px_rgba(0,0,0,0.1)] transition-all duration-300
-                 hover:shadow-lg active:scale-95 cursor-pointer"
+      className="group block rounded-xl overflow-hidden border border-gray-200 
+      bg-white shadow-sm transition-all duration-300 ease-in-out 
+      hover:shadow-md active:scale-95 hover:scale-[1.015]
+      dark:bg-[#0e0e0e] dark:border-white/10 dark:text-white dark:shadow-[0_4px_20px_rgba(255,255,255,0.04)] dark:hover:shadow-[0_8px_24px_rgba(255,255,255,0.05)]"
     >
       <OrderStatusBar orderIsCompleted={orderIsCompleted} />
 

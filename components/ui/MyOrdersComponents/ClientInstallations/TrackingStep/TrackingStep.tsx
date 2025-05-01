@@ -8,8 +8,8 @@ const TrackingStep = ({ statusName, date, visualState }: ITrackingStepProps) => 
   const iconClass = {
     done: "text-admin-activeColor",
     half: "text-admin-activeColor",
-    pending: "text-gray-400",
-    inactive: "text-gray-300",
+    pending: "text-gray-400 dark:text-white/70",
+    inactive: "text-gray-300 ",
   };
 
   return (

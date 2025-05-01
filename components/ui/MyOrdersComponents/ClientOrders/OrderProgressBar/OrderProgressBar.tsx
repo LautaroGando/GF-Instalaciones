@@ -36,7 +36,7 @@ const OrderProgressBar: React.FC<IOrderProgressProps> = ({
           hidden: { opacity: 0, y: 10 },
           show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
         }}
-        className="flex justify-between text-xs text-gray-500 font-medium mb-1"
+        className="flex justify-between text-xs text-gray-500 dark:text-white font-medium mb-1"
       >
         <span>Instalaciones completadas</span>
         <span>
