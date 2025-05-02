@@ -4,11 +4,20 @@ import axios from "axios";
 
 export const assignRole = async (roleId: Role, userId: string) => {
   try {
-    const { data } = await axios.post(`${API_URL}/user-role/assign-role`, {
-      roleId,
-      userId,
-    });
-    console.log(data);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const { data } = await axios.post(
+      `${API_URL}/user-role/assign-role`,
+      {
+        roleId,
+        userId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -20,10 +29,14 @@ export const assignRole = async (roleId: Role, userId: string) => {
 
 export const deleteRole = async (roleId: Role, userId: string) => {
   try {
-    const { data } = await axios.delete(
-      `${API_URL}/user-role/${userId}/${roleId}`
-    );
-    console.log(data);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const { data } = await axios.delete(`${API_URL}/user-role/${userId}/${roleId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

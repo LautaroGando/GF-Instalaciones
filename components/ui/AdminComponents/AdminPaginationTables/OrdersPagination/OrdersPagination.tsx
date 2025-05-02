@@ -26,7 +26,7 @@ const OrdersPagination = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="flex items-center justify-between sm:self-end sm:gap-3"
+      className="flex items-center justify-between text-secondaryColor/60 dark:text-white/70 sm:self-end sm:gap-3"
     >
       <button
         onClick={ordersPreviousPage}
