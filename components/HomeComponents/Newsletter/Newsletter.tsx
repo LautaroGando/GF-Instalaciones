@@ -5,7 +5,7 @@ import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 
 const Newsletter = () => {
   return (
-    <section className="mb-20 flex flex-col items-center">
+    <section className="flex flex-col items-center">
       <HomeTitle text="" justLine />
 
       <div className="mt-14 w-full flex flex-col items-center justify-center gap-y-4 lg:flex-row lg:justify-between">

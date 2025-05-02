@@ -1,7 +1,7 @@
 "use client";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import { useUserStore } from "@/store/UserStore/userStore";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
@@ -14,9 +14,10 @@ export const ButtonLogout: React.FC = () => {
       onClick={() => {
         handleLogout(isDark ? "#000000" : "#FAFAFA");
       }}
-      className="text-primaryColor bg-bgColor border border-bgColor w-7 h-7 flex justify-center items-center rounded-full transition-all duration-300 hover:text-letterColorLight hover:bg-primaryColor"
+      className="text-letterColorLight flex justify-center items-center gap-3 border-l-2 pl-3 border-bgColor transition-all duration-300 hover:text-error hover:border-error"
     >
-      <FontAwesomeIcon icon={faRightFromBracket} />
+      Salir
+      <FontAwesomeIcon icon={faRightToBracket} />
     </button>
   );
 };

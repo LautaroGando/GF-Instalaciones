@@ -1,5 +1,4 @@
 export const formatDate = (date: string) => {
-  console.log(date);
   const objectDate = new Date(date);
   const year = objectDate.getFullYear();
   const month =
