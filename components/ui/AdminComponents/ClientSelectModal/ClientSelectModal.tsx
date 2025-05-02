@@ -31,9 +31,7 @@ const ClientsSelectModal: React.FC = () => {
       .replace(/\s+/g, " ")
       .trim();
 
-  const clients = (users ?? []).filter((user) =>
-    user.userRoles.some((u) => u.role.name.toLowerCase() === "usuario")
-  );
+  const clients = (users ?? []).filter((user) => user.userRoles.length === 1);
 
   const filteredClients = clients.filter((c) =>
     normalize(c.fullName).includes(normalize(search))
