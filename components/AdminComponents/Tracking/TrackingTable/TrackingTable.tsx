@@ -16,7 +16,8 @@ import { useThemeStore } from "@/store/ThemeStore/themeStore";
 const TrackingTable = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
   const { openModal: openTrackingEditModal } = useTrackingEditModal();
-  const { handleFetchOrders, handleDeleteOrder, isLoading, getFilteredOrders } = useTrackingStore();
+  const { handleFetchOrders, handleDeleteOrder, isLoading, getFilteredOrders } =
+    useTrackingStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
   const filteredOrders = getFilteredOrders();
   const { isDark } = useThemeStore();
@@ -77,7 +78,7 @@ const TrackingTable = () => {
 
   return (
     <>
-      <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
+      <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto overflow-y-hidden">
         <table className="text-sm text-left w-full border-collapse">
           <TrackingTableHeader />
           <AnimatePresence mode="popLayout">
@@ -89,7 +90,10 @@ const TrackingTable = () => {
                   editOrder={() => handleEditOrder(order)}
                   deleteOrder={() => handleDeleteOrderClick(order.id)}
                   openTextModal={() =>
-                    handleOpenTextModal("Descripción de la Orden", order.description)
+                    handleOpenTextModal(
+                      "Descripción de la Orden",
+                      order.description
+                    )
                   }
                 />
               ))}

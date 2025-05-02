@@ -53,7 +53,7 @@ const InstallationsTable = () => {
 
   return (
     <>
-      <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
+      <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto overflow-y-hidden">
         <table className="text-sm text-left w-full border-collapse">
           <InstallationsTableHeader />
           <tbody>

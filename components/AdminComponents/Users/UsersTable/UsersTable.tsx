@@ -43,7 +43,7 @@ export const UsersTable: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
+    <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto overflow-y-hidden">
       {isLoading ? (
         <div className="flex items-center justify-center min-h-full">
           <Loading theme="light" />

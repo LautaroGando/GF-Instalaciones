@@ -19,7 +19,7 @@ export const PanelInfo: React.FC = () => {
   const employees = users?.filter(
     (user: IUser) => user.installer?.status === "APROBADO" || user.coordinator
   );
-  console.log(employees);
+
   return (
     <div className="flex flex-col gap-5 sm:flex-row sm:gap-3">
       {bannerPanel.map((item: IBannerPanel, i: number) => (

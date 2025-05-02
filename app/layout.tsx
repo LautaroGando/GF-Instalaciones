@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="bg-bgColor dark:bg-secondaryColor">
+      <body className="bg-bgColor overflow-x-hidden dark:bg-secondaryColor">
         {children}
         <SpeedInsights />
         <Analytics />

@@ -37,14 +37,14 @@ const BannerHome = () => {
               animate={
                 size < 1024
                   ? { flex: i === counter ? 1 : 0 }
-                  : { flex: i === counter ? 6 : 1 }
+                  : { flex: i === counter ? 4 : 1 }
               }
               transition={{ duration: 0.8 }}
             >
               <Image
                 className="w-full h-[100vh] object-cover object-center"
                 src={img.img}
-                alt="Imagen de instalacion"
+                alt="Imagen de instalación"
                 priority
               />
             </motion.div>

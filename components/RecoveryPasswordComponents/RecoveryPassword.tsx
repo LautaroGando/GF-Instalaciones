@@ -27,7 +27,7 @@ export const RecoveryPassword: React.FC = () => {
         <Form className="w-full h-[500px] max-w-[600px] mx-auto border-t-[10px] border-primaryColor rounded-[8px] shadow-lg shadow-secondaryColor/10 flex flex-col gap-5 items-center justify-between py-5 px-3 dark:shadow-bgColor/10">
           <div className="flex flex-col items-center gap-5">
             <h2 className="text-2xl font-semibold text-primaryColor sm:text-[32px]">
-              Cambia tu contraseña
+              Restablecer contraseña
             </h2>
             <p className="text-gray-500 text-xs max-w-[250px] text-center sm:text-base">
               Por seguridad, por favor elegí una contraseña nueva que no uses en
