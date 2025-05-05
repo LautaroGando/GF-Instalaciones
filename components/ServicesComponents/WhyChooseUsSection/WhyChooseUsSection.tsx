@@ -1,40 +1,22 @@
-import WhyChooseUsItem from "@/components/ui/ServicesComponents/WhyChooseUsSection/WhyChooseUsItem/WhyChooseUsItem";
-import {
-  faBuilding,
-  faClock,
-  faGlobe,
-  faHandshake,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
+import backgroundImage from "@/public/assets/images/auth/logoSignIn.svg";
 import React from "react";
+import Image from "next/image";
+import WhyChooseUsSectionItems from "@/components/ui/ServicesComponents/WhyChooseUsSectionItems/WhyChooseUsSectionItems";
 
 const WhyChooseUsSection = () => {
   return (
-    <section className="relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] w-screen bg-secondaryColor/85 text-white py-[25px]">
+    <section className="relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] mt-[50px] w-screen bg-secondaryColor/85 text-white py-[25px] sm:h-[570px]">
+      <Image
+        src={backgroundImage}
+        alt="Imagen de fondo"
+        className="absolute opacity-5 left-1/2 top-[25%] -translate-x-1/2 size-[260px] pointer-events-none z-0 sm:size-[350px] sm:top-[20%] lg:size-[400px] lg:top-[15%]"
+      />
       <div className="max-w-[1200px] mx-auto px-4">
-        <h2 className="mb-10 text-[22px] font-bold text-center">
+        <h2 className="mb-10 text-[22px] font-bold text-center sm:text-[28px] sm:mb-11 md:text-[32px] lg:mb-[68px]">
           ¿Por qué elegirnos para tu instalación?
         </h2>
 
-        <div className="flex flex-col gap-6">
-          <WhyChooseUsItem
-            icon={faBuilding}
-            text={"Especialización exclusiva en instalación gráfica (no imprimimos, ejecutamos)."}
-          />
-          <WhyChooseUsItem
-            icon={faUserGroup}
-            text={"Coordinadores expertos asignados a cada proyecto."}
-          />
-          <WhyChooseUsItem icon={faClock} text={"Seguimiento en tiempo real."} />
-          <WhyChooseUsItem
-            icon={faGlobe}
-            text={"Cobertura Nacional real: actuamos en simultáneo en todo el país."}
-          />
-          <WhyChooseUsItem
-            icon={faHandshake}
-            text={"Política de Reclamo Cero: nos hacemos cargo sin excusas."}
-          />
-        </div>
+        <WhyChooseUsSectionItems />
       </div>
     </section>
   );

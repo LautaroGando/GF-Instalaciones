@@ -4,7 +4,8 @@ export interface ITrackingRowsProps {
   order: IOrder;
   editOrder: () => void;
   deleteOrder: () => void;
-  openTextModal: () => void;
+  descriptionModal: () => void;
+  clientInfoModal: () => void;
 }
 
 export default ITrackingRowsProps;
