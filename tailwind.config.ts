@@ -7,7 +7,7 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: ["class" ],
+  darkMode: ["class"],
   theme: {
     extend: {
       colors: {
@@ -95,7 +95,7 @@ export default {
         dashboardBanner: 'url("/assets/images/dashboard/banner.svg")',
       },
       boxShadow: {
-        'admin-active': '0px 1px 4px rgba(40, 180, 99, 0.67)',
+        "admin-active": "0px 1px 4px rgba(40, 180, 99, 0.67)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -104,5 +104,6 @@ export default {
       },
     },
   },
+  safelist: ["row-span-2", "col-span-2"],
   plugins: [tailwindcssAnimate],
 } satisfies Config;
