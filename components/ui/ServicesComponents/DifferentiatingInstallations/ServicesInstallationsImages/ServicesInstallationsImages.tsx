@@ -1,6 +1,9 @@
+"use client";
+
 import clsx from "clsx";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { IServicesInstallationsImagesProps } from "./types";
 
 const ServicesInstallationsImages: React.FC<IServicesInstallationsImagesProps> = ({
@@ -9,18 +12,25 @@ const ServicesInstallationsImages: React.FC<IServicesInstallationsImagesProps> =
   setSelectedImage,
   images,
 }) => {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.9 });
+
   return (
     <div className="relative select-none">
       <div
+        ref={containerRef}
         className={clsx(
           "mt-7 p-4 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 transition-all duration-1000 ease-in-out overflow-hidden",
           showAll ? "max-h-[2000px]" : "max-h-[350px]"
         )}
       >
         {images.map((img, idx) => (
-          <div
+          <motion.div
             key={idx}
             onClick={() => setSelectedImage(img.src)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
             className="group cursor-pointer rounded-[8px] border border-white transition-all duration-300 ease-in-out scale-100 shadow-[2px_2px_4px_rgba(0,0,0,0.75)] hover:shadow-[2px_2px_8px_rgba(0,0,0,0.5)] hover:scale-[1.015] dark:border-white/70 dark:shadow-[2px_2px_8px_rgba(100,100,100,0.75)] dark:hover:shadow-[2px_2px_16px_rgba(100,100,100,0.5)]"
           >
             <Image
@@ -28,7 +38,7 @@ const ServicesInstallationsImages: React.FC<IServicesInstallationsImagesProps> =
               alt="Imagen de instalación"
               className="w-full h-[190px] sm:h-[220px] lg:h-[210px] rounded-[8px] object-cover transition-transform duration-500 ease-out group-hover:brightness-105 group-hover:contrast-105 group-active:scale-[0.99]"
             />
-          </div>
+          </motion.div>
         ))}
       </div>
 
