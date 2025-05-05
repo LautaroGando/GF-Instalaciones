@@ -28,11 +28,11 @@ export const ImageOpen: React.FC = () => {
             exit={{ scale: 0.5 }}
             onClick={(e) => e.stopPropagation()}
             transition={{ duration: 0.3 }}
-            className="w-[90%] h-[80%] p-5 flex flex-col gap-5 items-center justify-center bg-bgColor rounded-[9px] dark:bg-bgColorDark xl:w-[60%]"
+            className="w-[90%] h-auto max-h-[90%] p-5 flex flex-col gap-5 items-center justify-center bg-bgColor rounded-[9px] dark:bg-bgColorDark xl:w-[60%]"
           >
-            <div className="w-full h-[90%] overflow-x-auto">
+            <div className="w-full h-full overflow-auto">
               <Image
-                className="min-w-max h-full object-contain rounded-[8px] object-center"
+                className="w-full object-cover rounded-[8px] object-center"
                 src={image.image}
                 alt="Imagen de la instalación"
                 priority

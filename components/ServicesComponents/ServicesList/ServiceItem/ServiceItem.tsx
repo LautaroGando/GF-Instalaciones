@@ -42,7 +42,7 @@ export const ServiceItem: React.FC<IServiceItemProps> = ({
             <Image
               key={image.id}
               onClick={() => setIsOpenImage(image.id)}
-              className="min-w-full min-h-full object-cover cursor-pointer"
+              className="w-full max-h-[200px] object-cover rounded-[8px] cursor-pointer"
               src={image.image}
               alt="Imagen de la instalación"
               priority
