@@ -1,7 +1,17 @@
 import IInstallation from "./IInstallation";
 
+export interface IOrderClient {
+  id: string;
+  role: {
+    id: string;
+    name: string;
+  };
+  notifications: string[];
+}
+
 export interface IOrder {
   id: string;
+  client: IOrderClient
   orderNumber: string;
   title: string;
   description: string;

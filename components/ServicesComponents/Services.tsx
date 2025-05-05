@@ -2,6 +2,7 @@ import React from "react";
 import InstallationBanner from "./InstallationBanner/InstallationBanner";
 import ServicesList from "./ServicesList/ServicesList";
 import WhyChooseUsSection from "./WhyChooseUsSection/WhyChooseUsSection";
+import DifferentiatingInstallations from "./DifferentiatingInstallations/DifferentiatingInstallations";
 
 export const Services: React.FC = () => {
   return (
@@ -9,7 +10,8 @@ export const Services: React.FC = () => {
       <InstallationBanner />
       <ServicesList />
       <WhyChooseUsSection />
-     </div>
+      <DifferentiatingInstallations />
+    </div>
   );
 };
 

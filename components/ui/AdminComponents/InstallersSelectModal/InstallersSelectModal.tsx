@@ -39,7 +39,7 @@ const InstallersSelectModal: React.FC = () => {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="bg-bgColor rounded-2xl shadow-xl p-6 w-full max-w-[500px] dark:bg-bgColorDark sm:p-8"
+        className="bg-bgColor rounded-2xl shadow-xl p-6 w-full max-w-[500px] max-h-[90vh] overflow-hidden flex flex-col dark:bg-bgColorDark sm:p-8"
       >
         <div className="flex flex-col items-center gap-4 mb-6 ">
           <h2 className="text-xl font-semibold text-primaryColor text-center">
