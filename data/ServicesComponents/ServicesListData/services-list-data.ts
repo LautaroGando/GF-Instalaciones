@@ -1,5 +1,4 @@
 import { IServicesListData } from "./types";
-import imgDePrueba from "@/public/assets/images/services/auto.png";
 
 export const servicesListData: IServicesListData[] = [
   {
@@ -10,7 +9,7 @@ export const servicesListData: IServicesListData[] = [
       "630 vehículos de Aysa ploteados en 13 días.",
       "400 camiones Bimbo intervenidos en 8 provincias.",
     ],
-    images: [imgDePrueba, imgDePrueba],
+    imagesId: [0, 5],
   },
   {
     title: "Redes de puntos de venta y retail",
@@ -20,7 +19,7 @@ export const servicesListData: IServicesListData[] = [
       "55 locales de Burger King intervenidos en 5 horas.",
       "180 sucursales de Farmacity actualizadas en simultáneo.",
     ],
-    images: [imgDePrueba, imgDePrueba],
+    imagesId: [6, 1],
   },
   {
     title: "Instalaciones en altura",
@@ -30,20 +29,20 @@ export const servicesListData: IServicesListData[] = [
       "Lonas de 9x42m en Edificio Libertad.",
       "Medianeras promocionales de alta visibilidad.",
     ],
-    images: [imgDePrueba, imgDePrueba],
+    imagesId: [3, 7],
   },
   {
     title: "Instalación de corpóreos y gráfica de alto impacto",
     description:
       "Montaje de letras corpóreas, estructuras tridimensionales y gráfica de gran tamaño para edificios, locales y eventos. Dominamos el manejo de materiales como MDF, Acrílico, Polyfan y Metalex.",
     items: ["Corpóreos institucionales para Banco Provincia y Cuesta Blanca."],
-    images: [imgDePrueba],
+    imagesId: [2],
   },
   {
     title: "Ferias, exposiciones y eventos",
     description:
       "Montaje de gráfica para eventos masivos, ferias corporativas y activaciones promocionales. Equipos expertos en instalaciones temporales de alto impacto, con tiempos críticos de ejecución.",
     items: ["Lollapalooza Argentina.", "Copa América 2024 (predio AFA)."],
-    images: [imgDePrueba, imgDePrueba],
+    imagesId: [8, 4],
   },
 ];
