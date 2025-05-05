@@ -16,15 +16,15 @@ const InstallationProgress: React.FC<{ installation: IInstallation }> = ({ insta
 
             {j < installationSteps.length - 1 && (
               <div className="flex justify-center w-[32px] sm:h-[32px] sm:items-center sm:w-full">
-                <div className="w-[3px] h-[30px] bg-gray-200 rounded-full overflow-hidden sm:w-full sm:h-[3px]">
+                <div className="w-[3px] h-[30px] bg-gray-200 rounded-full overflow-hidden dark:bg-white sm:w-full sm:h-[3px]">
                   <div
                     className={clsx("rounded-full", {
                       "bg-admin-activeColor h-full w-[100%] sm:h-full sm:w-[100%]":
                         visualState === "done",
                       "bg-admin-activeColor h-[50%] w-full sm:w-[50%] sm:h-full":
                         visualState === "half",
-                      "bg-gray-200": visualState === "pending",
-                      "bg-gray-100": visualState === "inactive",
+                      "bg-gray-200 dark:bg-white": visualState === "pending",
+                      "bg-gray-100 dark:bg-white": visualState === "inactive",
                     })}
                   />
                 </div>

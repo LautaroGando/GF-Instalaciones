@@ -9,8 +9,8 @@ const InstallationsCardHeader: React.FC<IInstallationsCardHeaderProps> = ({
     <div className="flex flex-col mb-3 sm:flex-row sm:justify-between sm:items-center sm:mb-6">
       <div className="order-2 flex items-center sm:order-1">
         <div className="h-[88px] mt-4 sm:mt-0 sm:h-max">
-          <p className="text-xs text-gray-500">ID: {installation.id}</p>
-          <p className="text-secondaryColor/60 font-medium my-1">
+          <p className="text-xs text-gray-500 dark:text-white/80">ID: {installation.id}</p>
+          <p className="text-secondaryColor/60 font-medium my-1 dark:text-white">
             {installation.address.street} {installation.address.number},{" "}
             {installation.address.city.name}, {installation.address.city.province.name},{" "}
             {installation.address.postalCode}

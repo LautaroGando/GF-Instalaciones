@@ -1,5 +1,5 @@
 interface IClientOrdersHeaderProps {
-  orderCount: number;
+  finalCount: number;
   contentToShow: string;
   onViewChange: (value: "in process" | "completed") => void;
 }

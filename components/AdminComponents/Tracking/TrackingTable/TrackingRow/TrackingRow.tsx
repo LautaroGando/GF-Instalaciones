@@ -47,7 +47,8 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
   order,
   editOrder,
   deleteOrder,
-  openTextModal,
+  descriptionModal,
+  clientInfoModal
 }) => {
   const { handleUpdateOrder } = useTrackingStore();
   const { isDark } = useThemeStore();
@@ -106,10 +107,26 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
-          onClick={() => openTextModal()}
+          onClick={() => descriptionModal()}
           className="bg-primaryColor border border-primaryColor h-[36px] px-5 rounded-[2px] font-bold text-letterColorLight transition-all duration-200 hover:text-primaryColor hover:bg-white"
         >
           Leer Descripción
+        </motion.button>
+      </motion.td>
+
+      <motion.td
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+        className="px-4 h-14 whitespace-nowrap"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={() => clientInfoModal()}
+          className="bg-primaryColor border border-primaryColor h-[36px] px-5 rounded-[2px] font-bold text-letterColorLight transition-all duration-200 hover:text-primaryColor hover:bg-white"
+        >
+          Ver Cliente
         </motion.button>
       </motion.td>
 

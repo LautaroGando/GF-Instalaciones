@@ -49,7 +49,7 @@ export const ProfileMenu: React.FC = () => {
     <div
       ref={menuAdminProfileRef}
       className={clsx(
-        "hidden absolute w-[250px] p-0 overflow-hidden bg-bgColor top-full mt-[10.3px] transition-all duration-300 shadow-lg shadow-bgColorDark/20 right-0 dark:bg-secondaryColor dark:shadow-bgColor/20 lg:flex lg:flex-col",
+        "hidden absolute w-[250px] p-0 overflow-hidden bg-bgColor rounded-b-[8px] top-full mt-[10.3px] transition-all duration-300 shadow-lg shadow-bgColorDark/20 right-0 dark:bg-secondaryColor dark:shadow-bgColor/20 lg:flex lg:flex-col",
         open ? "h-[144px]" : "h-0 p-0 border-none"
       )}
     >

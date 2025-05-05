@@ -12,13 +12,37 @@ import { cleanParams } from "@/utils/cleanParams";
 import axios from "axios";
 
 // ORDERS
-export const getAllOrders = async (params: TOrdersQueryParams) => {
+export const getAllOrders = async () => {
+  try {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const { data } = await axios.get(`${API_URL}/orders`, {
+      params:{
+        limit: Number.MAX_SAFE_INTEGER
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getAllOrdersWithParams = async (params: Partial<TOrdersQueryParams>) => {
   try {
     const cleanedParams = cleanParams(params);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
     const { data } = await axios.get(`${API_URL}/orders`, {
       params: cleanedParams,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
+
+    console.log(token);
 
     return data;
   } catch (err) {
@@ -34,7 +58,13 @@ export const getAllOrders = async (params: TOrdersQueryParams) => {
 
 export const getOrderById = async (orderId: string): Promise<IOrder> => {
   try {
-    const res = await axios.get(`${API_URL}/orders/${orderId}`);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const res = await axios.get(`${API_URL}/orders/${orderId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -48,8 +78,17 @@ export const getOrderById = async (orderId: string): Promise<IOrder> => {
 };
 
 export const createOrder = async (values: ICreateOrderFormValues) => {
+  console.log(values);
+  
+
   try {
-    const response = await axios.post(`${API_URL}/orders`, values);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const response = await axios.post(`${API_URL}/orders`, values, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -67,11 +106,13 @@ export const updateOrder = async (
   values: IEditOrderFormValues
 ): Promise<IEditOrderFormValues | null> => {
   try {
-    const response = await axios.patch<IEditOrderFormValues>(`${API_URL}/orders/${id}`, values);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-    console.log(values);
-
-    console.log(response.data);
+    const response = await axios.patch<IEditOrderFormValues>(`${API_URL}/orders/${id}`, values, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return response.data;
   } catch (err) {
@@ -89,7 +130,13 @@ export const updateOrder = async (
 
 export const deleteOrder = async (id: string) => {
   try {
-    const res = await axios.delete(`${API_URL}/orders/${id}`);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const res = await axios.delete(`${API_URL}/orders/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -105,7 +152,13 @@ export const deleteOrder = async (id: string) => {
 // INSTALLATIONS
 export const getAllInstallationsNotPagination = async () => {
   try {
-    const { data } = await axios.get(`${API_URL}/installations`);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const { data } = await axios.get(`${API_URL}/installations`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return data;
   } catch (error) {
     console.log(error);
@@ -117,10 +170,15 @@ export const getAllInstallations = async (
   params?: Partial<TInstallationQueryParams>
 ) => {
   try {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
     const cleanedParams = params ? cleanParams(params) : undefined;
 
     const { data } = await axios.get(`${API_URL}/orders/${orderId}/installations`, {
       params: cleanedParams,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     return data;
@@ -137,7 +195,13 @@ export const createInstallation = async (
   values: ICreateInstallationFormValues
 ) => {
   try {
-    const { data } = await axios.post(`${API_URL}/orders/${orderId}/installations`, values);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const { data } = await axios.post(`${API_URL}/orders/${orderId}/installations`, values, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return data;
   } catch (err) {
@@ -156,9 +220,13 @@ export const updateInstallation = async (
   values: IEditInstallationFormValues
 ) => {
   try {
-    console.log(values);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-    const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values);
+    const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return data;
   } catch (err) {
@@ -174,9 +242,17 @@ export const updateInstallation = async (
 
 export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
   try {
-    const res = await axios.patch(`${API_URL}/installations/${id}/status`, {
-      status,
-    });
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const res = await axios.patch(
+      `${API_URL}/installations/${id}/status`,
+      {
+        status,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     return res.data;
   } catch (error) {
     console.log(error);
@@ -193,9 +269,12 @@ export const completeInstallation = async (id: string, values: ICompleteJob) => 
   });
 
   try {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
     const { data } = await axios.post(`${API_URL}/installations/${id}/images`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
       },
     });
     return data;
@@ -207,7 +286,13 @@ export const completeInstallation = async (id: string, values: ICompleteJob) => 
 
 export const deleteInstallation = async (id: string) => {
   try {
-    const { data } = await axios.delete(`${API_URL}/installations/${id}`);
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const { data } = await axios.delete(`${API_URL}/installations/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return data;
   } catch (err) {

@@ -1,36 +1,23 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { AnimatePresence } from "framer-motion";
 import TrackingTableHeader from "./TrackingTableHeader/TackingTableHeader";
+import TrackingRow from "./TrackingRow/TrackingRow";
 import CreateButton from "@/components/ui/AdminComponents/CreateButton/CreateButton";
-import { useTextModalStore } from "@/store/Admin/AdminModals/TextModalStore/TextModalStore";
-import { useTrackingEditModal } from "@/store/Admin/AdminModals/EditModals/TrackingEditModalStore/TrackingEditModalStore";
-import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import RenderEmptyState from "@/components/ui/AdminComponents/RenderEmptyState/RenderEmptyState";
-import IOrder from "@/interfaces/IOrder";
-import TrackingRow from "./TrackingRow/TrackingRow";
-import { AnimatePresence } from "framer-motion";
-import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
-import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import { useTrackingTableLogic } from "@/hooks/useTrackingTableLogic";
 
 const TrackingTable = () => {
-  const { openModal: openTrackingTextModal } = useTextModalStore();
-  const { openModal: openTrackingEditModal } = useTrackingEditModal();
-  const { handleFetchOrders, handleDeleteOrder, isLoading, getFilteredOrders } = useTrackingStore();
-  const [isLoadingOrders, setIsLoadingOrders] = useState(true);
-  const filteredOrders = getFilteredOrders();
-  const { isDark } = useThemeStore();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await handleFetchOrders();
-      setTimeout(() => {
-        setIsLoadingOrders(false);
-      }, 500);
-    };
-
-    fetchData();
-  }, [handleFetchOrders]);
+  const {
+    isLoading,
+    isLoadingOrders,
+    filteredOrders,
+    handleEditOrder,
+    handleDeleteOrderClick,
+    handleOpenTextModal,
+    handleViewClient,
+  } = useTrackingTableLogic();
 
   if (isLoading || isLoadingOrders) {
     return (
@@ -49,55 +36,31 @@ const TrackingTable = () => {
     );
   }
 
-  const handleEditOrder = (order: IOrder) => {
-    openTrackingEditModal(order);
-  };
-
-  const handleDeleteOrderClick = async (id: string) => {
-    await PersonalizedPopUp({
-      color: isDark ? "#000000" : "#FAFAFA",
-      withResult: true,
-      text: "Esta acción eliminará la orden permanentemente.",
-      textError: "No se pudo eliminar la orden. Intenta nuevamente.",
-      textSuccess: "La orden ha sido eliminada correctamente.",
-      title: "¿Estás seguro?",
-      titleError: "Error al eliminar",
-      titleSuccess: "Orden eliminada",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "Sí, eliminar",
-      genericFunction: () => handleDeleteOrder(id),
-    });
-  };
-
-  const handleOpenTextModal = (title: string, text: string) => {
-    openTrackingTextModal(title, text);
-  };
-
-  console.log(filteredOrders);
-
   return (
     <>
-      <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto">
+      <div className="w-full h-max min-h-[610px] overflow-x-auto overflow-y-hidden">
         <table className="text-sm text-left w-full border-collapse">
           <TrackingTableHeader />
           <AnimatePresence mode="popLayout">
             <tbody>
-              {filteredOrders.map((order) => (
-                <TrackingRow
-                  key={order.id}
-                  order={order}
-                  editOrder={() => handleEditOrder(order)}
-                  deleteOrder={() => handleDeleteOrderClick(order.id)}
-                  openTextModal={() =>
-                    handleOpenTextModal("Descripción de la Orden", order.description)
-                  }
-                />
-              ))}
+              {filteredOrders.map((order) => {
+                return (
+                  <TrackingRow
+                    key={order.id}
+                    order={order}
+                    editOrder={() => handleEditOrder(order)}
+                    deleteOrder={() => handleDeleteOrderClick(order.id)}
+                    descriptionModal={() =>
+                      handleOpenTextModal("Descripción de la Orden", order.description)
+                    }
+                    clientInfoModal={() => handleViewClient(order.client.id)}
+                  />
+                );
+              })}
             </tbody>
           </AnimatePresence>
         </table>
       </div>
-
       <CreateButton />
     </>
   );
