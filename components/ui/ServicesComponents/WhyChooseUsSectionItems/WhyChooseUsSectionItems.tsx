@@ -1,37 +1,29 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import WhyChooseUsItem from "../WhyChooseUsSection/WhyChooseUsItem/WhyChooseUsItem";
-import {
-  faBuilding,
-  faClock,
-  faGlobe,
-  faHandshake,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
+import whyChooseUsItems from "@/utils/whyChooseUsItem";
 
 const WhyChooseUsSectionItems = () => {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px", amount: 0.9 });
+
   return (
-    <div className="flex flex-col gap-6 lg:grid lg:grid-cols-2 sm:gap-[36px] lg:gap-y-[90px]">
-      <WhyChooseUsItem
-        icon={faBuilding}
-        text="Especialización exclusiva en instalación gráfica (no imprimimos, ejecutamos)."
-        align="left"
-      />
-      <WhyChooseUsItem
-        icon={faGlobe}
-        text="Cobertura Nacional real: actuamos en simultáneo en todo el país."
-        align="right"
-      />
-      <WhyChooseUsItem
-        icon={faUserGroup}
-        text="Coordinadores expertos asignados a cada proyecto."
-        align="left"
-      />
-      <WhyChooseUsItem
-        icon={faHandshake}
-        text="Política de Reclamo Cero: nos hacemos cargo sin excusas."
-        align="right"
-      />
-      <WhyChooseUsItem icon={faClock} text="Seguimiento en tiempo real." align="left" />
+    <div
+      ref={containerRef}
+      className="flex flex-col gap-6 lg:grid lg:grid-cols-2 sm:gap-[36px] lg:gap-y-[90px]"
+    >
+      {whyChooseUsItems.map((item, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, x: item.align === "left" ? -30 : 30 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }}
+        >
+          <WhyChooseUsItem icon={item.icon} text={item.text} align={item.align} />
+        </motion.div>
+      ))}
     </div>
   );
 };
