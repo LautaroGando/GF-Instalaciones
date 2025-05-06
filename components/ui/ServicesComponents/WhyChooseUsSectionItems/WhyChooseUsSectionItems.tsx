@@ -7,7 +7,7 @@ import whyChooseUsItems from "@/utils/whyChooseUsItem";
 
 const WhyChooseUsSectionItems = () => {
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px", amount: 0.9 });
+  const isInView = useInView(containerRef, { once: true, margin: "-100px", amount: 0.4 });
 
   return (
     <div

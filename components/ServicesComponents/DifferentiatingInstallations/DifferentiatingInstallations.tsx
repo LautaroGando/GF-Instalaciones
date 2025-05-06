@@ -14,7 +14,7 @@ const DifferentiatingInstallations = () => {
   const images = Array(9).fill(image);
 
   const titleRef = useRef(null);
-  const isInView = useInView(titleRef, { once: true, amount: 0.9 });
+  const isInView = useInView(titleRef, { once: true, amount: 0.4 });
 
   return (
     <section className="mx-auto py-4 text-center sm:py-6">
