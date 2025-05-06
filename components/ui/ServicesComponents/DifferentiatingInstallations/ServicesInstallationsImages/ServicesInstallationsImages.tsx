@@ -13,7 +13,7 @@ const ServicesInstallationsImages: React.FC<IServicesInstallationsImagesProps> =
   images,
 }) => {
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.9 });
+  const isInView = useInView(containerRef, { once: true, amount: 0.4 });
 
   return (
     <div className="relative select-none">
