@@ -6,7 +6,7 @@ import ButtonPrice from "../../ButtonPrice/ButtonPrice";
 
 const CallToAction: React.FC = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.9 });
+  const isInView = useInView(ref, { once: true, amount: 0.4 });
 
   return (
     <motion.div
