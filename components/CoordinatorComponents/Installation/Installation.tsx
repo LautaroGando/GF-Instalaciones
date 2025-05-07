@@ -72,7 +72,7 @@ export const Installation: React.FC = () => {
                 className={clsx(
                   "w-full max-w-[320px] min-h-[370px] max-h-[370px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5 dark:shadow-[3px_0px_2px_#fafafa40]",
                   installation.status === "A revisar" &&
-                    "border-installer-toReview"
+                    "border-installer-toReview bg-bgColor dark:bg-[#0E0E0E]"
                 )}
               >
                 <div className="flex items-center justify-between px-2">
