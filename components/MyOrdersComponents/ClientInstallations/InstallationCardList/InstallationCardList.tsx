@@ -19,6 +19,7 @@ const cardVariants = {
 };
 
 const InstallationCardList: React.FC<IInstallationCardListProps> = ({ order }) => {
+
   return (
     <section className="flex flex-col gap-6 text-gray-600 mb-16">
       {order?.installations.map((installation, i) => {

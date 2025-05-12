@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import orderSchema from "@/helpers/AdminValidations/validateCreateOrder";
@@ -19,10 +20,21 @@ import { useClientsSelectModal } from "@/store/Admin/AdminModals/ClientSelectMod
 const TrackingCreateModal = () => {
   const { selectedClient, openModal: openClientModal, clearClient } = useClientsSelectModal();
   const { isOpen, closeModal } = useTrackingCreateModal();
-  const { handleCreateOrder } = useTrackingStore();
+  const { handleCreateOrder, allOrders } = useTrackingStore();
   const { isDark } = useThemeStore();
-
   useDisableScroll(isOpen);
+
+  useEffect(() => {
+    const prevIsOpen = isOpenRef.current;
+
+    if (prevIsOpen && !isOpen) {
+      clearClient();
+    }
+
+    isOpenRef.current = isOpen;
+  }, [isOpen, clearClient]);
+
+  const isOpenRef = useRef(isOpen);
 
   if (!isOpen) {
     return null;
@@ -47,6 +59,26 @@ const TrackingCreateModal = () => {
     values: ICreateOrderFormValues,
     { setSubmitting }: FormikHelpers<ICreateOrderFormValues>
   ) => {
+    const orderNumberExist = allOrders.find((ord) => ord.orderNumber === values.orderNumber);
+
+    if (orderNumberExist) {
+      Swal.fire({
+        icon: "error",
+        title: "Número de orden duplicado",
+        text: "Ya existe una orden registrada con ese número. Por favor, ingresa uno diferente.",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#A79351",
+        background: isDark ? "#000000" : "#FAFAFA",
+        color: "#8D8D8D",
+        toast: false,
+        position: "center",
+        allowOutsideClick: true,
+        allowEscapeKey: true,
+      });
+
+      return;
+    }
+
     PersonalizedPopUp({
       color: isDark ? "#000000" : "#FAFAFA",
       withResult: false,

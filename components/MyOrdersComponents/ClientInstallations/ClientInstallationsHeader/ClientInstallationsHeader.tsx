@@ -63,7 +63,7 @@ const ClientInstallationsHeader: React.FC<{ order: IOrder }> = ({ order }) => {
               visible: { opacity: 1, transition: { duration: 0.8 } },
             }}
           >
-            <div className="w-[300px] sm:w-[400px] h-3 bg-gray-200 rounded-full overflow-hidden dark:bg-white">
+            <div className="w-[74vw] sm:w-[400px] h-3 bg-gray-200 rounded-full overflow-hidden dark:bg-white">
               <motion.div
                 style={{ width }}
                 className="h-full rounded-full bg-admin-activeColor/70"
@@ -75,7 +75,7 @@ const ClientInstallationsHeader: React.FC<{ order: IOrder }> = ({ order }) => {
                 hidden: { opacity: 0, scale: 0.8 },
                 visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
               }}
-              className="absolute right-[-20px] sm:right-[-40px] top-[-2] -translate-y-1/2 text-xs sm:text-sm font-semibold text-admin-activeColor sm:top-[-4]"
+              className="absolute right-[-30px] sm:right-[-40px] top-[-2] -translate-y-1/2 text-xs sm:text-sm font-semibold text-admin-activeColor sm:top-[-4]"
             >
               {order?.installationsFinished}
             </motion.p>

@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { IOrderCardStatusProps } from "./types";
 import clsx from "clsx";
 
-const OrderStatusHeader: React.FC<IOrderCardStatusProps> = ({ orderIsCompleted, order }) => {
-  console.log(order);
-  
+const OrderStatusHeader: React.FC<IOrderCardStatusProps> = ({
+  toReview,
+  orderIsCompleted,
+  order,
+}) => {
   return (
     <motion.div
       initial="hidden"
@@ -25,10 +27,14 @@ const OrderStatusHeader: React.FC<IOrderCardStatusProps> = ({ orderIsCompleted, 
       <span
         className={clsx(
           "font-semibold",
-          orderIsCompleted ? "text-admin-activeColor" : "text-primaryColor"
+          orderIsCompleted
+            ? "text-admin-activeColor"
+            : toReview
+            ? "text-admin-editColor"
+            : "text-primaryColor"
         )}
       >
-        {orderIsCompleted ? "Completada" : "En Proceso"}
+        {orderIsCompleted ? "Completada" : toReview ? "A Revisar" : "En Proceso"}
       </span>
       <span className="text-gray-500 dark:text-white">
         {new Date(order.startDate).toLocaleDateString("es-AR")}
