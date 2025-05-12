@@ -3,4 +3,5 @@ export interface IOrderProgressProps {
   total: number;
   isComplete?: boolean;
   className?: string;
+  toReview: boolean
 }

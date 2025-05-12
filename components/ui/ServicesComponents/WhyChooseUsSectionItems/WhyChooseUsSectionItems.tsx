@@ -12,7 +12,7 @@ const WhyChooseUsSectionItems = () => {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col gap-6 lg:grid lg:grid-cols-2 sm:gap-[36px] lg:gap-y-[90px]"
+      className="flex flex-col gap-6 px-3 sm:px-5 sm:gap-[36px] lg:grid lg:grid-cols-2 lg:gap-y-[90px]"
     >
       {whyChooseUsItems.map((item, index) => (
         <motion.div

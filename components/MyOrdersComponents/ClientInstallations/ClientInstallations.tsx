@@ -5,7 +5,7 @@ import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import ClientInstallationsHeader from "./ClientInstallationsHeader/ClientInstallationsHeader";
 import InstallationCardList from "./InstallationCardList/InstallationCardList";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import ClientEmptyState from "@/components/ui/MyOrdersComponents/ClientEmptyState/ClientEmptyState";
 
 const ClientInstallations = () => {
@@ -42,6 +42,18 @@ const ClientInstallations = () => {
         icon={faCircleExclamation}
         title="Orden no encontrada"
         description="No pudimos encontrar una orden con el ID proporcionado. Verifica el enlace o vuelve a intentar."
+        showBackButton
+      />
+    );
+  }
+
+  if (order.installationsFinished === "0/0") {
+    return (
+      <ClientEmptyState
+        icon={faCircleInfo}
+        title="Aún no hay instalaciones asignadas"
+        description="Esta orden fue registrada, pero todavía no se asignaron instalaciones. Por favor, revisa
+          más adelante."
         showBackButton
       />
     );

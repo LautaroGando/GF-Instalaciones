@@ -36,6 +36,9 @@ const TrackingTable = () => {
     );
   }
 
+  console.log(filteredOrders);
+  
+
   return (
     <>
       <div className="w-full h-max min-h-[610px] overflow-x-auto overflow-y-hidden">

@@ -1,6 +1,8 @@
 "use client";
+
 import clsx from "clsx";
 import React, { useState } from "react";
+import { motion } from "motion/react";
 
 export const InfoGraph: React.FC = () => {
   const [isVisibleText, setIsVisibleText] = useState(false);
@@ -8,7 +10,13 @@ export const InfoGraph: React.FC = () => {
   const handleVisibleText = () => setIsVisibleText(!isVisibleText);
 
   return (
-    <div className="text-center flex flex-col gap-4 items-center lg:flex-1">
+    <motion.div
+      className="text-center flex flex-col gap-4 items-center lg:flex-1"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <h2 className="text-lg font-semibold sm:text-[22px] lg:text-[26px] lg:text-left xl:text-3xl">
         Instalación gráfica de gran formato
       </h2>
@@ -18,15 +26,13 @@ export const InfoGraph: React.FC = () => {
           isVisibleText ? "max-h-[300px]" : "max-h-[80px]"
         )}
       >
-        GF es una empresa líder en servicios de instalación, especializada en el
-        montaje de cartelería, señalética y estructuras publicitarias. Nos
-        enfocamos en ofrecer soluciones completas y personalizadas para
-        proyectos de diferentes escalas, desde pequeños trabajos hasta complejas
-        instalaciones industriales. Nuestro equipo altamente capacitado trabaja
-        con tecnología moderna y los más altos estándares de seguridad y
-        calidad, asegurando que cada proyecto se ejecute con precisión y
-        atención a los detalles. En GF, nos comprometemos a brindar resultados
-        eficientes que superen las expectativas de nuestros clientes.
+        GF es una empresa líder en servicios de instalación, especializada en el montaje de
+        cartelería, señalética y estructuras publicitarias. Nos enfocamos en ofrecer soluciones
+        completas y personalizadas para proyectos de diferentes escalas, desde pequeños trabajos
+        hasta complejas instalaciones industriales. Nuestro equipo altamente capacitado trabaja con
+        tecnología moderna y los más altos estándares de seguridad y calidad, asegurando que cada
+        proyecto se ejecute con precisión y atención a los detalles. En GF, nos comprometemos a
+        brindar resultados eficientes que superen las expectativas de nuestros clientes.
       </p>
       <button
         onClick={handleVisibleText}
@@ -34,7 +40,7 @@ export const InfoGraph: React.FC = () => {
       >
         Leer {isVisibleText ? "menos" : "más"}
       </button>
-    </div>
+    </motion.div>
   );
 };
 

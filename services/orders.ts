@@ -42,8 +42,6 @@ export const getAllOrdersWithParams = async (params: Partial<TOrdersQueryParams>
       },
     });
 
-    console.log(token);
-
     return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
