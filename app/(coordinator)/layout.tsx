@@ -5,10 +5,23 @@ import { ReactNode } from "react";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "GF Coordinadores",
-  description: "",
+  title: "Panel de Coordinador | GF Instalaciones",
+  description:
+    "Accede al panel de coordinadores de GF Instalaciones. Supervisa y gestiona las instalaciones en curso y realiza seguimientos eficientes.",
+  keywords: [
+    "panel de coordinador",
+    "gestión de instalaciones",
+    "asignación de tareas",
+    "GF Instalaciones",
+    "seguimiento de proyectos",
+    "dashboard de coordinador",
+    "control de instalaciones",
+    "coordinación de equipos",
+    "supervisión de trabajos",
+    "gestión operativa",
+  ],
   icons: {
-    icon: "/assets/images/header/logo.svg",
+    icon: "/favicon.ico",
   },
 };
 
