@@ -1,0 +1,16 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /installer/
+Disallow: /coordinator/
+Disallow: /my-orders
+Disallow: /recovery-password
+Disallow: /api/
+
+# Host
+Host: https://www.gfrecursosgraficos.com.ar/
+
+# Sitemaps
+Sitemap: https://www.gfrecursosgraficos.com.ar/sitemap.xml

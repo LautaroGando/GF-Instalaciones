@@ -14,7 +14,7 @@ const WhyChooseUsSection = () => {
   const isImgInView = useInView(imgRef, { once: true, margin: "-100px", amount: 0.4 });
 
   return (
-    <section className="relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] mt-[50px] w-screen bg-secondaryColor/85 text-white py-[25px] sm:h-[570px] overflow-hidden">
+    <section className="relative left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] mt-[50px] w-screen bg-secondaryColor/85 overflow-hidden text-white py-[25px] sm:h-[570px] ">
       <motion.div
         ref={imgRef}
         initial={{ opacity: 0 }}

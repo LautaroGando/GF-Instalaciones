@@ -39,3 +39,7 @@ export interface IUserRecoveryPassword {
   newPassword: string;
   repeatPassword: string;
 }
+
+export interface IUserSendEmail {
+  email: string;
+}

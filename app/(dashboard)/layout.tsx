@@ -7,10 +7,22 @@ import Footer from "@/components/FooterComponents/Footer";
 import Banner from "@/components/ui/DashboardComponents/Banner/Banner";
 
 export const metadata: Metadata = {
-  title: "GF Perfil",
-  description: "",
+  title: "Perfil de Usuario | GF Instalaciones",
+  description:
+    "Accede y gestiona tu perfil personal en GF Instalaciones. Actualiza tus datos y mantén tu información siempre actualizada.",
+  keywords: [
+    "perfil de usuario",
+    "dashboard",
+    "gestión de cuenta",
+    "datos personales",
+    "configuración de cuenta",
+    "GF Instalaciones",
+    "usuario registrado",
+    "panel de usuario",
+    "actualizar información",
+  ],
   icons: {
-    icon: "/assets/images/header/logo.svg",
+    icon: "/favicon.ico",
   },
 };
 

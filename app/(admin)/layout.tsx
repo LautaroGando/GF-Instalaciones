@@ -11,10 +11,22 @@ import InstallationEditModal from "@/components/ui/AdminComponents/EditModal/Ins
 import InstallationNoteModal from "@/components/ui/AdminComponents/InstallationNoteModal/InstallationNoteModal";
 
 export const metadata: Metadata = {
-  title: "GF Admin",
-  description: "",
+  title: "Panel de Administración | GF Instalaciones",
+  description:
+    "Accede al panel de administración de GF Instalaciones para gestionar usuarios, instalaciones y datos de forma eficiente y segura.",
+  keywords: [
+    "panel de administración",
+    "gestión de usuarios",
+    "administración de instalaciones",
+    "datos",
+    "dashboard administrativo",
+    "GF Instalaciones",
+    "control de acceso",
+    "seguridad de datos",
+    "herramientas administrativas",
+  ],
   icons: {
-    icon: "/assets/images/header/logo.svg",
+    icon: "/favicon.ico",
   },
 };
 
