@@ -38,7 +38,7 @@ const ClientOrders = () => {
       await handleFetchAllOrders();
       await handleFetchOrders(
         contentToShow === "in process"
-          ? { progress: "DESC", completed: false }
+          ? { completed: false }
           : { completed: true }
       );
       setTimeout(() => setIsLoadingOrders(false), 500);

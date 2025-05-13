@@ -7,12 +7,12 @@ import whyChooseUsItems from "@/utils/whyChooseUsItem";
 
 const WhyChooseUsSectionItems = () => {
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px", amount: 0.9 });
+  const isInView = useInView(containerRef, { once: true, margin: "-100px", amount: 0.4 });
 
   return (
     <div
       ref={containerRef}
-      className="flex flex-col gap-6 lg:grid lg:grid-cols-2 sm:gap-[36px] lg:gap-y-[90px]"
+      className="flex flex-col gap-6 px-3 sm:px-5 sm:gap-[36px] lg:grid lg:grid-cols-2 lg:gap-y-[90px]"
     >
       {whyChooseUsItems.map((item, index) => (
         <motion.div
