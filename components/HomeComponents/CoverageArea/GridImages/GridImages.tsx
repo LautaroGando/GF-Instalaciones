@@ -1,5 +1,8 @@
 "use client";
-
+import React from "react";
+import coverage1 from "@/public/assets/images/home/coverage-1.png";
+import coverage2 from "@/public/assets/images/home/coverage-2.png";
+import coverage3 from "@/public/assets/images/home/coverage-3.png";
 import React, { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "motion/react";

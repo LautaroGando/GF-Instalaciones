@@ -62,7 +62,7 @@ export const ModalEditProfile: React.FC = () => {
               }}
             >
               {({ errors, touched }: FormikProps<IUserEdit>) => (
-                <Form className="flex flex-col gap-5 p-5  justify-between">
+                <Form className="flex flex-col gap-5 p-5 justify-between">
                   <h2 className="text-primaryColor text-xl font-semibold">
                     Editar datos:
                   </h2>

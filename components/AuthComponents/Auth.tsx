@@ -5,6 +5,7 @@ import { useAuthStore } from "@/store/AuthStore/authStore";
 import SignUp from "./SignUp/SignUp";
 import { useSize } from "@/hooks/useSize";
 import { useAuthSignUpStore } from "@/store/AuthSignUpStore/authSignUpStore";
+import FormSendEmail from "../RecoveryPasswordComponents/FormSendEmail/FormSendEmail";
 
 export const Auth: React.FC = () => {
   const { view } = useAuthStore();
@@ -30,6 +31,7 @@ export const Auth: React.FC = () => {
           <SignUp />
         </div>
       )}
+      <FormSendEmail />
     </div>
   );
 };

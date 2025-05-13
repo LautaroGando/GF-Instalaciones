@@ -5,10 +5,23 @@ import { ReactNode } from "react";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "GF Instaladores",
-  description: "",
+  title: "Panel de Instalaciones | GF Instalaciones",
+  description:
+    "Accede al panel de instalaciones de GF Instalaciones. Revisa, gestiona y actualiza las tareas asignadas con eficiencia y precisión.",
+  keywords: [
+    "panel de instalaciones",
+    "gestión de instalaciones",
+    "instalador gráfico",
+    "tareas asignadas",
+    "historial de instalaciones",
+    "dashboard instalador",
+    "GF Instalaciones",
+    "seguimiento de proyectos",
+    "actualización de estado",
+    "instalaciones gráficas",
+  ],
   icons: {
-    icon: "/assets/images/header/logo.svg",
+    icon: "/favicon.ico",
   },
 };
 
