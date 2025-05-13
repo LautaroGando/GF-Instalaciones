@@ -1,6 +1,18 @@
 import { ReactNode } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "GF Instalaciones | Instalaciones Gráficas Profesionales",
+  description:
+    "Especialistas en instalaciones gráficas de gran formato en todo el país. Cartelería, señalética, stands y más. Más de 28 años de experiencia en soluciones visuales.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+};
 
 const themeScript = `
   (function() {
