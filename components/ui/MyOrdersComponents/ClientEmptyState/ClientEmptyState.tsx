@@ -31,7 +31,7 @@ const ClientEmptyState: React.FC<IClientEmptyStateProps> = ({
 
       <h1 className="text-3xl font-bold text-primaryColor">{title}</h1>
 
-      <p className="text-gray-500 max-w-[360px]">{description}</p>
+      <p className="text-gray-500 max-w-[360px] dark:text-white">{description}</p>
 
       {showBackButton && (
         <button
