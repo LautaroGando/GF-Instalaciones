@@ -1,4 +1,4 @@
 export enum Role {
-  COORDINADOR = "88324c57-9e61-49be-91de-420e37a71de3",
-  ADMIN = "24af2662-8f22-4c33-966e-3249d3354ca1",
+  COORDINADOR = "8a44e908-7a57-487a-8a76-32c421c01ed4",
+  ADMIN = "2372a976-af10-4dab-aca8-d21a1d376800",
 }

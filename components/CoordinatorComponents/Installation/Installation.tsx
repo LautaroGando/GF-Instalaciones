@@ -36,7 +36,7 @@ export const Installation: React.FC = () => {
   }, [handleFetchInstallationsNotPagination]);
 
   const userInfo = user && "user" in user ? user.user : user;
-
+console.log(userInfo)
   const assignedInstallations = installations?.filter(
     (installation) =>
       installation.coordinator?.id ===
