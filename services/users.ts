@@ -65,13 +65,15 @@ export const activeUser = async (id: string) => {
     const token =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-    const { data } = await axios.put(`${API_URL}/user/restore/${id}`, {
+    const { data } = await axios.patch(`${API_URL}/user/restore/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+
     return data;
   } catch (error) {
+    console.log(error)
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(
         error.response.data.message || "Error al activar usuario"

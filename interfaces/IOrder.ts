@@ -10,6 +10,7 @@ export interface IOrder {
   createdAt: string;
   finishedAt: string | null;
   completed: boolean;
+  endDate: string;
   installationsFinished: string;
   progress: string;
   installations: IInstallation[];
