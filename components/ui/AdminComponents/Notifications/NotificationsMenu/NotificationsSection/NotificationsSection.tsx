@@ -54,9 +54,10 @@ export const NotificationsSection: React.FC = () => {
                   <li className="flex justify-between">
                     Condición fiscal:{" "}
                     <span className="font-normal">
-                      {capitalize(user.installer.taxCondition)
-                        .split("_")
-                        .join(" ")}
+                      {user.installer.taxCondition &&
+                        capitalize(user.installer.taxCondition)
+                          .split("_")
+                          .join(" ")}
                     </span>
                   </li>
                   <li className="flex justify-between">

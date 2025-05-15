@@ -21,6 +21,7 @@ import {
 import { useUserStore } from "@/store/UserStore/userStore";
 import { Role } from "@/enums/Role";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import { formatDateWithTime } from "@/utils/formatDateWithTime";
 
 interface Props {
   item: IUser;
@@ -87,7 +88,7 @@ const UserRow: React.FC<Props> = ({ item }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
       >
-        <InfoRows item={item} label={item.createdAt} />
+        <InfoRows item={item} label={formatDateWithTime(item.createdAt)} />
       </motion.td>
 
       <motion.td
@@ -96,7 +97,10 @@ const UserRow: React.FC<Props> = ({ item }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.15 }}
       >
-        <InfoRows item={item} label={item.disabledAt || "-"} />
+        <InfoRows
+          item={item}
+          label={formatDateWithTime(item.disabledAt) || "-"}
+        />
       </motion.td>
 
       <motion.td

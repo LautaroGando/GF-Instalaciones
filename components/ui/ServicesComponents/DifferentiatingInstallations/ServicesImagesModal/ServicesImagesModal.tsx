@@ -29,7 +29,7 @@ const ServicesImagesModal: React.FC<IServicesImagesModalProps> = ({
               alt="Imagen ampliada"
               width={1200}
               height={800}
-              className="w-full h-auto rounded-lg shadow-xl"
+              className="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-xl"
             />
             <button
               onClick={() => setSelectedImage(null)}

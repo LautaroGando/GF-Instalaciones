@@ -23,7 +23,7 @@ export const UserStats: React.FC = () => {
   }, [handleFetchUsers]);
 
   return (
-    <div className="rounded-[5px] shadow-md p-2 w-full min-h-[200px] flex flex-col">
+    <div className="rounded-[5px] shadow-md p-2 w-full min-h-[200px] flex flex-col dark:shadow-bgColor/20">
       <h2 className="font-medium">Usuarios</h2>
       {isLoading ? (
         <div className="h-[160px] flex items-center">

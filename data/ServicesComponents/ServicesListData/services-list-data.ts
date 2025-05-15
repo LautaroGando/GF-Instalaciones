@@ -42,7 +42,7 @@ export const servicesListData: IServicesListData[] = [
     title: "Ferias, exposiciones y eventos",
     description:
       "Montaje de gráfica para eventos masivos, ferias corporativas y activaciones promocionales. Equipos expertos en instalaciones temporales de alto impacto, con tiempos críticos de ejecución.",
-    items: ["Lollapalooza Argentina.", "Copa América 2024 (predio AFA)."],
+    items: ["Quilmes Rock.", "Copa América 2024 (predio AFA)."],
     imagesId: [8, 4],
   },
 ];
