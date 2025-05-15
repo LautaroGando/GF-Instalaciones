@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://www.gfrecursosgraficos.com.ar/",
+  siteUrl: "https://www.gfinstalaciones.com.ar/",
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   changefreq: "monthly",

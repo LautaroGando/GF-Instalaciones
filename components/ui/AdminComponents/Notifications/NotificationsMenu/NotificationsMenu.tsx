@@ -6,7 +6,7 @@ import NotificationsOption from "./NotificationsOption/NotificationsOption";
 import NotificationsSection from "./NotificationsSection/NotificationsSection";
 
 export const NotificationMenu: React.FC = () => {
-  const { openNotifications, openMessages, handleClose } =
+  const { openNotifications, handleClose } =
     useAdminNotificationStore();
   const menuNotificationsRef = useRef<HTMLDivElement>(null);
 
@@ -26,14 +26,14 @@ export const NotificationMenu: React.FC = () => {
       }
     };
 
-    if (openNotifications || openMessages) {
+    if (openNotifications) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [openNotifications, openMessages, handleClose]);
+  }, [openNotifications, handleClose]);
 
   return (
     <div
@@ -41,7 +41,7 @@ export const NotificationMenu: React.FC = () => {
       ref={menuNotificationsRef}
       className={clsx(
         "fixed top-0 mt-0 w-full right-0 lg:mt-5 z-50 bg-bgColor rounded-md shadow-lg shadow-bgColorDark/20 transition-all duration-300 flex flex-col justify-between overflow-y-auto hiddenScrollbar items-center dark:shadow-bgColor/20 dark:bg-secondaryColor lg:top-full lg:absolute lg:w-[400px]",
-        openNotifications || openMessages ? "h-[100dvh] lg:h-[70dvh]" : "h-0"
+        openNotifications ? "h-[100dvh] lg:h-[70dvh]" : "h-0"
       )}
     >
       <div className="flex flex-col w-full">

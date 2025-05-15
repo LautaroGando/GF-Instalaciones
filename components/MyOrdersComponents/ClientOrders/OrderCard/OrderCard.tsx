@@ -12,8 +12,6 @@ const OrderCard: React.FC<{ order: IOrder }> = ({ order }) => {
   const orderIsCompleted = order.completed;
   const toReview = !orderIsCompleted && order.progress === "100.00";
 
-  console.log(order);
-
   return (
     <Link
       href={`/my-orders/${order.id}`}

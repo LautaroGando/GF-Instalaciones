@@ -1,6 +1,8 @@
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import OrderCardContainer from "../OrderCardContainer/OrderCardContainer";
 import { ClientOrdersContentProps } from "./types";
+import ClientEmptyState from "@/components/ui/MyOrdersComponents/ClientEmptyState/ClientEmptyState";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const ClientOrdersContent: React.FC<ClientOrdersContentProps> = ({
   orders,
@@ -17,12 +19,11 @@ const ClientOrdersContent: React.FC<ClientOrdersContentProps> = ({
 
   if (!orders || orders.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[600px] text-center gap-3">
-        <h2 className="text-xl font-semibold text-primaryColor">No hay órdenes activas</h2>
-        <p className="text-gray-500 text-sm max-w-[300px]">
-          Aún no tenés órdenes asignadas o en proceso. Vuelve más tarde o contacta al coordinador.
-        </p>
-      </div>
+      <ClientEmptyState
+        icon={faCircleInfo}
+        title="No hay órdenes activas"
+        description="Aún no tenés órdenes asignadas o en proceso. Vuelve más tarde o contacta al coordinador."
+      />
     );
   }
 

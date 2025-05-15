@@ -24,7 +24,7 @@ export const OrderStats: React.FC = () => {
   }, [handleFetchInstallationsNotPagination]);
 
   return (
-    <div className="rounded-[5px] shadow-md p-2 w-full min-h-[700px] overflow-x-scroll sm:overflow-hidden">
+    <div className="rounded-[5px] shadow-md p-2 w-full min-h-[700px] overflow-x-scroll dark:shadow-bgColor/20 sm:overflow-hidden">
       <h2 className="font-medium text-lg">Instalaciónes</h2>
       {!installations ? (
         <div className="h-[650px] flex items-center">

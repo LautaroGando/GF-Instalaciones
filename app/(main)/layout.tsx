@@ -23,16 +23,16 @@ export const metadata: Metadata = {
     "gráfica en Argentina"
   ],
   applicationName: "GF Instalaciones",
-  authors: [{ name: "GF Instalaciones", url: "https://www.gfrecursosgraficos.com.ar/" }],
+  authors: [{ name: "GF Instalaciones", url: "https://www.gfinstalaciones.com.ar/" }],
   creator: "GF Instalaciones",
   publisher: "GF Instalaciones",
-  metadataBase: new URL("https://www.gfrecursosgraficos.com.ar/"),
+  metadataBase: new URL("https://www.gfinstalaciones.com.ar/"),
   alternates: {
-    canonical: "https://www.gfrecursosgraficos.com.ar/",
+    canonical: "https://www.gfinstalaciones.com.ar/",
   },
   openGraph: {
     type: "website",
-    url: "https://www.gfrecursosgraficos.com.ar/",
+    url: "https://www.gfinstalaciones.com.ar/",
     title: "GF Instalaciones | Instalaciones Gráficas Profesionales",
     description:
       "Especialistas en instalaciones gráficas de gran formato en todo el país. Cartelería, señalética, stands y más. Más de 28 años de experiencia en soluciones visuales.",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     locale: "es_AR",
     images: [
       {
-        url: "https://www.gfrecursosgraficos.com.ar/og-image.png",
+        url: "https://www.gfinstalaciones.com.ar/og-image.png",
         width: 1200,
         height: 630,
         alt: "GF Instalaciones | Instalaciones Gráficas Profesionales",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     description:
       "Especialistas en instalaciones gráficas de gran formato en todo el país. Cartelería, señalética, stands y más. Más de 28 años de experiencia en soluciones visuales.",
     site: "",
-    images: ["https://www.gfrecursosgraficos.com.ar/og-image.png"],
+    images: ["https://www.gfinstalaciones.com.ar/og-image.png"],
   },
   icons: {
     icon: "/favicon.ico",

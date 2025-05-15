@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const middleware = (req: NextRequest) => {
-  /* const searchUser = req.cookies.get("user-storage")?.value;
+  const searchUser = req.cookies.get("user-storage")?.value;
   const user = searchUser && JSON.parse(searchUser);
   const userInfo = user && "user" in user ? user.user : user;
 
@@ -98,7 +98,7 @@ export const middleware = (req: NextRequest) => {
       return NextResponse.redirect(new URL("/", req.url));
   }
 
-  return NextResponse.next(); */
+  return NextResponse.next();
 };
 
 export const config = {

@@ -1,5 +1,5 @@
 "use client";
-import { faBell, faInbox } from "@fortawesome/free-solid-svg-icons";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import NotificationMenu from "./NotificationsMenu/NotificationsMenu";
@@ -14,16 +14,6 @@ export const Notifications: React.FC = () => {
   return (
     <div className="gap-5 justify-center flex">
       <NotificationMenu />
-      <button
-        onClick={() => handleToggle("messages")}
-        type="button"
-        className="text-primaryColor relative border border-primaryColor p-2 w-[35px] h-[35px] rounded-sm flex justify-center items-center text-xl lg:bg-bgColor"
-      >
-        <FontAwesomeIcon icon={faInbox} />
-        <div className="absolute -top-1 -right-1 w-[15px] h-[15px] rounded-full bg-primaryColor text-letterColorLight flex justify-center items-center">
-          <span className="text-xs">0</span>
-        </div>
-      </button>
       <button
         onClick={() => handleToggle("notifications")}
         type="button"

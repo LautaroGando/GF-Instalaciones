@@ -1,23 +1,16 @@
 import IInstallation from "./IInstallation";
-
-export interface IOrderClient {
-  id: string;
-  role: {
-    id: string;
-    name: string;
-  };
-  notifications: string[];
-}
+import { IUserSafe } from "./IUserSafe";
 
 export interface IOrder {
   id: string;
-  client: IOrderClient
+  client: IUserSafe;
   orderNumber: string;
   title: string;
   description: string;
-  startDate: string;
-  endDate: string | null;
+  createdAt: string;
+  finishedAt: string | null;
   completed: boolean;
+  endDate: string;
   installationsFinished: string;
   progress: string;
   installations: IInstallation[];
