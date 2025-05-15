@@ -30,7 +30,7 @@ export const ImageOpen: React.FC = () => {
             transition={{ duration: 0.3 }}
             className="w-[90%] h-auto max-h-[90%] p-5 flex flex-col gap-5 items-center justify-center bg-bgColor rounded-[9px] dark:bg-bgColorDark xl:w-[60%]"
           >
-            <div className="w-full h-full overflow-auto">
+            <div className="w-full h-full rounded-[9px] overflow-auto">
               <Image
                 className="w-full object-cover rounded-[8px] object-center"
                 src={image.image}

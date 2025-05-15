@@ -14,8 +14,8 @@ export const formatDate = (date: string) => {
 };
 
 export const formatDateToInput = (date: string) => {
-  const [day, month, year] = date.split("/");
-  return `${year}-${month}-${day}`;
+  const [year, month, day] = date.split("-");
+  return `${year}-${month}-${day.split('T')[0]}`;
 };
 
 export const formatHour = (date: string) => {

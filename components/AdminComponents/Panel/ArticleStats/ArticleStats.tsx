@@ -16,7 +16,7 @@ export const ArticleStats: React.FC = () => {
   const { isDark } = useThemeStore();
 
   return (
-    <div className="rounded-[5px] shadow-md p-2 w-full">
+    <div className="rounded-[5px] shadow-md p-2 w-full dark:shadow-bgColor/20">
       <h2 className="font-medium">Artículos</h2>
       <ResponsiveContainer width="100%" height={150}>
         <BarChart data={articleStats()} layout="vertical">

@@ -21,7 +21,7 @@ export const ModalEditProfile: React.FC = () => {
   const userInfo = user && "user" in user ? user.user : user;
 
   if (!userInfo) return null;
-
+console.log(userInfo)
   return (
     <AnimatePresence mode="wait" onExitComplete={handleCloseEditMenu}>
       {isVisible && (

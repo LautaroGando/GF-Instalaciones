@@ -10,7 +10,7 @@ Disallow: /recovery-password
 Disallow: /api/
 
 # Host
-Host: https://www.gfrecursosgraficos.com.ar/
+Host: https://www.gfinstalaciones.com.ar/
 
 # Sitemaps
-Sitemap: https://www.gfrecursosgraficos.com.ar/sitemap.xml
+Sitemap: https://www.gfinstalaciones.com.ar/sitemap.xml

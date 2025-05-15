@@ -2,6 +2,7 @@
 import { useUserStore } from "@/store/UserStore/userStore";
 import { capitalize } from "@/utils/capitalize";
 import { useEffect, useState } from "react";
+import { formatDate } from '../utils/formatDate';
 
 export const useUserData = () => {
   const { user } = useUserStore();
@@ -17,7 +18,7 @@ export const useUserData = () => {
       setUserData([
         { key: "Nombre completo:", value: userInfo.fullName },
         { key: "Correo electrónico:", value: userInfo.email },
-        { key: "Fecha de nacimiento:", value: userInfo.birthDate },
+        { key: "Fecha de nacimiento:", value: formatDate(userInfo.birthDate) },
         { key: "Número de documento:", value: userInfo.idNumber },
         { key: "País:", value: capitalize(userInfo.country) },
         {
