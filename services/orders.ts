@@ -17,13 +17,14 @@ export const getAllOrders = async () => {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
     const { data } = await axios.get(`${API_URL}/orders`, {
-      params:{
-        limit: Number.MAX_SAFE_INTEGER
+      params: {
+        limit: Number.MAX_SAFE_INTEGER,
       },
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+    
     return data;
   } catch (err) {
     console.log(err);
@@ -77,7 +78,6 @@ export const getOrderById = async (orderId: string): Promise<IOrder> => {
 
 export const createOrder = async (values: ICreateOrderFormValues) => {
   console.log(values);
-  
 
   try {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;

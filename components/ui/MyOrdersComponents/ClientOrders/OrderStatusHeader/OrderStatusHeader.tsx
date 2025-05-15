@@ -37,7 +37,7 @@ const OrderStatusHeader: React.FC<IOrderCardStatusProps> = ({
         {orderIsCompleted ? "Completada" : toReview ? "A Revisar" : "En Proceso"}
       </span>
       <span className="text-gray-500 dark:text-white">
-        {new Date(order.startDate).toLocaleDateString("es-AR")}
+        {new Date(order.createdAt).toLocaleDateString("es-AR")}
       </span>
     </motion.div>
   );

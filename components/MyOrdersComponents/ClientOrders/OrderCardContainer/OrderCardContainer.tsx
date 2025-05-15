@@ -31,7 +31,7 @@ const OrderCardContainer: React.FC<{ orders: IOrder[] }> = ({ orders }) => {
       variants={containerVariants}
       initial="hidden"
       animate="show"
-      className="flex flex-col gap-7 py-4 md:grid md:grid-cols-2 xl:grid-cols-3"
+      className="flex flex-col gap-7 py-4 sm:py-12 sm:min-h-[45vh] md:grid md:grid-cols-2 xl:grid-cols-3"
     >
       {orders.map((order, i) => (
         <motion.div key={i} variants={cardVariants}>

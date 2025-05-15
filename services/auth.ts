@@ -22,6 +22,7 @@ export const signIn = async (values: IUserSignIn, color: TColor) => {
         text: "Bienvenido a GF Instalaciones.",
         icon: "success",
       });
+
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -38,7 +39,6 @@ export const signIn = async (values: IUserSignIn, color: TColor) => {
 };
 
 export const signUpUser = async (values: IUserSignUp, color: TColor) => {
-  console.log(values);
   try {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
@@ -80,7 +80,7 @@ export const signUpInstaller = async (values: IUserSignUpInstaller, color: TColo
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(data);
+    
     if (data)
       PersonalizedPopUp({
         color: color,
