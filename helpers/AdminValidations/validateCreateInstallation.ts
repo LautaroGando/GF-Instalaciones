@@ -1,7 +1,13 @@
 import * as Yup from "yup";
 
 const installationSchema = Yup.object().shape({
-  startDate: Yup.string().required("La fecha de inicio es obligatoria"),
+  startDate: Yup.string()
+    .required("La fecha de inicio es obligatoria")
+    .test("is-future", "La fecha debe ser futura", (value) => {
+      if (!value) return false;
+      return new Date(value).getTime() > Date.now();
+    }),
+
   notes: Yup.string(),
   address: Yup.object().shape({
     street: Yup.string().required("La calle es obligatoria"),
@@ -11,9 +17,7 @@ const installationSchema = Yup.object().shape({
     city: Yup.string().required("La ciudad es obligatoria"),
     province: Yup.string().required("La provincia es obligatoria"),
   }),
-  installersIds: Yup.array()
-    .of(Yup.string())
-    .min(1, "Debes seleccionar al menos un instalador"),
+  installersIds: Yup.array().of(Yup.string()).min(1, "Debes seleccionar al menos un instalador"),
   coordinatorId: Yup.string().required("Debes seleccionar un coordinador"),
 });
 

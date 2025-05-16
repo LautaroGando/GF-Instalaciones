@@ -57,10 +57,14 @@ export const FormCompleteInstallation: React.FC<
                 type="file"
                 name="files"
                 multiple
+                accept="image/*"
+                capture="environment"
                 onChange={(event) => {
-                  const files = Array.from(event.currentTarget.files || []);
-                  setFieldValue("files", files);
-                  setLocalFiles(files);
+                  const newFiles = Array.from(event.currentTarget.files || []);
+                  const updatedFiles = [...localFiles, ...newFiles];
+
+                  setFieldValue("files", updatedFiles);
+                  setLocalFiles(updatedFiles);
                 }}
               />
               <ErrorMessage

@@ -7,10 +7,12 @@ export const useClientOrders = (contentToShow: "in process" | "completed") => {
     useTrackingStore();
   const { user } = useUserStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
+console.log(orders);
+console.log(user);
 
   const clientOrders = useMemo(() => {
     if (!user) return [];
-    return orders.filter((order) => order.client.id === user.id);
+    return orders.filter((order) => order.client.user.id === user.id);
   }, [orders, user]);
 
   const pendingCount = clientOrders.filter((order) => !order.completed).length;

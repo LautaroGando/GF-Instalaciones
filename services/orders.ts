@@ -24,7 +24,7 @@ export const getAllOrders = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    
+
     return data;
   } catch (err) {
     console.log(err);
@@ -157,6 +157,7 @@ export const getAllInstallationsNotPagination = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
+
     return data;
   } catch (error) {
     console.log(error);
@@ -178,6 +179,7 @@ export const getAllInstallations = async (
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log(data);
 
     return data;
   } catch (error) {
@@ -195,19 +197,23 @@ export const createInstallation = async (
   try {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
+    console.log(values);
+
     const { data } = await axios.post(`${API_URL}/orders/${orderId}/installations`, values, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
+    console.log(data);
+
     return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      console.error("Error al crear la instalación");
+      console.error(err);
       throw new Error("No se pudo crear la instalación.");
     } else {
-      console.error("Error inesperado al crear la instalación");
+      console.log(err);
       throw new Error("Error inesperado al crear la instalación.");
     }
   }
@@ -228,7 +234,7 @@ export const updateInstallation = async (
 
     return data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
     if (axios.isAxiosError(err)) {
       console.error("Error al actualizar la instalación");
       throw new Error("No se pudo actualizar la instalación.");
