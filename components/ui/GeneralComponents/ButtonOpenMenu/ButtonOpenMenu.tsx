@@ -15,6 +15,7 @@ export const ButtonOpenMenu: React.FC<IButtonOpenMenuProps> = ({
     <button
       type="button"
       onClick={handleToggle}
+      className="h-[60px]"
       data-ignore-profile-outside-click
     >
       <FontAwesomeIcon

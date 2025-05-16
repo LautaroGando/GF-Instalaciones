@@ -7,9 +7,10 @@ import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBan, faUser } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
-import { formatDate, formatHour } from "@/utils/formatDate";
+import { formatHour } from "@/utils/formatDate";
 import { useInstallationNoteModalStore } from "@/store/Admin/AdminModals/InstallationNoteModalStore/InstallationNoteModalStore";
 import ModalFinalizedInstallation from "./ModalFinalizedInstallation/ModalFinalizedInstallation";
+import { formatDateWithTime } from "@/utils/formatDateWithTime";
 
 export const Installation: React.FC = () => {
   const { user } = useUserStore();
@@ -36,7 +37,7 @@ export const Installation: React.FC = () => {
   }, [handleFetchInstallationsNotPagination]);
 
   const userInfo = user && "user" in user ? user.user : user;
-console.log(userInfo)
+  console.log(userInfo);
   const assignedInstallations = installations?.filter(
     (installation) =>
       installation.coordinator?.id ===
@@ -87,7 +88,7 @@ console.log(userInfo)
                   </h6>
                   <p className="text-xs">
                     {installation.startDate &&
-                      formatDate(installation.startDate)}
+                      formatDateWithTime(installation.startDate)}
                   </p>
                 </div>
                 <div className="text-sm font-semibold flex flex-col gap-1 px-2">

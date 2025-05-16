@@ -75,14 +75,23 @@ export const formSignUpData: IFormSignUpData[] = [
     required: true,
   },
   {
+    label: "Localidad",
+    name: "locality",
+    type: "text",
+    required: true,
+  },
+  {
+    label: "Código postal",
+    name: "postalCode",
+    type: "text",
+    required: true,
+  },
+  {
     label: "Nº Telefónico",
     name: "phone",
     type: "text",
     isPhone: true,
-    options: [
-      { value: "+54", option: "+54" },
-      { value: "+598", option: "+598" },
-    ],
+    options: [{ value: "+54", option: "+54" }],
     required: true,
   },
   {

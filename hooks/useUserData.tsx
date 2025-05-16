@@ -2,7 +2,7 @@
 import { useUserStore } from "@/store/UserStore/userStore";
 import { capitalize } from "@/utils/capitalize";
 import { useEffect, useState } from "react";
-import { formatDate } from '../utils/formatDate';
+import { formatDate } from "../utils/formatDate";
 
 export const useUserData = () => {
   const { user } = useUserStore();
@@ -26,6 +26,8 @@ export const useUserData = () => {
           value: capitalize(userInfo.location).split("_").join(" "),
         },
         { key: "Dirección:", value: userInfo.address },
+        { key: "Localidad:", value: userInfo.locality },
+        { key: "Código postal:", value: userInfo.postalCode },
         {
           key: "Número de teléfono:",
           value: `${userInfo.coverage} ${userInfo.phone}`,

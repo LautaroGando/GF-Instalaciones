@@ -36,6 +36,8 @@ export const FormInstaller: React.FC = () => {
           country: "",
           location: "",
           address: "",
+          locality: "",
+          postalCode: "",
           coverage: "+54",
           phone: "",
           password: "",
@@ -60,13 +62,16 @@ export const FormInstaller: React.FC = () => {
               value === "si" ? true : value === "no" ? false : value,
             ])
           ) as unknown as IUserSignUpInstaller;
-          await signUpInstaller(
+          const data = await signUpInstaller(
             {
               ...formattedValues,
               taxCondition: values.taxCondition.toUpperCase(),
             },
             isDark ? "#000000" : "#FAFAFA"
           );
+          if (data) {
+            window.location.reload();
+          }
           setIsLoading(false);
           resetForm();
         }}

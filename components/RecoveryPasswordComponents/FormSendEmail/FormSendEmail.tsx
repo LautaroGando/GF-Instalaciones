@@ -5,9 +5,12 @@ import { AnimatePresence } from "motion/react";
 import React from "react";
 import { motion } from "motion/react";
 import { validateSendEmail } from "@/helpers/validateSendEmail";
+import { sendMailRecoveryPassword } from "@/services/auth";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 
 export const FormSendEmail: React.FC = () => {
   const { modal, handleCloseModal } = useRecoveryPasswordStore();
+  const { isDark } = useThemeStore();
 
   return (
     <AnimatePresence mode="wait">
@@ -23,11 +26,18 @@ export const FormSendEmail: React.FC = () => {
           <Formik
             initialValues={{ email: "" }}
             validate={validateSendEmail}
-            onSubmit={() => {}}
+            onSubmit={async (values, { resetForm }) => {
+              await sendMailRecoveryPassword(
+                values,
+                isDark ? "#000000" : "#FAFAFA"
+              );
+              resetForm();
+              handleCloseModal();
+            }}
           >
             <Form
               onClick={(e) => e.stopPropagation()}
-              className="max-w-[500px] bg-bgColor p-5 flex flex-col gap-5 rounded-lg border-t-[10px] border-primaryColor items-center"
+              className="max-w-[500px] bg-bgColor p-5 flex flex-col gap-5 rounded-lg border-t-[10px] border-primaryColor items-center dark:bg-bgColorDark"
             >
               <h2 className="text-primaryColor text-xl w-full font-semibold">
                 Verificar correo electrónico:

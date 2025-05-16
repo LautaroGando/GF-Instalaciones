@@ -10,6 +10,8 @@ export interface IUserSignUp {
   idNumber: string;
   country: string;
   location: string;
+  locality: string;
+  postalCode: string;
   address: string;
   coverage: string;
   phone: string;
