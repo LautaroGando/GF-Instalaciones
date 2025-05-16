@@ -56,7 +56,7 @@ const TrackingTable = () => {
                     descriptionModal={() =>
                       handleOpenTextModal("Descripción de la Orden", order.description)
                     }
-                    clientInfoModal={() => handleViewClient(order.client.id)}
+                    clientInfoModal={() => handleViewClient(order.client)}
                   />
                 );
               })}

@@ -5,14 +5,14 @@ import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import IOrder from "@/interfaces/IOrder";
-import { IUser } from "@/interfaces/IUser";
 import { useUserStore } from "@/store/UserStore/userStore";
+import { IUserSafe } from "@/interfaces/IUserSafe";
 
 export const useTrackingTableLogic = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
   const { openModal: openTrackingEditModal } = useTrackingEditModal();
   const { handleFetchOrders, handleDeleteOrder, getFilteredOrders, isLoading } = useTrackingStore();
-  const { handleFetchUsers, users } = useUserStore();
+  const { handleFetchUsers } = useUserStore();
   const { isDark } = useThemeStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
 
@@ -53,10 +53,8 @@ export const useTrackingTableLogic = () => {
     openTrackingTextModal(title, text);
   };
 
-  const handleViewClient = (id: string) => {
-    const user: IUser | undefined = users?.find((usr) => usr.userRoles[0].id === id);
-
-    if (user) {
+  const handleViewClient = (client: IUserSafe) => {
+    if (client) {
       const {
         fullName,
         email,
@@ -69,18 +67,32 @@ export const useTrackingTableLogic = () => {
         coverage,
         isSubscribed,
         createdAt,
-      } = user;
+      } = client;
+
+      const birthDateFormatted = new Intl.DateTimeFormat("es-AR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(new Date(birthDate));
+
+      const createdAtFormatted = new Intl.DateTimeFormat("es-AR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(new Date(createdAt));
 
       const clientData = `
       <div style="line-height: 1.6">
         <p><strong>Nombre completo:</strong> ${fullName}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>DNI:</strong> ${idNumber}</p>
-        <p><strong>Fecha de nacimiento:</strong> ${birthDate}</p>
+        <p><strong>Fecha de nacimiento:</strong> ${birthDateFormatted}</p>
         <p><strong>Teléfono:</strong> ${coverage} ${phone}</p>
         <p><strong>Dirección:</strong> ${address}, ${location}, ${country}</p>
         <p><strong>Suscripción activa:</strong> ${isSubscribed ? "Sí" : "No"}</p>
-        <p><strong>Registrado el:</strong> ${createdAt}</p>
+        <p><strong>Registrado el:</strong> ${createdAtFormatted}</p>
       </div>
     `;
 
