@@ -3,7 +3,8 @@ import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import IInstallation from "@/interfaces/IInstallation";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useUserStore } from "@/store/UserStore/userStore";
-import { formatDate, formatHour } from "@/utils/formatDate";
+import { formatHour } from "@/utils/formatDate";
+import { formatDateWithTime } from "@/utils/formatDateWithTime";
 import { faBan, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
@@ -92,7 +93,7 @@ export const History: React.FC = () => {
                   </h6>
                   <p className="text-xs">
                     {installation.startDate &&
-                      formatDate(installation.startDate)}
+                      formatDateWithTime(installation.startDate)}
                   </p>
                 </div>
                 <div className="text-sm font-semibold flex flex-col gap-1 px-2">
@@ -150,13 +151,17 @@ export const History: React.FC = () => {
                   {installation.status === "Cancelada" ? (
                     <div className="w-full h-[40px] bg-installer-cancelled/15 text-installer-cancelled flex flex-col items-center justify-center font-bold">
                       <h3>CANCELADA</h3>
-                      <h4 className="font-normal">{installation.endDate}</h4>
+                      <h4 className="font-normal">
+                        {formatDateWithTime(installation.endDate)}
+                      </h4>
                     </div>
                   ) : (
                     installation.status === "Finalizada" && (
                       <div className="w-full h-[40px] bg-installer-finalized/15 text-installer-finalized flex flex-col items-center justify-center font-bold">
                         <h3>FINALIZADA</h3>
-                        <h4 className="font-normal">{installation.endDate}</h4>
+                        <h4 className="font-normal">
+                          {formatDateWithTime(installation.endDate)}
+                        </h4>
                       </div>
                     )
                   )}

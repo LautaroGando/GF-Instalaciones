@@ -228,6 +228,7 @@ export const updateInstallation = async (
 
     return data;
   } catch (err) {
+    console.log(err)
     if (axios.isAxiosError(err)) {
       console.error("Error al actualizar la instalación");
       throw new Error("No se pudo actualizar la instalación.");

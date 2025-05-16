@@ -1,12 +1,17 @@
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import { API_URL } from "@/config/envs";
-import { IUserSignIn, IUserSignUp, IUserSignUpInstaller } from "@/interfaces/IAuth";
+import {
+  IUserSignIn,
+  IUserSignUp,
+  IUserSignUpInstaller,
+} from "@/interfaces/IAuth";
 import type { TColor } from "@/types/TColor";
 import axios from "axios";
 
 export const signIn = async (values: IUserSignIn, color: TColor) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
     const { data } = await axios.post(`${API_URL}/auth/signInUser`, values, {
       headers: {
@@ -40,7 +45,8 @@ export const signIn = async (values: IUserSignIn, color: TColor) => {
 
 export const signUpUser = async (values: IUserSignUp, color: TColor) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
     const { data } = await axios.post(`${API_URL}/auth/signUpUser`, values, {
       headers: {
@@ -71,16 +77,24 @@ export const signUpUser = async (values: IUserSignUp, color: TColor) => {
   }
 };
 
-export const signUpInstaller = async (values: IUserSignUpInstaller, color: TColor) => {
+export const signUpInstaller = async (
+  values: IUserSignUpInstaller,
+  color: TColor
+) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-    const { data } = await axios.post(`${API_URL}/auth/signUpInstaller`, values, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    
+    const { data } = await axios.post(
+      `${API_URL}/auth/signUpInstaller`,
+      values,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
     if (data)
       PersonalizedPopUp({
         color: color,
@@ -92,6 +106,90 @@ export const signUpInstaller = async (values: IUserSignUpInstaller, color: TColo
       });
     return data;
   } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      PersonalizedPopUp({
+        color: color,
+        withResult: false,
+        simpleModal: true,
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+      });
+    }
+  }
+};
+
+export const sendMailRecoveryPassword = async (
+  values: Record<string, string>,
+  color: TColor
+) => {
+  try {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const { data } = await axios.post(
+      `${API_URL}/auth/recovery-request`,
+      values,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (data)
+      PersonalizedPopUp({
+        color: color,
+        withResult: false,
+        simpleModal: true,
+        title: "Correo enviado con éxito",
+        text: "Verifica tu correo para recuperar tu clave.",
+        icon: "success",
+      });
+    return data;
+  } catch (error) {
+    console.log(error);
+    if (axios.isAxiosError(error) && error.response) {
+      PersonalizedPopUp({
+        color: color,
+        withResult: false,
+        simpleModal: true,
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+      });
+    }
+  }
+};
+
+export const recoveryPassword = async (
+  values: Record<string, string>,
+  color: TColor
+) => {
+  console.log(values);
+  try {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const { data } = await axios.post(
+      `${API_URL}/auth/recovery-change-password`,
+      values,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (data)
+      PersonalizedPopUp({
+        color: color,
+        withResult: false,
+        simpleModal: true,
+        title: "Has cambiado tu clave con éxito.",
+        text: "Vuelve a ingresar para verificarlo.",
+        icon: "success",
+      });
+    return data;
+  } catch (error) {
+    console.log(error);
     if (axios.isAxiosError(error) && error.response) {
       PersonalizedPopUp({
         color: color,

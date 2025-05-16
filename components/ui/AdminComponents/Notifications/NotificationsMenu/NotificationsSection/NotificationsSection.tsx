@@ -42,8 +42,8 @@ export const NotificationsSection: React.FC = () => {
               <div
                 key={user.installer.id}
                 className={clsx(
-                  "flex flex-col items-center gap-3 justify-between p-2 border-b transition-all duration-300 border-b-admin-borderColor/50 overflow-hidden",
-                  moreInfo === user.installer.id ? "h-[325px]" : "h-[48px]"
+                  "flex flex-col items-center gap-3 justify-between p-2 border-b transition-all duration-300 border-b-admin-borderColor/50",
+                  moreInfo === user.installer.id ? "h-[325px] overflow-auto" : "h-[48px] overflow-hidden"
                 )}
               >
                 <div className="flex items-center justify-between w-full">

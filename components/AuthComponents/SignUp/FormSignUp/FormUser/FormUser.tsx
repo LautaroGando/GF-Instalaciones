@@ -39,6 +39,8 @@ export const FormUser: React.FC = () => {
           country: "",
           location: "",
           address: "",
+          locality: "",
+          postalCode: "",
           coverage: "+54",
           phone: "",
           password: "",
@@ -47,7 +49,10 @@ export const FormUser: React.FC = () => {
         validate={validateSignUp}
         onSubmit={async (values, { resetForm }) => {
           setIsLoading(true);
-          await signUpUser(values, isDark ? "#000000" : "#FAFAFA");
+          const data = await signUpUser(values, isDark ? "#000000" : "#FAFAFA");
+          if (data) {
+            window.location.reload();
+          }
           setIsLoading(false);
           resetForm();
         }}

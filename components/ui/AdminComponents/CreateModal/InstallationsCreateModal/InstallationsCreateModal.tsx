@@ -388,7 +388,7 @@ const InstallationsCreateModal = () => {
                         name="startDate"
                         type="datetime-local"
                         placeholder="Seleccione fecha y hora de inicio"
-                        className="shadow-sm shadow-primaryColor/60 p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm text-primaryColor"
+                        className="shadow-sm shadow-primaryColor/60 bg-transparent p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm text-primaryColor"
                       />
 
                       <motion.div

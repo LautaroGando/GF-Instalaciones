@@ -13,10 +13,14 @@ export const UserProfile: React.FC = () => {
   const userInfo = user && "user" in user ? user.user : user;
 
   return (
-    <div className="flex items-center gap-5 relative cursor-pointer">
+    <div className="flex items-center relative cursor-pointer">
       <ButtonOpenMenu />
       <ProfileMenu />
-      <p onClick={handleToggle} data-ignore-profile-outside-click>
+      <p
+        onClick={handleToggle}
+        className="h-[60px] flex items-center px-5"
+        data-ignore-profile-outside-click
+      >
         {userInfo?.fullName}
       </p>
       <div

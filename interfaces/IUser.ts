@@ -16,6 +16,8 @@ export interface IUser {
   idNumber: string;
   location: string;
   address: string;
+  locality: string;
+  postalCode: string;
   country: string;
   phone: string;
   coverage: string;
