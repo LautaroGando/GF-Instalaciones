@@ -48,9 +48,6 @@ const InstallationsTable = () => {
     );
   }
 
-  console.log(filteredInstallations);
-  
-
   return (
     <>
       <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto overflow-y-hidden">

@@ -73,6 +73,9 @@ const InstallationsCreateModal = () => {
     { setSubmitting }: FormikHelpers<ICreateInstallationFormValues>
   ) => {
     closeModal();
+
+    const formattedStartDate = values.startDate ? new Date(values.startDate).toISOString() : "";
+
     const installersIds = selectedInstallers.map((installer) => installer.id);
 
     const coordinatorId =
@@ -82,6 +85,7 @@ const InstallationsCreateModal = () => {
 
     const installationData: ICreateInstallationFormValues = {
       ...values,
+      startDate: formattedStartDate,
       installersIds,
       coordinatorId,
     };
@@ -100,10 +104,6 @@ const InstallationsCreateModal = () => {
         clearCoordinators: () => clearCoordinators(),
       });
     }
-
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 200);
   };
 
   if (!orderId) return;
@@ -167,10 +167,7 @@ const InstallationsCreateModal = () => {
                         placeholder="Ingrese la provincia"
                         className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] text-sm w-full outline-none transition-all duration-200 dark:text-letterColorLight focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                       >
-                        <option
-                          value=""
-                          className="bg-bgColor dark:bg-bgColorDark"
-                        >
+                        <option value="" className="bg-bgColor dark:bg-bgColorDark">
                           Seleccionar provincia
                         </option>
                         {provincesMock.map((province, i) => (

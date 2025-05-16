@@ -26,8 +26,10 @@ const InstallersSelectModal: React.FC = () => {
       .replace(/\s+/g, " ")
       .trim();
 
-  const filteredInstallers = (installers ?? []).filter((installer) =>
-    normalize(installer.user.fullName).includes(normalize(search))
+  const filteredInstallers = (installers ?? []).filter(
+    (installer) =>
+      installer.status === "APROBADO" &&
+      normalize(installer.user.fullName).includes(normalize(search))
   );
 
   if (!isOpen) return null;
@@ -75,8 +77,13 @@ const InstallersSelectModal: React.FC = () => {
                   className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 dark:bg-gray-100/10"
                 >
                   <div className="flex items-center gap-3">
-                    <FontAwesomeIcon icon={faCircleUser} className="text-gray-500 text-2xl dark:text-gray-200" />
-                    <p className="text-gray-800 font-medium dark:text-gray-100">{installer.user.fullName}</p>
+                    <FontAwesomeIcon
+                      icon={faCircleUser}
+                      className="text-gray-500 text-2xl dark:text-gray-200"
+                    />
+                    <p className="text-gray-800 font-medium dark:text-gray-100">
+                      {installer.user.fullName}
+                    </p>
                   </div>
 
                   {selectedInstallers.some((inst) => inst.id === installer.id) ? (
