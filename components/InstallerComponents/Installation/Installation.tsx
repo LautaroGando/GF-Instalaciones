@@ -11,7 +11,8 @@ import { faBan, faUser } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
-import { formatDate, formatHour } from "@/utils/formatDate";
+import { formatHour } from "@/utils/formatDate";
+import { formatDateWithTime } from "@/utils/formatDateWithTime";
 
 export const Installation: React.FC = () => {
   const { user } = useUserStore();
@@ -113,7 +114,7 @@ export const Installation: React.FC = () => {
                   </h6>
                   <p className="text-xs">
                     {installation.startDate &&
-                      formatDate(installation.startDate)}
+                      formatDateWithTime(installation.startDate)}
                   </p>
                 </div>
                 <div className="text-sm font-semibold flex flex-col gap-1 px-2">
@@ -210,7 +211,7 @@ export const Installation: React.FC = () => {
                       <div className="w-full h-[40px] bg-installer-postponed/15 text-installer-postponed flex flex-col items-center justify-center font-bold">
                         <h3>POSPUESTA</h3>
                         <h4 className="font-normal">
-                          {installation.startDate}
+                          {formatDateWithTime(installation.startDate)}
                         </h4>
                       </div>
                     )

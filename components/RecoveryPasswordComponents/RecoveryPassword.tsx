@@ -2,11 +2,15 @@
 import { recoveryData } from "@/data/RecoveryPasswordComponents/RecoveryData/recovery-data";
 import { IRecoveryData } from "@/data/RecoveryPasswordComponents/RecoveryData/types";
 import { validateRecoveryPassword } from "@/helpers/validateRecoveryPassword";
+import { useUserData } from "@/hooks/useUserData";
 import { IUserRecoveryPassword } from "@/interfaces/IAuth";
+import { recoveryPassword } from "@/services/auth";
+import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 export const RecoveryPassword: React.FC = () => {
@@ -16,12 +20,35 @@ export const RecoveryPassword: React.FC = () => {
     newPassword: false,
     repeatPassword: false,
   });
+  const searchParams = useSearchParams();
+  const { isDark } = useThemeStore();
+  const { user } = useUserData();
+  const router = useRouter();
+
+  const token = searchParams.get("token");
+
+  if (user || !token) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <Formik
       initialValues={{ newPassword: "", repeatPassword: "" }}
       validate={validateRecoveryPassword}
-      onSubmit={() => {}}
+      onSubmit={async (values, { resetForm }) => {
+        const newPassword = values.newPassword;
+
+        const data = await recoveryPassword(
+          { newPassword, token },
+          isDark ? "#000000" : "#FAFAFA"
+        );
+
+        if (data) {
+          router.push("/auth");
+        }
+        resetForm();
+      }}
     >
       {({ errors, touched }: FormikProps<IUserRecoveryPassword>) => (
         <Form className="w-full h-[500px] max-w-[600px] mx-auto border-t-[10px] border-primaryColor rounded-[8px] shadow-lg shadow-secondaryColor/10 flex flex-col gap-5 items-center justify-between py-5 px-3 dark:shadow-bgColor/10">

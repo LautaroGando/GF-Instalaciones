@@ -256,6 +256,7 @@ export const useUserStore = create<IUserStoreProps>()(
               ),
             }));
             get().handleApplyFilter(false);
+            get().handleFetchUsers();
           },
         });
       },

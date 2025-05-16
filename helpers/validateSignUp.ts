@@ -34,6 +34,16 @@ export const validateSignUp = (input: IUserSignUp) => {
         "La dirección debe contener el nombre de la calle y la altura.")
     : "";
 
+  !regex.locality.test(input.locality)
+    ? (errors.locality =
+        "La localidad debe tener entre 2 y 50 letras, y puede incluir espacios o guiones.")
+    : "";
+
+  !regex.postalCode.test(input.postalCode)
+    ? (errors.postalCode =
+        "El código postal debe tener entre 3 y 10 caracteres, letras o números.")
+    : "";
+
   !regex.phone.test(input.phone)
     ? (errors.phone =
         "El número de teléfono debe contener solo dígitos, sin espacios ni símbolos, y tener entre 7 y 15 caracteres.")
@@ -44,7 +54,9 @@ export const validateSignUp = (input: IUserSignUp) => {
         "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial.")
     : "";
 
-  input.repeatPassword !== input.password ? errors.repeatPassword = 'Las contraseñas deben coincidir.' : '';
+  input.repeatPassword !== input.password
+    ? (errors.repeatPassword = "Las contraseñas deben coincidir.")
+    : "";
 
   return errors;
 };

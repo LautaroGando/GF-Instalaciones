@@ -1,5 +1,6 @@
 import RecoveryPassword from "@/components/RecoveryPasswordComponents/RecoveryPassword";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Recuperar Contraseña | GF Instalaciones",
@@ -20,5 +21,9 @@ export const metadata: Metadata = {
 };
 
 export default function RecoveryPasswordPage() {
-  return <RecoveryPassword />;
+  return (
+    <Suspense>
+      <RecoveryPassword />;
+    </Suspense>
+  );
 }
