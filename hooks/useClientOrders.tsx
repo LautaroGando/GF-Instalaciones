@@ -12,7 +12,7 @@ console.log(user);
 
   const clientOrders = useMemo(() => {
     if (!user) return [];
-    return orders.filter((order) => order.client.id === user.id);
+    return orders.filter((order) => order.client.user.id === user.id);
   }, [orders, user]);
 
   const pendingCount = clientOrders.filter((order) => !order.completed).length;
