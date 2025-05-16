@@ -37,7 +37,6 @@ const TrackingTable = () => {
   }
 
   console.log(filteredOrders);
-  
 
   return (
     <>
@@ -54,9 +53,12 @@ const TrackingTable = () => {
                     editOrder={() => handleEditOrder(order)}
                     deleteOrder={() => handleDeleteOrderClick(order.id)}
                     descriptionModal={() =>
-                      handleOpenTextModal("Descripción de la Orden", order.description)
+                      handleOpenTextModal(
+                        "Descripción de la Orden",
+                        order.description
+                      )
                     }
-                    clientInfoModal={() => handleViewClient(order.client)}
+                    clientInfoModal={() => handleViewClient(order.client.user)}
                   />
                 );
               })}
