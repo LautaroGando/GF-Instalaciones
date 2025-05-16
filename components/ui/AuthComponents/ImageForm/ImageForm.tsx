@@ -4,7 +4,6 @@ import clsx from "clsx";
 import React from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
-// import signIn from "@/public/assets/images";
 
 export const ImageForm: React.FC = () => {
   const { view } = useAuthStore();
@@ -21,7 +20,9 @@ export const ImageForm: React.FC = () => {
     >
       <Image
         src={
-          view === "signIn" ? signIn : "/assets/images/auth/img-register.png"
+          view === "signIn"
+            ? "/assets/images/auth/img-login.png"
+            : "/assets/images/auth/img-register.png"
         }
         alt="Imagen del ingreso"
         className="object-contain"

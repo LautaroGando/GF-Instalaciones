@@ -38,7 +38,7 @@ export const BannerServices: React.FC = () => {
           )}
         >
           <Image
-            className="object-cover h-full"
+            className="object-cover w-full h-full"
             src={img.img}
             alt="Imagen de una instalación"
             priority
