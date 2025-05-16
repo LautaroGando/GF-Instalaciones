@@ -68,13 +68,20 @@ export const formEditData: IFormEditData[] = [
     type: "text",
   },
   {
+    label: "Localidad",
+    name: "locality",
+    type: "text",
+  },
+  {
+    label: "Código postal",
+    name: "postalCode",
+    type: "text",
+  },
+  {
     label: "Nº Telefónico",
     name: "phone",
     type: "text",
     isPhone: true,
-    options: [
-      { value: "+54", option: "+54" },
-      { value: "+598", option: "+598" },
-    ],
+    options: [{ value: "+54", option: "+54" }],
   },
 ];
