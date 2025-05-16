@@ -11,7 +11,8 @@ import { IUserSafe } from "@/interfaces/IUserSafe";
 export const useTrackingTableLogic = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
   const { openModal: openTrackingEditModal } = useTrackingEditModal();
-  const { handleFetchOrders, handleDeleteOrder, getFilteredOrders, isLoading } = useTrackingStore();
+  const { handleFetchOrders, handleDeleteOrder, getFilteredOrders, isLoading } =
+    useTrackingStore();
   const { handleFetchUsers } = useUserStore();
   const { isDark } = useThemeStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
@@ -54,7 +55,7 @@ export const useTrackingTableLogic = () => {
   };
 
   const handleViewClient = (client: IUserSafe) => {
-    if (client) {
+    if (client.user) {
       const {
         fullName,
         email,
@@ -67,7 +68,7 @@ export const useTrackingTableLogic = () => {
         coverage,
         isSubscribed,
         createdAt,
-      } = client;
+      } = client.user;
 
       const birthDateFormatted = new Intl.DateTimeFormat("es-AR", {
         day: "numeric",
@@ -91,7 +92,9 @@ export const useTrackingTableLogic = () => {
         <p><strong>Fecha de nacimiento:</strong> ${birthDateFormatted}</p>
         <p><strong>Teléfono:</strong> ${coverage} ${phone}</p>
         <p><strong>Dirección:</strong> ${address}, ${location}, ${country}</p>
-        <p><strong>Suscripción activa:</strong> ${isSubscribed ? "Sí" : "No"}</p>
+        <p><strong>Suscripción activa:</strong> ${
+          isSubscribed ? "Sí" : "No"
+        }</p>
         <p><strong>Registrado el:</strong> ${createdAtFormatted}</p>
       </div>
     `;
