@@ -47,6 +47,9 @@ const ClientInstallations = () => {
     );
   }
 
+  console.log(order);
+  
+
   if (order.installationsFinished === "0/0") {
     return (
       <ClientEmptyState
