@@ -7,10 +7,6 @@ export interface IInstallation {
   id: string;
   startDate: string | null;
   endDate: string | null;
-  startedAt: string | null;
-  submittedForReviewAt: string | null;
-  createdAt: string;
-  updatedAt: string;
   address: IAddress;
   status: TInstallationStatus;
   notes: string;

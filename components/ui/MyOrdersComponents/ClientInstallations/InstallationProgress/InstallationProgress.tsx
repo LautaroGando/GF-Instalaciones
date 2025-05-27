@@ -12,7 +12,7 @@ const InstallationProgress: React.FC<{ installation: IInstallation }> = ({ insta
 
         return (
           <React.Fragment key={step}>
-            <TrackingStep statusName={step} installation={installation} visualState={visualState} />
+            <TrackingStep statusName={step} date="22/05/2001" visualState={visualState} />
 
             {j < installationSteps.length - 1 && (
               <div className="flex justify-center w-[32px] sm:h-[32px] sm:items-center sm:w-full">
