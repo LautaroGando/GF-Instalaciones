@@ -10,11 +10,13 @@ import TInstallationStatus from "@/types/TInstallationStatus";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import { cleanParams } from "@/utils/cleanParams";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 // ORDERS
 export const getAllOrders = async () => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.get(`${API_URL}/orders`, {
       params: {
@@ -34,7 +36,11 @@ export const getAllOrders = async () => {
 export const getAllOrdersWithParams = async (params: Partial<TOrdersQueryParams>) => {
   try {
     const cleanedParams = cleanParams(params);
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
+
+    console.log("Token desde cookie:", token);
 
     const { data } = await axios.get(`${API_URL}/orders`, {
       params: cleanedParams,
@@ -57,7 +63,8 @@ export const getAllOrdersWithParams = async (params: Partial<TOrdersQueryParams>
 
 export const getOrderById = async (orderId: string): Promise<IOrder> => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const res = await axios.get(`${API_URL}/orders/${orderId}`, {
       headers: {
@@ -80,7 +87,8 @@ export const createOrder = async (values: ICreateOrderFormValues) => {
   console.log(values);
 
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const response = await axios.post(`${API_URL}/orders`, values, {
       headers: {
@@ -104,7 +112,8 @@ export const updateOrder = async (
   values: IEditOrderFormValues
 ): Promise<IEditOrderFormValues | null> => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const response = await axios.patch<IEditOrderFormValues>(`${API_URL}/orders/${id}`, values, {
       headers: {
@@ -128,7 +137,8 @@ export const updateOrder = async (
 
 export const deleteOrder = async (id: string) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const res = await axios.delete(`${API_URL}/orders/${id}`, {
       headers: {
@@ -150,7 +160,8 @@ export const deleteOrder = async (id: string) => {
 // INSTALLATIONS
 export const getAllInstallationsNotPagination = async () => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.get(`${API_URL}/installations`, {
       headers: {
@@ -169,7 +180,8 @@ export const getAllInstallations = async (
   params?: Partial<TInstallationQueryParams>
 ) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const cleanedParams = params ? cleanParams(params) : undefined;
 
@@ -195,7 +207,8 @@ export const createInstallation = async (
   values: ICreateInstallationFormValues
 ) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     console.log(values);
 
@@ -224,7 +237,8 @@ export const updateInstallation = async (
   values: IEditInstallationFormValues
 ) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values, {
       headers: {
@@ -247,7 +261,8 @@ export const updateInstallation = async (
 
 export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const res = await axios.patch(
       `${API_URL}/installations/${id}/status`,
@@ -274,7 +289,8 @@ export const completeInstallation = async (id: string, values: ICompleteJob) => 
   });
 
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(`${API_URL}/installations/${id}/images`, formData, {
       headers: {
@@ -291,8 +307,9 @@ export const completeInstallation = async (id: string, values: ICompleteJob) => 
 
 export const deleteInstallation = async (id: string) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
+    
     const { data } = await axios.delete(`${API_URL}/installations/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,

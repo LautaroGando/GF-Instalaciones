@@ -41,9 +41,7 @@ export const useUserStore = create<IUserStoreProps>()(
       setMaxPage: () => {
         const { filterUsers } = get();
         const maxPages =
-          filterUsers && filterUsers.length > 0
-            ? Math.ceil(filterUsers.length / 10)
-            : 1;
+          filterUsers && filterUsers.length > 0 ? Math.ceil(filterUsers.length / 10) : 1;
         set({ maxPage: maxPages });
       },
       setMoreInfo: (id: string) => {
@@ -52,28 +50,24 @@ export const useUserStore = create<IUserStoreProps>()(
       },
       setUser: (user: IUser | IInstaller) => {
         set({ user });
-        Cookies.set(
-          "user-storage",
-          JSON.stringify({ user, token: get().token }),
-          {
-            expires: 7,
-            secure: true,
-            sameSite: "Strict",
-          }
-        );
+        Cookies.set("user-storage", JSON.stringify({ user, token: get().token }), {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
       },
       setToken: (token: string) => {
         set({ token });
-        Cookies.set(
-          "user-storage",
-          JSON.stringify({ user: get().user, token }),
-          {
-            expires: 7,
-            secure: true,
-            sameSite: "Strict",
-          }
-        );
+
+        localStorage.setItem("user-storage", JSON.stringify({ user: get().user, token }));
+
+        Cookies.set("user-storage", JSON.stringify({ user: get().user, token }), {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
       },
+
       handleOpenEditMenu: () => set(() => ({ editMenu: true })),
       handleCloseEditMenu: () => set(() => ({ editMenu: false })),
       handleFilterUsers: (value: string) => {
@@ -100,8 +94,7 @@ export const useUserStore = create<IUserStoreProps>()(
         set({ page: page + 1 });
       },
       handleApplyFilter: (resetPage = true) => {
-        const { users, selectedFilter, searchTerm, sortBy, setMaxPage, page } =
-          get();
+        const { users, selectedFilter, searchTerm, sortBy, setMaxPage, page } = get();
 
         let filteredUsers: IUser[] = users ?? [];
 
@@ -109,11 +102,9 @@ export const useUserStore = create<IUserStoreProps>()(
           selectedFilter === "user"
             ? user.userRoles[user.userRoles.length - 1].role.name === "Usuario"
             : selectedFilter === "installer"
-            ? user.userRoles[user.userRoles.length - 1].role.name ===
-              "Instalador"
+            ? user.userRoles[user.userRoles.length - 1].role.name === "Instalador"
             : selectedFilter === "coordinator"
-            ? user.userRoles[user.userRoles.length - 1].role.name ===
-              "Coordinador"
+            ? user.userRoles[user.userRoles.length - 1].role.name === "Coordinador"
             : selectedFilter === "active"
             ? !user.disabledAt &&
               user.installer?.status !== "RECHAZADO" &&
@@ -138,9 +129,7 @@ export const useUserStore = create<IUserStoreProps>()(
             const parseDate = (date: string) => {
               if (!date || typeof date !== "string") return 0;
 
-              const fixedDate = date.includes("/")
-                ? date.split("/").reverse().join("-")
-                : date;
+              const fixedDate = date.includes("/") ? date.split("/").reverse().join("-") : date;
 
               const parsed = new Date(fixedDate).getTime();
               return isNaN(parsed) ? 0 : parsed;
@@ -179,10 +168,7 @@ export const useUserStore = create<IUserStoreProps>()(
         set({ sortBy: value });
         get().handleApplyFilter(false);
       },
-      handleEditUser: async (
-        id: string,
-        values: Partial<IUser | IInstaller>
-      ) => {
+      handleEditUser: async (id: string, values: Partial<IUser | IInstaller>) => {
         const { user, users } = get();
 
         try {
@@ -190,9 +176,7 @@ export const useUserStore = create<IUserStoreProps>()(
 
           set({
             user: { ...user, ...updatedUser },
-            users: users?.map((user) =>
-              user.id === id ? { ...user, ...updatedUser } : user
-            ),
+            users: users?.map((user) => (user.id === id ? { ...user, ...updatedUser } : user)),
           });
 
           get().handleApplyFilter(false);
@@ -219,9 +203,7 @@ export const useUserStore = create<IUserStoreProps>()(
             if (data) {
               set((state) => ({
                 users: state.users?.filter((user: IUser) => user.id !== id),
-                filterUsers: state.filterUsers?.filter(
-                  (user: IUser) => user.id !== id
-                ),
+                filterUsers: state.filterUsers?.filter((user: IUser) => user.id !== id),
               }));
             }
             get().setMaxPage();
@@ -285,10 +267,7 @@ export const useUserStore = create<IUserStoreProps>()(
           },
         });
       },
-      handleChangeStatusInstaller: async (
-        id: string,
-        status: TInstallerStatus
-      ) => {
+      handleChangeStatusInstaller: async (id: string, status: TInstallerStatus) => {
         try {
           await changeStatusInstaller(id, status);
           set((state) => ({
@@ -324,11 +303,7 @@ export const useUserStore = create<IUserStoreProps>()(
         const { actionMenu } = get();
         set({ actionMenu: actionMenu === id ? null : id });
       },
-      handleAssignRoleUser: async (
-        roleId: Role,
-        userId: string,
-        color: TColor
-      ) => {
+      handleAssignRoleUser: async (roleId: Role, userId: string, color: TColor) => {
         await PersonalizedPopUp({
           color: color,
           withResult: true,
@@ -350,11 +325,7 @@ export const useUserStore = create<IUserStoreProps>()(
           },
         });
       },
-      handleDeleteRoleUser: async (
-        roleId: Role,
-        userId: string,
-        color: TColor
-      ) => {
+      handleDeleteRoleUser: async (roleId: Role, userId: string, color: TColor) => {
         await PersonalizedPopUp({
           color: color,
           withResult: true,

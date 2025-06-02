@@ -1,10 +1,12 @@
 import { API_URL } from "@/config/envs";
 import { Role } from "@/enums/Role";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const assignRole = async (roleId: Role, userId: string) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(
       `${API_URL}/user-role/assign-role`,
@@ -29,7 +31,8 @@ export const assignRole = async (roleId: Role, userId: string) => {
 
 export const deleteRole = async (roleId: Role, userId: string) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.delete(`${API_URL}/user-role/${userId}/${roleId}`, {
       headers: {
