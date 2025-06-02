@@ -100,11 +100,11 @@ export const useUserStore = create<IUserStoreProps>()(
 
         filteredUsers = filteredUsers.filter((user: IUser) =>
           selectedFilter === "user"
-            ? user.userRoles[user.userRoles.length - 1].role.name === "Usuario"
+            ? user.userRoles[user.userRoles.length - 1]?.role.name === "Usuario"
             : selectedFilter === "installer"
-            ? user.userRoles[user.userRoles.length - 1].role.name === "Instalador"
+            ? user.userRoles.find((user) => user.role.name === "Instalador")
             : selectedFilter === "coordinator"
-            ? user.userRoles[user.userRoles.length - 1].role.name === "Coordinador"
+            ? user.userRoles.find((user) => user.role.name === "Coordinador")
             : selectedFilter === "active"
             ? !user.disabledAt &&
               user.installer?.status !== "RECHAZADO" &&

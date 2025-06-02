@@ -5,7 +5,7 @@ import { useUserStore } from "@/store/UserStore/userStore";
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBan, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faUsers } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
 import { formatHour } from "@/utils/formatDate";
 import { useInstallationNoteModalStore } from "@/store/Admin/AdminModals/InstallationNoteModalStore/InstallationNoteModalStore";
@@ -37,15 +37,19 @@ export const Installation: React.FC = () => {
   }, [handleFetchInstallationsNotPagination]);
 
   const userInfo = user && "user" in user ? user.user : user;
-  console.log(userInfo);
+
   const assignedInstallations = installations?.filter(
     (installation) =>
       installation.coordinator?.id ===
-      userInfo?.userRoles[userInfo.userRoles.length - 1].id
+      userInfo?.userRoles.find((user) => user.role.name === "Coordinador")?.id
   );
 
   const filterIncompleteInstallations = assignedInstallations?.filter(
-    (installation: IInstallation) => installation.status === "A revisar"
+    (installation: IInstallation) =>
+      installation.status === "A revisar" ||
+      installation.status === "En proceso" ||
+      installation.status === "Pendiente" ||
+      installation.status === "Pospuesta"
   );
 
   return (
@@ -72,16 +76,28 @@ export const Installation: React.FC = () => {
                 key={installation.id}
                 className={clsx(
                   "w-full max-w-[320px] min-h-[370px] max-h-[370px] shadow-[3px_0px_2px_#00000040] border-l-[7px] rounded-[4px] py-3 flex flex-col justify-between gap-5 dark:shadow-[3px_0px_2px_#fafafa40]",
-                  installation.status === "A revisar" &&
-                    "border-installer-toReview bg-bgColor dark:bg-[#0E0E0E]"
+                  installation.status === "Pendiente"
+                    ? "border-primaryColor bg-bgColor dark:bg-[#0E0E0E]"
+                    : installation.status === "En proceso"
+                    ? "border-installer-inProccess bg-primaryColor text-letterColorLight"
+                    : installation.status === "A revisar"
+                    ? "border-installer-toReview bg-bgColor dark:bg-[#0E0E0E]"
+                    : installation.status === "Pospuesta" &&
+                      "border-installer-postponed bg-bgColor dark:bg-[#0E0E0E]"
                 )}
               >
                 <div className="flex items-center justify-between px-2">
                   <h6
                     className={clsx(
                       "text-xs font-bold border-l-[3px] pl-1",
-                      installation.status === "A revisar" &&
-                        "text-installer-toReview border-installer-toReview"
+                      installation.status === "Pendiente"
+                        ? "text-primaryColor border-primaryColor"
+                        : installation.status === "En proceso"
+                        ? "text-letterColorLight border-bgColor"
+                        : installation.status === "A revisar"
+                        ? "text-installer-toReview border-installer-toReview"
+                        : installation.status === "Pospuesta" &&
+                          "text-installer-postponed border-installer-postponed"
                     )}
                   >
                     {installation.status}
@@ -131,30 +147,33 @@ export const Installation: React.FC = () => {
                 <div className="flex items-center gap-3 px-2">
                   <FontAwesomeIcon
                     className="text-[25px] w-[25px]"
-                    icon={faUser}
+                    icon={faUsers}
                     width={25}
                   />
                   <div className="flex flex-col text-sm">
-                    <h3 className="font-bold">Coordinador</h3>
+                    <h3 className="font-bold">Instaladores</h3>
                     <h4>
-                      {installation.coordinator?.user?.fullName ||
-                        "Sin coordinador"}
+                      {installation.installers.map(
+                        (installer) => `${installer.user.fullName}, `
+                      ) || "Sin coordinador"}
                     </h4>
                   </div>
                 </div>
-                <button
-                  onClick={() =>
-                    openModal({
-                      installation: installation,
-                      title: "",
-                      text: "",
-                      images: installation.images,
-                    })
-                  }
-                  className="w-[200px] h-[40px] rounded-[4px] bg-primaryColor text-letterColorLight mx-auto transition-all duration-300 hover:bg-primaryColorHover"
-                >
-                  REVISAR
-                </button>
+                {installation.status === "A revisar" && (
+                  <button
+                    onClick={() =>
+                      openModal({
+                        installation: installation,
+                        title: "",
+                        text: "",
+                        images: installation.images,
+                      })
+                    }
+                    className="w-[200px] h-[40px] rounded-[4px] bg-primaryColor text-letterColorLight mx-auto transition-all duration-300 hover:bg-primaryColorHover"
+                  >
+                    REVISAR
+                  </button>
+                )}
                 <ModalFinalizedInstallation />
               </div>
             );
