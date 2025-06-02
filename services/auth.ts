@@ -7,11 +7,12 @@ import {
 } from "@/interfaces/IAuth";
 import type { TColor } from "@/types/TColor";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const signIn = async (values: IUserSignIn, color: TColor) => {
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(`${API_URL}/auth/signInUser`, values, {
       headers: {
@@ -45,8 +46,8 @@ export const signIn = async (values: IUserSignIn, color: TColor) => {
 
 export const signUpUser = async (values: IUserSignUp, color: TColor) => {
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(`${API_URL}/auth/signUpUser`, values, {
       headers: {
@@ -82,8 +83,8 @@ export const signUpInstaller = async (
   color: TColor
 ) => {
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(
       `${API_URL}/auth/signUpInstaller`,
@@ -124,8 +125,8 @@ export const sendMailRecoveryPassword = async (
   color: TColor
 ) => {
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(
       `${API_URL}/auth/recovery-request`,
@@ -167,8 +168,8 @@ export const recoveryPassword = async (
 ) => {
   console.log(values);
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
     const { data } = await axios.post(
       `${API_URL}/auth/recovery-change-password`,
       values,
