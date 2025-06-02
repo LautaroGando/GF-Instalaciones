@@ -4,8 +4,9 @@ import { useTrackingEditModal } from "@/store/Admin/AdminModals/EditModals/Track
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
-import IOrder, { IClientSafe } from "@/interfaces/IOrder";
+import IOrder from "@/interfaces/IOrder";
 import { useUserStore } from "@/store/UserStore/userStore";
+import { IUserSafe } from "@/interfaces/IUserSafe";
 
 export const useTrackingTableLogic = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
@@ -53,8 +54,8 @@ export const useTrackingTableLogic = () => {
     openTrackingTextModal(title, text);
   };
 
-  const handleViewClient = (client: IClientSafe) => {
-    if (client) {
+  const handleViewClient = (client: IUserSafe) => {
+    if (client.user) {
       const {
         fullName,
         email,
@@ -68,9 +69,6 @@ export const useTrackingTableLogic = () => {
         isSubscribed,
         createdAt,
       } = client.user;
-
-      console.log(client);
-      
 
       const birthDateFormatted = new Intl.DateTimeFormat("es-AR", {
         day: "numeric",

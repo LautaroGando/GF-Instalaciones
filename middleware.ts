@@ -1,6 +1,6 @@
-// import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const middleware = (req: NextRequest) => {}
+export const middleware = (req: NextRequest) => {
 //   const searchUser = req.cookies.get("user-storage")?.value;
 //   const user = searchUser && JSON.parse(searchUser);
 //   const userInfo = user && "user" in user ? user.user : user;
@@ -111,4 +111,4 @@ export const middleware = (req: NextRequest) => {}
 //     "/my-orders/:path*",
 //     "/blog/:path*",
 //   ],
-// };
+};

@@ -72,7 +72,7 @@ const InstallationEditModal = () => {
     { setSubmitting }: FormikHelpers<IEditInstallationFormValues>
   ) => {
     const installationId = selectedInstallation.id ?? "";
-
+    
     const payload = {
       ...values,
       installersIds: selectedInstallers.map((i) => i.id),
