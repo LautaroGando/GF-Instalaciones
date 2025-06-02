@@ -22,14 +22,15 @@ export const Navigation: React.FC<INavigationProps> = ({ pathname }) => {
           const modifyPath = link.href.split("/")[2];
 
           if (
-            (userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
-              "Instalador" &&
+            (userInfo?.userRoles.find(
+              (user) => user.role.name === "Instalador"
+            ) &&
               link.label === "Newslatter") ||
-            (userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
-              "Coordinador" &&
+            (userInfo?.userRoles.find(
+              (user) => user.role.name === "Coordinador"
+            ) &&
               link.label === "Newslatter") ||
-            (userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
-              "Admin" &&
+            (userInfo?.userRoles.find((user) => user.role.name === "Admin") &&
               link.label === "Newslatter")
           )
             return;

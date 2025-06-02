@@ -41,7 +41,7 @@ export const UsersTable: React.FC = () => {
       </div>
     );
   }
-console.log(filterUsers)
+
   return (
     <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto overflow-y-hidden">
       {isLoading ? (

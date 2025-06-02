@@ -110,32 +110,38 @@ export const ResponsiveMenu: React.FC = () => {
                 icon={faInfoCircle}
                 label="Ver perfil"
               />
-              {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
-                "Usuario" && (
-                <ButtonAction
-                  href="/my-orders"
-                  icon={faBoxesStacked}
-                  label="Mis órdenes"
-                />
-              )}
-              {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
-                "Instalador" && (
+              {userInfo.userRoles[userInfo.userRoles.length - 1]?.role.name ===
+                "Usuario" &&
+                userInfo?.userRoles.find(
+                  (user) => user.role.name === "Usuario"
+                ) && (
+                  <ButtonAction
+                    href="/my-orders"
+                    icon={faBoxesStacked}
+                    label="Mis órdenes"
+                  />
+                )}
+              {userInfo?.userRoles.find(
+                (user) => user.role.name === "Instalador"
+              ) && (
                 <ButtonAction
                   href="/installer/installations"
                   icon={faScrewdriverWrench}
                   label="Panel de instalador"
                 />
               )}
-              {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
-                "Coordinador" && (
+              {userInfo?.userRoles.find(
+                (user) => user.role.name === "Coordinador"
+              ) && (
                 <ButtonAction
                   href="/coordinator/installations"
                   icon={faUserSecret}
                   label="Panel de coordinador"
                 />
               )}
-              {userInfo?.userRoles[userInfo.userRoles.length - 1].role.name ===
-                "Admin" && (
+              {userInfo?.userRoles.find(
+                (user) => user.role.name === "Admin"
+              ) && (
                 <ButtonAction
                   href="/admin/panel"
                   icon={faUserTie}
