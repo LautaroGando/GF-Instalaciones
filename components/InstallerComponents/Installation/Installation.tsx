@@ -198,7 +198,7 @@ export const Installation: React.FC = () => {
                   ) : installation.status === "En proceso" ? (
                     <>
                       <button
-                        onClick={handleOpenModal}
+                        onClick={() => handleOpenModal(installation.id)}
                         className="rounded-sm w-[200px] h-[40px] bg-bgColor border border-bgColor text-primaryColor transition-all duration-300 font-semibold hover:bg-primaryColor hover:text-letterColorLight"
                       >
                         Completar

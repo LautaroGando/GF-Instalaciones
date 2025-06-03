@@ -7,13 +7,19 @@ import Image from "next/image";
 import React from "react";
 import { motion } from "motion/react";
 import useDisableScroll from "@/hooks/useDisableScroll";
+import { IModalFinalizedInstallationProps } from "./types";
+import { IModalCompleteInstallationProps } from "@/components/InstallerComponents/Installation/ModalCompleteInstallation/types";
 
-export const ModalFinalizedInstallation: React.FC = () => {
+export const ModalFinalizedInstallation: React.FC<
+  IModalFinalizedInstallationProps
+> = ({ id }: IModalCompleteInstallationProps) => {
   const { isOpen, images, closeModal, installation } =
     useInstallationNoteModalStore();
   const { handleInstallationStatus } = useTrackingStore();
   const { isDark } = useThemeStore();
   useDisableScroll(isOpen);
+
+  if (!isOpen || installation?.id !== id) return null;
 
   const handleFinishInstallation = () =>
     installation &&

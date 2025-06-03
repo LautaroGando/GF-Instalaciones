@@ -174,7 +174,7 @@ export const Installation: React.FC = () => {
                     >
                       REVISAR
                     </button>
-                    <ModalFinalizedInstallation />
+                    <ModalFinalizedInstallation id={installation.id} />
                   </>
                 )}
               </div>

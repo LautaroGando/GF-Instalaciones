@@ -60,7 +60,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     updatedAt: "",
   },
   installationStatus: "En proceso" as TInstallationStatus,
-  completeModal: false,
+  completeModal: null,
 
   // ===========================
   // 🛠️ 2. Utilidades Generales
@@ -71,8 +71,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   },
   setEditedInstallationId: (id: string | null) => set({ editedInstallationId: id }),
 
-  handleOpenModal: () => set(() => ({ completeModal: true })), // habria que colocar un nombre mas especifico
-  handleCloseModal: () => set(() => ({ completeModal: false })), // habria que colocar un nombre mas especifico
+  handleOpenModal: (id) => set(() => ({ completeModal: id })), // habria que colocar un nombre mas especifico
+  handleCloseModal: () => set(() => ({ completeModal: null })), // habria que colocar un nombre mas especifico
 
   // ===========================
   // 🔎 3. Busqueda
