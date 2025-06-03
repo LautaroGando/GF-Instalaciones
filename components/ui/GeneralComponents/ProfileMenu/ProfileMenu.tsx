@@ -42,7 +42,7 @@ export const ProfileMenu: React.FC = () => {
   }, [open, handleClose]);
 
   const userInfo = user && "user" in user ? user.user : user;
-
+console.log(userInfo)
   return (
     <AnimatePresence>
       {open && (

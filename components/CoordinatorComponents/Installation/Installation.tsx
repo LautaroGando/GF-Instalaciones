@@ -160,21 +160,23 @@ export const Installation: React.FC = () => {
                   </div>
                 </div>
                 {installation.status === "A revisar" && (
-                  <button
-                    onClick={() =>
-                      openModal({
-                        installation: installation,
-                        title: "",
-                        text: "",
-                        images: installation.images,
-                      })
-                    }
-                    className="w-[200px] h-[40px] rounded-[4px] bg-primaryColor text-letterColorLight mx-auto transition-all duration-300 hover:bg-primaryColorHover"
-                  >
-                    REVISAR
-                  </button>
+                  <>
+                    <button
+                      onClick={() =>
+                        openModal({
+                          installation: installation,
+                          title: "",
+                          text: "",
+                          images: installation.images,
+                        })
+                      }
+                      className="w-[200px] h-[40px] rounded-[4px] bg-primaryColor text-letterColorLight mx-auto transition-all duration-300 hover:bg-primaryColorHover"
+                    >
+                      REVISAR
+                    </button>
+                    <ModalFinalizedInstallation />
+                  </>
                 )}
-                <ModalFinalizedInstallation />
               </div>
             );
           })}

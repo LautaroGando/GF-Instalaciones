@@ -196,12 +196,15 @@ export const Installation: React.FC = () => {
                       Llegué
                     </button>
                   ) : installation.status === "En proceso" ? (
-                    <button
-                      onClick={handleOpenModal}
-                      className="rounded-sm w-[200px] h-[40px] bg-bgColor border border-bgColor text-primaryColor transition-all duration-300 font-semibold hover:bg-primaryColor hover:text-letterColorLight"
-                    >
-                      Completar
-                    </button>
+                    <>
+                      <button
+                        onClick={handleOpenModal}
+                        className="rounded-sm w-[200px] h-[40px] bg-bgColor border border-bgColor text-primaryColor transition-all duration-300 font-semibold hover:bg-primaryColor hover:text-letterColorLight"
+                      >
+                        Completar
+                      </button>
+                      <ModalCompleteInstallation id={installation.id} />
+                    </>
                   ) : installation.status === "A revisar" ? (
                     <div className="w-full h-[40px] bg-installer-toReview/15 text-installer-toReview flex items-center justify-center font-bold">
                       <h3>EN REVISIÓN</h3>
@@ -217,7 +220,6 @@ export const Installation: React.FC = () => {
                     )
                   )}
                 </div>
-                <ModalCompleteInstallation id={installation.id} />
               </div>
             );
           })}
