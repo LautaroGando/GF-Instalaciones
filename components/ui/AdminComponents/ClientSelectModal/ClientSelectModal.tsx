@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import { faCircleUser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useClientsSelectModal } from "@/store/Admin/AdminModals/ClientSelectModalStore/ClientSelectModalStore";
 
 const ClientsSelectModal: React.FC = () => {
@@ -12,11 +12,11 @@ const ClientsSelectModal: React.FC = () => {
     isOpen,
     closeModal,
     addClient,
-    selectedClient,
-    clearClient,
+    removeClient,
+    selectedClients,
   } = useClientsSelectModal();
-  const { users, handleFetchUsers } = useUserStore();
 
+  const { users, handleFetchUsers } = useUserStore();
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -71,43 +71,47 @@ const ClientsSelectModal: React.FC = () => {
         <div className="flex flex-col gap-3 h-[47vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 pr-1">
           <AnimatePresence mode="popLayout">
             {filteredClients.length > 0 ? (
-              filteredClients.map((client) => (
-                <motion.div
-                  key={client.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  layout
-                  className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 dark:bg-gray-100/10"
-                >
-                  <div className="flex items-center gap-3">
-                    <FontAwesomeIcon
-                      icon={faCircleUser}
-                      className="text-gray-500 text-2xl dark:text-gray-200"
-                    />
-                    <p className="text-gray-800 font-medium dark:text-gray-100 max-w-[60px] sm:max-w-full">
-                      {client.fullName}
-                    </p>
-                  </div>
+              filteredClients.map((client) => {
+                const isSelected = selectedClients.some((c) => c.id === client.id);
 
-                  {selectedClient?.id === client.id ? (
-                    <button
-                      onClick={clearClient}
-                      className="border border-red-500 text-red-500 px-4 py-1.5 rounded-lg text-sm hover:bg-red-500 hover:text-white transition"
-                    >
-                      Desasignar
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => addClient(client)}
-                      className="bg-primaryColor text-white px-4 py-1.5 rounded-lg text-sm hover:bg-primaryColorHover transition"
-                    >
-                      Asignar
-                    </button>
-                  )}
-                </motion.div>
-              ))
+                return (
+                  <motion.div
+                    key={client.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    layout
+                    className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 dark:bg-gray-100/10"
+                  >
+                    <div className="flex items-center gap-3">
+                      <FontAwesomeIcon
+                        icon={faCircleUser}
+                        className="text-gray-500 text-2xl dark:text-gray-200"
+                      />
+                      <p className="text-gray-800 font-medium dark:text-gray-100 max-w-[60px] sm:max-w-full">
+                        {client.fullName}
+                      </p>
+                    </div>
+
+                    {isSelected ? (
+                      <button
+                        onClick={() => removeClient(client.id)}
+                        className="border border-red-500 text-red-500 px-4 py-1.5 rounded-lg text-sm hover:bg-red-500 hover:text-white transition"
+                      >
+                        Desasignar
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => addClient(client)}
+                        className="bg-primaryColor text-white px-4 py-1.5 rounded-lg text-sm hover:bg-primaryColorHover transition"
+                      >
+                        Asignar
+                      </button>
+                    )}
+                  </motion.div>
+                );
+              })
             ) : (
               <motion.div
                 key="no-result"

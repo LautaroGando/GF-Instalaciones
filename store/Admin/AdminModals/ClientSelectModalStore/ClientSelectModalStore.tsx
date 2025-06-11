@@ -2,13 +2,24 @@ import { create } from "zustand";
 import { IClientsSelectModalProps } from "./types";
 import { IUser } from "@/interfaces/IUser";
 
-export const useClientsSelectModal = create<IClientsSelectModalProps>((set) => ({
+export const useClientsSelectModal = create<IClientsSelectModalProps>((set, get) => ({
   isOpen: false,
-  selectedClient: null,
+  selectedClients: [],
 
-  addClient: (client: IUser) => set({ selectedClient: client }),
+  addClient: (client: IUser) => {
+    const current = get().selectedClients;
+    const alreadyAdded = current.some((c) => c.id === client.id);
+    if (!alreadyAdded) {
+      set({ selectedClients: [...current, client] });
+    }
+  },
 
-  clearClient: () => set({ selectedClient: null }),
+  removeClient: (clientId: string) => {
+    const updated = get().selectedClients.filter((c) => c.id !== clientId);
+    set({ selectedClients: updated });
+  },
+
+  clearClients: () => set({ selectedClients: [] }),
 
   openModal: () => set({ isOpen: true }),
   closeModal: () => set({ isOpen: false }),

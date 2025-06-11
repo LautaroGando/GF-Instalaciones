@@ -89,12 +89,12 @@ export const PersonalizedPopUp = async ({
       icon: "error",
       title: titleError,
       text: errorMessage,
-      toast: true,
-      position: "bottom-end",
+      toast: false,
+      position: "center",
       showConfirmButton: false,
       color: "#8D8D8D",
-      timer: 2000,
-      timerProgressBar: true,
+      timer: 4000,
+      timerProgressBar: false,
       background: color,
     });
   } finally {

@@ -18,6 +18,7 @@ import CoordinatorsSelectModal from "../../CoordinatorsSelectModal/CoordinatorsS
 import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import { getTodayStartISO } from "@/utils/getTodayStartISO";
 
 const SyncInstallersWithFormik = () => {
   const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
@@ -31,13 +32,13 @@ const SyncInstallersWithFormik = () => {
   return null;
 };
 
-const SyncCoordinatorWithFormik = () => {
+const SyncCoordinatorsWithFormik = () => {
   const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
   const { selectedCoordinators } = useCoordinatorsSelectModal();
 
   useEffect(() => {
-    const id = selectedCoordinators[0]?.id || "";
-    setFieldValue("coordinatorId", id);
+    const ids = selectedCoordinators.map((c) => c.id);
+    setFieldValue("coordinatorsIds", ids);
   }, [selectedCoordinators, setFieldValue]);
 
   return null;
@@ -59,6 +60,7 @@ const InstallationsCreateModal = () => {
     clearCoordinators,
     openModal: openCoordinatorsModal,
   } = useCoordinatorsSelectModal();
+
   const { handleCreateInstallation } = useTrackingStore();
   const { isDark } = useThemeStore();
 
@@ -73,21 +75,19 @@ const InstallationsCreateModal = () => {
     { setSubmitting }: FormikHelpers<ICreateInstallationFormValues>
   ) => {
     closeModal();
+    clearInstallers();
+    clearCoordinators();
 
     const formattedStartDate = values.startDate ? new Date(values.startDate).toISOString() : "";
 
     const installersIds = selectedInstallers.map((installer) => installer.id);
-
-    const coordinatorId =
-      selectedCoordinators[0]?.userRoles.find(
-        (userRole) => userRole.role.name.toLowerCase() === "coordinador"
-      )?.id || "";
+    const coordinatorsIds = selectedCoordinators.map((coordinator) => coordinator.id);
 
     const installationData: ICreateInstallationFormValues = {
       ...values,
       startDate: formattedStartDate,
       installersIds,
-      coordinatorId,
+      coordinatorsIds,
     };
 
     if (orderId) {
@@ -100,8 +100,6 @@ const InstallationsCreateModal = () => {
         textError: "Hubo un problema al crear la instalación.",
         setSubmiting: setSubmitting,
         genericFunction: () => handleCreateInstallation(orderId, installationData),
-        clearInstallers: () => clearInstallers(),
-        clearCoordinators: () => clearCoordinators(),
       });
     }
   };
@@ -111,7 +109,11 @@ const InstallationsCreateModal = () => {
   return (
     <>
       <div
-        onClick={closeModal}
+        onClick={() => {
+          closeModal();
+          clearInstallers();
+          clearCoordinators();
+        }}
         className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50"
       >
         <motion.div
@@ -140,7 +142,7 @@ const InstallationsCreateModal = () => {
                   province: "",
                 },
                 installersIds: [],
-                coordinatorId: "",
+                coordinatorsIds: [],
               }}
               validationSchema={installationSchema}
               onSubmit={handleOnSubmit}
@@ -148,7 +150,7 @@ const InstallationsCreateModal = () => {
               {({ errors, touched }) => (
                 <>
                   <SyncInstallersWithFormik />
-                  <SyncCoordinatorWithFormik />
+                  <SyncCoordinatorsWithFormik />
                   <Form className="space-y-3 text-bgColorDark/60">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -384,6 +386,7 @@ const InstallationsCreateModal = () => {
                       <Field
                         name="startDate"
                         type="datetime-local"
+                        min={getTodayStartISO()}
                         placeholder="Seleccione fecha y hora de inicio"
                         className="shadow-sm shadow-primaryColor/60 bg-transparent p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm text-primaryColor"
                       />
@@ -472,7 +475,7 @@ const InstallationsCreateModal = () => {
                       <button
                         type="button"
                         onClick={openInstallersModal}
-                        className="w-full mt-2 border border-primaryColor bg-primaryColor text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-transparent hover:text-primaryColor"
+                        className="w-full mt-2 border border-primaryColor bg-transparent text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColor hover:text-letterColorLight"
                       >
                         Seleccionar instaladores
                       </button>
@@ -525,14 +528,14 @@ const InstallationsCreateModal = () => {
                         )}
                       </div>
 
-                      {errors.coordinatorId && touched.coordinatorId && (
+                      {errors.coordinatorsIds && touched.coordinatorsIds && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           transition={{ duration: 0.3 }}
                           className="text-red-500 text-sm mt-2"
                         >
-                          {errors.coordinatorId as string}
+                          {errors.coordinatorsIds as string}
                         </motion.div>
                       )}
                     </motion.div>
@@ -549,7 +552,7 @@ const InstallationsCreateModal = () => {
                       <button
                         type="button"
                         onClick={openCoordinatorsModal}
-                        className="w-full mt-2 border border-primaryColor bg-primaryColor text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-transparent hover:text-primaryColor"
+                        className="w-full mt-2 border border-primaryColor bg-transparent text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColor hover:text-letterColorLight"
                       >
                         Seleccionar coordinador
                       </button>
@@ -567,7 +570,11 @@ const InstallationsCreateModal = () => {
                     >
                       <button
                         type="button"
-                        onClick={closeModal}
+                        onClick={() => {
+                          closeModal();
+                          clearInstallers();
+                          clearCoordinators();
+                        }}
                         className="w-full mt-4 order-2 bg-gray-400 text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-gray-500 xl:order-1 xl:w-[240px]"
                       >
                         Cancelar

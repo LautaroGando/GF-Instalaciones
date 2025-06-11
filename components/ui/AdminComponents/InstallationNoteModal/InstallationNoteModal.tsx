@@ -34,6 +34,19 @@ const InstallationNoteModal: React.FC = () => {
       closeModal,
     });
 
+  const handleRejectInstallation = () =>
+    installation &&
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: false,
+      titleSuccess: "Instalación rechazada",
+      textSuccess: "La instalación ha sido rechazada correctamente.",
+      titleError: "Error al rechazar",
+      textError: "No se pudo rechazar la instalación. Intenta nuevamente.",
+      genericFunction: () => handleInstallationStatus(installation.id, "Rechazada"),
+      closeModal,
+    });
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -103,12 +116,21 @@ const InstallationNoteModal: React.FC = () => {
 
             <div className="mt-6 flex flex-col gap-3">
               {installation?.id && installation.status === "A revisar" && (
-                <button
-                  onClick={handleFinishInstallation}
-                  className="w-full bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover"
-                >
-                  Finalizar instalación
-                </button>
+                <>
+                  <button
+                    onClick={handleFinishInstallation}
+                    className="w-full bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover"
+                  >
+                    Finalizar instalación
+                  </button>
+
+                  <button
+                    onClick={handleRejectInstallation}
+                    className="w-full bg-admin-inactiveColor text-white p-2 rounded-md transition-all duration-200 hover:bg-admin-inactiveColor/80"
+                  >
+                    Rechazar instalación
+                  </button>
+                </>
               )}
 
               {images.length > 1 && (
