@@ -9,7 +9,7 @@ import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 import TInstallationStatus from "@/types/TInstallationStatus";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import { cleanParams } from "@/utils/cleanParams";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 
 // ORDERS
@@ -86,12 +86,15 @@ export const createOrder = async (values: ICreateOrderFormValues) => {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
-    const response = await axios.post(`${API_URL}/orders`, values, {
+    const { data } = await axios.post(`${API_URL}/orders`, values, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+
+    console.log(data);
+
+    return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       console.error("Error al crear la orden");
@@ -163,6 +166,8 @@ export const getAllInstallationsNotPagination = async () => {
       },
     });
 
+    console.log(data);
+
     return data;
   } catch (error) {
     console.log(error);
@@ -198,6 +203,9 @@ export const createInstallation = async (
   orderId: string,
   values: ICreateInstallationFormValues
 ) => {
+
+  console.log(values);
+  
   try {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
@@ -224,10 +232,12 @@ export const createInstallation = async (
   }
 };
 
+
 export const updateInstallation = async (
   installationId: string,
   values: IEditInstallationFormValues
 ) => {
+      console.log(values);
   try {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
@@ -238,18 +248,27 @@ export const updateInstallation = async (
       },
     });
 
+
+    
+
     return data;
-  } catch (err) {
-    console.log(err);
-    if (axios.isAxiosError(err)) {
-      console.error("Error al actualizar la instalación");
-      throw new Error("No se pudo actualizar la instalación.");
+  } catch (error) {
+    console.log(error);
+    
+    if (axios.isAxiosError(error)) {
+      const err = error as AxiosError<{ message: string | string[] }>;
+      const rawMessage = err.response?.data?.message;
+      const message = Array.isArray(rawMessage)
+        ? rawMessage.join(" ")
+        : rawMessage || "Error inesperado del servidor.";
+
+      throw new Error(message);
     } else {
-      console.error("Error inesperado al actualizar la instalación");
       throw new Error("Error inesperado al actualizar la instalación.");
     }
   }
 };
+
 
 export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
   try {
@@ -265,6 +284,9 @@ export const updateInstallationStatus = async (id: string, status: TInstallation
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+
+    console.log(res.data);
+    
     return res.data;
   } catch (error) {
     console.log(error);
@@ -301,7 +323,7 @@ export const deleteInstallation = async (id: string) => {
   try {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
-    
+
     const { data } = await axios.delete(`${API_URL}/installations/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,

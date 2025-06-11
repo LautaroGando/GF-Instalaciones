@@ -1,15 +1,9 @@
 import IInstallation from "./IInstallation";
 import { IUserSafe } from "./IUserSafe";
 
-export interface IClientSafe {
-  id: string;
-  isActive: boolean;
-  user: IUserSafe;
-}
-
 export interface IOrder {
   id: string;
-  client: IClientSafe;
+  client: IUserSafe[];
   orderNumber: string;
   title: string;
   description: string;

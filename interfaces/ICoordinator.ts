@@ -1,4 +1,7 @@
+import { IUserSafe } from "./IUserSafe";
+
 export interface ICoordinator {
   id: string;
-  disabledAt: Date | null;
+  isActive: boolean;
+  user: IUserSafe;
 }

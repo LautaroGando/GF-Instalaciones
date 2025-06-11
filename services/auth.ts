@@ -49,6 +49,9 @@ export const signUpUser = async (values: IUserSignUp, color: TColor) => {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
+    console.log(values);
+    
+
     const { data } = await axios.post(`${API_URL}/auth/signUpUser`, values, {
       headers: {
         Authorization: `Bearer ${token}`,
