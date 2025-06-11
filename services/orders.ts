@@ -40,8 +40,6 @@ export const getAllOrdersWithParams = async (params: Partial<TOrdersQueryParams>
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
-    console.log("Token desde cookie:", token);
-
     const { data } = await axios.get(`${API_URL}/orders`, {
       params: cleanedParams,
       headers: {
@@ -84,8 +82,6 @@ export const getOrderById = async (orderId: string): Promise<IOrder> => {
 };
 
 export const createOrder = async (values: ICreateOrderFormValues) => {
-  console.log(values);
-
   try {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
@@ -123,8 +119,6 @@ export const updateOrder = async (
 
     return response.data;
   } catch (err) {
-    console.log(err);
-
     if (axios.isAxiosError(err)) {
       console.error("Error al actualizar la orden");
       throw new Error("No se pudo actualizar la orden.");
@@ -191,8 +185,6 @@ export const getAllInstallations = async (
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(data);
-
     return data;
   } catch (error) {
     const message = axios.isAxiosError(error)

@@ -222,10 +222,6 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     try {
       get().handleLoading(true);
       const newOrder: IOrder = await createOrder(values);
-      console.log(newOrder);
-
-      
-      
 
       setTimeout(() => {
         set((state) => ({ orders: [newOrder, ...state.orders] }));
@@ -343,7 +339,6 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   handleCreateInstallation: async (orderId: string, values: ICreateInstallationFormValues) => {
     try {
       const newInstallation = await createInstallation(orderId, values);
-      console.log(newInstallation);
 
       const normalizedInstallation = Array.isArray(newInstallation)
         ? newInstallation[0]

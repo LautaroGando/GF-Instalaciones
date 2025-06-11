@@ -99,8 +99,6 @@ export const useInstallationsTableLogic = () => {
   };
 
   const handleViewInstallers = (installation: IInstallation) => {
-    console.log(installation.installers);
-    
 
     const installationInstallers = installation.installers
       .map((inst) => `<strong>Instalador:</strong> ${inst.user.fullName}<br/>`)
