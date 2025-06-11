@@ -9,9 +9,7 @@ import Link from "next/link";
 const Template1: React.FC = () => {
   const searchParams = useSearchParams();
   const articleName = searchParams.get("articleName");
-  console.log(articleName);
   
-
   const post = BlogPostsData.find((post) => post.title === articleName);
 
   if (!post) {

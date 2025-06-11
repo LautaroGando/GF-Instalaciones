@@ -1,9 +1,9 @@
 import { IPreviewJobs } from "./types";
 import previewJob1 from "../../public/assets/images/home/preview-job-1.svg";
-import previewJob2 from "../../public/assets/images/home/preview-job-2.svg";
-import previewJob3 from "../../public/assets/images/home/preview-job-3.svg";
-import previewJob4 from "../../public/assets/images/home/preview-job-4.svg";
-import previewJob5 from "../../public/assets/images/home/preview-job-5.svg";
+import previewJob2 from "../../public/assets/images/home/preview-job-2.jpg";
+import previewJob3 from "../../public/assets/images/home/preview-job-3.jpg";
+import previewJob4 from "../../public/assets/images/home/preview-job-4.jpg";
+import previewJob5 from "../../public/assets/images/home/preview-job-5.jpg";
 
 export const previewJobs: IPreviewJobs[] = [
   {
@@ -33,7 +33,7 @@ export const previewJobs: IPreviewJobs[] = [
   {
     id: 5,
     image: previewJob5,
-    title: "Ambulancias",
-    text: "Optimiza la visibilidad de tus ambulancias con gráficos claros y profesionales que cumplen con normativas de seguridad.",
+    title: "Vidrieras",
+    text: "Instalamos gráficas para vidrieras que potencian la visibilidad de tu negocio y captan la atención de tus clientes.",
   },
 ];

@@ -151,7 +151,6 @@ export const sendMailRecoveryPassword = async (
       });
     return data;
   } catch (error) {
-    console.log(error);
     if (axios.isAxiosError(error) && error.response) {
       PersonalizedPopUp({
         color: color,
@@ -169,7 +168,6 @@ export const recoveryPassword = async (
   values: Record<string, string>,
   color: TColor
 ) => {
-  console.log(values);
   try {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
@@ -193,7 +191,6 @@ export const recoveryPassword = async (
       });
     return data;
   } catch (error) {
-    console.log(error);
     if (axios.isAxiosError(error) && error.response) {
       PersonalizedPopUp({
         color: color,
