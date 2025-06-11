@@ -10,7 +10,7 @@ export interface ICreateInstallationFormValues {
     province: string;
   };
   installersIds: string[];
-  coordinatorId: string;
+  coordinatorsIds: string[];
 }
 
 export default ICreateInstallationFormValues;

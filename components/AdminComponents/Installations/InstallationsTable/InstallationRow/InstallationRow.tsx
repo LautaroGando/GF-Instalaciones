@@ -53,7 +53,6 @@ const cellVariants = {
 
 const InstallationRow: React.FC<IInstallationsRowProps> = ({
   installation,
-  coordinatorName,
   onEdit,
   onDelete,
   onCancel,
@@ -62,6 +61,7 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
   onViewInstallers,
   onViewAddress,
   wasRecentlyEdited,
+  onViewCoordinators,
 }) => {
   const { isDark } = useThemeStore();
 
@@ -113,17 +113,26 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
               ? "text-primaryColor"
               : installation.status === "A revisar"
               ? "text-admin-editColor"
-              : installation.status === "Pospuesta" || installation.status === "Cancelada"
+              : ["Pospuesta", "Cancelada", "Rechazada"].includes(installation.status)
               ? "text-admin-inactiveColor"
-              : "text-admin-activeColor"
+              : installation.status === "Finalizada"
+              ? "text-admin-activeColor"
+              : ""
           )}
         >
           {installation.status}
         </motion.span>
       </motion.td>
 
-      <motion.td variants={cellVariants} className="px-4 h-14 align-middle whitespace-nowrap">
-        <span className="text-letterColor">{coordinatorName}</span>
+      <motion.td variants={cellVariants} className="px-4 h-12 whitespace-nowrap">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={onViewCoordinators}
+          className="bg-primaryColor border border-primaryColor h-[36px] px-5 font-bold text-letterColorLight rounded-[2px] transition-all duration-200 hover:bg-white hover:text-primaryColor"
+        >
+          Ver Coordinadores
+        </motion.button>
       </motion.td>
 
       <motion.td variants={cellVariants} className="px-4 h-12 whitespace-nowrap">

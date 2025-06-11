@@ -126,7 +126,7 @@ const TrackingRow: React.FC<ITrackingRowsProps> = ({
           onClick={() => clientInfoModal()}
           className="bg-primaryColor border border-primaryColor h-[36px] px-5 rounded-[2px] font-bold text-letterColorLight transition-all duration-200 hover:text-primaryColor hover:bg-white"
         >
-          Ver Cliente
+          Ver Clientes
         </motion.button>
       </motion.td>
 

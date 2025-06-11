@@ -115,7 +115,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     return selectedOrder.installations.filter(
       (inst) =>
         normalize(inst.address?.city?.name ?? "").includes(search) ||
-        normalize(inst.coordinator?.user.fullName ?? "").includes(search)
+        inst.coordinator?.some((coor) => normalize(coor.user.fullName).includes(search))
     );
   },
 
@@ -179,7 +179,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       }));
     } catch (err) {
       console.error("Error al obtener las órdenes:", err);
-    }finally{
+    } finally {
       get().handleLoading(false);
     }
   },
@@ -214,7 +214,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       }));
     } catch (err) {
       console.error("Error al obtener las órdenes:", err);
-    }finally{
+    } finally {
       get().handleLoading(false);
     }
   },
@@ -223,9 +223,6 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       get().handleLoading(true);
       const newOrder: IOrder = await createOrder(values);
       console.log(newOrder);
-
-      
-      
 
       setTimeout(() => {
         set((state) => ({ orders: [newOrder, ...state.orders] }));
@@ -336,7 +333,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     } catch (error) {
       console.log("Error al obtener las instalaciones:", error);
       return null;
-    }finally{
+    } finally {
       get().handleLoading(false);
     }
   },
@@ -410,7 +407,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
       return updatedInstallation;
     } catch (err) {
-      console.log("Error al actualizar la instalación:", err);
+      console.log(err);
       throw err;
     }
   },

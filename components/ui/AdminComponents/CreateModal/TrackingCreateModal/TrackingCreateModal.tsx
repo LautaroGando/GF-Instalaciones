@@ -18,39 +18,41 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useClientsSelectModal } from "@/store/Admin/AdminModals/ClientSelectModalStore/ClientSelectModalStore";
 
 const TrackingCreateModal = () => {
-  const { selectedClient, openModal: openClientModal, clearClient } = useClientsSelectModal();
+  const {
+    selectedClients,
+    openModal: openClientModal,
+    removeClient,
+    clearClients,
+  } = useClientsSelectModal();
   const { isOpen, closeModal } = useTrackingCreateModal();
   const { handleCreateOrder, allOrders } = useTrackingStore();
   const { isDark } = useThemeStore();
   useDisableScroll(isOpen);
 
-  useEffect(() => {
-    const prevIsOpen = isOpenRef.current;
-
-    if (prevIsOpen && !isOpen) {
-      clearClient();
-    }
-
-    isOpenRef.current = isOpen;
-  }, [isOpen, clearClient]);
-
   const isOpenRef = useRef(isOpen);
 
-  if (!isOpen) {
-    return null;
-  }
+  useEffect(() => {
+    const prevIsOpen = isOpenRef.current;
+    if (prevIsOpen && !isOpen) {
+      clearClients();
+    }
+    isOpenRef.current = isOpen;
+  }, [isOpen, clearClients]);
 
-  const SyncClientWithFormik = () => {
+  const SyncClientsWithFormik = () => {
     const { setFieldValue } = useFormikContext<ICreateOrderFormValues>();
-    const { selectedClient } = useClientsSelectModal();
+    const { selectedClients } = useClientsSelectModal();
 
     useEffect(() => {
-      const clientRoleId =
-        selectedClient?.userRoles.find((userRole) => userRole.role.name.toLowerCase() === "usuario")
-          ?.id || "";
+      const clientRoleIds = selectedClients
+        .map(
+          (client) =>
+            client.userRoles.find((role) => role.role.name.toLowerCase() === "usuario")?.id
+        )
+        .filter(Boolean);
 
-      setFieldValue("clientId", clientRoleId);
-    }, [selectedClient, setFieldValue]);
+      setFieldValue("clientsIds", clientRoleIds);
+    }, [selectedClients, setFieldValue]);
 
     return null;
   };
@@ -60,24 +62,20 @@ const TrackingCreateModal = () => {
     { setSubmitting }: FormikHelpers<ICreateOrderFormValues>
   ) => {
     const orderNumberExist = allOrders.find((ord) => ord.orderNumber === values.orderNumber);
-
     if (orderNumberExist) {
       Swal.fire({
         icon: "error",
         title: "Número de orden duplicado",
-        text: "Ya existe una orden registrada con ese número. Por favor, ingresa uno diferente.",
+        text: "Ya existe una orden registrada con ese número.",
         confirmButtonText: "Entendido",
         confirmButtonColor: "#A79351",
         background: isDark ? "#000000" : "#FAFAFA",
         color: "#8D8D8D",
-        toast: false,
-        position: "center",
-        allowOutsideClick: true,
-        allowEscapeKey: true,
       });
-
       return;
     }
+
+    console.log(values);
 
     PersonalizedPopUp({
       color: isDark ? "#000000" : "#FAFAFA",
@@ -85,14 +83,16 @@ const TrackingCreateModal = () => {
       titleSuccess: "Orden creada",
       titleError: "Error",
       textSuccess: "La orden ha sido creada correctamente.",
-      textError: "Hubo un problema al crear la orden. Inténtalo de nuevo.",
+      textError: "Hubo un problema al crear la orden.",
       setSubmiting: setSubmitting,
       genericFunction: () => handleCreateOrder(values),
       closeModal: () => closeModal(),
     });
 
-    clearClient();
+    clearClients();
   };
+
+  if (!isOpen) return null;
 
   return (
     <>
@@ -115,18 +115,20 @@ const TrackingCreateModal = () => {
 
           <div className="overflow-y-auto px-6 pb-6 pt-1">
             <Formik
-              initialValues={{
-                orderNumber: "",
-                title: "",
-                description: "",
-                clientId: "",
-              }}
+              initialValues={
+                {
+                  orderNumber: "",
+                  title: "",
+                  description: "",
+                  clientsIds: [],
+                } as ICreateOrderFormValues
+              }
               validationSchema={orderSchema}
               onSubmit={handleOnSubmit}
             >
               {({ handleSubmit, errors, touched }) => (
                 <>
-                  <SyncClientWithFormik />
+                  <SyncClientsWithFormik />
                   <Form onSubmit={handleSubmit} className="space-y-3 text-bgColorDark/60">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -231,22 +233,25 @@ const TrackingCreateModal = () => {
                         Cliente asignado
                       </label>
                       <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px] dark:bg-gray-100/10 dark:border-gray-300/20">
-                        {selectedClient ? (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
-                            className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm"
-                          >
-                            <p>{selectedClient.fullName}</p>
-                            <button
-                              type="button"
-                              className="text-admin-inactiveColor hover:text-admin-inactiveColor/80"
-                              onClick={() => clearClient()}
+                        {selectedClients.length > 0 ? (
+                          selectedClients.map((client) => (
+                            <motion.div
+                              key={client.id}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.2, ease: "easeOut" }}
+                              className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm"
                             >
-                              <FontAwesomeIcon icon={faTimes} />
-                            </button>
-                          </motion.div>
+                              <p>{client.fullName}</p>
+                              <button
+                                type="button"
+                                onClick={() => removeClient(client.id)}
+                                className="text-admin-inactiveColor hover:text-admin-inactiveColor/80"
+                              >
+                                <FontAwesomeIcon icon={faTimes} />
+                              </button>
+                            </motion.div>
+                          ))
                         ) : (
                           <motion.p
                             initial={{ opacity: 0 }}
@@ -259,14 +264,14 @@ const TrackingCreateModal = () => {
                         )}
                       </div>
 
-                      {errors.clientId && touched.clientId && (
+                      {errors.clientsIds && touched.clientsIds && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           transition={{ duration: 0.3 }}
                           className="text-red-500 text-sm mt-2"
                         >
-                          {errors.clientId as string}
+                          {errors.clientsIds as string}
                         </motion.div>
                       )}
                     </motion.div>
@@ -283,7 +288,7 @@ const TrackingCreateModal = () => {
                       <button
                         type="button"
                         onClick={openClientModal}
-                        className="w-full mt-2 border border-primaryColor bg-primaryColor text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-transparent hover:text-primaryColor"
+                        className="w-full mt-2 border border-primaryColor bg-transparent text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColor hover:text-letterColorLight"
                       >
                         Seleccionar cliente
                       </button>

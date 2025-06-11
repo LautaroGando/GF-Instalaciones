@@ -11,8 +11,7 @@ import { IUserSafe } from "@/interfaces/IUserSafe";
 export const useTrackingTableLogic = () => {
   const { openModal: openTrackingTextModal } = useTextModalStore();
   const { openModal: openTrackingEditModal } = useTrackingEditModal();
-  const { handleFetchOrders, handleDeleteOrder, getFilteredOrders, isLoading } =
-    useTrackingStore();
+  const { handleFetchOrders, handleDeleteOrder, getFilteredOrders, isLoading } = useTrackingStore();
   const { handleFetchUsers } = useUserStore();
   const { isDark } = useThemeStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
@@ -54,53 +53,60 @@ export const useTrackingTableLogic = () => {
     openTrackingTextModal(title, text);
   };
 
-  const handleViewClient = (client: IUserSafe) => {
-    if (client.user) {
-      const {
-        fullName,
-        email,
-        birthDate,
-        idNumber,
-        phone,
-        address,
-        location,
-        country,
-        coverage,
-        isSubscribed,
-        createdAt,
-      } = client.user;
+  const handleViewClient = (clients: IUserSafe[]) => {
+    if (!Array.isArray(clients) || clients.length === 0) return;
 
-      const birthDateFormatted = new Intl.DateTimeFormat("es-AR", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }).format(new Date(birthDate));
+    const formattedClients = clients
+      .filter((client) => client)
+      .map((client, index) => {
+        const {
+          fullName,
+          email,
+          birthDate,
+          idNumber,
+          phone,
+          address,
+          location,
+          country,
+          coverage,
+          isSubscribed,
+          createdAt,
+        } = client;
 
-      const createdAtFormatted = new Intl.DateTimeFormat("es-AR", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }).format(new Date(createdAt));
+        const birthDateFormatted = new Intl.DateTimeFormat("es-AR", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }).format(new Date(birthDate));
 
-      const clientData = `
-      <div style="line-height: 1.6">
-        <p><strong>Nombre completo:</strong> ${fullName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>DNI:</strong> ${idNumber}</p>
-        <p><strong>Fecha de nacimiento:</strong> ${birthDateFormatted}</p>
-        <p><strong>Teléfono:</strong> ${coverage} ${phone}</p>
-        <p><strong>Dirección:</strong> ${address}, ${location}, ${country}</p>
-        <p><strong>Suscripción activa:</strong> ${
-          isSubscribed ? "Sí" : "No"
-        }</p>
-        <p><strong>Registrado el:</strong> ${createdAtFormatted}</p>
-      </div>
-    `;
+        const createdAtFormatted = new Intl.DateTimeFormat("es-AR", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(new Date(createdAt));
 
-      openTrackingTextModal("Información del cliente", clientData.trim());
-    }
+        return `
+        <div style="line-height: 1.6; color: #4e4e4e;">
+          <h4><strong>Cliente ${index + 1}</strong></h4>
+          <p><strong>Nombre completo:</strong> ${fullName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>DNI:</strong> ${idNumber}</p>
+          <p><strong>Fecha de nacimiento:</strong> ${birthDateFormatted}</p>
+          <p><strong>Teléfono:</strong> ${coverage} ${phone}</p>
+          <p><strong>Dirección:</strong> ${address}, ${location}, ${country}</p>
+          <p><strong>Suscripción activa:</strong> ${isSubscribed ? "Sí" : "No"}</p>
+          <p><strong>Registrado el:</strong> ${createdAtFormatted}</p>
+          <hr style="margin: 10px 0;" />
+        </div>
+      `;
+      });
+
+    openTrackingTextModal(
+      "Información del cliente",
+      `<div style="line-height: 1.6">${formattedClients.join("")}</div>`
+    );
   };
 
   return {

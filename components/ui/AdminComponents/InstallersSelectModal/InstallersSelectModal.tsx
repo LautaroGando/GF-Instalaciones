@@ -33,6 +33,8 @@ const InstallersSelectModal: React.FC = () => {
   );
 
   if (!isOpen) return null;
+  
+  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 px-4 sm:px-6">

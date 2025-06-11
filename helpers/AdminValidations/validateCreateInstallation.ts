@@ -18,7 +18,7 @@ const installationSchema = Yup.object().shape({
     province: Yup.string().required("La provincia es obligatoria"),
   }),
   installersIds: Yup.array().of(Yup.string()).min(1, "Debes seleccionar al menos un instalador"),
-  coordinatorId: Yup.string().required("Debes seleccionar un coordinador"),
+  coordinatorsIds: Yup.array().of(Yup.string()).min(1, "Debes seleccionar al menos un coordinador"),
 });
 
 export default installationSchema;

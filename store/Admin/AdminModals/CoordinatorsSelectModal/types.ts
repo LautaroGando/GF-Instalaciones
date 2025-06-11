@@ -1,9 +1,9 @@
-import { IUser } from "@/interfaces/IUser";
+import { ISelectedCoordinator } from "@/interfaces/ISelectedCoordinator";
 
 export interface ICoordinatorsSelectModalProps {
   isOpen: boolean;
-  selectedCoordinators: IUser[];
-  addCoordinator: (coordinator: IUser) => void;
+  selectedCoordinators: ISelectedCoordinator[];
+  addCoordinator: (coordinator: ISelectedCoordinator) => void;
   deleteCoordinator: (id: string) => void;
   clearCoordinators: () => void;
   openModal: () => void;
