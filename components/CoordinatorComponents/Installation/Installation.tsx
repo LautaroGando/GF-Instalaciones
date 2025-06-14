@@ -38,12 +38,10 @@ export const Installation: React.FC = () => {
 
   const userInfo = user && "user" in user ? user.user : user;
 
-  const assignedInstallations = installations?.filter(
-    (installation) =>
-      installation.coordinator?.id ===
-      userInfo?.userRoles.find((user) => user.role.name === "Coordinador")?.id
+  const assignedInstallations = installations?.filter((installation) =>
+    installation.coordinator.some((c) => c.user.id === userInfo?.id)
   );
-
+  console.log(assignedInstallations);
   const filterIncompleteInstallations = assignedInstallations?.filter(
     (installation: IInstallation) =>
       installation.status === "A revisar" ||
