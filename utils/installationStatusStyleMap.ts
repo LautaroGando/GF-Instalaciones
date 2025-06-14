@@ -28,6 +28,11 @@ export const statusStyleMap: Record<
     bg: "#28b463",
     border: "#28b463",
   },
+  Rechazada: {
+    text: "#28b463",
+    bg: "#28b463",
+    border: "#28b463",
+  },
   Cancelada: {
     text: "#E17575",
     bg: "#E17575",
