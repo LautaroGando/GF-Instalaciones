@@ -3,33 +3,25 @@ import { useUserStore } from "@/store/UserStore/userStore";
 import { useEffect, useMemo, useState } from "react";
 
 export const useClientOrders = (contentToShow: "in process" | "completed") => {
-  const {
-    orders,
-    handleFetchOrders,
-    handleFetchAllOrders,
-    isLoading,
-    ordersTotalPages,
-  } = useTrackingStore();
+  const { orders, handleFetchOrders, handleFetchAllOrders, isLoading, ordersTotalPages } =
+    useTrackingStore();
   const { user } = useUserStore();
   const [isLoadingOrders, setIsLoadingOrders] = useState(true);
 
   const clientOrders = useMemo(() => {
     if (!user) return [];
-    return orders.filter((order) => order.client?.user.id === user.id);
+    return orders.filter((order) => order.client?.some((c) => c.id === user.id));
   }, [orders, user]);
 
   const pendingCount = clientOrders.filter((order) => !order.completed).length;
   const completedCount = clientOrders.filter((order) => order.completed).length;
-  const finalCount =
-    contentToShow === "completed" ? completedCount : pendingCount;
+  const finalCount = contentToShow === "completed" ? completedCount : pendingCount;
 
   useEffect(() => {
     const fetchData = async () => {
       await handleFetchAllOrders();
       await handleFetchOrders(
-        contentToShow === "in process"
-          ? { completed: false }
-          : { completed: true }
+        contentToShow === "in process" ? { completed: false } : { completed: true }
       );
       setIsLoadingOrders(false);
     };
