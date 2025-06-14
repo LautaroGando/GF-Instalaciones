@@ -19,7 +19,7 @@ export const Path: React.FC = () => {
   const pathname = usePathname();
 
   const splitPathname = pathname.split("/");
-console.log(splitPathname)
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-2 items-center text-letterColorLight">
@@ -48,7 +48,10 @@ console.log(splitPathname)
 
           {splitPathname[2] && (
             <>
-              <Link href={`/${splitPathname[1]}/${splitPathname[2]}`} className="hover:underline">
+              <Link
+                href={`/${splitPathname[1]}/${splitPathname[2]}`}
+                className="hover:underline"
+              >
                 {capitalize(splitPathname[2])}
               </Link>
               <FontAwesomeIcon icon={faChevronRight} />
@@ -67,8 +70,12 @@ console.log(splitPathname)
           )}
         </p>
       </div>
-      {splitPathname[2] && !splitPathname[3] && <BannerInfo type={splitPathname[2] as TAdminBanner} />}
-      {splitPathname[3] && <BannerInfo type={splitPathname[3] as TAdminBanner} />}
+      {splitPathname[2] && !splitPathname[3] && (
+        <BannerInfo type={splitPathname[2] as TAdminBanner} />
+      )}
+      {splitPathname[3] && (
+        <BannerInfo type={splitPathname[3] as TAdminBanner} />
+      )}
     </div>
   );
 };

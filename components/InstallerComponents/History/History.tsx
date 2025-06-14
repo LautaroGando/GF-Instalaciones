@@ -147,8 +147,9 @@ export const History: React.FC = () => {
                   <div className="flex flex-col text-sm">
                     <h3 className="font-bold">Coordinador</h3>
                     <h4>
-                      {installation.coordinator?.user?.fullName ||
-                        "Sin coordinador"}
+                      {installation.coordinator.map(
+                        (coordinator) => `${coordinator.user.fullName}, `
+                      ) || "Sin coordinadores"}
                     </h4>
                   </div>
                 </div>

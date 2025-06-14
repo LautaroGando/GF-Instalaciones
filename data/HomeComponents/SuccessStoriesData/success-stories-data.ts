@@ -2,7 +2,7 @@ import { ISuccessStoriesData } from "./types";
 
 export const successStoriesData: ISuccessStoriesData[] = [
   {
-    data: 28,
+    data: 29,
     label: "Años en el rubro",
   },
   {

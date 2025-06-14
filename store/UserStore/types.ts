@@ -22,8 +22,7 @@ export interface IUserStoreProps {
   editMenu: boolean;
   setMaxPage: () => void;
   setMoreInfo: (id: string) => void;
-  setUser: (user: IUser | IInstaller) => void;
-  setToken: (token: string) => void;
+  setUserAndToken: (user: IUser | IInstaller, token: string) => void;
   handleOpenEditMenu: () => void;
   handleCloseEditMenu: () => void;
   handleFilterUsers: (values: string) => void;

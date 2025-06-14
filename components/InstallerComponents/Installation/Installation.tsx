@@ -161,10 +161,11 @@ export const Installation: React.FC = () => {
                     width={25}
                   />
                   <div className="flex flex-col text-sm">
-                    <h3 className="font-bold">Coordinador</h3>
+                    <h3 className="font-bold">Coordinadores</h3>
                     <h4>
-                      {installation.coordinator?.user?.fullName ||
-                        "Sin coordinador"}
+                      {installation.coordinator.map(
+                        (coordinator) => `${coordinator.user.fullName}, `
+                      ) || "Sin coordinadores"}
                     </h4>
                   </div>
                 </div>
@@ -196,12 +197,15 @@ export const Installation: React.FC = () => {
                       Llegué
                     </button>
                   ) : installation.status === "En proceso" ? (
-                    <button
-                      onClick={handleOpenModal}
-                      className="rounded-sm w-[200px] h-[40px] bg-bgColor border border-bgColor text-primaryColor transition-all duration-300 font-semibold hover:bg-primaryColor hover:text-letterColorLight"
-                    >
-                      Completar
-                    </button>
+                    <>
+                      <button
+                        onClick={() => handleOpenModal(installation.id)}
+                        className="rounded-sm w-[200px] h-[40px] bg-bgColor border border-bgColor text-primaryColor transition-all duration-300 font-semibold hover:bg-primaryColor hover:text-letterColorLight"
+                      >
+                        Completar
+                      </button>
+                      <ModalCompleteInstallation id={installation.id} />
+                    </>
                   ) : installation.status === "A revisar" ? (
                     <div className="w-full h-[40px] bg-installer-toReview/15 text-installer-toReview flex items-center justify-center font-bold">
                       <h3>EN REVISIÓN</h3>
@@ -217,7 +221,6 @@ export const Installation: React.FC = () => {
                     )
                   )}
                 </div>
-                <ModalCompleteInstallation id={installation.id} />
               </div>
             );
           })}
