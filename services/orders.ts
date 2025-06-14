@@ -196,7 +196,7 @@ export const getAllInstallations = async (
         Authorization: `Bearer ${token}`,
       },
     });
-  
+
     return data;
   } catch (error) {
     const message = axios.isAxiosError(error)
@@ -210,9 +210,8 @@ export const createInstallation = async (
   orderId: string,
   values: ICreateInstallationFormValues
 ) => {
-
   console.log(values);
-  
+
   try {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
@@ -239,12 +238,11 @@ export const createInstallation = async (
   }
 };
 
-
 export const updateInstallation = async (
   installationId: string,
   values: IEditInstallationFormValues
 ) => {
-      console.log(values);
+  console.log(values);
   try {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
@@ -255,13 +253,10 @@ export const updateInstallation = async (
       },
     });
 
-
-    
-
     return data;
   } catch (error) {
     console.log(error);
-    
+
     if (axios.isAxiosError(error)) {
       const err = error as AxiosError<{ message: string | string[] }>;
       const rawMessage = err.response?.data?.message;
@@ -275,7 +270,6 @@ export const updateInstallation = async (
     }
   }
 };
-
 
 export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
   try {
@@ -293,7 +287,7 @@ export const updateInstallationStatus = async (id: string, status: TInstallation
     );
 
     console.log(res.data);
-    
+
     return res.data;
   } catch (error) {
     console.log(error);
