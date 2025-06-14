@@ -1,6 +1,5 @@
 "use client";
 import Loading from "@/components/ui/GeneralComponents/Loading/Loading";
-import { ICoordinator } from "@/interfaces/ICoordinator";
 import IInstallation from "@/interfaces/IInstallation";
 import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useUserStore } from "@/store/UserStore/userStore";
@@ -37,12 +36,7 @@ export const History: React.FC = () => {
   const userInfo = user && "user" in user ? user.user : user;
 
   const assignedInstallations = installations?.filter((installation) =>
-    installation.coordinator.some(
-      (coordinator: ICoordinator) =>
-        userInfo &&
-        userInfo.coordinator &&
-        coordinator.id === userInfo?.coordinator.id
-    )
+    installation.coordinator.some((c) => c.user.id === userInfo?.id)
   );
 
   const filterCompleteInstallations = assignedInstallations?.filter(

@@ -57,8 +57,6 @@ export const useUserStore = create<IUserStoreProps>()(
 
         set({ user, token });
 
-        localStorage.setItem("user-storage", JSON.stringify(payload));
-
         Cookies.set("user-storage", JSON.stringify(payload), {
           expires: 7,
           secure: true,

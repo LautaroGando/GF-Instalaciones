@@ -11,7 +11,6 @@ import { formatHour } from "@/utils/formatDate";
 import { useInstallationNoteModalStore } from "@/store/Admin/AdminModals/InstallationNoteModalStore/InstallationNoteModalStore";
 import ModalFinalizedInstallation from "./ModalFinalizedInstallation/ModalFinalizedInstallation";
 import { formatDateWithTime } from "@/utils/formatDateWithTime";
-import { ICoordinator } from "@/interfaces/ICoordinator";
 
 export const Installation: React.FC = () => {
   const { user } = useUserStore();
@@ -38,13 +37,11 @@ export const Installation: React.FC = () => {
   }, [handleFetchInstallationsNotPagination]);
 
   const userInfo = user && "user" in user ? user.user : user;
-  console.log(userInfo);
-  const assignedInstallations = installations?.filter(
-    (installation) =>
-      installation.coordinator?.id ===
-      userInfo?.userRoles.some((role) => role.role.name === "Coordinador")
-  );
 
+  const assignedInstallations = installations?.filter((installation) =>
+    installation.coordinator.some((c) => c.user.id === userInfo?.id)
+  );
+  console.log(assignedInstallations);
   const filterIncompleteInstallations = assignedInstallations?.filter(
     (installation: IInstallation) =>
       installation.status === "A revisar" ||
