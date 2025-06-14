@@ -4,9 +4,9 @@ import clsx from "clsx";
 import React from "react";
 import { IAdminProfileProps } from "./types";
 import ProfileMenu from "../../GeneralComponents/ProfileMenu/ProfileMenu";
-import Image from "next/image";
-import photoGaston from "@/public/assets/icons/photo-gaston.png";
 import { useUserStore } from "@/store/UserStore/userStore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserTie } from "@fortawesome/free-solid-svg-icons";
 
 export const AdminProfile: React.FC<IAdminProfileProps> = ({
   viewAdmin,
@@ -24,15 +24,14 @@ export const AdminProfile: React.FC<IAdminProfileProps> = ({
       <ProfileMenu />
       <div
         className={clsx(
-          "w-[80px] h-[80px] rounded-full bg-black overflow-hidden",
+          "w-[80px] h-[80px] rounded-full flex items-center justify-center overflow-hidden",
           imgClasses
         )}
       >
-        <Image
-          src={photoGaston}
-          alt="Foto de perfil de Gastón"
-          width={80}
-          height={80}
+        <FontAwesomeIcon
+          className="max-w-[30px] text-[30px]"
+          icon={faUserTie}
+          width={30}
         />
       </div>
       <div className="flex flex-col gap-2">

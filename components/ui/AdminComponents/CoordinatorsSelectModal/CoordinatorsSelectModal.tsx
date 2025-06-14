@@ -4,20 +4,13 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleUser,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleUser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
+import { ISelectedCoordinator } from "@/interfaces/ISelectedCoordinator";
 
 const CoordinatorsSelectModal: React.FC = () => {
-  const {
-    isOpen,
-    closeModal,
-    addCoordinator,
-    selectedCoordinators,
-    deleteCoordinator,
-  } = useCoordinatorsSelectModal();
+  const { isOpen, closeModal, addCoordinator, selectedCoordinators, deleteCoordinator } =
+    useCoordinatorsSelectModal();
   const { users, handleFetchUsers } = useUserStore();
 
   const [search, setSearch] = useState("");
@@ -38,11 +31,29 @@ const CoordinatorsSelectModal: React.FC = () => {
     user.userRoles.some((u) => u.role.name.toLowerCase() === "coordinador")
   );
 
-  const filteredCoordinators = coordinators.filter((c) =>
-    normalize(c.fullName).includes(normalize(search))
+const coordinatorsWithRoleId: ISelectedCoordinator[] = coordinators
+  .map((user) => {
+    const role = user.userRoles.find((r) => r.role.name.toLowerCase() === "coordinador");
+    if (!role) return null;
+
+    return {
+      id: role.id,
+      user: {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+      },
+    };
+  })
+  .filter((item): item is ISelectedCoordinator => item !== null);
+
+  const filteredCoordinators = coordinatorsWithRoleId.filter((c) =>
+    normalize(c.user.fullName).includes(normalize(search))
   );
 
   if (!isOpen) return null;
+
+  console.log(filteredCoordinators);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 px-4 sm:px-6">
@@ -75,57 +86,43 @@ const CoordinatorsSelectModal: React.FC = () => {
 
         <div className="flex flex-col gap-3 h-[47vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 pr-1">
           <AnimatePresence mode="popLayout">
-            {filteredCoordinators.length > 0 ? (
-              filteredCoordinators.map((coordinator) => (
-                <motion.div
-                  key={coordinator.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  layout
-                  className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 dark:bg-gray-100/10"
-                >
-                  <div className="flex items-center gap-3">
-                    <FontAwesomeIcon
-                      icon={faCircleUser}
-                      className="text-gray-500 text-2xl dark:text-gray-200"
-                    />
-                    <p className="text-gray-800 font-medium dark:text-gray-100">
-                      {coordinator.fullName}
-                    </p>
-                  </div>
-
-                  {selectedCoordinators.some(
-                    (sc) => sc.id === coordinator.id
-                  ) ? (
-                    <button
-                      onClick={() => deleteCoordinator(coordinator.id)}
-                      className="border border-red-500 text-red-500 px-4 py-1.5 rounded-lg text-sm hover:bg-red-500 hover:text-white transition"
-                    >
-                      Desasignar
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => addCoordinator(coordinator)}
-                      className="bg-primaryColor text-white px-4 py-1.5 rounded-lg text-sm hover:bg-primaryColorHover transition"
-                    >
-                      Asignar
-                    </button>
-                  )}
-                </motion.div>
-              ))
-            ) : (
+            {filteredCoordinators.map((coordinator) => (
               <motion.div
-                key="no-result"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-center text-gray-500 text-sm h-[60vh]"
+                key={coordinator.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                layout
+                className="flex items-center justify-between bg-gray-100 p-3 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 dark:bg-gray-100/10"
               >
-                No se encontraron coordinadores.
+                <div className="flex items-center gap-3">
+                  <FontAwesomeIcon
+                    icon={faCircleUser}
+                    className="text-gray-500 text-2xl dark:text-gray-200"
+                  />
+                  <p className="text-gray-800 font-medium dark:text-gray-100">
+                    {coordinator.user.fullName}
+                  </p>
+                </div>
+
+                {selectedCoordinators.some((sc) => sc.id === coordinator.id) ? (
+                  <button
+                    onClick={() => deleteCoordinator(coordinator.id)}
+                    className="border border-red-500 text-red-500 px-4 py-1.5 rounded-lg text-sm hover:bg-red-500 hover:text-white transition"
+                  >
+                    Desasignar
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => addCoordinator(coordinator)}
+                    className="bg-primaryColor text-white px-4 py-1.5 rounded-lg text-sm hover:bg-primaryColorHover transition"
+                  >
+                    Asignar
+                  </button>
+                )}
               </motion.div>
-            )}
+            ))}
           </AnimatePresence>
         </div>
 

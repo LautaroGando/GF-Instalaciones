@@ -20,6 +20,7 @@ const InstallationsTable = () => {
     handlePostpone,
     handleViewAddress,
     handleViewInstallers,
+    handleViewCoordinators,
     handleViewNotes,
   } = useInstallationsTableLogic();
 
@@ -47,7 +48,7 @@ const InstallationsTable = () => {
       />
     );
   }
-
+  
   return (
     <>
       <div className="w-full h-[max-content] min-h-[610px] overflow-x-auto overflow-y-hidden">
@@ -56,17 +57,15 @@ const InstallationsTable = () => {
           <tbody>
             <AnimatePresence>
               {filteredInstallations.map((installation: IInstallation) => {
-                const coordinatorName = installation.coordinator?.user.fullName || "-";
-
                 return (
                   <InstallationRow
                     key={installation.id}
-                    installation={Array.isArray(installation) ? installation[0]: installation}
-                    coordinatorName={coordinatorName}
+                    installation={Array.isArray(installation) ? installation[0] : installation}
                     onEdit={() => handleEdit(installation)}
                     onDelete={() => handleDelete(installation.id)}
                     onViewAddress={() => handleViewAddress(installation)}
                     onViewInstallers={() => handleViewInstallers(installation)}
+                    onViewCoordinators={() => handleViewCoordinators(installation)}
                     onCancel={() => handleCancelInstallation(installation.id, "Cancelada")}
                     onPostpone={() => handlePostpone(installation.id, "Pospuesta")}
                     onViewNotes={() =>

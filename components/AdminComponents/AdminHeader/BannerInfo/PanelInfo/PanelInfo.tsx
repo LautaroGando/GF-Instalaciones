@@ -16,7 +16,7 @@ export const PanelInfo: React.FC = () => {
     handleFetchInstallationsNotPagination();
   }, [handleFetchInstallationsNotPagination]);
 
-  const employees = users?.filter(
+  const collaborators = users?.filter(
     (user: IUser) => user.installer?.status === "APROBADO" || user.coordinator
   );
 
@@ -36,8 +36,8 @@ export const PanelInfo: React.FC = () => {
               end={
                 item.label === "Usuarios"
                   ? users?.length ?? 0
-                  : item.label === "Empleados"
-                  ? employees?.length ?? 0
+                  : item.label === "Colaboradores"
+                  ? collaborators?.length ?? 0
                   : item.label === "Instalaciónes"
                   ? installations?.length ?? 0
                   : 0

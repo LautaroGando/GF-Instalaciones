@@ -5,7 +5,7 @@ import { useTrackingStore } from "@/store/Admin/TrackingStore/TrackingStore";
 import { useUserStore } from "@/store/UserStore/userStore";
 import { formatHour } from "@/utils/formatDate";
 import { formatDateWithTime } from "@/utils/formatDateWithTime";
-import { faBan, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
@@ -35,10 +35,8 @@ export const History: React.FC = () => {
 
   const userInfo = user && "user" in user ? user.user : user;
 
-  const assignedInstallations = installations?.filter(
-    (installation) =>
-      installation.coordinator?.id ===
-      userInfo?.userRoles[userInfo.userRoles.length - 1].id
+  const assignedInstallations = installations?.filter((installation) =>
+    installation.coordinator.some((c) => c.user.id === userInfo?.id)
   );
 
   const filterCompleteInstallations = assignedInstallations?.filter(
@@ -136,14 +134,15 @@ export const History: React.FC = () => {
                 <div className="flex items-center gap-3 px-2">
                   <FontAwesomeIcon
                     className="text-[25px] w-[25px]"
-                    icon={faUser}
+                    icon={faUsers}
                     width={25}
                   />
                   <div className="flex flex-col text-sm">
-                    <h3 className="font-bold">Coordinador</h3>
+                    <h3 className="font-bold">Instaladores</h3>
                     <h4>
-                      {installation.coordinator?.user?.fullName ||
-                        "Sin coordinador"}
+                      {installation.installers.map(
+                        (installer) => `${installer.user.fullName}, `
+                      ) || "Sin coordinador"}
                     </h4>
                   </div>
                 </div>

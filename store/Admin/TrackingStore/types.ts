@@ -38,7 +38,7 @@ export interface ITrackingProps {
   installationFilters: IInstallationFilters;
   installationSort: IInstallationSortParams;
   installationStatus: TInstallationStatus;
-  completeModal: boolean;
+  completeModal: string | null;
 
   // ===========================
   // 🛠️ 2. Utilidades Generales
@@ -46,7 +46,7 @@ export interface ITrackingProps {
 
   handleLoading: (conditional: boolean) => void;
   setEditedInstallationId: (id: string | null) => void;
-  handleOpenModal: () => void;
+  handleOpenModal: (id: string) => void;
   handleCloseModal: () => void;
 
   // ===========================

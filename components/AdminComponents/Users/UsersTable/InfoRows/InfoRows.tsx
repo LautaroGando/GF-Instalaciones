@@ -4,7 +4,7 @@ import { IInfoRowsProps } from "./types";
 
 export const InfoRows: React.FC<IInfoRowsProps> = ({ item, label }) => {
   const lastRole = item.userRoles[item.userRoles.length - 1]?.role.name;
-console.log(item)
+
   const className = clsx(
     lastRole === "Admin"
       ? "font-semibold"

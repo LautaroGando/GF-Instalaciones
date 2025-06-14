@@ -16,7 +16,7 @@ import { useRecoveryPasswordStore } from "@/store/RecoveryPasswordStore/recovery
 export const FormSignIn: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  const { setUser, setToken } = useUserStore();
+  const { setUserAndToken } = useUserStore();
   const { isDark } = useThemeStore();
   const { handleOpenModal } = useRecoveryPasswordStore();
 
@@ -39,10 +39,12 @@ export const FormSignIn: React.FC = () => {
 
             if (data.installer && data.installer.status !== "APROBADO") {
               return;
-            } else {
-              setUser(data.installer ? data.installer : data.user);
-              setToken(data.token);
             }
+
+            setUserAndToken(
+              data.installer ? data.installer : data.user,
+              data.token
+            );
 
             setTimeout(() => {
               router.push("/");

@@ -7,11 +7,12 @@ import {
 } from "@/interfaces/IAuth";
 import type { TColor } from "@/types/TColor";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const signIn = async (values: IUserSignIn, color: TColor) => {
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(`${API_URL}/auth/signInUser`, values, {
       headers: {
@@ -45,8 +46,11 @@ export const signIn = async (values: IUserSignIn, color: TColor) => {
 
 export const signUpUser = async (values: IUserSignUp, color: TColor) => {
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
+
+    console.log(values);
+    
 
     const { data } = await axios.post(`${API_URL}/auth/signUpUser`, values, {
       headers: {
@@ -82,8 +86,8 @@ export const signUpInstaller = async (
   color: TColor
 ) => {
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(
       `${API_URL}/auth/signUpInstaller`,
@@ -124,8 +128,8 @@ export const sendMailRecoveryPassword = async (
   color: TColor
 ) => {
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(
       `${API_URL}/auth/recovery-request`,
@@ -147,7 +151,6 @@ export const sendMailRecoveryPassword = async (
       });
     return data;
   } catch (error) {
-    console.log(error);
     if (axios.isAxiosError(error) && error.response) {
       PersonalizedPopUp({
         color: color,
@@ -165,10 +168,9 @@ export const recoveryPassword = async (
   values: Record<string, string>,
   color: TColor
 ) => {
-  console.log(values);
   try {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
     const { data } = await axios.post(
       `${API_URL}/auth/recovery-change-password`,
       values,
@@ -189,7 +191,6 @@ export const recoveryPassword = async (
       });
     return data;
   } catch (error) {
-    console.log(error);
     if (axios.isAxiosError(error) && error.response) {
       PersonalizedPopUp({
         color: color,

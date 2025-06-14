@@ -18,6 +18,10 @@ import InstallersSelectModal from "../../InstallersSelectModal/InstallersSelectM
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import { IInstaller } from "@/interfaces/IInstaller";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import { getTodayStartISO } from "@/utils/getTodayStartISO";
+import CoordinatorsSelectModal from "../../CoordinatorsSelectModal/CoordinatorsSelectModal";
+import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
+import { ISelectedCoordinator } from "@/interfaces/ISelectedCoordinator";
 
 const InstallationEditModal = () => {
   const searchParams = useSearchParams();
@@ -32,6 +36,15 @@ const InstallationEditModal = () => {
     clearInstallers,
     openModal: openInstallersModal,
   } = useInstallersSelectModal();
+
+  const {
+    selectedCoordinators,
+    deleteCoordinator,
+    clearCoordinators,
+    addCoordinator,
+    openModal: openCoordinatorsModal,
+  } = useCoordinatorsSelectModal();
+
   const { isDark } = useThemeStore();
 
   useEffect(() => {
@@ -41,19 +54,61 @@ const InstallationEditModal = () => {
     selectedInstallation.installers.forEach((inst) => addInstaller(inst));
   }, [selectedInstallation, addInstaller, clearInstallers]);
 
+  useEffect(() => {
+    if (!selectedInstallation?.coordinator) return;
+
+    clearCoordinators();
+    selectedInstallation.coordinator.forEach((coord) => {
+      if (coord.user) {
+        const formattedCoordinator = {
+          id: coord.id,
+          user: {
+            id: coord.user.id,
+            fullName: coord.user.fullName,
+            email: coord.user.email,
+          },
+        };
+
+        addCoordinator(formattedCoordinator);
+      }
+    });
+  }, [selectedInstallation, addCoordinator, clearCoordinators]);
+
   const SyncInstallersWithFormik = ({
     selectedInstallers,
     setFieldValue,
+    currentValue,
   }: {
     selectedInstallers: IInstaller[];
+    setFieldValue: (field: string, value: string[]) => void;
+    currentValue: string[];
+  }) => {
+    useEffect(() => {
+      const newIds = selectedInstallers.map((i) => i.id);
+      const hasChanged =
+        newIds.length !== currentValue.length || !newIds.every((id) => currentValue.includes(id));
+
+      if (hasChanged) {
+        setFieldValue("installersIds", newIds);
+      }
+    }, [selectedInstallers, setFieldValue, currentValue]);
+
+    return null;
+  };
+
+  const SyncCoordinatorsWithFormik = ({
+    selectedCoordinators,
+    setFieldValue,
+  }: {
+    selectedCoordinators: ISelectedCoordinator[];
     setFieldValue: (field: string, value: string[]) => void;
   }) => {
     useEffect(() => {
       setFieldValue(
-        "installersIds",
-        selectedInstallers.map((i) => i.id)
+        "coordinatorsIds",
+        selectedCoordinators.map((c) => c.id)
       );
-    }, [selectedInstallers, setFieldValue]);
+    }, [selectedCoordinators, setFieldValue]);
 
     return null;
   };
@@ -65,6 +120,7 @@ const InstallationEditModal = () => {
   const initialValues: IEditInstallationFormValues = {
     startDate: selectedInstallation.startDate ?? "",
     installersIds: selectedInstallation.installers?.map((i) => i.id) ?? [],
+    coordinatorsIds: selectedInstallation.coordinator?.map((c) => c.id) ?? [],
   };
 
   const handleOnSubmit = async (
@@ -76,7 +132,10 @@ const InstallationEditModal = () => {
     const payload = {
       ...values,
       installersIds: selectedInstallers.map((i) => i.id),
+      coordinatorsIds: selectedCoordinators.map((c) => c.id),
     };
+
+    console.log(payload);
 
     await PersonalizedPopUp({
       color: isDark ? "#000000" : "#FAFAFA",
@@ -84,7 +143,7 @@ const InstallationEditModal = () => {
       titleSuccess: "Instalación actualizada",
       titleError: "Error",
       textSuccess: "Los cambios se guardaron correctamente.",
-      textError: "No se pudo actualizar la instalación. Intenta nuevamente.",
+      textError: "",
       installationId,
       setEditedInstallationId,
       setSubmiting: setSubmitting,
@@ -159,6 +218,18 @@ const InstallationEditModal = () => {
                     return;
                   }
 
+                  if (selectedCoordinators.length === 0) {
+                    PersonalizedPopUp({
+                      color: isDark ? "#000000" : "#FAFAFA",
+                      withResult: false,
+                      simpleModal: true,
+                      icon: "warning",
+                      title: "Faltan coordinadores",
+                      text: "Debes seleccionar al menos un coordinador.",
+                    });
+                    return;
+                  }
+
                   handleSubmit(e);
                 };
 
@@ -166,6 +237,12 @@ const InstallationEditModal = () => {
                   <>
                     <SyncInstallersWithFormik
                       selectedInstallers={selectedInstallers}
+                      setFieldValue={setFieldValue}
+                      currentValue={values.installersIds}
+                    />
+
+                    <SyncCoordinatorsWithFormik
+                      selectedCoordinators={selectedCoordinators}
                       setFieldValue={setFieldValue}
                     />
 
@@ -188,7 +265,8 @@ const InstallationEditModal = () => {
                         <Field
                           name="startDate"
                           type="datetime-local"
-                          step="900"
+                          min={getTodayStartISO()}
+                          step="300"
                           className="shadow-sm shadow-primaryColor/60 bg-transparent p-2 rounded-[4px] w-full outline-none dark:text-letterColorLight"
                         />
                         {errors.startDate && touched.startDate && (
@@ -281,6 +359,83 @@ const InstallationEditModal = () => {
                       </motion.div>
 
                       <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.3,
+                          ease: "easeOut",
+                          delay: 0.7,
+                        }}
+                      >
+                        <label
+                          htmlFor="selectedCoordinators"
+                          className="text-sm font-medium text-primaryColor/80 dark:text-letterColorLight/80"
+                        >
+                          Coordinadores Seleccionados
+                        </label>
+                        <div className="flex flex-wrap gap-2 mt-2 bg-gray-100 p-3 rounded-md border border-gray-300 min-h-[50px] dark:bg-gray-100/10 dark:border-gray-300/20">
+                          {selectedCoordinators.length > 0 ? (
+                            selectedCoordinators.map((coordinator) => (
+                              <motion.div
+                                key={coordinator.id}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.2, ease: "easeOut" }}
+                                className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm"
+                              >
+                                <p>{coordinator.user.fullName}</p>
+                                <button
+                                  type="button"
+                                  className="text-admin-inactiveColor hover:text-admin-inactiveColor/80"
+                                  onClick={() => deleteCoordinator(coordinator.id)}
+                                >
+                                  <FontAwesomeIcon icon={faTimes} />
+                                </button>
+                              </motion.div>
+                            ))
+                          ) : (
+                            <motion.p
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ duration: 0.3, ease: "easeOut" }}
+                              className="text-gray-400 text-sm"
+                            >
+                              No hay coordinadores seleccionados
+                            </motion.p>
+                          )}
+                        </div>
+
+                        {errors.coordinatorsIds && touched.coordinatorsIds && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            transition={{ duration: 0.3 }}
+                            className="text-red-500 text-sm mt-2"
+                          >
+                            {errors.coordinatorsIds as string}
+                          </motion.div>
+                        )}
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.3,
+                          ease: "easeOut",
+                          delay: 0.8,
+                        }}
+                      >
+                        <button
+                          type="button"
+                          onClick={openCoordinatorsModal}
+                          className="w-full mt-2 border bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:border-primaryColorHover hover:bg-white hover:text-primaryColor dark:hover:bg-bgColorDark"
+                        >
+                          Seleccionar coordinadores
+                        </button>
+                      </motion.div>
+
+                      <motion.div
                         className="flex flex-col xl:flex-row xl:justify-between"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -318,6 +473,7 @@ const InstallationEditModal = () => {
         </motion.div>
       </div>
       <InstallersSelectModal />
+      <CoordinatorsSelectModal />
     </>
   );
 };

@@ -9,12 +9,14 @@ import { TInstallationQueryParams } from "@/types/TInstallationQueryParams";
 import TInstallationStatus from "@/types/TInstallationStatus";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 import { cleanParams } from "@/utils/cleanParams";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import Cookies from "js-cookie";
 
 // ORDERS
 export const getAllOrders = async () => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.get(`${API_URL}/orders`, {
       params: {
@@ -34,7 +36,9 @@ export const getAllOrders = async () => {
 export const getAllOrdersWithParams = async (params: Partial<TOrdersQueryParams>) => {
   try {
     const cleanedParams = cleanParams(params);
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.get(`${API_URL}/orders`, {
       params: cleanedParams,
@@ -57,7 +61,8 @@ export const getAllOrdersWithParams = async (params: Partial<TOrdersQueryParams>
 
 export const getOrderById = async (orderId: string): Promise<IOrder> => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const res = await axios.get(`${API_URL}/orders/${orderId}`, {
       headers: {
@@ -77,17 +82,19 @@ export const getOrderById = async (orderId: string): Promise<IOrder> => {
 };
 
 export const createOrder = async (values: ICreateOrderFormValues) => {
-  console.log(values);
-
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
-    const response = await axios.post(`${API_URL}/orders`, values, {
+    const { data } = await axios.post(`${API_URL}/orders`, values, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+
+    console.log(data);
+
+    return data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       console.error("Error al crear la orden");
@@ -104,7 +111,8 @@ export const updateOrder = async (
   values: IEditOrderFormValues
 ): Promise<IEditOrderFormValues | null> => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const response = await axios.patch<IEditOrderFormValues>(`${API_URL}/orders/${id}`, values, {
       headers: {
@@ -114,8 +122,6 @@ export const updateOrder = async (
 
     return response.data;
   } catch (err) {
-    console.log(err);
-
     if (axios.isAxiosError(err)) {
       console.error("Error al actualizar la orden");
       throw new Error("No se pudo actualizar la orden.");
@@ -128,7 +134,8 @@ export const updateOrder = async (
 
 export const deleteOrder = async (id: string) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const res = await axios.delete(`${API_URL}/orders/${id}`, {
       headers: {
@@ -150,7 +157,8 @@ export const deleteOrder = async (id: string) => {
 // INSTALLATIONS
 export const getAllInstallationsNotPagination = async () => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.get(`${API_URL}/installations`, {
       headers: {
@@ -169,7 +177,8 @@ export const getAllInstallations = async (
   params?: Partial<TInstallationQueryParams>
 ) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const cleanedParams = params ? cleanParams(params) : undefined;
 
@@ -179,7 +188,6 @@ export const getAllInstallations = async (
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(data);
 
     return data;
   } catch (error) {
@@ -194,8 +202,11 @@ export const createInstallation = async (
   orderId: string,
   values: ICreateInstallationFormValues
 ) => {
+  console.log(values);
+
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     console.log(values);
 
@@ -223,8 +234,10 @@ export const updateInstallation = async (
   installationId: string,
   values: IEditInstallationFormValues
 ) => {
+  console.log(values);
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values, {
       headers: {
@@ -233,13 +246,18 @@ export const updateInstallation = async (
     });
 
     return data;
-  } catch (err) {
-    console.log(err);
-    if (axios.isAxiosError(err)) {
-      console.error("Error al actualizar la instalación");
-      throw new Error("No se pudo actualizar la instalación.");
+  } catch (error) {
+    console.log(error);
+
+    if (axios.isAxiosError(error)) {
+      const err = error as AxiosError<{ message: string | string[] }>;
+      const rawMessage = err.response?.data?.message;
+      const message = Array.isArray(rawMessage)
+        ? rawMessage.join(" ")
+        : rawMessage || "Error inesperado del servidor.";
+
+      throw new Error(message);
     } else {
-      console.error("Error inesperado al actualizar la instalación");
       throw new Error("Error inesperado al actualizar la instalación.");
     }
   }
@@ -247,7 +265,8 @@ export const updateInstallation = async (
 
 export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const res = await axios.patch(
       `${API_URL}/installations/${id}/status`,
@@ -258,6 +277,9 @@ export const updateInstallationStatus = async (id: string, status: TInstallation
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+
+    console.log(res.data);
+
     return res.data;
   } catch (error) {
     console.log(error);
@@ -274,7 +296,8 @@ export const completeInstallation = async (id: string, values: ICompleteJob) => 
   });
 
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.post(`${API_URL}/installations/${id}/images`, formData, {
       headers: {
@@ -291,7 +314,8 @@ export const completeInstallation = async (id: string, values: ICompleteJob) => 
 
 export const deleteInstallation = async (id: string) => {
   try {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.delete(`${API_URL}/installations/${id}`, {
       headers: {

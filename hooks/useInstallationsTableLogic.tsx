@@ -20,7 +20,8 @@ export const useInstallationsTableLogic = () => {
     handleInstallationStatus,
   } = useTrackingStore();
   const { openModal: openTextModal } = useTextModalStore();
-  const { openModal: openInstallationsNoteModal } = useInstallationNoteModalStore();
+  const { openModal: openInstallationsNoteModal } =
+    useInstallationNoteModalStore();
   const { openModal: openInstallationEditModal } = useInstallationsEditModal();
   const [isLoadingOrder, setIsLoadingOrder] = useState(true);
   const { isDark } = useThemeStore();
@@ -52,7 +53,10 @@ export const useInstallationsTableLogic = () => {
     });
   };
 
-  const handleCancelInstallation = (id: string, status: TInstallationStatus) => {
+  const handleCancelInstallation = (
+    id: string,
+    status: TInstallationStatus
+  ) => {
     PersonalizedPopUp({
       color: isDark ? "#000000" : "#FAFAFA",
       withResult: true,
@@ -99,9 +103,6 @@ export const useInstallationsTableLogic = () => {
   };
 
   const handleViewInstallers = (installation: IInstallation) => {
-    console.log(installation.installers);
-    
-
     const installationInstallers = installation.installers
       .map((inst) => `<strong>Instalador:</strong> ${inst.user.fullName}<br/>`)
       .join("");
@@ -109,7 +110,23 @@ export const useInstallationsTableLogic = () => {
     openTextModal("Instaladores", installationInstallers || "Sin Instalador");
   };
 
-  const handleViewNotes = (installation: IInstallation, text: string, images: string[]) => {
+  const handleViewCoordinators = (installation: IInstallation) => {
+    const installationCoordinators =
+      installation.coordinator
+        ?.map(
+          (coor, i) =>
+            `<strong>Coordinador ${i + 1}:</strong> ${coor.user.fullName}<br/>`
+        )
+        .join("") || "Sin Coordinadores";
+
+    openTextModal("Coordinadores", installationCoordinators);
+  };
+
+  const handleViewNotes = (
+    installation: IInstallation,
+    text: string,
+    images: string[]
+  ) => {
     openInstallationsNoteModal({
       installation,
       title: "Notas",
@@ -127,6 +144,7 @@ export const useInstallationsTableLogic = () => {
     handlePostpone,
     handleViewAddress,
     handleViewInstallers,
+    handleViewCoordinators,
     handleViewNotes,
   };
 };

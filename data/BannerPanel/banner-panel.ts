@@ -13,7 +13,7 @@ export const bannerPanel: IBannerPanel[] = [
   },
   {
     icon: faUsers,
-    label: "Empleados",
+    label: "Colaboradores",
   },
   {
     icon: faArrowDownWideShort,

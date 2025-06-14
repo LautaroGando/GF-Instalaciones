@@ -6,6 +6,7 @@ import clsx from "clsx";
 import Footer from "@/components/FooterComponents/Footer";
 import BlogBanner from "@/components/ui/BlogComponents/BlogBanner/BlogBanner";
 import React, { ReactNode } from "react";
+import InstallationNoteModal from "@/components/ui/AdminComponents/InstallationNoteModal/InstallationNoteModal";
 
 export const metadata: Metadata = {
   title: "GF Instalaciones | Instalaciones Gráficas Profesionales",
@@ -72,6 +73,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
       <Header />
       <BannerHome />
       <BlogBanner />
+      <InstallationNoteModal />
       <main className="px-[15px] mt-20 py-10 sm:px-[20px] lg:max-w-[960px] lg:mx-auto xl:max-w-[1200px]">
         {children}
       </main>

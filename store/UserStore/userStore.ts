@@ -50,29 +50,18 @@ export const useUserStore = create<IUserStoreProps>()(
         const { moreInfo } = get();
         set({ moreInfo: moreInfo === id ? null : id });
       },
-      setUser: (user: IUser | IInstaller) => {
-        set({ user });
-        Cookies.set(
-          "user-storage",
-          JSON.stringify({ user, token: get().token }),
-          {
-            expires: 7,
-            secure: true,
-            sameSite: "Strict",
-          }
-        );
-      },
-      setToken: (token: string) => {
-        set({ token });
-        Cookies.set(
-          "user-storage",
-          JSON.stringify({ user: get().user, token }),
-          {
-            expires: 7,
-            secure: true,
-            sameSite: "Strict",
-          }
-        );
+      setUserAndToken: (user: IUser | IInstaller, token: string) => {
+        if (!user || !token) return;
+
+        const payload = { user, token };
+
+        set({ user, token });
+
+        Cookies.set("user-storage", JSON.stringify(payload), {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+        });
       },
       handleOpenEditMenu: () => set(() => ({ editMenu: true })),
       handleCloseEditMenu: () => set(() => ({ editMenu: false })),
@@ -380,7 +369,10 @@ export const useUserStore = create<IUserStoreProps>()(
     {
       name: "user-storage",
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ user: state.user, token: state.token }),
+      partialize: (state) => {
+        if (!state.user || !state.token) return {};
+        return { user: state.user, token: state.token };
+      },
     }
   )
 );

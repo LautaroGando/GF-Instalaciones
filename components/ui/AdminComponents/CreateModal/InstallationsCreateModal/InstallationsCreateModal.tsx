@@ -18,6 +18,7 @@ import CoordinatorsSelectModal from "../../CoordinatorsSelectModal/CoordinatorsS
 import { useCoordinatorsSelectModal } from "@/store/Admin/AdminModals/CoordinatorsSelectModal/CoordinatorsSelectModal";
 import PersonalizedPopUp from "@/components/ui/GeneralComponents/PersonalizedPopUp/PersonalizedPopUp";
 import { useThemeStore } from "@/store/ThemeStore/themeStore";
+import { getTodayStartISO } from "@/utils/getTodayStartISO";
 
 const SyncInstallersWithFormik = () => {
   const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
@@ -31,13 +32,13 @@ const SyncInstallersWithFormik = () => {
   return null;
 };
 
-const SyncCoordinatorWithFormik = () => {
+const SyncCoordinatorsWithFormik = () => {
   const { setFieldValue } = useFormikContext<ICreateInstallationFormValues>();
   const { selectedCoordinators } = useCoordinatorsSelectModal();
 
   useEffect(() => {
-    const id = selectedCoordinators[0]?.id || "";
-    setFieldValue("coordinatorId", id);
+    const ids = selectedCoordinators.map((c) => c.id);
+    setFieldValue("coordinatorsIds", ids);
   }, [selectedCoordinators, setFieldValue]);
 
   return null;
@@ -59,6 +60,7 @@ const InstallationsCreateModal = () => {
     clearCoordinators,
     openModal: openCoordinatorsModal,
   } = useCoordinatorsSelectModal();
+
   const { handleCreateInstallation } = useTrackingStore();
   const { isDark } = useThemeStore();
 
@@ -73,21 +75,23 @@ const InstallationsCreateModal = () => {
     { setSubmitting }: FormikHelpers<ICreateInstallationFormValues>
   ) => {
     closeModal();
+    clearInstallers();
+    clearCoordinators();
 
-    const formattedStartDate = values.startDate ? new Date(values.startDate).toISOString() : "";
+    const formattedStartDate = values.startDate
+      ? new Date(values.startDate).toISOString()
+      : "";
 
     const installersIds = selectedInstallers.map((installer) => installer.id);
-
-    const coordinatorId =
-      selectedCoordinators[0]?.userRoles.find(
-        (userRole) => userRole.role.name.toLowerCase() === "coordinador"
-      )?.id || "";
+    const coordinatorsIds = selectedCoordinators.map(
+      (coordinator) => coordinator.id
+    );
 
     const installationData: ICreateInstallationFormValues = {
       ...values,
       startDate: formattedStartDate,
       installersIds,
-      coordinatorId,
+      coordinatorsIds,
     };
 
     if (orderId) {
@@ -99,9 +103,8 @@ const InstallationsCreateModal = () => {
         textSuccess: "La instalación se creó correctamente.",
         textError: "Hubo un problema al crear la instalación.",
         setSubmiting: setSubmitting,
-        genericFunction: () => handleCreateInstallation(orderId, installationData),
-        clearInstallers: () => clearInstallers(),
-        clearCoordinators: () => clearCoordinators(),
+        genericFunction: () =>
+          handleCreateInstallation(orderId, installationData),
       });
     }
   };
@@ -111,7 +114,11 @@ const InstallationsCreateModal = () => {
   return (
     <>
       <div
-        onClick={closeModal}
+        onClick={() => {
+          closeModal();
+          clearInstallers();
+          clearCoordinators();
+        }}
         className="fixed px-4 inset-0 flex min-h-screen items-center justify-center bg-bgColorDark bg-opacity-50 z-50"
       >
         <motion.div
@@ -140,7 +147,7 @@ const InstallationsCreateModal = () => {
                   province: "",
                 },
                 installersIds: [],
-                coordinatorId: "",
+                coordinatorsIds: [],
               }}
               validationSchema={installationSchema}
               onSubmit={handleOnSubmit}
@@ -148,7 +155,7 @@ const InstallationsCreateModal = () => {
               {({ errors, touched }) => (
                 <>
                   <SyncInstallersWithFormik />
-                  <SyncCoordinatorWithFormik />
+                  <SyncCoordinatorsWithFormik />
                   <Form className="space-y-3 text-bgColorDark/60">
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -167,7 +174,10 @@ const InstallationsCreateModal = () => {
                         placeholder="Ingrese la provincia"
                         className="shadow-sm shadow-primaryColor/60 bg-transparent text-secondaryColor p-2 rounded-[4px] text-sm w-full outline-none transition-all duration-200 dark:text-letterColorLight focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm dark:placeholder:text-letterColorLight/50"
                       >
-                        <option value="" className="bg-bgColor dark:bg-bgColorDark">
+                        <option
+                          value=""
+                          className="bg-bgColor dark:bg-bgColorDark"
+                        >
                           Seleccionar provincia
                         </option>
                         {provincesMock.map((province, i) => (
@@ -183,9 +193,16 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.province && touched.address?.province ? 1 : 0,
+                          opacity:
+                            errors.address?.province &&
+                            touched.address?.province
+                              ? 1
+                              : 0,
                           height:
-                            errors.address?.province && touched.address?.province ? "auto" : 0,
+                            errors.address?.province &&
+                            touched.address?.province
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -218,8 +235,14 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.city && touched.address?.city ? 1 : 0,
-                          height: errors.address?.city && touched.address?.city ? "auto" : 0,
+                          opacity:
+                            errors.address?.city && touched.address?.city
+                              ? 1
+                              : 0,
+                          height:
+                            errors.address?.city && touched.address?.city
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -252,8 +275,14 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.street && touched.address?.street ? 1 : 0,
-                          height: errors.address?.street && touched.address?.street ? "auto" : 0,
+                          opacity:
+                            errors.address?.street && touched.address?.street
+                              ? 1
+                              : 0,
+                          height:
+                            errors.address?.street && touched.address?.street
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -286,8 +315,14 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.number && touched.address?.number ? 1 : 0,
-                          height: errors.address?.number && touched.address?.number ? "auto" : 0,
+                          opacity:
+                            errors.address?.number && touched.address?.number
+                              ? 1
+                              : 0,
+                          height:
+                            errors.address?.number && touched.address?.number
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -321,9 +356,15 @@ const InstallationsCreateModal = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
                           opacity:
-                            errors.address?.postalCode && touched.address?.postalCode ? 1 : 0,
+                            errors.address?.postalCode &&
+                            touched.address?.postalCode
+                              ? 1
+                              : 0,
                           height:
-                            errors.address?.postalCode && touched.address?.postalCode ? "auto" : 0,
+                            errors.address?.postalCode &&
+                            touched.address?.postalCode
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -356,8 +397,14 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.address?.note && touched.address?.note ? 1 : 0,
-                          height: errors.address?.note && touched.address?.note ? "auto" : 0,
+                          opacity:
+                            errors.address?.note && touched.address?.note
+                              ? 1
+                              : 0,
+                          height:
+                            errors.address?.note && touched.address?.note
+                              ? "auto"
+                              : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -384,6 +431,7 @@ const InstallationsCreateModal = () => {
                       <Field
                         name="startDate"
                         type="datetime-local"
+                        min={getTodayStartISO()}
                         placeholder="Seleccione fecha y hora de inicio"
                         className="shadow-sm shadow-primaryColor/60 bg-transparent p-2 rounded-[4px] w-full outline-none transition-all duration-200 focus:border-primaryColor-xl focus:shadow-primaryColor/100 placeholder:text-black/50 placeholder:text-sm text-primaryColor"
                       />
@@ -391,8 +439,10 @@ const InstallationsCreateModal = () => {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{
-                          opacity: errors.startDate && touched.startDate ? 1 : 0,
-                          height: errors.startDate && touched.startDate ? "auto" : 0,
+                          opacity:
+                            errors.startDate && touched.startDate ? 1 : 0,
+                          height:
+                            errors.startDate && touched.startDate ? "auto" : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="text-red-500 text-sm mt-2"
@@ -472,7 +522,7 @@ const InstallationsCreateModal = () => {
                       <button
                         type="button"
                         onClick={openInstallersModal}
-                        className="w-full mt-2 border border-primaryColor bg-primaryColor text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-transparent hover:text-primaryColor"
+                        className="w-full mt-2 border border-primaryColor bg-transparent text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColor hover:text-letterColorLight"
                       >
                         Seleccionar instaladores
                       </button>
@@ -503,11 +553,13 @@ const InstallationsCreateModal = () => {
                               transition={{ duration: 0.2, ease: "easeOut" }}
                               className="flex items-center justify-center gap-2 bg-primaryColor/10 text-primaryColor px-3 py-1 rounded-full text-sm font-medium shadow-sm"
                             >
-                              <p>{coordinator.fullName}</p>
+                              <p>{coordinator.user.fullName}</p>
                               <button
                                 type="button"
                                 className="text-admin-inactiveColor hover:text-admin-inactiveColor/80"
-                                onClick={() => deleteCoordinator(coordinator.id)}
+                                onClick={() =>
+                                  deleteCoordinator(coordinator.id)
+                                }
                               >
                                 <FontAwesomeIcon icon={faTimes} />
                               </button>
@@ -525,14 +577,14 @@ const InstallationsCreateModal = () => {
                         )}
                       </div>
 
-                      {errors.coordinatorId && touched.coordinatorId && (
+                      {errors.coordinatorsIds && touched.coordinatorsIds && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           transition={{ duration: 0.3 }}
                           className="text-red-500 text-sm mt-2"
                         >
-                          {errors.coordinatorId as string}
+                          {errors.coordinatorsIds as string}
                         </motion.div>
                       )}
                     </motion.div>
@@ -549,7 +601,7 @@ const InstallationsCreateModal = () => {
                       <button
                         type="button"
                         onClick={openCoordinatorsModal}
-                        className="w-full mt-2 border border-primaryColor bg-primaryColor text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-transparent hover:text-primaryColor"
+                        className="w-full mt-2 border border-primaryColor bg-transparent text-primaryColor p-2 rounded-md transition-all duration-200 hover:bg-primaryColor hover:text-letterColorLight"
                       >
                         Seleccionar coordinador
                       </button>
@@ -567,7 +619,11 @@ const InstallationsCreateModal = () => {
                     >
                       <button
                         type="button"
-                        onClick={closeModal}
+                        onClick={() => {
+                          closeModal();
+                          clearInstallers();
+                          clearCoordinators();
+                        }}
                         className="w-full mt-4 order-2 bg-gray-400 text-letterColorLight p-2 rounded-md transition-all duration-200 hover:bg-gray-500 xl:order-1 xl:w-[240px]"
                       >
                         Cancelar
