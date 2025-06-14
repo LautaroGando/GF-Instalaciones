@@ -3,6 +3,26 @@ import { Role } from "@/enums/Role";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+export const getRoles = async () => {
+  try {
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
+
+    const { data } = await axios.get(`${API_URL}/users/getRoles`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message || "Error al obtener roles");
+    }
+    throw new Error("Error al obtener roles");
+  }
+};
+
 export const assignRole = async (roleId: Role, userId: string) => {
   try {
     const cookieData = Cookies.get("user-storage");
@@ -34,11 +54,14 @@ export const deleteRole = async (roleId: Role, userId: string) => {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
-    const { data } = await axios.delete(`${API_URL}/user-role/${userId}/${roleId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axios.delete(
+      `${API_URL}/user-role/${userId}/${roleId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return data;
   } catch (error) {
