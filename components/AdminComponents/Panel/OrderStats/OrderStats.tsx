@@ -35,7 +35,7 @@ export const OrderStats: React.FC = () => {
           <div className="col-span-2 w-full">
             <ResponsiveContainer width="100%" height={40}>
               <BarChart
-                data={orderStats(installations)[0].data}
+                data={orderStats(installations.result)[0].data}
                 layout="vertical"
               >
                 <XAxis type="number" hide />
@@ -62,7 +62,7 @@ export const OrderStats: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          {orderStats(installations)
+          {orderStats(installations.result)
             .slice(1)
             .map((region, index) => (
               <div key={index} className="w-full">
