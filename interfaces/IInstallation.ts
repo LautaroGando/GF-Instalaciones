@@ -15,4 +15,8 @@ export interface IInstallation {
   images: string[];
 }
 
+export interface IInstallationResult {
+  result: IInstallation[];
+}
+
 export default IInstallation;

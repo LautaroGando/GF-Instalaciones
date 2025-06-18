@@ -39,7 +39,7 @@ export const PanelInfo: React.FC = () => {
                   : item.label === "Colaboradores"
                   ? collaborators?.length ?? 0
                   : item.label === "Instalaciónes"
-                  ? installations?.length ?? 0
+                  ? installations?.result?.length ?? 0
                   : 0
               }
               duration={3}

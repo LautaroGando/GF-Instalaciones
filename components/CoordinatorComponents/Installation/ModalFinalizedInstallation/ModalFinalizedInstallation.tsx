@@ -35,6 +35,20 @@ export const ModalFinalizedInstallation: React.FC<
       closeModal: () => closeModal(),
     });
 
+  const handleRejectInstallation = () =>
+    installation &&
+    PersonalizedPopUp({
+      color: isDark ? "#000000" : "#FAFAFA",
+      withResult: false,
+      titleSuccess: "Instalación rechazada",
+      textSuccess: "La instalación ha sido rechazada correctamente.",
+      titleError: "Error al rechazar",
+      textError: "No se pudo rechazar la instalación. Intenta nuevamente.",
+      genericFunction: () =>
+        handleInstallationStatus(installation.id, "Rechazada"),
+      closeModal,
+    });
+
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -76,6 +90,12 @@ export const ModalFinalizedInstallation: React.FC<
                 className="mt-6 w-full bg-primaryColor text-white p-2 rounded-md transition-all duration-200 hover:bg-primaryColorHover"
               >
                 Finalizar instalación
+              </button>
+              <button
+                onClick={handleRejectInstallation}
+                className="w-full bg-admin-inactiveColor text-white p-2 rounded-md transition-all duration-200 hover:bg-admin-inactiveColor/80"
+              >
+                Rechazar instalación
               </button>
               <button
                 onClick={closeModal}
