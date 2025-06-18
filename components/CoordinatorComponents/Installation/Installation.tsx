@@ -14,14 +14,14 @@ import { formatDateWithTime } from "@/utils/formatDateWithTime";
 
 export const Installation: React.FC = () => {
   const { user } = useUserStore();
-  const { installations, handleFetchInstallationsNotPagination } =
+  const { installations, handleFetchInstallationsPagination } =
     useTrackingStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { openModal } = useInstallationNoteModalStore();
 
   useEffect(() => {
     const fetchData = async () => {
-      await handleFetchInstallationsNotPagination();
+      await handleFetchInstallationsPagination();
       setIsLoading(false);
     };
 
@@ -34,14 +34,15 @@ export const Installation: React.FC = () => {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [handleFetchInstallationsNotPagination]);
+  }, [handleFetchInstallationsPagination]);
 
   const userInfo = user && "user" in user ? user.user : user;
 
-  const assignedInstallations = installations?.filter((installation) =>
-    installation.coordinator.some((c) => c.user.id === userInfo?.id)
-  );
-  console.log(assignedInstallations);
+  const assignedInstallations =
+    installations?.result?.filter((installation) =>
+      installation.coordinator.some((c) => c.user.id === userInfo?.id)
+    ) || [];
+
   const filterIncompleteInstallations = assignedInstallations?.filter(
     (installation: IInstallation) =>
       installation.status === "A revisar" ||

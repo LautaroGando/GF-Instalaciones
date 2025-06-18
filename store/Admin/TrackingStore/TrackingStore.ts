@@ -10,6 +10,7 @@ import {
   deleteOrder,
   getAllInstallations,
   getAllInstallationsNotPagination,
+  getAllInstallationsPagination,
   getAllOrders,
   getAllOrdersWithParams,
   getOrderById,
@@ -69,7 +70,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   handleLoading: (conditional: boolean) => {
     set({ isLoading: conditional });
   },
-  setEditedInstallationId: (id: string | null) => set({ editedInstallationId: id }),
+  setEditedInstallationId: (id: string | null) =>
+    set({ editedInstallationId: id }),
 
   handleOpenModal: (id) => set(() => ({ completeModal: id })), // habria que colocar un nombre mas especifico
   handleCloseModal: () => set(() => ({ completeModal: null })), // habria que colocar un nombre mas especifico
@@ -93,10 +95,12 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
     return orders.filter(
       (order) =>
-        normalize(order.orderNumber).includes(search) || normalize(order.title).includes(search)
+        normalize(order.orderNumber).includes(search) ||
+        normalize(order.title).includes(search)
     );
   },
-  setInstallationsSearch: (search: string) => set({ installationsSearch: search }),
+  setInstallationsSearch: (search: string) =>
+    set({ installationsSearch: search }),
   getFilteredInstallations: () => {
     const { selectedOrder, installationsSearch } = get();
 
@@ -115,7 +119,9 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
     return selectedOrder.installations.filter(
       (inst) =>
         normalize(inst.address?.city?.name ?? "").includes(search) ||
-        inst.coordinator?.some((coor) => normalize(coor.user.fullName).includes(search))
+        inst.coordinator?.some((coor) =>
+          normalize(coor.user.fullName).includes(search)
+        )
     );
   },
 
@@ -204,7 +210,9 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         ordersSearch,
       };
 
-      const { result: orders, totalPages } = await getAllOrdersWithParams(finalParams);
+      const { result: orders, totalPages } = await getAllOrdersWithParams(
+        finalParams
+      );
 
       set(() => ({
         orders,
@@ -277,6 +285,14 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
   // 🧰 6. Instalaciones
   // ===========================
 
+  handleFetchInstallationsPagination: async () => {
+    try {
+      const getInstallations = await getAllInstallationsPagination();
+      set(() => ({ installations: getInstallations }));
+    } catch (error) {
+      console.log(error);
+    }
+  },
   handleFetchInstallationsNotPagination: async () => {
     try {
       const getInstallations = await getAllInstallationsNotPagination();
@@ -309,10 +325,8 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         page,
       };
 
-      const { result: allInstallations, totalPages } = await getAllInstallations(
-        orderId,
-        finalParams
-      );
+      const { result: allInstallations, totalPages } =
+        await getAllInstallations(orderId, finalParams);
 
       const existingOrder = get().orders.find((o) => o.id === orderId);
       const fetchedOrder = existingOrder ?? (await getOrderById(orderId));
@@ -336,7 +350,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       get().handleLoading(false);
     }
   },
-  handleCreateInstallation: async (orderId: string, values: ICreateInstallationFormValues) => {
+  handleCreateInstallation: async (
+    orderId: string,
+    values: ICreateInstallationFormValues
+  ) => {
     try {
       const newInstallation = await createInstallation(orderId, values);
 
@@ -349,7 +366,10 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
           order.id === orderId
             ? {
                 ...order,
-                installations: [normalizedInstallation, ...(order.installations || [])],
+                installations: [
+                  normalizedInstallation,
+                  ...(order.installations || []),
+                ],
               }
             : order
         ),
@@ -371,10 +391,17 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
       throw err;
     }
   },
-  handleUpdateInstallation: async (installationId: string, values: IEditInstallationFormValues) => {
+  handleUpdateInstallation: async (
+    installationId: string,
+    values: IEditInstallationFormValues
+  ) => {
     try {
-      const updatedInstallation = await updateInstallation(installationId, values);
-      if (!updatedInstallation) throw new Error("Error al actualizar la instalación");
+      const updatedInstallation = await updateInstallation(
+        installationId,
+        values
+      );
+      if (!updatedInstallation)
+        throw new Error("Error al actualizar la instalación");
 
       set((state) => {
         const updatedOrders = state.orders.map((order) => ({
@@ -389,10 +416,11 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         const updatedSelectedOrder = state.selectedOrder?.id
           ? {
               ...state.selectedOrder,
-              installations: state.selectedOrder.installations.map((installation) =>
-                installation.id === installationId
-                  ? { ...installation, ...updatedInstallation }
-                  : installation
+              installations: state.selectedOrder.installations.map(
+                (installation) =>
+                  installation.id === installationId
+                    ? { ...installation, ...updatedInstallation }
+                    : installation
               ),
             }
           : state.selectedOrder;
@@ -422,7 +450,9 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         const updatedSelectedOrder = state.selectedOrder
           ? {
               ...state.selectedOrder,
-              installations: state.selectedOrder.installations.filter((inst) => inst.id !== id),
+              installations: state.selectedOrder.installations.filter(
+                (inst) => inst.id !== id
+              ),
             }
           : state.selectedOrder;
 
@@ -442,9 +472,9 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
       set((state) => {
         const updatedInstallations =
-          state.installations?.map((installation) =>
+          state.installations?.result.map((installation) =>
             installation.id === id ? { ...installation, status } : installation
-          ) || null;
+          ) || [];
 
         const updatedOrders = state.orders.map((order) => ({
           ...order,
@@ -456,14 +486,20 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
         const updatedSelectedOrder = state.selectedOrder
           ? {
               ...state.selectedOrder,
-              installations: state.selectedOrder.installations.map((installation) =>
-                installation.id === id ? { ...installation, status } : installation
+              installations: state.selectedOrder.installations.map(
+                (installation) =>
+                  installation.id === id
+                    ? { ...installation, status }
+                    : installation
               ),
             }
           : null;
 
         return {
-          installations: updatedInstallations,
+          installations: {
+            ...state.installations!,
+            result: updatedInstallations,
+          },
           orders: updatedOrders,
           selectedOrder: updatedSelectedOrder,
         };

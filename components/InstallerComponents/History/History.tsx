@@ -13,13 +13,13 @@ import React, { useEffect, useState } from "react";
 
 export const History: React.FC = () => {
   const { user } = useUserStore();
-  const { installations, handleFetchInstallationsNotPagination } =
+  const { installations, handleFetchInstallationsPagination } =
     useTrackingStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      await handleFetchInstallationsNotPagination();
+      await handleFetchInstallationsPagination();
       setIsLoading(false);
     };
 
@@ -32,19 +32,19 @@ export const History: React.FC = () => {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [handleFetchInstallationsNotPagination]);
+  }, [handleFetchInstallationsPagination]);
 
   const userInfo = user && "user" in user ? user.user : user;
 
-  const assignedInstallations = installations?.filter(
-    (installation: IInstallation) =>
+  const assignedInstallations =
+    installations?.result?.filter((installation: IInstallation) =>
       installation.installers.some(
         (installer: IInstaller) =>
           userInfo &&
           userInfo.installer &&
           installer.id === userInfo?.installer.id
       )
-  );
+    ) || [];
 
   const filterCompleteInstallations = assignedInstallations?.filter(
     (installation: IInstallation) =>

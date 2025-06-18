@@ -7,7 +7,7 @@ import { IOrderSortParams } from "@/interfaces/IOrderSortParams";
 import { TOrdersQueryParams } from "@/types/TOrdersQueryParams";
 
 //? INSTALLATIONS
-import IInstallation from "@/interfaces/IInstallation";
+import IInstallation, { IInstallationResult } from "@/interfaces/IInstallation";
 import ICreateInstallationFormValues from "@/interfaces/ICreateInstallationFormValues";
 import IEditInstallationFormValues from "@/interfaces/IEditInstallationFormValues";
 import { IInstallationFilters } from "@/interfaces/IInstallationFilters";
@@ -26,7 +26,7 @@ export interface ITrackingProps {
   isLoading: boolean;
   ordersPage: number;
   ordersTotalPages: number;
-  installations: IInstallation[] | null;
+  installations: IInstallationResult | null;
   installationsPage: number;
   installationsTotalPages: number;
   editedInstallationId: string | null;
@@ -79,6 +79,7 @@ export interface ITrackingProps {
   // 🧰 6. Instalaciones
   // ===========================
 
+  handleFetchInstallationsPagination: () => Promise<IInstallation[] | void>;
   handleFetchInstallationsNotPagination: () => Promise<IInstallation[] | void>;
   handleFetchInstallations: (
     orderId: string,
