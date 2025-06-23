@@ -167,7 +167,7 @@ export const getAllInstallationsPagination = async () => {
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
     const { data } = await axios.get(
-      `${API_URL}/installations/filter?limit=1000`,
+      `${API_URL}/installations/filter?limit=1000000`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
