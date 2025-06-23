@@ -61,7 +61,7 @@ const BannerHome = () => {
             <span>GRANDE DEL PAÍS</span>
           </p>
           <p className="text-letterColorLight text-sm max-w-[428px] sm:text-lg sm:max-w-[630px] lg:text-xl xl:text-2xl xl:max-w-[750px]">
-            Más de 28 años de experiencia. Más de 120 instaladores activos en
+            Más de 29 años de experiencia. Más de 120 instaladores activos en
             todo el país.
           </p>
         </div>
