@@ -10,7 +10,6 @@ import {
   deleteOrder,
   getAllInstallations,
   getAllInstallationsNotPagination,
-  getAllInstallationsPagination,
   getAllOrders,
   getAllOrdersWithParams,
   getOrderById,
@@ -287,7 +286,7 @@ export const useTrackingStore = create<ITrackingProps>((set, get) => ({
 
   handleFetchInstallationsPagination: async () => {
     try {
-      const getInstallations = await getAllInstallationsPagination();
+      const getInstallations = await getAllInstallationsNotPagination();
       set(() => ({ installations: getInstallations }));
     } catch (error) {
       console.log(error);
