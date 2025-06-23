@@ -147,16 +147,16 @@ const InstallationRow: React.FC<IInstallationsRowProps> = ({
       </motion.td>
 
       <motion.td variants={cellVariants} className="px-4 h-12 whitespace-nowrap">
-        {(installation.notes && installation.notes.trim() !== "") || installation.images ? (
+        {Array.isArray(installation.images) && installation.images.length > 0 && (
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
             onClick={onViewNotes}
             className="bg-primaryColor border border-primaryColor h-[36px] px-5 font-bold text-letterColorLight rounded-[2px] transition-all duration-200 hover:bg-white hover:text-primaryColor"
           >
-            Ver Notas
+            Ver imágenes
           </motion.button>
-        ) : null}
+        )}
       </motion.td>
 
       <motion.td
