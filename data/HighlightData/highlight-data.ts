@@ -21,7 +21,7 @@ export const highlightItems: IHighlightData[] = [
   {
     title: "Especialización exclusiva",
     description:
-      "Nos dedicamos únicamente a la instalación de gráfica de gran formato.",
+      "Nos dedicamos únicamente a la Instalación de Gráfica de Gran Formato.",
     icon: faScrewdriverWrench,
   },
 ];

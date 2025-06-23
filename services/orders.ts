@@ -155,23 +155,6 @@ export const deleteOrder = async (id: string) => {
 };
 
 // INSTALLATIONS
-export const getAllInstallationsPagination = async () => {
-  try {
-    const cookieData = Cookies.get("user-storage");
-    const token = cookieData ? JSON.parse(cookieData).token : null;
-
-    const { data } = await axios.get(`${API_URL}/installations/filter?limit=1000`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const getAllInstallationsNotPagination = async () => {
   try {
     const cookieData = Cookies.get("user-storage");
@@ -225,7 +208,6 @@ export const createInstallation = async (
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
-    console.log(values);
 
     const { data } = await axios.post(`${API_URL}/orders/${orderId}/installations`, values, {
       headers: {

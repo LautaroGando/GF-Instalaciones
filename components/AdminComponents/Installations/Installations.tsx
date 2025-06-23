@@ -5,6 +5,8 @@ import InstallationsOrderAndFilter from "@/components/ui/AdminComponents/OrderAn
 import InstallationsPagination from "@/components/ui/AdminComponents/AdminPaginationTables/InstallationsPagination/InstallationsPagination";
 
 const Instalations = () => {
+
+  
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-5 sm:flex-row sm:justify-between">

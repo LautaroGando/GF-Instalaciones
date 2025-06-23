@@ -10,12 +10,12 @@ import {
 export const whyChooseUsItems: IWhyChooseUsItemProps[] = [
   {
     icon: faBuilding,
-    text: "Especialización exclusiva en instalación gráfica (no imprimimos, ejecutamos).",
+    text: "Especialización exclusiva en Instalación Gráfica (no imprimimos, ejecutamos).",
     align: "left",
   },
   {
     icon: faGlobe,
-    text: "Cobertura Nacional real: actuamos en simultáneo en todo el país.",
+    text: "Cobertura Nacional real: actuamos en simultáneo en todo el País.",
     align: "right",
   },
   {

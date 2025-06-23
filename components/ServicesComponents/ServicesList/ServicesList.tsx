@@ -10,12 +10,12 @@ import ServiceItem from "./ServiceItem/ServiceItem";
 export const ServicesList: React.FC = () => {
   return (
     <div className="flex flex-col gap-5">
-      <Subtitle label="Especialización en cada tipo de instalación" />
+      <Subtitle label="Especialización en cada tipo de Instalación" />
       <p className="text-sm text-[#4E4E4E] font-light text-center dark:text-letterColorLight sm:text-lg">
-        En GF Instalaciones llevamos más de 28 años ejecutando instalaciones de
-        gráfica de gran formato en toda Argentina. Nuestro equipo de más de 120
-        instaladores especializados nos permite llevar tu proyecto a cualquier
-        rincón del país, respetando plazos y garantizando calidad.
+        En GF Instalaciones llevamos más de 29 años ejecutando Instalaciones de
+        Gráfica de Gran Formato en toda Argentina. Nuestro equipo de más de 120
+        Instaladores especializados nos permite llevar tu proyecto a cualquier
+        rincón del País, respetando plazos y garantizando calidad.
       </p>
       <h3 className="text-primaryColor text-xl font-semibold sm:text-2xl">
         Servicios
