@@ -15,13 +15,13 @@ import {
 } from "recharts";
 
 export const OrderStats: React.FC = () => {
-  const { installations, handleFetchInstallationsNotPagination } =
+  const { installations, handleFetchInstallationsPagination } =
     useTrackingStore();
   const { isDark } = useThemeStore();
 
   useEffect(() => {
-    handleFetchInstallationsNotPagination();
-  }, [handleFetchInstallationsNotPagination]);
+    handleFetchInstallationsPagination();
+  }, [handleFetchInstallationsPagination]);
 
   return (
     <div className="rounded-[5px] shadow-md p-2 w-full min-h-[700px] overflow-x-scroll dark:shadow-bgColor/20 sm:overflow-hidden">
