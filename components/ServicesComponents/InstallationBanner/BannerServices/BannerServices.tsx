@@ -15,7 +15,7 @@ export const BannerServices: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter((prev) => (prev === 3 ? 0 : prev + 1));
-    }, 5000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [counter]);

@@ -14,7 +14,7 @@ export const servicesListData: IServicesListData[] = [
   {
     title: "Redes de puntos de venta y retail",
     description:
-      "Instalación de vinilos, corpóreos, POP y cartelería en cadenas de retail y franquicias. Ejecutamos campañas simultáneas en más de 100 sucursales por día, garantizando imagen uniforme en todo el país.",
+      "Instalación de Vinilos, Corpóreos, POP y Cartelería Liviana en cadenas de Retail y Franquicias. Ejecutamos campañas simultáneas en más de 100 sucursales por día en todo el territorio Nacional, garantizando imagen uniforme en todo el País.",
     items: [
       "55 locales de Burger King intervenidos en 5 horas.",
       "180 sucursales de Farmacity actualizadas en simultáneo.",
@@ -24,7 +24,7 @@ export const servicesListData: IServicesListData[] = [
   {
     title: "Instalaciones en altura",
     description:
-      "Instalaciones de gráfica en altura utilizando silletas, grúas y sistemas certificados de seguridad. Ejecutamos desde lonas frontlight y backlight hasta corpóreos de gran tamaño en fachadas y medianeras.",
+      "Instalaciones de Gráfica en Altura utilizando grúas, silletas y sistemas certificados de seguridad. Ejecutamos desde lonas frontlight y backlight hasta corpóreos de gran tamaño en fachadas y medianeras.",
     items: [
       "Lonas de 9x42m en Edificio Libertad.",
       "Medianeras promocionales de alta visibilidad.",
