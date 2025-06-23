@@ -33,7 +33,9 @@ export const getAllOrders = async () => {
   }
 };
 
-export const getAllOrdersWithParams = async (params: Partial<TOrdersQueryParams>) => {
+export const getAllOrdersWithParams = async (
+  params: Partial<TOrdersQueryParams>
+) => {
   try {
     const cleanedParams = cleanParams(params);
 
@@ -114,11 +116,15 @@ export const updateOrder = async (
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
-    const response = await axios.patch<IEditOrderFormValues>(`${API_URL}/orders/${id}`, values, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.patch<IEditOrderFormValues>(
+      `${API_URL}/orders/${id}`,
+      values,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return response.data;
   } catch (err) {
@@ -155,6 +161,26 @@ export const deleteOrder = async (id: string) => {
 };
 
 // INSTALLATIONS
+export const getAllInstallationsPagination = async () => {
+  try {
+    const cookieData = Cookies.get("user-storage");
+    const token = cookieData ? JSON.parse(cookieData).token : null;
+
+    const { data } = await axios.get(
+      `${API_URL}/installations/filter?limit=1000`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getAllInstallationsNotPagination = async () => {
   try {
     const cookieData = Cookies.get("user-storage");
@@ -182,12 +208,15 @@ export const getAllInstallations = async (
 
     const cleanedParams = params ? cleanParams(params) : undefined;
 
-    const { data } = await axios.get(`${API_URL}/orders/${orderId}/installations`, {
-      params: cleanedParams,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axios.get(
+      `${API_URL}/orders/${orderId}/installations`,
+      {
+        params: cleanedParams,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return data;
   } catch (error) {
@@ -208,12 +237,15 @@ export const createInstallation = async (
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
-
-    const { data } = await axios.post(`${API_URL}/orders/${orderId}/installations`, values, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axios.post(
+      `${API_URL}/orders/${orderId}/installations`,
+      values,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     console.log(data);
 
@@ -238,11 +270,15 @@ export const updateInstallation = async (
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
-    const { data } = await axios.patch(`${API_URL}/installations/${installationId}`, values, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axios.patch(
+      `${API_URL}/installations/${installationId}`,
+      values,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return data;
   } catch (error) {
@@ -262,7 +298,10 @@ export const updateInstallation = async (
   }
 };
 
-export const updateInstallationStatus = async (id: string, status: TInstallationStatus) => {
+export const updateInstallationStatus = async (
+  id: string,
+  status: TInstallationStatus
+) => {
   try {
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
@@ -285,7 +324,10 @@ export const updateInstallationStatus = async (id: string, status: TInstallation
   }
 };
 
-export const completeInstallation = async (id: string, values: ICompleteJob) => {
+export const completeInstallation = async (
+  id: string,
+  values: ICompleteJob
+) => {
   const formData = new FormData();
 
   formData.append("commentary", values.commentary ?? "");
@@ -298,12 +340,16 @@ export const completeInstallation = async (id: string, values: ICompleteJob) => 
     const cookieData = Cookies.get("user-storage");
     const token = cookieData ? JSON.parse(cookieData).token : null;
 
-    const { data } = await axios.post(`${API_URL}/installations/${id}/images`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axios.post(
+      `${API_URL}/installations/${id}/images`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return data;
   } catch (error) {
     console.error("Error al subir la instalación:", error);
