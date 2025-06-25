@@ -15,13 +15,17 @@ import {
 } from "recharts";
 
 export const OrderStats: React.FC = () => {
-  const { installations, handleFetchInstallationsPagination } =
-    useTrackingStore();
+  const { installations, handleFetchInstallationsPagination } = useTrackingStore();
   const { isDark } = useThemeStore();
 
   useEffect(() => {
     handleFetchInstallationsPagination();
   }, [handleFetchInstallationsPagination]);
+
+  const stats = installations?.result ? orderStats(installations.result) : [];
+
+  const mainData = stats?.[0]?.data || [];
+  const regionStats = stats?.slice(1) || [];
 
   return (
     <div className="rounded-[5px] shadow-md p-2 w-full min-h-[700px] overflow-x-scroll dark:shadow-bgColor/20 sm:overflow-hidden">
@@ -34,10 +38,7 @@ export const OrderStats: React.FC = () => {
         <div className="grid grid-cols-2 gap-4 w-[200%] sm:w-full">
           <div className="col-span-2 w-full">
             <ResponsiveContainer width="100%" height={40}>
-              <BarChart
-                data={orderStats(installations.result)[0].data}
-                layout="vertical"
-              >
+              <BarChart data={mainData} layout="vertical">
                 <XAxis type="number" hide />
                 <YAxis
                   dataKey="name"
@@ -62,50 +63,46 @@ export const OrderStats: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          {orderStats(installations.result)
-            .slice(1)
-            .map((region, index) => (
-              <div key={index} className="w-full">
-                <h3 className="font-medium text-sm">{region.title}</h3>
-                <ResponsiveContainer
-                  width="100%"
-                  height={region.data.length * 32}
-                >
-                  <BarChart data={region.data} layout="vertical">
-                    <XAxis type="number" hide />
-                    <YAxis
-                      dataKey="name"
-                      type="category"
-                      width={130}
-                      tick={{
-                        style: {
-                          fontSize: "12px",
-                          textAnchor: "start",
-                          fill: isDark ? "#FAFAFA" : "#000000",
-                        },
-                      }}
-                      dx={-120}
-                    />
-                    <Bar dataKey="value" barSize={17}>
-                      {region.data.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={
-                            isDark && entry.name === "Total:"
-                              ? "#444"
-                              : entry.color
-                          }
-                        />
-                      ))}
-                    </Bar>
-                    <Tooltip
-                      content={<CustomTooltip />}
-                      cursor={{ fill: "transparent" }}
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            ))}
+
+          {regionStats.map((region, index) => (
+            <div key={index} className="w-full">
+              <h3 className="font-medium text-sm">{region.title}</h3>
+              <ResponsiveContainer width="100%" height={region.data.length * 32}>
+                <BarChart data={region.data} layout="vertical">
+                  <XAxis type="number" hide />
+                  <YAxis
+                    dataKey="name"
+                    type="category"
+                    width={130}
+                    tick={{
+                      style: {
+                        fontSize: "12px",
+                        textAnchor: "start",
+                        fill: isDark ? "#FAFAFA" : "#000000",
+                      },
+                    }}
+                    dx={-120}
+                  />
+                  <Bar dataKey="value" barSize={17}>
+                    {region.data.map((entry, i) => (
+                      <Cell
+                        key={`cell-${i}`}
+                        fill={
+                          isDark && entry.name === "Total:"
+                            ? "#444"
+                            : entry.color
+                        }
+                      />
+                    ))}
+                  </Bar>
+                  <Tooltip
+                    content={<CustomTooltip />}
+                    cursor={{ fill: "transparent" }}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          ))}
         </div>
       )}
     </div>
