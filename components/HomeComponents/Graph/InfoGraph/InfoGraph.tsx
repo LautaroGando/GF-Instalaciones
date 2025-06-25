@@ -18,7 +18,7 @@ export const InfoGraph: React.FC = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <h2 className="text-lg font-semibold sm:text-[22px] lg:text-[26px] lg:text-left xl:text-3xl">
-        Instalación gráfica de gran formato
+        Instalación Gráfica de Gran Formato
       </h2>
       <p
         className={clsx(
