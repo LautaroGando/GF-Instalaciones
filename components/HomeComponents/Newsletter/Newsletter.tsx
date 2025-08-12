@@ -7,23 +7,6 @@ import newssletterImg from "@/public/assets/ilustrations/home/newsletter.svg";
 import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 import { motion, useInView } from "motion/react";
 
-interface Hbspt {
-  forms: {
-    create: (options: {
-      portalId: string;
-      formId: string;
-      region?: string;
-      target: string;
-    }) => void;
-  };
-}
-
-declare global {
-  interface Window {
-    hbspt?: Hbspt;
-  }
-}
-
 const HUBSPOT_PORTAL_ID = "47831539";
 const HUBSPOT_FORM_ID = "946e115e-498c-4e6a-9ecb-4b400df2a0da";
 const HUBSPOT_REGION = "na1"; // opcional en la mayoría de integraciones

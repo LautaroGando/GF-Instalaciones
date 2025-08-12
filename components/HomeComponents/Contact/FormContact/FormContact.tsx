@@ -5,21 +5,15 @@ import contactImg from "@/public/assets/ilustrations/home/contact.svg";
 import Image from "next/image";
 import { motion, useInView } from "motion/react";
 
-interface Hbspt {
-  forms: {
-    create: (options: {
-      portalId: string;
-      formId: string;
-      region?: string;
-      target: string;
-    }) => void;
-  };
-}
-
-declare global {
-  interface Window {
-    hbspt?: Hbspt;
-  }
+interface HubspotForms {
+  create: (options: {
+    portalId: string;
+    formId: string;
+    region?: string;
+    target: string;
+    onFormReady?: ($form: HTMLElement) => void;
+    [key: string]: unknown;
+  }) => void;
 }
 
 const HUBSPOT_PORTAL_ID = "47831539";
@@ -40,12 +34,19 @@ export const FormContact: React.FC = () => {
 
     const createHubspotForm = () => {
       try {
-        if (window.hbspt?.forms) {
-          window.hbspt.forms.create({
+        const formsApi = window.hbspt?.forms as HubspotForms | undefined;
+
+        if (formsApi) {
+          formsApi.create({
             portalId: HUBSPOT_PORTAL_ID,
             formId: HUBSPOT_FORM_ID,
             region: HUBSPOT_REGION,
             target: "#hubspotForm",
+            onFormReady: ($form: HTMLElement) => {
+              $form.querySelectorAll("label").forEach((lbl) => {
+                (lbl as HTMLElement).style.color = "#A0A0A0";
+              });
+            },
           });
           setLoading(false);
         }
