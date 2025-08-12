@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Script from "next/script";
 import React, { useEffect, useRef, useState } from "react";
 import newssletterImg from "@/public/assets/ilustrations/home/newsletter.svg";
 import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
@@ -25,81 +26,82 @@ declare global {
 
 const HUBSPOT_PORTAL_ID = "47831539";
 const HUBSPOT_FORM_ID = "946e115e-498c-4e6a-9ecb-4b400df2a0da";
-const HUBSPOT_REGION = "na1";
+const HUBSPOT_REGION = "na1"; // opcional en la mayoría de integraciones
+const HUBSPOT_SCRIPT_SRC = "https://js.hsforms.net/forms/v2.js";
 
 const Newsletter: React.FC = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // función que intenta crear el form si hbspt está disponible
+  const tryCreateForm = () => {
+    try {
+      if (window.hbspt?.forms) {
+        window.hbspt.forms.create({
+          portalId: HUBSPOT_PORTAL_ID,
+          formId: HUBSPOT_FORM_ID,
+          region: HUBSPOT_REGION,
+          target: "#hubspotNewsletter",
+        });
+        setLoading(false);
+        setError(null);
+        return true;
+      }
+    } catch (err) {
+      console.error("HubSpot form error:", err);
+    }
+    return false;
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const existing = document.getElementById("hs-forms-script");
-    let addedScript = false;
+    // Si ya está disponible, crear y salir
+    if (tryCreateForm()) return;
 
-    const createHubspotForm = () => {
-      try {
-        if (window.hbspt?.forms) {
-          window.hbspt.forms.create({
-            portalId: HUBSPOT_PORTAL_ID,
-            formId: HUBSPOT_FORM_ID,
-            region: HUBSPOT_REGION,
-            target: "#hubspotNewsletter",
-          });
-          setLoading(false);
-        } else {
-          // Si el script ya cargó pero hbspt aún no está listo, reintentar un pequeño tiempo
-          setTimeout(() => {
-            if (window.hbspt?.forms) {
-              window.hbspt.forms.create({
-                portalId: HUBSPOT_PORTAL_ID,
-                formId: HUBSPOT_FORM_ID,
-                region: HUBSPOT_REGION,
-                target: "#hubspotNewsletter",
-              });
-              setLoading(false);
-            } else {
-              // Si sigue sin estar, marcamos como no cargado para evitar spinner eterno
-              setLoading(false);
-              console.error("HubSpot script loaded but window.hbspt not available.");
-            }
-          }, 500);
-        }
-      } catch (err) {
-        console.error("HubSpot form error:", err);
+    // Polling con retries (cada 300ms hasta 20 intentos -> 6s max)
+    let attempts = 0;
+    const maxAttempts = 20;
+    const interval = 300;
+    const poll = setInterval(() => {
+      attempts++;
+      if (tryCreateForm()) {
+        clearInterval(poll);
+      } else if (attempts >= maxAttempts) {
+        clearInterval(poll);
         setLoading(false);
+        setError("No se pudo inicializar el formulario de HubSpot (timeout).");
+        console.error("HubSpot loaded but window.hbspt not available after retries.");
       }
-    };
-
-    if (existing) {
-      createHubspotForm();
-    } else {
-      const s = document.createElement("script");
-      s.id = "hs-forms-script";
-      s.src = "//js.hsforms.net/forms/embed/v2.js";
-      s.type = "text/javascript";
-      s.charset = "utf-8";
-      s.onload = () => createHubspotForm();
-      s.onerror = () => {
-        console.error("Error loading HubSpot script");
-        setLoading(false);
-      };
-      document.body.appendChild(s);
-      addedScript = true;
-    }
+    }, interval);
 
     return () => {
-      if (addedScript) {
-        const el = document.getElementById("hs-forms-script");
-        if (el?.parentNode) el.parentNode.removeChild(el);
-      }
+      clearInterval(poll);
     };
   }, []);
 
   return (
     <section className="flex flex-col items-center">
       <HomeTitle text="" justLine />
+
+      {/* Next.js Script: carga controlada en cliente */}
+      <Script
+        id="hs-forms-script"
+        src={HUBSPOT_SCRIPT_SRC}
+        strategy="afterInteractive"
+        onLoad={() => {
+          // onLoad sucede cuando el archivo es descargado; la lib puede inicializar async.
+          // Delegate a useEffect que hace polling para instanciar el form.
+          console.debug("HubSpot script onLoad fired.");
+        }}
+        onError={(e) => {
+          console.error("Error loading HubSpot script", e);
+          setLoading(false);
+          setError("Error cargando el script de HubSpot.");
+        }}
+      />
 
       <motion.div
         ref={ref}
@@ -192,14 +194,20 @@ const Newsletter: React.FC = () => {
               },
             }}
           >
-            {/* Contenedor donde HubSpot inyectará el formulario */}
             <div id="hubspotNewsletter" className="w-full" aria-live="polite">
               {loading && (
                 <div className="flex items-center justify-center h-[56px]">
                   <span className="text-white">Cargando formulario…</span>
                 </div>
               )}
-              {/* El formulario de HubSpot reemplazará este contenido cuando se cargue */}
+
+              {error && (
+                <div className="flex items-center justify-center h-[56px]">
+                  <span className="text-white">Error: {error}</span>
+                </div>
+              )}
+
+              {/* HubSpot inyectará el formulario aquí */}
             </div>
           </motion.div>
         </motion.div>
