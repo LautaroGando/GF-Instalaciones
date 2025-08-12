@@ -1,19 +1,89 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import contactImg from "@/public/assets/ilustrations/home/contact.svg";
 import Image from "next/image";
-import { Form, Formik, FormikProps } from "formik";
-import { IContact } from "@/interfaces/IContact";
-import { formContactData } from "@/data/FormContactData/form-contact-data";
-import type { IFormContactData } from "@/data/FormContactData/types";
-import { validateContact } from "@/helpers/validateContact";
-import InputField from "@/components/ui/HomeComponents/InputField/InputField";
 import { motion, useInView } from "motion/react";
 
+interface Hbspt {
+  forms: {
+    create: (options: {
+      portalId: string;
+      formId: string;
+      region?: string;
+      target: string;
+    }) => void;
+  };
+}
+
+declare global {
+  interface Window {
+    hbspt?: Hbspt;
+  }
+}
+
+const HUBSPOT_PORTAL_ID = "47831539";
+const HUBSPOT_FORM_ID = "a4f89e0a-d480-4ce2-b1a4-68e827fe01ef";
+const HUBSPOT_REGION = "na1";
+
 export const FormContact: React.FC = () => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Solo ejecutar en cliente
+    if (typeof window === "undefined") return;
+
+    const existing = document.getElementById("hs-forms-script");
+    let addedScript = false;
+
+    const createHubspotForm = () => {
+      try {
+        if (window.hbspt?.forms) {
+          window.hbspt.forms.create({
+            portalId: HUBSPOT_PORTAL_ID,
+            formId: HUBSPOT_FORM_ID,
+            region: HUBSPOT_REGION,
+            target: "#hubspotForm",
+          });
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error("HubSpot form error:", err);
+        setLoading(false);
+      }
+    };
+
+    if (existing) {
+      // Si el script ya está, solo intentamos crear el form
+      createHubspotForm();
+    } else {
+      // Añadimos el script al body
+      const s = document.createElement("script");
+      s.id = "hs-forms-script";
+      s.src = "//js.hsforms.net/forms/embed/v2.js";
+      s.type = "text/javascript";
+      s.charset = "utf-8";
+      s.onload = () => {
+        createHubspotForm();
+      };
+      s.onerror = () => {
+        console.error("Error loading HubSpot script");
+        setLoading(false);
+      };
+      document.body.appendChild(s);
+      addedScript = true;
+    }
+
+    // Limpieza: si fuimos nosotros quienes añadimos el script lo removemos al desmontar
+    return () => {
+      if (addedScript) {
+        const el = document.getElementById("hs-forms-script");
+        if (el?.parentNode) el.parentNode.removeChild(el);
+      }
+    };
+  }, []);
 
   return (
     <motion.div
@@ -60,77 +130,25 @@ export const FormContact: React.FC = () => {
           },
         }}
       >
-        <Formik
-          initialValues={{
-            name: "",
-            surname: "",
-            email: "",
-            phone: "",
-            company: "",
-            message: "",
-          }}
-          validate={validateContact}
-          onSubmit={() => {}}
+        <motion.h3
+          className="text-primaryColor font-semibold text-2xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView && { opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
         >
-          {({ errors, touched, values }: FormikProps<IContact>) => (
-            <Form className="flex flex-col gap-3">
-              <motion.h3
-                className="text-primaryColor font-semibold text-2xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView && { opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              >
-                Contacto:
-              </motion.h3>
+          Contacto:
+        </motion.h3>
 
-              <motion.div
-                className="flex flex-col gap-7 sm:gap-2"
-                initial="hidden"
-                animate={isInView && "show"}
-                variants={{
-                  hidden: {},
-                  show: {
-                    transition: {
-                      staggerChildren: 0.2,
-                      delayChildren: 0.4,
-                    },
-                  },
-                }}
-              >
-                {formContactData.map((field: IFormContactData, i: number) => (
-                  <motion.div
-                    key={i}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      show: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { duration: 0.5, ease: "easeOut" },
-                      },
-                    }}
-                  >
-                    <InputField<IContact>
-                      {...field}
-                      errors={errors}
-                      touched={touched}
-                      values={values}
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
+        {/* Contenedor donde HubSpot inyecta el formulario */}
+        <div
+          id="hubspotForm"
+          className="min-h-[180px] flex items-center justify-center"
+          aria-live="polite"
+        >
+          {loading && <span>Cargando formulario…</span>}
+        </div>
 
-              <motion.button
-                type="submit"
-                className="bg-primaryColor mt-5 text-letterColorLight transition-all duration-300 border border-transparent text-lg font-medium w-[200px] mx-auto h-[40px] rounded-sm hover:bg-primaryColorHover"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView && { opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
-              >
-                Enviar
-              </motion.button>
-            </Form>
-          )}
-        </Formik>
+        {/* Si quieres mostrar algo debajo del form (botones, nota, etc.), agrégalo aquí */}
       </motion.div>
     </motion.div>
   );

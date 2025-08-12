@@ -1,14 +1,101 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import newssletterImg from "@/public/assets/ilustrations/home/newsletter.svg";
 import HomeTitle from "@/components/ui/HomeComponents/HomeTitle/HomeTitle";
 import { motion, useInView } from "motion/react";
 
-const Newsletter = () => {
-  const ref = useRef<HTMLDivElement>(null);
+interface Hbspt {
+  forms: {
+    create: (options: {
+      portalId: string;
+      formId: string;
+      region?: string;
+      target: string;
+    }) => void;
+  };
+}
+
+declare global {
+  interface Window {
+    hbspt?: Hbspt;
+  }
+}
+
+const HUBSPOT_PORTAL_ID = "47831539";
+const HUBSPOT_FORM_ID = "946e115e-498c-4e6a-9ecb-4b400df2a0da";
+const HUBSPOT_REGION = "na1";
+
+const Newsletter: React.FC = () => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const existing = document.getElementById("hs-forms-script");
+    let addedScript = false;
+
+    const createHubspotForm = () => {
+      try {
+        if (window.hbspt?.forms) {
+          window.hbspt.forms.create({
+            portalId: HUBSPOT_PORTAL_ID,
+            formId: HUBSPOT_FORM_ID,
+            region: HUBSPOT_REGION,
+            target: "#hubspotNewsletter",
+          });
+          setLoading(false);
+        } else {
+          // Si el script ya cargó pero hbspt aún no está listo, reintentar un pequeño tiempo
+          setTimeout(() => {
+            if (window.hbspt?.forms) {
+              window.hbspt.forms.create({
+                portalId: HUBSPOT_PORTAL_ID,
+                formId: HUBSPOT_FORM_ID,
+                region: HUBSPOT_REGION,
+                target: "#hubspotNewsletter",
+              });
+              setLoading(false);
+            } else {
+              // Si sigue sin estar, marcamos como no cargado para evitar spinner eterno
+              setLoading(false);
+              console.error("HubSpot script loaded but window.hbspt not available.");
+            }
+          }, 500);
+        }
+      } catch (err) {
+        console.error("HubSpot form error:", err);
+        setLoading(false);
+      }
+    };
+
+    if (existing) {
+      createHubspotForm();
+    } else {
+      const s = document.createElement("script");
+      s.id = "hs-forms-script";
+      s.src = "//js.hsforms.net/forms/embed/v2.js";
+      s.type = "text/javascript";
+      s.charset = "utf-8";
+      s.onload = () => createHubspotForm();
+      s.onerror = () => {
+        console.error("Error loading HubSpot script");
+        setLoading(false);
+      };
+      document.body.appendChild(s);
+      addedScript = true;
+    }
+
+    return () => {
+      if (addedScript) {
+        const el = document.getElementById("hs-forms-script");
+        if (el?.parentNode) el.parentNode.removeChild(el);
+      }
+    };
+  }, []);
 
   return (
     <section className="flex flex-col items-center">
@@ -29,7 +116,6 @@ const Newsletter = () => {
         }}
         className="mt-14 w-full flex flex-col items-center justify-center gap-y-4 lg:flex-row lg:justify-between"
       >
-
         <motion.div
           variants={{
             hidden: { opacity: 0, y: 20 },
@@ -106,21 +192,14 @@ const Newsletter = () => {
               },
             }}
           >
-            <label
-              htmlFor="email"
-              className="text-white text-[14px] block mb-2 sm:text-[16px] xl:text-[18px]"
-            >
-              Correo electrónico*
-            </label>
-            <div className="flex h-11 text-[14px] sm:text-[16px] xl:text-[18px]">
-              <input
-                type="email"
-                id="email"
-                className="flex-1 px-3 outline-none text-black w-[50%] h-[43px] sm:h-[50px] xl:h-[56px]"
-              />
-              <button className="bg-black text-white px-4 rounded-r-lg h-[43px] hover:bg-black/90 transition-all duration-200 sm:w-[30%] sm:h-[50px] xl:h-[56px]">
-                Suscribirse
-              </button>
+            {/* Contenedor donde HubSpot inyectará el formulario */}
+            <div id="hubspotNewsletter" className="w-full" aria-live="polite">
+              {loading && (
+                <div className="flex items-center justify-center h-[56px]">
+                  <span className="text-white">Cargando formulario…</span>
+                </div>
+              )}
+              {/* El formulario de HubSpot reemplazará este contenido cuando se cargue */}
             </div>
           </motion.div>
         </motion.div>
